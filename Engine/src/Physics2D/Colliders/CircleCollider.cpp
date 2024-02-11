@@ -15,9 +15,6 @@ void CircleCollider::SetLocalRadius(float radius_)
 }
 
 
-
-
-
 float CircleCollider::GetRadius() const
 {
 	auto scale = GetTransform()->GetScale();
@@ -30,3 +27,8 @@ float CircleCollider::GetRadius() const
 	return scale.x * localRadius;
 }
 
+std::pair<float, float> CircleCollider::ShadowAlongNormal(glm::vec2 normal) const
+{
+	float positionAlongNormal = glm::dot((glm::vec2)GetTransform()->GetPosition(), normal);
+	return { positionAlongNormal - GetRadius(), positionAlongNormal + GetRadius() };
+}

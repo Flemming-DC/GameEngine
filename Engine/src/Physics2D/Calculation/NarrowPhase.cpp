@@ -68,10 +68,8 @@ bool NarrowPhase::IsOverLapping(CircleCollider* circle, PolygonCollider* polygon
 	int count = (int)polygon->GetLocalPosition2Ds().size();
 	for (int i = 0; i < count; i++)
 	{
-		float circlePositionAlongNormal = glm::dot(circlePosition, polygon->GetNormalByIndex(i));
-		std::pair<float, float> circleShadow = {
-			circlePositionAlongNormal - circle->GetRadius(), circlePositionAlongNormal + circle->GetRadius() };
-		auto polygonShadow = polygon->CalculateShadowAlongNormal(polygon->GetNormalByIndex(i));
+		std::pair<float, float> circleShadow = circle->ShadowAlongNormal(polygon->GetNormalByIndex(i));
+		auto polygonShadow = polygon->ShadowAlongNormal(polygon->GetNormalByIndex(i));
 		bool noOverlap = circleShadow.first > polygonShadow.second || polygonShadow.first > circleShadow.second;
 		if (noOverlap)
 			return false;
@@ -79,7 +77,7 @@ bool NarrowPhase::IsOverLapping(CircleCollider* circle, PolygonCollider* polygon
 
 	// now we consider the shadow along the circle's effective normal.
 	float minSqrDistance = INFINITY;
-	glm::vec2 closestPoint; // evt. put GetClosestPoint calculation inside the collider class
+	glm::vec2 closestCorner; // evt. put GetClosestPoint calculation inside the collider class
 	for (glm::vec2 localPosition2D : polygon->GetLocalPosition2Ds())
 	{
 		auto position2D = polygon->GetTransform()->ToWorldSpace(localPosition2D, true);
@@ -87,17 +85,15 @@ bool NarrowPhase::IsOverLapping(CircleCollider* circle, PolygonCollider* polygon
 		if (sqrDistance < minSqrDistance)
 		{
 			minSqrDistance = sqrDistance;
-			closestPoint = position2D;
+			closestCorner = position2D;
 		}
 	}
-	glm::vec2 circleNormal = glm::normalize(closestPoint - circlePosition);
+	glm::vec2 circleNormal = glm::normalize(closestCorner - circlePosition);
 	if (Tools::HasNAN(circleNormal))
 		RaiseError("NAN encountered");
 
-	float circlePositionAlongNormal = glm::dot(circlePosition, circleNormal);
-	std::pair<float, float> circleShadow = {
-		circlePositionAlongNormal - circle->GetRadius(), circlePositionAlongNormal + circle->GetRadius() };
-	auto polygonShadow = polygon->CalculateShadowAlongNormal(circleNormal, false);
+	std::pair<float, float> circleShadow = circle->ShadowAlongNormal(circleNormal);
+	auto polygonShadow = polygon->ShadowAlongNormal(circleNormal);
 	bool noOverlap = circleShadow.first > polygonShadow.second || polygonShadow.first > circleShadow.second;
 	if (noOverlap)
 		return false;
@@ -122,8 +118,8 @@ bool NarrowPhase::IsOverLapping(PolygonCollider* polygon1, PolygonCollider* poly
 	// the simple polygon, which maximize the chance of an early exit
 	for (int i = 0; i < complexCount; i++)
 	{
-		auto complexShadow = complexPolygon->CalculateShadowAlongNormal(complexPolygon->GetNormalByIndex(i));
-		auto simpleShadow = simplePolygon->CalculateShadowAlongNormal(complexPolygon->GetNormalByIndex(i));
+		auto complexShadow = complexPolygon->ShadowAlongNormal(complexPolygon->GetNormalByIndex(i));
+		auto simpleShadow = simplePolygon->ShadowAlongNormal(complexPolygon->GetNormalByIndex(i));
 		bool noOverlap = complexShadow.first > simpleShadow.second || simpleShadow.first > complexShadow.second;
 		if (noOverlap)
 			return false;
@@ -131,8 +127,8 @@ bool NarrowPhase::IsOverLapping(PolygonCollider* polygon1, PolygonCollider* poly
 
 	for (int i = 0; i < simpleCount; i++)
 	{
-		auto complexShadow = complexPolygon->CalculateShadowAlongNormal(simplePolygon->GetNormalByIndex(i));
-		auto simpleShadow = simplePolygon->CalculateShadowAlongNormal(simplePolygon->GetNormalByIndex(i));
+		auto complexShadow = complexPolygon->ShadowAlongNormal(simplePolygon->GetNormalByIndex(i));
+		auto simpleShadow = simplePolygon->ShadowAlongNormal(simplePolygon->GetNormalByIndex(i));
 		bool noOverlap = complexShadow.first > simpleShadow.second || simpleShadow.first > complexShadow.second;
 		if (noOverlap)
 			return false;
@@ -144,7 +140,62 @@ bool NarrowPhase::IsOverLapping(PolygonCollider* polygon1, PolygonCollider* poly
 
 
 
+std::vector<Collider*> NarrowPhase::RayCastOverlaps(
+	glm::vec2 startPosition, glm::vec2 direction, float distance)
+{
+	// some kind of broad phase filter ???
 
+	std::vector<Collider*> output = {};
+
+	float startPosAlongDirection = glm::dot(startPosition, direction);
+	std::pair<float, float> rayShadow = { startPosAlongDirection, startPosAlongDirection + distance };
+	auto normal = glm::vec2(-direction.y, direction.x);
+	float startPosAlongNormal = glm::dot(startPosition, normal);
+
+	for (const auto col : Collider::GetAllColliders())
+	{
+		auto shadowNormal = col->ShadowAlongNormal(normal);
+		bool noOverlapNormal = shadowNormal.first > startPosAlongNormal || startPosAlongNormal > shadowNormal.second;
+		if (noOverlapNormal)
+			continue;
+		auto shadow = col->ShadowAlongNormal(direction);
+		bool noOverlap = shadow.first > rayShadow.second || rayShadow.first > shadow.second;
+		if (noOverlap)
+			continue;
+		output.push_back(col);
+	}
+	return output;
+
+}
+
+Collider* RayCast(
+	glm::vec2 startPosition, glm::vec2 direction, float distance)
+{
+	// some kind of broad phase filter ???
+	// some kind of sorting in the boradphase ???
+
+	std::vector<Collider*> output = {};
+
+	float startPosAlongDirection = glm::dot(startPosition, direction);
+	std::pair<float, float> rayShadow = { startPosAlongDirection, startPosAlongDirection + distance };
+	auto normal = glm::vec2(-direction.y, direction.x);
+	float startPosAlongNormal = glm::dot(startPosition, normal);
+
+	for (const auto col : Collider::GetAllColliders())
+	{
+		auto shadowNormal = col->ShadowAlongNormal(normal);
+		bool noOverlapNormal = shadowNormal.first > startPosAlongNormal || startPosAlongNormal > shadowNormal.second;
+		if (noOverlapNormal)
+			continue;
+		auto shadow = col->ShadowAlongNormal(direction);
+		bool noOverlap = shadow.first > rayShadow.second || rayShadow.first > shadow.second;
+		if (noOverlap)
+			continue;
+		output.push_back(col);
+	}
+	return output;
+
+}
 
 
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Collider.h"
+#include "glm/glm.hpp"
 #include <vector>
 
 
@@ -10,6 +11,8 @@ class CollisionDetector
 public:
 	static void Update();
 	static Overlaps GetOverlaps() { return overlaps; }
+	static std::vector<Collider*> RayCastOverlaps(
+		glm::vec2 startPosition, glm::vec2 direction, float distance = INFINITY);
 private:
 	static Overlaps overlaps;
 

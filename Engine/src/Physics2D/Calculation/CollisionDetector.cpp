@@ -40,3 +40,8 @@ void CollisionDetector::HandleCollisionInfo(Overlaps newOverlaps)
 }
 
 
+std::vector<Collider*> CollisionDetector::RayCastOverlaps(
+	glm::vec2 startPosition, glm::vec2 direction, float distance)
+{
+	return NarrowPhase::RayCastOverlaps(startPosition, direction, distance);
+}

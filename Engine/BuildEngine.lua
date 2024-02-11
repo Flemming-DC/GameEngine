@@ -25,6 +25,7 @@ Engine = project "Engine"
     }
 
     links {
+        -- "/NODEFAULTLIB:LIBCMT;" -- insert manually without .lib extension
         "glew32s",
         "glfw3", 
         "Opengl32",

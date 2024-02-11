@@ -126,9 +126,16 @@ void run()
 
         if (Input::KeyHeldDown(GLFW_KEY_K))
         {
-            Log("hi");
+            Log("K");
             for (const auto& overlap : CollisionDetector::GetOverlaps())
                 Log(overlap.first->GetEntity()->name + " overlaps " + overlap.second->GetEntity()->name);
+        }
+        if (Input::KeyHeldDown(GLFW_KEY_L))
+        {
+            Log("L");
+            auto colliders = CollisionDetector::RayCastOverlaps(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
+            for (const auto& col : colliders)
+                Log(col->GetEntity()->name + " was hit");
         }
         // --------- custom logic end -----------
 

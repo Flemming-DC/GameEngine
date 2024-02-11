@@ -8,5 +8,5 @@ optimizations:
 		textures, matrials, objects in scenes, 
 		transforms, renderables, colliders, custom components
 	collisionStatic and collisionLayers
-
+	CalculateShadowAlongNormal is expensive for polygon collider. evt. use some form of precalculation
 

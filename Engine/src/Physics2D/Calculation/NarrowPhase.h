@@ -12,7 +12,8 @@ public:
 	using Overlaps = std::vector<std::pair<Collider*, Collider*>>;
 
 	static Overlaps GetOverlaps(Overlaps potentialOverlaps);
-
+	static std::vector<Collider*> RayCastOverlaps(
+		glm::vec2 startPosition, glm::vec2 direction, float distance = INFINITY);
 
 
 private:

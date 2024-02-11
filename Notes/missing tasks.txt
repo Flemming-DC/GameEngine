@@ -4,6 +4,7 @@ diverse
 	set uniform should act on separate material instances, not shared materials.
 	generational indices or uuid's over pointers to components and entities
 	buy old used mac, linux, xbox and playstation
+	update view-area on window resize
 
 components & gameobjects
 	separate gamelogic out
@@ -31,8 +32,6 @@ collision
 		rigidbody
 	generate collision data
 		normals, velocity, collisionPoint
-	collision events, not callbacks for exit/enter. bool for stay
-	isTouching evt. with errorbar
 
 scenes
 run function / master loop

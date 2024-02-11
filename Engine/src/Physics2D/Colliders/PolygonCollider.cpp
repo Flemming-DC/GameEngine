@@ -43,13 +43,14 @@ void PolygonCollider::Setup(std::vector<glm::vec2> position2Ds_)
 
 
 
-std::pair<float, float> PolygonCollider::CalculateShadowAlongNormal(glm::vec2 normal, bool isLocal) const
+std::pair<float, float> PolygonCollider::ShadowAlongNormal(glm::vec2 normal) const
 {
 	float min = INFINITY;
 	float max = -INFINITY;
 	for (auto localPosition2D : localPosition2Ds)
 	{
-		glm::vec2 position2D = isLocal ? localPosition2D : GetTransform()->ToWorldSpace(localPosition2D, true);
+		//glm::vec2 position2D = isLocal ? localPosition2D : GetTransform()->ToWorldSpace(localPosition2D, true);
+		glm::vec2 position2D = GetTransform()->ToWorldSpace(localPosition2D, true);
 		float coordinateAlongNormal = glm::dot(position2D, normal);
 		if (coordinateAlongNormal < min)
 			min = coordinateAlongNormal;
@@ -58,16 +59,6 @@ std::pair<float, float> PolygonCollider::CalculateShadowAlongNormal(glm::vec2 no
 	}
 	if (min > max)
 	{
-		float min_ = INFINITY;
-		float max_ = -INFINITY;
-		glm::vec2 localPosition2D = localPosition2Ds[0];
-		glm::vec2 position2D = isLocal ? localPosition2D : GetTransform()->ToWorldSpace(localPosition2D, true);
-		float coordinateAlongNormal = glm::dot(position2D, normal);
-		if (coordinateAlongNormal < min)
-			min_ = coordinateAlongNormal;
-		if (coordinateAlongNormal > max)
-			max_ = coordinateAlongNormal;
-
 		RaiseError("min should be less than max. But found min = "
 			+ std::to_string(min) + " and max = " + std::to_string(max));
 	}
