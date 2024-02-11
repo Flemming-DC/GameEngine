@@ -10,6 +10,7 @@ components & gameobjects
 	updatable
 	handle activation
 	asset instances
+	component destroyed warning
 
 dynamics
 	startObject, endObject, update, enable, disable, startScene, endScene, starGame, endGame
@@ -27,10 +28,9 @@ collision
 	raycast and the like
 
 	components
-		collider
 		rigidbody
 	generate collision data
-		normals, velocity, colliders, exit vs enter
+		normals, velocity, collisionPoint
 	collision events, not callbacks for exit/enter. bool for stay
 	isTouching evt. with errorbar
 

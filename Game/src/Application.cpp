@@ -15,6 +15,7 @@
 #include "EngineCommon.h"
 #include "Components/GameLogic.h"
 #include "CollisionDetector.h"
+#include "Input.h"
 
 void unused_TransformGUI(const Entity& entity, glm::vec3* eulerAngles)
 {
@@ -114,15 +115,24 @@ void run()
 
     while (NewFrame())
     {
+        CollisionDetector::Update();
+
+        // --------- custom logic start -----------
         TransformGUI2D(picture1, &eulerAngles1);
         TransformGUI2D(picture2, &eulerAngles2);
         TransformGUI2D(circle1, &eulerAnglesCircle1);
         TransformGUI2D(circle2, &eulerAnglesCircle2);
-
-        CollisionDetector::Update();
         Entity::UpdateAllEntities();
-        Renderer::Draw();
 
+        if (Input::KeyHeldDown(GLFW_KEY_K))
+        {
+            Log("hi");
+            for (const auto& overlap : CollisionDetector::GetOverlaps())
+                Log(overlap.first->GetEntity()->name + " overlaps " + overlap.second->GetEntity()->name);
+        }
+        // --------- custom logic end -----------
+
+        Renderer::Draw();
         EndFrame();
     }
     Shutdown();

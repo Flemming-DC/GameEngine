@@ -5,10 +5,14 @@
 
 class CollisionDetector
 {
+	using Overlaps = std::vector<std::pair<Collider*, Collider*>>;
+
 public:
 	static void Update();
+	static Overlaps GetOverlaps() { return overlaps; }
 private:
-	using Overlaps = std::vector<std::pair<Collider*, Collider*>>;
-	static void HandleCollisionInfo(Overlaps overlaps);
+	static Overlaps overlaps;
+
+	static void HandleCollisionInfo(Overlaps newOverlaps);
 };
 

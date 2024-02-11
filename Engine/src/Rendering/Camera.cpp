@@ -58,13 +58,13 @@ glm::mat4 Camera::GetView() //const
 void Camera::OnUpdate()
 {
     glm::vec3 moveDirection = glm::vec3(0.0f);
-    if (Input::KeyPressed(GLFW_KEY_A))
+    if (Input::KeyHeldDown(GLFW_KEY_A))
         moveDirection.x -= 1;
-    if (Input::KeyPressed(GLFW_KEY_D))
+    if (Input::KeyHeldDown(GLFW_KEY_D))
         moveDirection.x += 1;
-    if (Input::KeyPressed(GLFW_KEY_S))
+    if (Input::KeyHeldDown(GLFW_KEY_S))
         moveDirection.y -= 1;
-    if (Input::KeyPressed(GLFW_KEY_W))
+    if (Input::KeyHeldDown(GLFW_KEY_W))
         moveDirection.y += 1;
     if (moveDirection.x != 0 && moveDirection.y != 0)
         moveDirection = glm::normalize(moveDirection);

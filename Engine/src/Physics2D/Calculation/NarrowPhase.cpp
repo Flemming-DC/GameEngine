@@ -59,7 +59,7 @@ bool NarrowPhase::IsOverLapping(CircleCollider* circle1, CircleCollider* circle2
 bool NarrowPhase::IsOverLapping(CircleCollider* circle, PolygonCollider* polygon)
 {
 	// we use a modified version of the SAT algorithm, in which the we treat 
-	// the direction from the circle to closest point in polygon as the only relevant
+	// the direction from the circle to closest point in the polygon as the only relevant
 	// normal on the circle https://www.youtube.com/watch?v=vWs33LVrs74&ab_channel=Two-BitCoding
 
 	// we use world coordinates
@@ -97,7 +97,7 @@ bool NarrowPhase::IsOverLapping(CircleCollider* circle, PolygonCollider* polygon
 	float circlePositionAlongNormal = glm::dot(circlePosition, circleNormal);
 	std::pair<float, float> circleShadow = {
 		circlePositionAlongNormal - circle->GetRadius(), circlePositionAlongNormal + circle->GetRadius() };
-	auto polygonShadow = polygon->CalculateShadowAlongNormal(circleNormal, true);
+	auto polygonShadow = polygon->CalculateShadowAlongNormal(circleNormal, false);
 	bool noOverlap = circleShadow.first > polygonShadow.second || polygonShadow.first > circleShadow.second;
 	if (noOverlap)
 		return false;

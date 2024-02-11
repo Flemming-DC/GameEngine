@@ -44,7 +44,7 @@ void Input::ScrollCallback(GLFWwindow* window, double pressed, double direction)
     scrollDirection = (int)direction;
 }
 
-bool Input::KeyPressed(int key)
+bool Input::KeyHeldDown(int key)
 {
     glCall(int state = glfwGetKey(window, key));
     if (state == GLFW_PRESS)
