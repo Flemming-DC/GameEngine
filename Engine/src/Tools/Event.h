@@ -8,19 +8,19 @@ template <typename... Args>
 class Event
 {
 public:
-    unsigned int add(const std::function<void(Args...)>& function)
+    unsigned int Add(const std::function<void(Args...)>& function)
     {
         maxId++;
         functionsById[maxId] = function;
         return maxId;
     }
 
-    void remove(unsigned int id)
+    void Remove(unsigned int id)
     {
         Tools::RemoveKey_unordered(functionsById, id);
     }
 
-    void invoke(Args... args) const
+    void Invoke(Args... args) const
     {
         for (const auto& pair : functionsById)
             pair.second(args...);

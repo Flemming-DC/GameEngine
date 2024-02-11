@@ -47,7 +47,7 @@ namespace Tools
 
 
 	template<typename T>
-	bool Contains(const std::vector<T>& vec, T t)
+	inline bool Contains(const std::vector<T>& vec, T t)
 	{
 		return std::find(std::begin(vec), std::end(vec), t) != std::end(vec);
 	};

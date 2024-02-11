@@ -14,7 +14,7 @@
 #include "Event.h"
 #include "EngineCommon.h"
 #include "Components/GameLogic.h"
-#include "PhysicsCalculator.h"
+#include "CollisionDetector.h"
 
 void unused_TransformGUI(const Entity& entity, glm::vec3* eulerAngles)
 {
@@ -44,6 +44,15 @@ void TransformGUI2D(const Entity& entity, glm::vec3* eulerAngles)
     ImGui::SliderFloat2((name + ".Scale").c_str(), pointerToScale, 0.001f, 3);
 
     transform->localRotation = glm::quat(glm::radians(*eulerAngles));
+}
+
+void HelloEnter(Collider* other)
+{
+    Log("Enter " + other->GetEntity()->name);
+}
+void HelloExit(Collider* other)
+{
+    Log("Exit " + other->GetEntity()->name);
 }
 
 void run()
@@ -79,6 +88,8 @@ void run()
     picture2.AddComponent<Renderable>()->SetByInspector(&mesh, &material);
     picture2.AddComponent<GameLogic>()->SetByInspector(&material); // this is affecting both pictures due to shared material.
     picture2.AddComponent<RectangleCollider>()->SetSize({ 1, 1 });
+    picture2.GetComponent<RectangleCollider>()->onEnter.Add(HelloEnter);
+    picture2.GetComponent<RectangleCollider>()->onExit.Add(HelloExit);
 
     Entity circle1("circle 1");
     circle1.AddComponent<Transform>();
@@ -87,6 +98,8 @@ void run()
     Entity circle2("circle 2");
     circle2.AddComponent<Transform>();
     circle2.AddComponent<CircleCollider>()->SetLocalRadius(0.5f);
+    circle2.GetComponent<CircleCollider>()->onEnter.Add(HelloEnter);
+    circle2.GetComponent<CircleCollider>()->onExit.Add(HelloExit);
 
     glm::vec3 eulerAngles1(0);
     glm::vec3 eulerAngles2(0);
@@ -106,8 +119,8 @@ void run()
         TransformGUI2D(circle1, &eulerAnglesCircle1);
         TransformGUI2D(circle2, &eulerAnglesCircle2);
 
+        CollisionDetector::Update();
         Entity::UpdateAllEntities();
-        PhysicsCalculator::Update();
         Renderer::Draw();
 
         EndFrame();
