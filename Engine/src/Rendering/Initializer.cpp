@@ -66,6 +66,7 @@ bool NewFrame()
 
 void EndFrame()
 {
+    Input::Update(); // resetting input data, must happen before glfwPollEvents
     ImGui::Render();
     ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
     glCall(glfwSwapBuffers(window)); // Swap front and back buffers

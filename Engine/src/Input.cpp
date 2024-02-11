@@ -4,6 +4,8 @@
 #include <GLFW/glfw3.h>
 
 static GLFWwindow* window;
+bool Input::scrollHeldDown = false;
+int Input::scrollDirection = 0;
 
 void Input::Setup(GLFWwindow* window_)
 {
@@ -11,7 +13,14 @@ void Input::Setup(GLFWwindow* window_)
     glCall(glfwFocusWindow(window)); // this should be called by default
     glCall(glfwSetWindowFocusCallback(window, LogFocusChange));
     glCall(glfwSetKeyCallback(window, KeyboardCallback));
+    glCall(glfwSetScrollCallback(window, ScrollCallback));
+}
 
+void Input::Update()
+{
+    // resetting input data
+    scrollHeldDown = false;
+    scrollDirection = 0;
 }
 
 void Input::LogFocusChange(GLFWwindow* window, int focused)
@@ -29,7 +38,13 @@ void Input::KeyboardCallback(GLFWwindow* window, int key, int scancode, int acti
     // or perhaps listen for specific key, action, mods combination rather than receiving this as parameters
 }
 
-bool Input::GetKey(int key)
+void Input::ScrollCallback(GLFWwindow* window, double pressed, double direction)
+{
+    scrollHeldDown = (pressed == 1);
+    scrollDirection = (int)direction;
+}
+
+bool Input::KeyPressed(int key)
 {
     glCall(int state = glfwGetKey(window, key));
     if (state == GLFW_PRESS)

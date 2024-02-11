@@ -121,6 +121,4 @@ int main()
     run();
     return 0;
 }
-
-
-// git add . && git commit && git push
+// git add . && git commit -m "m" && git push

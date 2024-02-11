@@ -57,19 +57,22 @@ glm::mat4 Camera::GetView() //const
 
 void Camera::OnUpdate()
 {
-    glm::vec3 direction = glm::vec3(0.0f);
-    if (Input::GetKey(GLFW_KEY_A))
-        direction.x -= 1;
-    if (Input::GetKey(GLFW_KEY_D))
-        direction.x += 1;
-    if (Input::GetKey(GLFW_KEY_S))
-        direction.y -= 1;
-    if (Input::GetKey(GLFW_KEY_W))
-        direction.y += 1;
-    if (direction.x != 0 && direction.y != 0)
-        direction = glm::normalize(direction);
+    glm::vec3 moveDirection = glm::vec3(0.0f);
+    if (Input::KeyPressed(GLFW_KEY_A))
+        moveDirection.x -= 1;
+    if (Input::KeyPressed(GLFW_KEY_D))
+        moveDirection.x += 1;
+    if (Input::KeyPressed(GLFW_KEY_S))
+        moveDirection.y -= 1;
+    if (Input::KeyPressed(GLFW_KEY_W))
+        moveDirection.y += 1;
+    if (moveDirection.x != 0 && moveDirection.y != 0)
+        moveDirection = glm::normalize(moveDirection);
 
-    GetTransform()->localPosition += direction * moveSpeed * Time::GetDelta();
+    GetTransform()->localPosition += moveDirection * moveSpeed * Time::GetDelta();
+
+    float scaling = 1 + Input::GetScrollDirection() * scrollSpeed * Time::GetDelta(); // exp(x) = 1 + x + O(x^2) is used
+    projection = glm::scale(projection, glm::vec3(scaling));
 }
 
 
