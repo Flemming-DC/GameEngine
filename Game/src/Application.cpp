@@ -14,7 +14,8 @@
 #include "Event.h"
 #include "EngineCommon.h"
 #include "Components/GameLogic.h"
-#include "CollisionDetector.h"
+#include "CollisionLoop.h"
+#include "CollisionChecker.h"
 #include "Input.h"
 
 void unused_TransformGUI(const Entity& entity, glm::vec3* eulerAngles)
@@ -115,7 +116,7 @@ void run()
 
     while (NewFrame())
     {
-        CollisionDetector::Update();
+        CollisionLoop::Update();
 
         // --------- custom logic start -----------
         TransformGUI2D(picture1, &eulerAngles1);
@@ -127,20 +128,20 @@ void run()
         if (Input::KeyHeldDown(GLFW_KEY_K))
         {
             Log("K");
-            for (const auto& overlap : CollisionDetector::GetOverlaps())
+            for (const auto& overlap : CollisionChecker::GetOverlaps())
                 Log(overlap.first->GetEntity()->name + " overlaps " + overlap.second->GetEntity()->name);
         }
         if (Input::KeyHeldDown(GLFW_KEY_L))
         {
             Log("L");
-            auto colliders = CollisionDetector::RayOverlaps(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
+            auto colliders = CollisionChecker::RayOverlaps(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
             for (const auto& col : colliders)
                 Log(col->GetEntity()->name + " was hit");
         }
         if (Input::KeyHeldDown(GLFW_KEY_P))
         {
             Log("P");
-            auto collider = CollisionDetector::RayCast(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
+            auto collider = CollisionChecker::RayCast(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
             if (collider != nullptr)
                 Log(collider->GetEntity()->name + " was hit");
             else

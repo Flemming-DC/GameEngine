@@ -1,13 +1,13 @@
-#include "CollisionDetector.h"
+#include "CollisionLoop.h"
 #include "BroadPhase.h"
 #include "NarrowPhase.h"
 #include "Collider.h"
 #include "ListTools.h"
 
 using Overlaps = std::vector<std::pair<Collider*, Collider*>>;
-Overlaps CollisionDetector::overlaps = {};
+Overlaps CollisionLoop::overlaps = {};
 
-void CollisionDetector::Update()
+void CollisionLoop::Update()
 {
 	// potentialCollisions are stored as collider pairs, rather than collision objects
 	auto potentialNewOverlaps = BroadPhase::GetPotentialOverlaps();
@@ -18,7 +18,7 @@ void CollisionDetector::Update()
 }
 
 
-void CollisionDetector::HandleCollisionInfo(Overlaps newOverlaps)
+void CollisionLoop::HandleCollisionInfo(Overlaps newOverlaps)
 {
 	for (const auto& pair : newOverlaps)
 	{
@@ -39,15 +39,4 @@ void CollisionDetector::HandleCollisionInfo(Overlaps newOverlaps)
 	overlaps = newOverlaps;
 }
 
-
-std::vector<Collider*> CollisionDetector::RayOverlaps(
-	glm::vec2 startPosition, glm::vec2 direction, float distance)
-{
-	return NarrowPhase::RayOverlaps(startPosition, direction, distance);
-}
-Collider* CollisionDetector::RayCast(
-	glm::vec2 startPosition, glm::vec2 direction, float distance)
-{
-	return NarrowPhase::RayCast(startPosition, direction, distance);
-}
 

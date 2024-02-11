@@ -1,21 +1,16 @@
 #pragma once
 #include "Collider.h"
-#include "glm/glm.hpp"
+#include "CollisionLoop.h"
 #include <vector>
 
-
-class CollisionDetector
+// this class exposes some functions to be used by the gamelogic, 
+// in contrast to CollisionChecker, which is an internal engine only class.
+class CollisionChecker
 {
 	using Overlaps = std::vector<std::pair<Collider*, Collider*>>;
-
 public:
-	static void Update();
-	static Overlaps GetOverlaps() { return overlaps; }
 	static std::vector<Collider*> RayOverlaps(glm::vec2 startPosition, glm::vec2 direction, float distance = INFINITY);
 	static Collider* RayCast(glm::vec2 startPosition, glm::vec2 direction, float distance = INFINITY);
-private:
-	static Overlaps overlaps;
-
-	static void HandleCollisionInfo(Overlaps newOverlaps);
+	static Overlaps GetOverlaps() { return CollisionLoop::GetOverlaps(); }
 };
 
