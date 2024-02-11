@@ -1,0 +1,41 @@
+#pragma once
+#include <vector>
+#include "Shader.h"
+#include "Material.h"
+#include "Mesh.h"
+#include "glm/glm.hpp"
+#include "Transform.h"
+
+
+// you should only create or draw gizmo if in editor
+// 
+// this class has a lot of code dublication from the Renderable class, since a Gizmo is also conceptually
+// a renderable. However, Renderable inhirits from component and Gizmo does not, which forces the dublication
+class Gizmo
+{
+public:
+	static std::vector<Gizmo*> allGizmos;
+	bool showPoints = true;
+	bool loop = true;
+
+	Gizmo(
+		std::vector<glm::vec2> position2Ds, 
+		Transform* transform, // transform is allowed to be null
+		glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	~Gizmo();
+	void Draw();
+	void UnBind();
+
+	static Gizmo* MakeCircle(
+		glm::vec2 center, 
+		float radius, 
+		Transform* transform_, 
+		glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+private:
+	Mesh* mesh; 
+	Material* material;
+	Shader* shader;
+	Transform* transform;
+	int positionCount;
+};
+

@@ -1,0 +1,32 @@
+#include "CircleCollider.h"
+#include "glm/glm.hpp"
+#include <algorithm> 
+
+
+void CircleCollider::SetLocalRadius(float radius_)
+{
+	localRadius = radius_;
+	glm::vec2 center = glm::vec2(0.0f); // evt. make this a variable
+
+	if (gizmo != nullptr)
+		delete gizmo;
+	gizmo = Gizmo::MakeCircle(center, radius_, GetTransform());
+	gizmo->showPoints = false;
+}
+
+
+
+
+
+float CircleCollider::GetRadius() const
+{
+	auto scale = GetTransform()->GetScale();
+
+	// replace error checking with constrained proportions
+	float error = (scale.x - scale.y) / std::max(0.005f, scale.x + scale.y);
+	if (error * error > 0.01f)
+		Warning("non-uniform scales are not supported for exact circle colliders");
+
+	return scale.x * localRadius;
+}
+

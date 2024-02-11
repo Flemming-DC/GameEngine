@@ -1,0 +1,12 @@
+
+optimizations:
+	transform O(n^2) funciton
+	batch rendering 
+	parralization
+	physics broad phase
+	contingous memory for 
+		textures, matrials, objects in scenes, 
+		transforms, renderables, colliders, custom components
+	
+
+

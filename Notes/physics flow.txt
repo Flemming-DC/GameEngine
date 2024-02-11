@@ -1,0 +1,52 @@
+
+
+----------- program flow ----------- 
+# hey, this naturally works like an ecs!
+
+Physics.Update()
+	potentialIntersections = broadphase.GetPotentialCollisions()
+		uses boundingboxes
+		same for all collider types
+	intersections = narrowphase.GetCollisions(potentialIntersections)
+		dependent on collider type
+	collisionStructs = solve(intersections)
+		dynamic vs kinematic / physicsStatic
+		dependent on collider type
+		colision data gathering might be optional.
+		invoke events
+
+	skip to begin with
+		handle smooth broadphase for non-global forces
+		apply smoothForces
+			gravity
+			drag
+			friction
+			forcefields
+			
+			
+
+----------- classes ----------- 
+
+Collider (abstract)
+	bounds / boundingRect / boundingbox
+	evt. list touchingColliders
+	list intersectingColliders
+	onCollisionEnter
+	onCollisionExit
+	inertia (scalar in 2d, matrix in 3d)
+	
+	isIntersecting(Collider other) //calculate for narrowPhase vs. cached for gameLogic
+
+
+
+
+
+
+
+
+
+
+
+
+
+

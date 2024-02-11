@@ -1,0 +1,52 @@
+
+diverse
+	move openGL errorhandling into rendering folder thereby seperating it from general tools
+	set uniform should act on separate material instances, not shared materials.
+	generational indices or uuid's over pointers to components and entities
+	camera scroll
+	buy old used mac, linux, xbox and playstation
+
+components & gameobjects
+	separate gamelogic out
+	updatable
+	handle activation
+	asset instances
+
+dynamics
+	startObject, endObject, update, enable, disable, startScene, endScene, starGame, endGame
+
+collision
+	use constrained proportions for circleCollider. this proporty is set on transform and used
+	by circleCollider and Gizmo renderer
+
+	collision detection
+		broad phase: boundingbox trees
+	collision solving (aka. interaction)
+	evt. drag & friction
+	
+	easy spawning for testing
+	raycast and the like
+
+	components
+		collider
+		rigidbody
+	generate collision data
+		normals, velocity, colliders, exit vs enter
+	collision events, not callbacks for exit/enter. bool for stay
+	isTouching evt. with errorbar
+
+scenes
+run function / master loop
+read/save files from/to disk
+
+threads
+headers
+	common, tools, rendering
+
+make 2d game
+
+
+
+
+
+
