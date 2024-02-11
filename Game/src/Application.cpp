@@ -133,9 +133,18 @@ void run()
         if (Input::KeyHeldDown(GLFW_KEY_L))
         {
             Log("L");
-            auto colliders = CollisionDetector::RayCastOverlaps(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
+            auto colliders = CollisionDetector::RayOverlaps(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
             for (const auto& col : colliders)
                 Log(col->GetEntity()->name + " was hit");
+        }
+        if (Input::KeyHeldDown(GLFW_KEY_P))
+        {
+            Log("P");
+            auto collider = CollisionDetector::RayCast(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
+            if (collider != nullptr)
+                Log(collider->GetEntity()->name + " was hit");
+            else
+                Log("Hit nothing");
         }
         // --------- custom logic end -----------
 

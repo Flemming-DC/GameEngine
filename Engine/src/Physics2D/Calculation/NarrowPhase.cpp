@@ -140,12 +140,12 @@ bool NarrowPhase::IsOverLapping(PolygonCollider* polygon1, PolygonCollider* poly
 
 
 
-std::vector<Collider*> NarrowPhase::RayCastOverlaps(
+std::vector<Collider*> NarrowPhase::RayOverlaps(
 	glm::vec2 startPosition, glm::vec2 direction, float distance)
 {
 	// some kind of broad phase filter ???
 
-	std::vector<Collider*> output = {};
+	std::vector<Collider*> hits = {};
 
 	float startPosAlongDirection = glm::dot(startPosition, direction);
 	std::pair<float, float> rayShadow = { startPosAlongDirection, startPosAlongDirection + distance };
@@ -162,22 +162,22 @@ std::vector<Collider*> NarrowPhase::RayCastOverlaps(
 		bool noOverlap = shadow.first > rayShadow.second || rayShadow.first > shadow.second;
 		if (noOverlap)
 			continue;
-		output.push_back(col);
+		hits.push_back(col);
 	}
-	return output;
+	return hits;
 
 }
 
-Collider* RayCast(
+Collider* NarrowPhase::RayCast(
 	glm::vec2 startPosition, glm::vec2 direction, float distance)
 {
 	// some kind of broad phase filter ???
-	// some kind of sorting in the boradphase ???
 
-	std::vector<Collider*> output = {};
+	float minPosAlongDir = INFINITY;
+	Collider* nearestHit = nullptr;
 
-	float startPosAlongDirection = glm::dot(startPosition, direction);
-	std::pair<float, float> rayShadow = { startPosAlongDirection, startPosAlongDirection + distance };
+	float startPosAlongDir = glm::dot(startPosition, direction);
+	std::pair<float, float> rayShadow = { startPosAlongDir, startPosAlongDir + distance };
 	auto normal = glm::vec2(-direction.y, direction.x);
 	float startPosAlongNormal = glm::dot(startPosition, normal);
 
@@ -191,9 +191,15 @@ Collider* RayCast(
 		bool noOverlap = shadow.first > rayShadow.second || rayShadow.first > shadow.second;
 		if (noOverlap)
 			continue;
-		output.push_back(col);
+
+		float posAlongDir = shadow.first;
+		if (posAlongDir < minPosAlongDir)
+		{
+			minPosAlongDir = posAlongDir;
+			nearestHit = col;
+		}
 	}
-	return output;
+	return nearestHit;
 
 }
 

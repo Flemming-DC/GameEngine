@@ -9,4 +9,5 @@ optimizations:
 		transforms, renderables, colliders, custom components
 	collisionStatic and collisionLayers
 	CalculateShadowAlongNormal is expensive for polygon collider. evt. use some form of precalculation
+	use broadShadow in raycast as a broadPhase
 

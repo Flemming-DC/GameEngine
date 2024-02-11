@@ -11,8 +11,8 @@ class CollisionDetector
 public:
 	static void Update();
 	static Overlaps GetOverlaps() { return overlaps; }
-	static std::vector<Collider*> RayCastOverlaps(
-		glm::vec2 startPosition, glm::vec2 direction, float distance = INFINITY);
+	static std::vector<Collider*> RayOverlaps(glm::vec2 startPosition, glm::vec2 direction, float distance = INFINITY);
+	static Collider* RayCast(glm::vec2 startPosition, glm::vec2 direction, float distance = INFINITY);
 private:
 	static Overlaps overlaps;
 
