@@ -7,7 +7,7 @@
 class Input
 {
 public:
-	static void Setup(GLFWwindow* window_);
+	static void MakeEntities(GLFWwindow* window_);
 	static bool KeyHeldDown(int key);
 	inline static bool GetScrollHeldDown() { return scrollHeldDown; }
 	inline static int GetScrollDirection() { return scrollDirection; }

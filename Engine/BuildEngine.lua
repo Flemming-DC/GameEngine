@@ -18,6 +18,7 @@ Engine = project "Engine"
         "../Engine/src/Physics2D",
         "../Engine/src/Physics2D/Colliders",
         "../Engine/src/Physics2D/Calculation",
+        "../Engine/src/Saveables",
         "../Engine/Dependencies/SrcDependencies/stduuid",
         "../Engine/Dependencies/SrcDependencies",
         "../Engine/Dependencies/BinDependencies/OpenGL/include",

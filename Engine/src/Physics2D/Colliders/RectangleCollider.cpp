@@ -14,7 +14,7 @@ void RectangleCollider::SetSize(glm::vec2 size)
 		{ halfSize.x,  halfSize.y }, // RU
 		{ halfSize.x, -halfSize.y }, // RD
 	};
-	Setup(position2Ds);
+	MakeEntities(position2Ds);
 }
 
 

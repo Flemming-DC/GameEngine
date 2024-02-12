@@ -4,7 +4,7 @@
 class Time
 {
 public:
-	static void Setup();
+	static void MakeEntities();
 	static void Update();
 	static float GetDelta();
 	static float GetCurrent();

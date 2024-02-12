@@ -1,0 +1,12 @@
+---
+
+uuid: #uuid
+name: picture 1 # evt. let name e infered from file name
+components:
+    transform:
+    renderable:
+        mesh: #uuid for SquareMesh
+        material: #uuid for Blizmat
+    rectangleCollider:
+        size: [1, 1]
+

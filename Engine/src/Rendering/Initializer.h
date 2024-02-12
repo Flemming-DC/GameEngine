@@ -3,10 +3,13 @@
 #include <GLFW/glfw3.h>
 
 
-
-void Setup();
-void Shutdown();
-bool NewFrame();
-void EndFrame();
+class Initializer
+{
+public:
+	static void Setup();
+	static void Shutdown();
+	static bool NewFrame();
+	static void EndFrame();
+};
 
 

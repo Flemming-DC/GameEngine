@@ -2,7 +2,7 @@
 #include "ErrorChecker.h"
 
 
-void PolygonCollider::Setup(std::vector<glm::vec2> position2Ds_)
+void PolygonCollider::MakeEntities(std::vector<glm::vec2> position2Ds_)
 {
 	localPosition2Ds = position2Ds_;
 

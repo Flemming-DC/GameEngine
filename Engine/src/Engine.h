@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "glm/glm.hpp"
 #include "Gizmo.h"
+#include "Scene.h"
 
 #include "PolygonCollider.h"
 #include "RectangleCollider.h"

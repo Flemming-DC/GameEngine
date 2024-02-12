@@ -10,7 +10,7 @@
 
 static GLFWwindow* window;
 
-void Setup()
+void Initializer::Setup()
 {
     // glfw setup
     if (!glfwInit())
@@ -42,18 +42,18 @@ void Setup()
     ImGui::StyleColorsDark();
 
     //custom setup
-    Input::Setup(window);
-    Time::Setup();
+    Input::MakeEntities(window);
+    Time::MakeEntities();
 }
 
-void Shutdown()
+void Initializer::Shutdown()
 {
     ImGui_ImplGlfwGL3_Shutdown();
     ImGui::DestroyContext();
     glfwTerminate();
 }
 
-bool NewFrame()
+bool Initializer::NewFrame()
 {
     bool close = glfwWindowShouldClose(window);
     if (close)
@@ -64,7 +64,7 @@ bool NewFrame()
     return true;
 }
 
-void EndFrame()
+void Initializer::EndFrame()
 {
     Input::Update(); // resetting input data, must happen before glfwPollEvents
     ImGui::Render();

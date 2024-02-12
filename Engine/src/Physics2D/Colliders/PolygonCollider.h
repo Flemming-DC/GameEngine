@@ -7,7 +7,7 @@
 class PolygonCollider : public Collider
 {
 public:
-	void Setup(std::vector<glm::vec2> position2Ds_);
+	void MakeEntities(std::vector<glm::vec2> position2Ds_);
 	// add position and remove position would be useful in an editor
 
 	const std::vector<glm::vec2>& GetLocalPosition2Ds() const { return localPosition2Ds; } 

@@ -59,9 +59,10 @@ void HelloExit(Collider* other)
 
 void run()
 {
-    Setup();
+    Initializer::Setup();
     Renderer::SetupGrid2D(0.25f);
     
+    // ---------- assets ---------- 
     Mesh mesh = Mesh::CreateSquare();
 
     glm::vec4 color = { 0.8f, 0.3f, 0.8f, 1.0f };
@@ -75,16 +76,18 @@ void run()
     Material material(shader, uniformsByName);
     
 
+    // ---------- cpp scene data ---------- 
+
     Entity camera("camera");
     camera.AddComponent<Transform>();
     camera.AddComponent<Camera>()->SetOrthographicProjection();
 
-    
+
     Entity picture1("picture 1");
     picture1.AddComponent<Transform>();
     picture1.AddComponent<Renderable>()->SetByInspector(&mesh, &material);
     picture1.AddComponent<RectangleCollider>()->SetSize({ 1, 1 });
-    
+
     Entity picture2("picture 2");
     picture2.AddComponent<Transform>()->SetParent(picture1.GetComponent<Transform>());
     picture2.AddComponent<Renderable>()->SetByInspector(&mesh, &material);
@@ -103,18 +106,22 @@ void run()
     circle2.GetComponent<CircleCollider>()->onEnter.Add(HelloEnter);
     circle2.GetComponent<CircleCollider>()->onExit.Add(HelloExit);
 
+    // ---------- saved scene data ---------- 
+    picture1.GetComponent<Transform>()->localPosition = { -0.5f, -0.5f, 0 };
+    picture2.GetComponent<Transform>()->localPosition = { 1.5f, -0.5f, 0 };
+    circle1.GetComponent<Transform>()->localPosition = { -0.5f,  0.6f, 0 };
+    circle2.GetComponent<Transform>()->localPosition = { 0.7f,  0.5f, 0 };
+    
+
+    // ------------ loop ------------
+
     glm::vec3 eulerAngles1(0);
     glm::vec3 eulerAngles2(0);
     glm::vec3 eulerAnglesCircle1(0);
     glm::vec3 eulerAnglesCircle2(0);
 
-    // start positions
-    picture1.GetComponent<Transform>()->localPosition = { -0.5f, -0.5f, 0 };
-    picture2.GetComponent<Transform>()->localPosition = {  1.5f, -0.5f, 0 };
-    circle1.GetComponent<Transform>()->localPosition =  { -0.5f,  0.6f, 0 };
-    circle2.GetComponent<Transform>()->localPosition =  {  0.7f,  0.5f, 0 };
 
-    while (NewFrame())
+    while (Initializer::NewFrame())
     {
         CollisionLoop::Update();
 
@@ -150,9 +157,9 @@ void run()
         // --------- custom logic end -----------
 
         Renderer::Draw();
-        EndFrame();
+        Initializer::EndFrame();
     }
-    Shutdown();
+    Initializer::Shutdown();
 }
 
 
