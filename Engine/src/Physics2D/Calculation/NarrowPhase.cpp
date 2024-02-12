@@ -77,7 +77,7 @@ bool NarrowPhase::IsOverLapping(CircleCollider* circle, PolygonCollider* polygon
 
 	// now we consider the shadow along the circle's effective normal.
 	float minSqrDistance = INFINITY;
-	glm::vec2 closestCorner; // evt. put GetClosestPoint calculation inside the collider class
+	glm::vec2 closestCorner; // evt. put GetClosestCorner calculation inside the collider class
 	for (glm::vec2 localPosition2D : polygon->GetLocalPosition2Ds())
 	{
 		auto position2D = polygon->GetTransform()->ToWorldSpace(localPosition2D, true);

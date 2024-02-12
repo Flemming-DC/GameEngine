@@ -1,35 +1,5 @@
 #include "CollisionChecker.h"
 
-std::vector<Collider*> CollisionChecker::RayOverlaps(
-	glm::vec2 startPosition, glm::vec2 direction, float distance)
-{
-	// some kind of broad phase filter ???
-
-	std::vector<Collider*> hits = {};
-
-	float startPosAlongDirection = glm::dot(startPosition, direction);
-	std::pair<float, float> rayShadow = { startPosAlongDirection, startPosAlongDirection + distance };
-	auto normal = glm::vec2(-direction.y, direction.x);
-	float startPosAlongNormal = glm::dot(startPosition, normal);
-
-	for (const auto col : Collider::GetAllColliders())
-	{
-		// checking for overlap
-		auto shadowNormal = col->ShadowAlongNormal(normal);
-		bool noOverlapNormal = shadowNormal.first > startPosAlongNormal || startPosAlongNormal > shadowNormal.second;
-		if (noOverlapNormal)
-			continue;
-		auto shadow = col->ShadowAlongNormal(direction);
-		bool noOverlap = shadow.first > rayShadow.second || rayShadow.first > shadow.second;
-		if (noOverlap)
-			continue;
-		// appending to list
-		hits.push_back(col);
-	}
-	return hits;
-
-}
-
 Collider* CollisionChecker::RayCast(
 	glm::vec2 startPosition, glm::vec2 direction, float distance)
 {
@@ -67,4 +37,33 @@ Collider* CollisionChecker::RayCast(
 
 }
 
+std::vector<Collider*> CollisionChecker::RayOverlaps(
+	glm::vec2 startPosition, glm::vec2 direction, float distance)
+{
+	// some kind of broad phase filter ???
+
+	std::vector<Collider*> hits = {};
+
+	float startPosAlongDirection = glm::dot(startPosition, direction);
+	std::pair<float, float> rayShadow = { startPosAlongDirection, startPosAlongDirection + distance };
+	auto normal = glm::vec2(-direction.y, direction.x);
+	float startPosAlongNormal = glm::dot(startPosition, normal);
+
+	for (const auto col : Collider::GetAllColliders())
+	{
+		// checking for overlap
+		auto shadowNormal = col->ShadowAlongNormal(normal);
+		bool noOverlapNormal = shadowNormal.first > startPosAlongNormal || startPosAlongNormal > shadowNormal.second;
+		if (noOverlapNormal)
+			continue;
+		auto shadow = col->ShadowAlongNormal(direction);
+		bool noOverlap = shadow.first > rayShadow.second || rayShadow.first > shadow.second;
+		if (noOverlap)
+			continue;
+		// appending to list
+		hits.push_back(col);
+	}
+	return hits;
+
+}
 

@@ -13,7 +13,6 @@ public:
 
 	static Overlaps GetOverlaps(Overlaps potentialOverlaps);
 
-
 private:
 	// evt. make IsOverLapping public. or make it available from the collider class
 	static bool IsOverLapping(Collider* collider1, Collider* collider2);

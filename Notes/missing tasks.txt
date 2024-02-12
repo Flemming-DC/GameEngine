@@ -26,7 +26,6 @@ collision
 	evt. drag & friction
 	
 	easy spawning for testing
-	raycast and the like
 
 	components
 		rigidbody
@@ -37,9 +36,9 @@ scenes
 run function / master loop
 read/save files from/to disk
 
-threads
 headers
 	common, tools, rendering
+profiler
 
 make 2d game
 
