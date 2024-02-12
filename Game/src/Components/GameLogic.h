@@ -1,5 +1,5 @@
 #pragma once
-#include "EngineCommon.h"
+#include "Engine.h"
 #include "Material.h"
 
 class GameLogic : public Component

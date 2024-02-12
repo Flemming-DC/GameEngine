@@ -19,6 +19,7 @@ dynamics
 collision
 	use constrained proportions for circleCollider. this proporty is set on transform and used
 	by circleCollider and Gizmo renderer
+	edit colliders
 
 	collision detection
 		broad phase: boundingbox trees
