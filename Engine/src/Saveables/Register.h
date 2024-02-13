@@ -1,41 +1,38 @@
 #pragma once
-#include "Shader.h"
-#include "Texture.h"
-#include "Material.h"
-#include "Scene.h"
 #include <stduuid/uuid.h>
 #include <utility>
+#include "ErrorChecker.h"
 
-// rename this to register and template it
-template<typename T>
+
+template<typename DataChunk>
 class Register
 {
 public:
 
     template<typename... Args>
-    uuids::uuid Make(Args&&... args)
+    uuids::uuid Add(Args&&... args)
     {
-        ts.emplace_back(std::forward<Args>(args)...);
-        indexByID[ts.back().GetID()] = ts.size() - 1;
-        return ts.back().GetID();
+        dataChunks.emplace_back(std::forward<Args>(args)...);
+        indexByID[dataChunks.back().GetID()] = dataChunks.size() - 1;
+        return dataChunks.back().GetID();
     }
 
     void Remove(const uuids::uuid& id)
     {
         if (!Tools::ContainsKey_unordered(indexByID, id))
             RaiseError("Trying to reomve an object, which isn't in the register.");
-        ts.erase(ts.begin() + indexByID[id]);
+        dataChunks.erase(dataChunks.begin() + indexByID[id]);
         Tools::RemoveKey_unordered(indexByID, id);
     }
 
-    const T& Get(const uuids::uuid& id)
+    const DataChunk& Get(const uuids::uuid& id)
     {
-        return ts[indexByID[id]];
+        return dataChunks[indexByID[id]];
     }
 
 
 private:
-    std::vector<T> ts;
+    std::vector<DataChunk> dataChunks;
     std::unordered_map<uuids::uuid, int> indexByID;
 
 

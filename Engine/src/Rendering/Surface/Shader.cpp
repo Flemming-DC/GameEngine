@@ -10,6 +10,9 @@
 #include "UuidCreator.h"
 
 // ---------------- public ----------------
+Register<Shader> Shader::register_;
+
+
 Shader::Shader(const std::string& filePath) 
     : path(filePath), id(UuidCreator::MakeID())
 {

@@ -70,17 +70,27 @@ void run()
     Mesh mesh = Mesh::CreateSquare();
 
     glm::vec4 color = { 0.8f, 0.3f, 0.8f, 1.0f };
-    
 
+    auto id_ = Shader::register_.Add("res/shaders/Image.shader");
+    const Shader& shader_ = Shader::register_.Get(id_);
+    Shader::register_.Remove(id_);
 
+    auto id = Shader::register_.Add("res/shaders/Image.shader");
+    const Shader& shader = Shader::register_.Get(id);
+
+    /*
     Register<Shader> sr;
-    auto id_ = sr.Make("res/shaders/Image.shader");
-    //const Shader& shader_ = sr.Get(id_);
-    //sr.Remove(id_);
+    auto id_ = sr.Add("res/shaders/Image.shader");
+    const Shader& shader_ = sr.Get(id_);
+    sr.Remove(id_);
 
-    auto id = ShaderRegister::MakeShader("res/shaders/Image.shader");
+    auto id = sr.Add("res/shaders/Image.shader");
+    const Shader& shader = sr.Get(id);
+    */
+
+    //auto id = ShaderRegister::MakeShader("res/shaders/Image.shader");
     //auto id = ShaderRegister::Add(Shader("res/shaders/Image.shader"));
-    const Shader& shader = ShaderRegister::Get(id);
+    //const Shader& shader = ShaderRegister::Get(id);
     
     Texture texture("res/textures/blizzard attacking fans.png");
     std::map<std::string, std::any> uniformsByName = {

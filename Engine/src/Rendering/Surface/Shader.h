@@ -4,6 +4,7 @@
 #include <any>
 #include <stduuid/uuid.h>
 #include "glm/glm.hpp"
+#include "Register.h"
 
 // check if file exists
 struct ShaderStrings
@@ -14,17 +15,10 @@ struct ShaderStrings
 
 class Shader
 {
-private:
-	uuids::uuid id;
-	unsigned int rendererID;
-	int location = -1;
-	std::string path;
-	std::unordered_map<std::string, int> locationByName;
-	std::unordered_map<std::string, int> idByFilePath;
-	std::unordered_map<std::string, std::string> uniformTypesByName;
-	std::unordered_map<std::string, int> textureSlotsByName;
-
 public:
+	static Register<Shader> register_;
+
+
 	Shader(const std::string& filePath);
 	~Shader();
 
@@ -39,6 +33,15 @@ public:
 	int GetTextureSlot(std::string uniformName) { return textureSlotsByName[uniformName]; }
 
 private:
+	uuids::uuid id;
+	unsigned int rendererID;
+	int location = -1;
+	std::string path;
+	std::unordered_map<std::string, int> locationByName;
+	std::unordered_map<std::string, int> idByFilePath;
+	std::unordered_map<std::string, std::string> uniformTypesByName;
+	std::unordered_map<std::string, int> textureSlotsByName;
+
 	void SetUniformInt(const std::string& name, int i);
 	void SetUniformVec4(const std::string& name, const glm::vec4& vector4);
 	void SetUniformMat4(const std::string& name, const glm::mat4& matrix);
