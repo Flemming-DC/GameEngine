@@ -8,6 +8,7 @@
 #include "glm/glm.hpp"
 #include "Gizmo.h"
 #include "Scene.h"
+#include "Register.h"
 
 #include "PolygonCollider.h"
 #include "RectangleCollider.h"

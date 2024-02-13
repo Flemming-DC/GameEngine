@@ -17,7 +17,7 @@ void UuidCreator::Setup()
 }
 */
 
-uuids::uuid UuidCreator::MakeUUID()
+uuids::uuid UuidCreator::MakeID()
 {
     std::random_device rd;
     auto seed_data = std::array<int, std::mt19937::state_size> {};

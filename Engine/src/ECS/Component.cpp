@@ -5,7 +5,7 @@
 
 void Component::InternalConstructor(Entity* entity_)
 {
-	id = UuidCreator::MakeUUID();
+	id = UuidCreator::MakeID();
 	entity = entity_;
 	transform = Get<Transform>();
 	OnConstructed();

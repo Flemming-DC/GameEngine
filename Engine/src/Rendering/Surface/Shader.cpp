@@ -7,9 +7,11 @@
 #include "ErrorChecker.h"
 #include "StringTools.h"
 #include <filesystem>
+#include "UuidCreator.h"
 
 // ---------------- public ----------------
-Shader::Shader(const std::string& filePath) : path(filePath)
+Shader::Shader(const std::string& filePath) 
+    : path(filePath), id(UuidCreator::MakeID())
 {
     if (idByFilePath.find(filePath) != idByFilePath.end())
         rendererID = idByFilePath[filePath];
@@ -22,10 +24,12 @@ Shader::Shader(const std::string& filePath) : path(filePath)
         idByFilePath[filePath] = rendererID;
     }
     glCall(glUseProgram(rendererID));
+    Log(" Shader contructed with rendererID = " + std::to_string(rendererID));
 }
 
 Shader::~Shader()
 {
+    Log(" Shader destroyed with rendererID = " + std::to_string(rendererID));
     glCall(glDeleteProgram(rendererID));
 }
 
@@ -92,7 +96,7 @@ int Shader::GetUniformLocation(const std::string& name)
     glCall(int location = glGetUniformLocation(rendererID, name.c_str()));
     if (location == -1)
         Warning("glGetUniformLocation failed to find uniform " + name + ".\n"
-            + "Remember the shader language is case sensitive and that unused variable won't be found.");
+            + "Remember the shader language is case sensitive and that unused variables won't be found.");
     locationByName[name] = location;
     return location;
 }

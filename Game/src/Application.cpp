@@ -17,6 +17,8 @@
 #include "CollisionLoop.h"
 #include "CollisionChecker.h"
 #include "Input.h"
+#include "Register.h"
+#include "ShaderRegister.h"
 
 void unused_TransformGUI(const Entity& entity, glm::vec3* eulerAngles)
 {
@@ -57,6 +59,8 @@ void HelloExit(Collider* other)
     Log("Exit " + other->GetEntity()->name);
 }
 
+
+
 void run()
 {
     Initializer::Setup();
@@ -66,7 +70,18 @@ void run()
     Mesh mesh = Mesh::CreateSquare();
 
     glm::vec4 color = { 0.8f, 0.3f, 0.8f, 1.0f };
-    Shader shader("res/shaders/Image.shader");
+    
+
+
+    Register<Shader> sr;
+    auto id_ = sr.Make("res/shaders/Image.shader");
+    //const Shader& shader_ = sr.Get(id_);
+    //sr.Remove(id_);
+
+    auto id = ShaderRegister::MakeShader("res/shaders/Image.shader");
+    //auto id = ShaderRegister::Add(Shader("res/shaders/Image.shader"));
+    const Shader& shader = ShaderRegister::Get(id);
+    
     Texture texture("res/textures/blizzard attacking fans.png");
     std::map<std::string, std::any> uniformsByName = {
         {"u_textureSampler", &texture},
@@ -85,7 +100,7 @@ void run()
 
     Entity picture1("picture 1");
     picture1.AddComponent<Transform>();
-    picture1.AddComponent<Renderable>()->SetByInspector(&mesh, &material);
+    picture1.AddComponent<Renderable>()->SetByInspector(&mesh, &material); 
     picture1.AddComponent<RectangleCollider>()->SetSize({ 1, 1 });
 
     Entity picture2("picture 2");
@@ -120,7 +135,7 @@ void run()
     glm::vec3 eulerAnglesCircle1(0);
     glm::vec3 eulerAnglesCircle2(0);
 
-
+    Log("starting loop");
     while (Initializer::NewFrame())
     {
         CollisionLoop::Update();

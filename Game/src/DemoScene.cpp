@@ -17,6 +17,7 @@
 #include "CollisionLoop.h"
 #include "CollisionChecker.h"
 #include "Input.h"
+#include "GameAssets.h"
 
 void DemoScene::HelloEnter(Collider* other)
 {

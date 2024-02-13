@@ -2,6 +2,7 @@
 #include <string>
 #include <unordered_map>
 #include <any>
+#include <stduuid/uuid.h>
 #include "glm/glm.hpp"
 
 // check if file exists
@@ -14,6 +15,7 @@ struct ShaderStrings
 class Shader
 {
 private:
+	uuids::uuid id;
 	unsigned int rendererID;
 	int location = -1;
 	std::string path;
@@ -31,6 +33,7 @@ public:
 	void SetUniform(const std::string& name, std::any value);
 	
 
+	uuids::uuid GetID() const { return id; }
 	std::string GetPath() const { return path; }
 	std::unordered_map<std::string, std::string> GetUniformTypesByName() const { return uniformTypesByName; }
 	int GetTextureSlot(std::string uniformName) { return textureSlotsByName[uniformName]; }

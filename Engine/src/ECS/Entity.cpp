@@ -5,7 +5,7 @@
 
 std::unordered_map<const Entity*, std::vector<Component*>> Entity::componentsByID;
 
-Entity::Entity(std::string name) : name(name), id(UuidCreator::MakeUUID()){ }
+Entity::Entity(std::string name) : name(name), id(UuidCreator::MakeID()){ }
 
 Entity::~Entity()
 {

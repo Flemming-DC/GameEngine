@@ -21,6 +21,8 @@ namespace Tools
 		return false;
 	}
 
+	// remove by index is simple myVector.erase(myVector.begin() + index);
+
 	template<typename Tkey, typename Tval>
 	bool RemoveKey(std::map<Tkey, Tval>& dict, Tkey key)
 	{

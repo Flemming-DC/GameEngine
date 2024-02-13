@@ -8,7 +8,7 @@ class UuidCreator
 public:
 	//static void Setup();
 
-	static uuids::uuid MakeUUID(); //{ return (*generator)(); }
+	static uuids::uuid MakeID(); //{ return (*generator)(); }
 	static uuids::uuid from_string(std::string str) { return uuids::uuid::from_string(str).value(); }
 	static std::string to_string(uuids::uuid id) { return uuids::to_string(id); }
 
