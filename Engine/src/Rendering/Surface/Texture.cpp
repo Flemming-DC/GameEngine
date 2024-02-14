@@ -1,10 +1,13 @@
 #include "Texture.h"
 #include "ErrorChecker.h"
 #include "stb_image/stb_image.h"
+#include "Initializer.h"
 
 
 void Texture::Setup(const std::string& filePath_)
 {
+	if (!Initializer::IsInitialized())
+		RaiseError("Texture cannot be setup before Initializer::Setup() is called.");
 	if (UuidCreator::IsInitialized(id))
 		RaiseError("Texture is already initialized");
 	id = UuidCreator::MakeID();
@@ -36,6 +39,9 @@ Texture::~Texture()
 
 void Texture::Bind(unsigned int slot) const
 {
+	if (!UuidCreator::IsInitialized(id))
+		RaiseError("You cannot bind an uninitialized Texture");
+
 	// GL_TEXTURE0 is an int, so GL_TEXTURE0 + slot gives another GL_TEXTURE enum value. 
 	glCall(glActiveTexture(GL_TEXTURE0 + slot));
 	glCall(glBindTexture(GL_TEXTURE_2D, rendererID));

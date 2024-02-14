@@ -2,10 +2,13 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "ErrorChecker.h"
+#include "Initializer.h"
 
 
 void IndexBuffer::Setup(const unsigned int* data, unsigned int count_)
 {
+    if (!Initializer::IsInitialized())
+        RaiseError("IndexBuffer cannot be setup before Initializer::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("IndexBuffer is already initialized");
     id = UuidCreator::MakeID();
@@ -25,6 +28,8 @@ IndexBuffer::~IndexBuffer()
 
 void IndexBuffer::Bind() const
 {
+    if (!UuidCreator::IsInitialized(id))
+        RaiseError("You cannot bind an uninitialized IndexBuffer");
     glCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererID));
 }
 

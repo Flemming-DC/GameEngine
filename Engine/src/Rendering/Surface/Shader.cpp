@@ -4,9 +4,10 @@
 #include <string>
 #include <sstream>
 #include <any>
+#include <filesystem>
 #include "ErrorChecker.h"
 #include "StringTools.h"
-#include <filesystem>
+#include "Initializer.h"
 
 // ---------------- public ----------------
 Register<Shader> Shader::register_;
@@ -15,6 +16,8 @@ Register<Shader> Shader::register_;
 
 void Shader::Setup(const std::string& filePath)
 {
+    if (!Initializer::IsInitialized())
+        RaiseError("Shader cannot be setup before Initializer::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("Shader is already initialized");
     id = UuidCreator::MakeID();
@@ -43,7 +46,7 @@ Shader::~Shader()
 void Shader::Bind() const
 {
     if (!UuidCreator::IsInitialized(id))
-        RaiseError("You cannt bind an uninitialized shader");
+        RaiseError("You cannot bind an uninitialized Shader");
 
     glCall(glUseProgram(rendererID));
 }

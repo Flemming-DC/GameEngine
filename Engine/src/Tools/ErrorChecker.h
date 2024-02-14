@@ -12,7 +12,11 @@
 template<typename T>
 void _RaiseError(T message, const char* func, const char* file, int line)
 {
+    std::cout << "\nBackTrace: " << std::endl;
+    _PrintBacktrace();
+    std::cout << "----------" << std::endl;
     std::cout << "ERROR MESSAGE: " << message << "\nERROR in " << func << " at " << file << ":" << line << std::endl;
+    std::cout << "----------\n" << std::endl;
     std::exit(1);
 }
 
@@ -34,3 +38,4 @@ void _glCall(const char* function, const char* file, int line);
 
 bool LastGlCallHadError();
 
+void _PrintBacktrace();

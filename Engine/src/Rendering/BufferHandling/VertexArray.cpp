@@ -2,10 +2,12 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "ErrorChecker.h"
+#include "Initializer.h"
 
-//void VertexArray::Setup
-VertexArray::VertexArray()
+void VertexArray::Setup()
 {
+    if (!Initializer::IsInitialized())
+        RaiseError("VertexArray cannot be setup before Initializer::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("VertexArray is already initialized");
     id = UuidCreator::MakeID();
@@ -33,6 +35,9 @@ void VertexArray::UnBind()
 
 void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexLayoutManager& layoutManager) const
 {
+    if (!UuidCreator::IsInitialized(id))
+        RaiseError("You cannot bind an uninitialized VertexArray");
+
     Bind();
     vb.Bind();
     unsigned int offset = 0;

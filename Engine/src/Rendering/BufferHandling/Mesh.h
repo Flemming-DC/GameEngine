@@ -11,14 +11,20 @@
 class Mesh
 {
 public:
-    Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const VertexLayout& layout);
-    //~Mesh();
+    //Mesh() {}
+    Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const VertexLayout& layout)
+        : indexBuffer(indices.data(), indices.size()), vertexBuffer(vertices.data(), vertices.size() * sizeof(float))
+        { Setup(vertices, indices, layout); }
+    void Setup(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const VertexLayout& layout);
+
     void Bind() const;
     static void UnBind();
     inline unsigned int GetIndexCount() const { return indexBuffer.GetCount(); }
+    uuids::uuid GetID() const { return id; }
     static Mesh CreateSquare(); // if you make more primitive meshes, then move this into a separate class
 
 private:
+    uuids::uuid id = UuidCreator::GetUnInitializedID();
     VertexBuffer vertexBuffer;
     VertexLayoutManager layoutManager;
     VertexArray vertexArray;

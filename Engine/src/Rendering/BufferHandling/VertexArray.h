@@ -14,8 +14,9 @@ public:
 	//~VertexArray();
 	//void Setup();
 
-	VertexArray();
+	VertexArray() {}
 	~VertexArray();
+	void Setup();
 
 	void Bind() const;
 	static void UnBind();

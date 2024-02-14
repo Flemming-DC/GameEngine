@@ -10,9 +10,9 @@ public:
 	static void Shutdown();
 	static bool NewFrame();
 	static void EndFrame();
-	static bool Iinitialized() { return initialized; }
+	static bool IsInitialized() { return isInitialized; }
 private:
-	static bool initialized;
+	static bool isInitialized;
 };
 
 

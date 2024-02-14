@@ -15,8 +15,7 @@ project "Game"
         "glew32s",
         "glfw3", 
         "Opengl32",
-        "Glu32", 
-        "yaml-cppd"
+        "Glu32"
     }
     ignoredefaultlibraries(Engine.ignoredefaultlibraries)
     libdirs(Engine.libdirs)
@@ -27,6 +26,7 @@ project "Game"
     filter "system:windows"
         systemversion "latest"
         defines { }
+        links { "dbghelp" } -- append dbghelp library for Windows
 
     filter "configurations:Debug"
         defines { "GLEW_STATIC", "WIN32", "_DEBUG", "_CONSOLE" } 

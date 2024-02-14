@@ -9,7 +9,7 @@
 #include "EngineAssets.h"
 
 static GLFWwindow* window;
-bool Initializer::initialized = false;
+bool Initializer::isInitialized = false;
 
 void Initializer::Setup()
 {
@@ -46,7 +46,7 @@ void Initializer::Setup()
     Input::Setup(window);
     Time::Setup();
     EngineAssets::Setup();
-    initialized = true;
+    isInitialized = true;
 }
 
 void Initializer::Shutdown()

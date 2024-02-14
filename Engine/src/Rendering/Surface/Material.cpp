@@ -1,17 +1,20 @@
 #include "Material.h"
 #include <string>
-#include "Shader.h"
 #include <map>
+#include "Shader.h"
 #include "ErrorChecker.h"
 #include "StringTools.h"
 #include "ListTools.h"
 #include "OtherTools.h"
+#include "Initializer.h"
 
 
 void Material::Setup(
     const Shader& shader_,
     const std::map<std::string, std::any>& uniformValuesByName_)
 {
+    if (!Initializer::IsInitialized())
+        RaiseError("Material cannot be setup before Initializer::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("Material is already initialized");
     id = UuidCreator::MakeID();
@@ -42,6 +45,9 @@ void Material::SetUniform(const std::string& name, std::any value)
 
 void Material::Bind(bool allowMissingUniforms)
 {
+    if (!UuidCreator::IsInitialized(id))
+        RaiseError("You cannot bind an uninitialized Material");
+
     using namespace std;
     for (auto pair : texturesByName)
         pair.second->Bind(shader.GetTextureSlot(pair.first));
