@@ -6,7 +6,7 @@
 void Texture::Setup(const std::string& filePath_)
 {
 	if (UuidCreator::IsInitialized(id))
-		RaiseError("Shader is already initialized");
+		RaiseError("Texture is already initialized");
 	id = UuidCreator::MakeID();
 	filePath = filePath_;
 	stbi_set_flip_vertically_on_load(1);

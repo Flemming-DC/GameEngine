@@ -12,6 +12,9 @@ void Material::Setup(
     const Shader& shader_,
     const std::map<std::string, std::any>& uniformValuesByName_)
 {
+    if (UuidCreator::IsInitialized(id))
+        RaiseError("Material is already initialized");
+    id = UuidCreator::MakeID();
     shader = shader_;
     uniformValuesByName = uniformValuesByName_;
     CheckUniforms();

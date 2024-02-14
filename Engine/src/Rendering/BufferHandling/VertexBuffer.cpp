@@ -4,8 +4,11 @@
 #include "ErrorChecker.h"
 
 
-VertexBuffer::VertexBuffer(const void* data, unsigned int size)
+void VertexBuffer::Setup(const void* data, unsigned int size)
 {
+    if (UuidCreator::IsInitialized(id))
+        RaiseError("VertexBuffer is already initialized");
+    id = UuidCreator::MakeID();
     glCall(glGenBuffers(1, &rendererID));
     glCall(glBindBuffer(GL_ARRAY_BUFFER, rendererID));
     glCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));

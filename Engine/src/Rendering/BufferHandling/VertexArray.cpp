@@ -3,9 +3,12 @@
 #include <GLFW/glfw3.h>
 #include "ErrorChecker.h"
 
-
+//void VertexArray::Setup
 VertexArray::VertexArray()
 {
+    if (UuidCreator::IsInitialized(id))
+        RaiseError("VertexArray is already initialized");
+    id = UuidCreator::MakeID();
     glCall(glGenVertexArrays(1, &rendererID));
     glCall(glBindVertexArray(rendererID));
 

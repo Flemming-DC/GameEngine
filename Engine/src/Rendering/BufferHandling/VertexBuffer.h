@@ -1,16 +1,24 @@
 #pragma once
+#include "UuidCreator.h"
+#include "Register.h"
 
 class VertexBuffer
 {
-private:
-	unsigned int rendererID;
 
 public:
-	VertexBuffer(const void* data, unsigned int size);
+	static Register<VertexBuffer> register_;
+
+	VertexBuffer() {}
+	VertexBuffer(const void* data, unsigned int size) { Setup(data, size); }
 	~VertexBuffer();
+	void Setup(const void* data, unsigned int size);
 
 	void Bind() const;
 	static void UnBind();
+	uuids::uuid GetID() const { return id; }
 
+private:
+	unsigned int rendererID;
+	uuids::uuid id = UuidCreator::GetUnInitializedID();
 };
 

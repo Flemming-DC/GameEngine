@@ -4,10 +4,14 @@
 #include "ErrorChecker.h"
 
 
-IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int count_) : count(count_)
+void IndexBuffer::Setup(const unsigned int* data, unsigned int count_)
 {
+    if (UuidCreator::IsInitialized(id))
+        RaiseError("IndexBuffer is already initialized");
+    id = UuidCreator::MakeID();
     static_assert(sizeof(unsigned int) == sizeof(GLuint),
         "IndexBuffer expects sizeof(unsigned int) == sizeof(GLuint)");
+    count = count_;
     
     glCall(glGenBuffers(1, &rendererID));
     glCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererID));
