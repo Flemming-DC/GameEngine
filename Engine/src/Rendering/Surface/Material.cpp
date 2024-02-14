@@ -13,7 +13,7 @@ void Material::Setup(
     const Shader& shader_,
     const std::map<std::string, std::any>& uniformValuesByName_)
 {
-    if (!Initializer::IsInitialized())
+    if (!Initializer::OpenGLInitialized())
         RaiseError("Material cannot be setup before Initializer::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("Material is already initialized");
@@ -27,6 +27,8 @@ void Material::Setup(
 
 Material::~Material()
 {
+    Log(" Material destroyed  ");
+    //if (UuidCreator::IsInitialized(id))
     //  check if there are other references to the textures. If not, then delete them.
     //for (auto texture : textures)
         //delete texture;

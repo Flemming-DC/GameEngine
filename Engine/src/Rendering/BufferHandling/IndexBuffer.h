@@ -20,7 +20,7 @@ public:
 
 private:
 	uuids::uuid id = UuidCreator::GetUnInitializedID();
-	unsigned int rendererID = -1;
+	unsigned int openGLid = 0;
 	unsigned int count = 0;
 };
 

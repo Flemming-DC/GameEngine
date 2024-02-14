@@ -28,7 +28,7 @@ public:
 
 private:
 	uuids::uuid id = UuidCreator::GetUnInitializedID();
-	unsigned int rendererID;
+	unsigned int openGLid = 0;
 	//VertexBuffer vertexBuffer;
 };
 

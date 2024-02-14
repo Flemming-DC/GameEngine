@@ -34,7 +34,7 @@ public:
 private:
 	uuids::uuid id = UuidCreator::GetUnInitializedID();
 	std::string path = "";
-	unsigned int rendererID = -1;
+	unsigned int openGLid = 0;
 	std::unordered_map<std::string, int> locationByName;
 	std::unordered_map<std::string, int> idByFilePath;
 	std::unordered_map<std::string, std::string> uniformTypesByName;

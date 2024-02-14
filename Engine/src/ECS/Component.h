@@ -15,7 +15,7 @@ class Component
 	friend class Entity; 
 public:
 
-	Component() { Log("Component created"); };
+	Component() { };
 	~Component();
 	std::string to_string() const;
 

@@ -337,7 +337,7 @@ typedef struct
    // private data
    //
    unsigned char cursor_at_end_of_line; // not implemented yet
-   unsigned char isInitialized;
+   unsigned char openGLInitialized;
    unsigned char has_preferred_x;
    unsigned char single_line;
    unsigned char padding1, padding2, padding3;
@@ -1308,7 +1308,7 @@ static void stb_textedit_clear_state(STB_TexteditState *state, int is_single_lin
    state->has_preferred_x = 0;
    state->preferred_x = 0;
    state->cursor_at_end_of_line = 0;
-   state->isInitialized = 1;
+   state->openGLInitialized = 1;
    state->single_line = (unsigned char) is_single_line;
    state->insert_mode = 0;
 }

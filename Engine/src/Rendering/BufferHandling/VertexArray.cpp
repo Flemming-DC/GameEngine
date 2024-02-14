@@ -6,24 +6,26 @@
 
 void VertexArray::Setup()
 {
-    if (!Initializer::IsInitialized())
+    if (!Initializer::OpenGLInitialized())
         RaiseError("VertexArray cannot be setup before Initializer::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("VertexArray is already initialized");
     id = UuidCreator::MakeID();
-    glCall(glGenVertexArrays(1, &rendererID));
-    glCall(glBindVertexArray(rendererID));
+    glCall(glGenVertexArrays(1, &openGLid));
+    glCall(glBindVertexArray(openGLid));
 
 }
 
 VertexArray::~VertexArray()
 {
-    glCall(glDeleteVertexArrays(1, &rendererID));
+    Log(" VertexArray destroyed with openGLid = " + std::to_string(openGLid));
+    if (UuidCreator::IsInitialized(id))
+        glCall(glDeleteVertexArrays(1, &openGLid));
 }
 
 void VertexArray::Bind() const
 {
-    glCall(glBindVertexArray(rendererID));
+    glCall(glBindVertexArray(openGLid));
 }
 
 void VertexArray::UnBind()

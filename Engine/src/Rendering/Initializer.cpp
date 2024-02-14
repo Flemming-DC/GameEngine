@@ -9,7 +9,7 @@
 #include "EngineAssets.h"
 
 static GLFWwindow* window;
-bool Initializer::isInitialized = false;
+bool Initializer::openGLInitialized = false;
 
 void Initializer::Setup()
 {
@@ -42,11 +42,12 @@ void Initializer::Setup()
     ImGui_ImplGlfwGL3_Init(window, true);
     ImGui::StyleColorsDark();
 
+    openGLInitialized = true;
+
     //custom setup
     Input::Setup(window);
     Time::Setup();
     EngineAssets::Setup();
-    isInitialized = true;
 }
 
 void Initializer::Shutdown()

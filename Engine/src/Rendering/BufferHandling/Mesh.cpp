@@ -4,7 +4,7 @@
 
 void Mesh::Setup(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const VertexLayout& layout)
 {
-    if (!Initializer::IsInitialized())
+    if (!Initializer::OpenGLInitialized())
         RaiseError("Mesh cannot be setup before Initializer::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("Mesh is already initialized");

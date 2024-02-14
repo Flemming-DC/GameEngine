@@ -16,31 +16,31 @@ Register<Shader> Shader::register_;
 
 void Shader::Setup(const std::string& filePath)
 {
-    if (!Initializer::IsInitialized())
+    if (!Initializer::OpenGLInitialized())
         RaiseError("Shader cannot be setup before Initializer::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("Shader is already initialized");
     id = UuidCreator::MakeID();
     path = filePath;
     if (idByFilePath.find(filePath) != idByFilePath.end())
-        rendererID = idByFilePath[filePath];
+        openGLid = idByFilePath[filePath];
     else
     {
         CheckFilePath(filePath);
         ShaderStrings shaderStruct = ParseShader(filePath);
-        rendererID = CreateShaderProgram(shaderStruct.vertexShader, shaderStruct.fragmentShader);
+        openGLid = CreateShaderProgram(shaderStruct.vertexShader, shaderStruct.fragmentShader);
         FindUniforms(filePath);
-        idByFilePath[filePath] = rendererID;
+        idByFilePath[filePath] = openGLid;
     }
-    glCall(glUseProgram(rendererID));
-    Log(" Shader contructed with rendererID = " + std::to_string(rendererID));
+    glCall(glUseProgram(openGLid));
+    Log(" Shader contructed with openGLid = " + std::to_string(openGLid));
 }
 
 Shader::~Shader()
 {
-    Log(" Shader destroyed with rendererID = " + std::to_string(rendererID));
+    Log(" Shader destroyed with openGLid = " + std::to_string(openGLid));
     if (UuidCreator::IsInitialized(id))
-        glCall(glDeleteProgram(rendererID));
+        glCall(glDeleteProgram(openGLid));
 }
 
 void Shader::Bind() const
@@ -48,7 +48,7 @@ void Shader::Bind() const
     if (!UuidCreator::IsInitialized(id))
         RaiseError("You cannot bind an uninitialized Shader");
 
-    glCall(glUseProgram(rendererID));
+    glCall(glUseProgram(openGLid));
 }
 
 void Shader::UnBind()
@@ -106,7 +106,7 @@ int Shader::GetUniformLocation(const std::string& name)
     if (locationByName.find(name) != locationByName.end())
         return locationByName[name];
 
-    glCall(int location = glGetUniformLocation(rendererID, name.c_str()));
+    glCall(int location = glGetUniformLocation(openGLid, name.c_str()));
     if (location == -1)
         Warning("glGetUniformLocation failed to find uniform " + name + ".\n"
             + "Remember the shader language is case sensitive and that unused variables won't be found.");
