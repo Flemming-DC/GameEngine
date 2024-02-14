@@ -35,7 +35,9 @@ public:
 		glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 private:
 	Mesh* mesh; 
-	Material* material;
+	//Material* material;
+	glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+	Material material;
 	Transform* transform;
 	int positionCount;
 };

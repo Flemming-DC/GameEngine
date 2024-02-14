@@ -6,12 +6,11 @@
 #include "EngineAssets.h"
 
 std::vector<Gizmo*> Gizmo::allGizmos;
-//const Shader& Gizmo::shader = Shader::register_.Get(Shader::register_.Add("res/shaders/SolidColor.shader"));
-//uuids::uuid Gizmo::shaderID = UuidCreator::MakeID(); // dummyValue //Shader::register_.Add("res/shaders/SolidColor.shader");
-//std::optional<const Shader&> Gizmo::shader;
 
-Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec4 color)
+
+Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec4 color_)
 {
+    color = color_;
     std::vector<float> positionsRaw;
     for (glm::vec2 position2D : position2Ds)
     {
@@ -23,7 +22,8 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
     float point_size = 5;
     glCall(glPointSize(point_size));
 
-    material = new Material(EngineAssets::SolidColorShader(), { {"u_color", color}, {"u_MVP", Material::MissingUniform()} });
+    //material = new Material(EngineAssets::SolidColorShader(), { {"u_color", color}, {"u_MVP", Material::MissingUniform()} });
+    material = EngineAssets::GreenGizmoMaterial(); // color unspecified
     mesh = new Mesh(positionsRaw, {}, { 2, 0, 0, 0 });
     transform = transform_;
     positionCount = position2Ds.size();
@@ -37,7 +37,7 @@ Gizmo::~Gizmo()
 {
     Tools::Remove(allGizmos, this);
     delete mesh;
-    delete material;
+    //delete material;
 }
 
 void Gizmo::Draw()
@@ -45,9 +45,10 @@ void Gizmo::Draw()
     glm::mat4 projection = Camera::GetCurrent()->GetProjection(); // evt. save the projectionView. at least within each frame
     glm::mat4 view = Camera::GetCurrent()->GetView();
     glm::mat4 model = transform != nullptr ? transform->GetModel() : glm::mat4(1.0f); // this is inefficient
-    material->SetUniform("u_MVP", projection * view * model);
+    material.SetUniform("u_MVP", projection * view * model);
+    material.SetUniform("u_color", color);
 
-    material->Bind();
+    material.Bind();
     mesh->Bind();
 
     glCall(glDrawArrays(loop ? GL_LINE_LOOP : GL_LINE_STRIP, 0, positionCount));
