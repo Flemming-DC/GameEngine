@@ -10,11 +10,11 @@ class Register
 public:
 
     template<typename... Args>
-    uuids::uuid Add(Args&&... args)
+    const DataChunk& Add(Args&&... args)
     {
         dataChunks.emplace_back(std::forward<Args>(args)...);
         indexByID[dataChunks.back().GetID()] = dataChunks.size() - 1;
-        return dataChunks.back().GetID();
+        return dataChunks.back();
     }
 
     void Remove(const uuids::uuid& id)

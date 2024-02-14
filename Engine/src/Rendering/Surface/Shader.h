@@ -5,6 +5,7 @@
 #include <stduuid/uuid.h>
 #include "glm/glm.hpp"
 #include "Register.h"
+#include "UuidCreator.h"
 
 // check if file exists
 struct ShaderStrings
@@ -18,25 +19,22 @@ class Shader
 public:
 	static Register<Shader> register_;
 
-
-	Shader(const std::string& filePath);
+	Shader() {}
+	Shader(const std::string& filePath) { Setup(filePath); }
 	~Shader();
-
+	void Setup(const std::string& filePath);
 	void Bind() const;
 	static void UnBind();
 	void SetUniform(const std::string& name, std::any value);
-	
-
-	uuids::uuid GetID() const { return id; }
 	std::string GetPath() const { return path; }
 	std::unordered_map<std::string, std::string> GetUniformTypesByName() const { return uniformTypesByName; }
 	int GetTextureSlot(std::string uniformName) { return textureSlotsByName[uniformName]; }
+	uuids::uuid GetID() const { return id; }
 
 private:
-	uuids::uuid id;
-	unsigned int rendererID;
-	int location = -1;
-	std::string path;
+	uuids::uuid id = UuidCreator::GetUnInitializedID();
+	std::string path = "";
+	unsigned int rendererID = -1;
 	std::unordered_map<std::string, int> locationByName;
 	std::unordered_map<std::string, int> idByFilePath;
 	std::unordered_map<std::string, std::string> uniformTypesByName;

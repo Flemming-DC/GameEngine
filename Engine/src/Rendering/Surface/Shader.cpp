@@ -7,15 +7,18 @@
 #include "ErrorChecker.h"
 #include "StringTools.h"
 #include <filesystem>
-#include "UuidCreator.h"
 
 // ---------------- public ----------------
 Register<Shader> Shader::register_;
 
 
-Shader::Shader(const std::string& filePath) 
-    : path(filePath), id(UuidCreator::MakeID())
+
+void Shader::Setup(const std::string& filePath)
 {
+    if (UuidCreator::IsInitialized(id))
+        RaiseError("Shader is already initialized");
+    id = UuidCreator::MakeID();
+    path = filePath;
     if (idByFilePath.find(filePath) != idByFilePath.end())
         rendererID = idByFilePath[filePath];
     else
@@ -33,11 +36,15 @@ Shader::Shader(const std::string& filePath)
 Shader::~Shader()
 {
     Log(" Shader destroyed with rendererID = " + std::to_string(rendererID));
-    glCall(glDeleteProgram(rendererID));
+    if (UuidCreator::IsInitialized(id))
+        glCall(glDeleteProgram(rendererID));
 }
 
 void Shader::Bind() const
 {
+    if (!UuidCreator::IsInitialized(id))
+        RaiseError("You cannt bind an uninitialized shader");
+
     glCall(glUseProgram(rendererID));
 }
 

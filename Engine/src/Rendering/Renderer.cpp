@@ -83,14 +83,17 @@ void Renderer::SetupGrid2D(float gridScale)
 
     }
 
+    Log("Renderer: make gizmo");
     horizontalGrid = new Gizmo(horizontallyOrganizedPosition2Ds, nullptr, color);
     horizontalGrid->loop = false;
     horizontalGrid->showPoints = false;
 
+    Log("Renderer: make gizmo");
     verticalGrid = new Gizmo(verticallyOrganizedPosition2Ds, nullptr, color);
+    Log("Renderer: done making gizmos");
     verticalGrid->loop = false;
     verticalGrid->showPoints = false;
-
+    Log("Renderer: exit codeblock ");
 }
 
 

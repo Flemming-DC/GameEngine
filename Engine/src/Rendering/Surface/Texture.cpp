@@ -3,9 +3,12 @@
 #include "stb_image/stb_image.h"
 
 
-Texture::Texture(const std::string& filePath_)
-	: rendererID(0), filePath(filePath_), localBuffer(nullptr), width(0), height(0), bytesPerPixel(0)
+void Texture::Setup(const std::string& filePath_)
 {
+	if (UuidCreator::IsInitialized(id))
+		RaiseError("Shader is already initialized");
+	id = UuidCreator::MakeID();
+	filePath = filePath_;
 	stbi_set_flip_vertically_on_load(1);
 	localBuffer = stbi_load(filePath.c_str(), &width, &height, &bytesPerPixel, 4); // 4 = channel count
 	if (!localBuffer)

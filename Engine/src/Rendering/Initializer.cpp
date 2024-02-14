@@ -6,9 +6,10 @@
 #include "ErrorChecker.h"
 #include "Input.h"
 #include "Time_.h"
-
+#include "EngineAssets.h"
 
 static GLFWwindow* window;
+bool Initializer::initialized = false;
 
 void Initializer::Setup()
 {
@@ -42,8 +43,10 @@ void Initializer::Setup()
     ImGui::StyleColorsDark();
 
     //custom setup
-    Input::MakeEntities(window);
-    Time::MakeEntities();
+    Input::Setup(window);
+    Time::Setup();
+    EngineAssets::Setup();
+    initialized = true;
 }
 
 void Initializer::Shutdown()

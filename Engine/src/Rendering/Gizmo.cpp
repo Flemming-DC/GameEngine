@@ -2,8 +2,13 @@
 #include "ErrorChecker.h"
 #include "Camera.h"
 #include "ListTools.h"
+#include "UuidCreator.h"
+#include "EngineAssets.h"
 
 std::vector<Gizmo*> Gizmo::allGizmos;
+//const Shader& Gizmo::shader = Shader::register_.Get(Shader::register_.Add("res/shaders/SolidColor.shader"));
+//uuids::uuid Gizmo::shaderID = UuidCreator::MakeID(); // dummyValue //Shader::register_.Add("res/shaders/SolidColor.shader");
+//std::optional<const Shader&> Gizmo::shader;
 
 Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec4 color)
 {
@@ -18,8 +23,7 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
     float point_size = 5;
     glCall(glPointSize(point_size));
 
-    shader = new Shader("res/shaders/SolidColor.shader");
-    material = new Material(*shader, { {"u_color", color}, {"u_MVP", Material::MissingUniform()} });
+    material = new Material(EngineAssets::SolidColorShader(), { {"u_color", color}, {"u_MVP", Material::MissingUniform()} });
     mesh = new Mesh(positionsRaw, {}, { 2, 0, 0, 0 });
     transform = transform_;
     positionCount = position2Ds.size();

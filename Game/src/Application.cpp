@@ -19,6 +19,7 @@
 #include "Input.h"
 #include "Register.h"
 #include "ShaderRegister.h"
+#include "UuidCreator.h"
 
 void unused_TransformGUI(const Entity& entity, glm::vec3* eulerAngles)
 {
@@ -61,8 +62,13 @@ void HelloExit(Collider* other)
 
 
 
+
+
 void run()
 {
+    auto uuid = UuidCreator::GetUnInitializedID();
+    Log(UuidCreator::to_string(uuid));
+
     Initializer::Setup();
     Renderer::SetupGrid2D(0.25f);
     
@@ -71,26 +77,15 @@ void run()
 
     glm::vec4 color = { 0.8f, 0.3f, 0.8f, 1.0f };
 
-    auto id_ = Shader::register_.Add("res/shaders/Image.shader");
+    auto id_ = Shader::register_.Add("res/shaders/Image.shader").GetID();
     const Shader& shader_ = Shader::register_.Get(id_);
     Shader::register_.Remove(id_);
 
-    auto id = Shader::register_.Add("res/shaders/Image.shader");
-    const Shader& shader = Shader::register_.Get(id);
+    const Shader& shader = Shader::register_.Add("res/shaders/Image.shader");
 
-    /*
-    Register<Shader> sr;
-    auto id_ = sr.Add("res/shaders/Image.shader");
-    const Shader& shader_ = sr.Get(id_);
-    sr.Remove(id_);
+    //Shader shader = Shader::register_.Add();
+    //shader.Setup("res/shaders/Image.shader");
 
-    auto id = sr.Add("res/shaders/Image.shader");
-    const Shader& shader = sr.Get(id);
-    */
-
-    //auto id = ShaderRegister::MakeShader("res/shaders/Image.shader");
-    //auto id = ShaderRegister::Add(Shader("res/shaders/Image.shader"));
-    //const Shader& shader = ShaderRegister::Get(id);
     
     Texture texture("res/textures/blizzard attacking fans.png");
     std::map<std::string, std::any> uniformsByName = {
@@ -99,7 +94,7 @@ void run()
         {"u_MVP", Material::MissingUniform()}
     };
     Material material(shader, uniformsByName);
-    
+
 
     // ---------- cpp scene data ---------- 
 

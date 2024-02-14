@@ -8,12 +8,12 @@
 #include "OtherTools.h"
 
 
-Material::Material(
+void Material::Setup(
     const Shader& shader_,
-    const std::map<std::string, std::any>& uniformValuesByName_
-    )
-    : shader(shader_), uniformValuesByName(uniformValuesByName_)
+    const std::map<std::string, std::any>& uniformValuesByName_)
 {
+    shader = shader_;
+    uniformValuesByName = uniformValuesByName_;
     CheckUniforms();
     SetupTexturesByName();
     Bind(true);

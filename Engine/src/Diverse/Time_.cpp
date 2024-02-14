@@ -5,7 +5,7 @@ static std::chrono::steady_clock::time_point start;
 static std::chrono::steady_clock::time_point previous;
 static std::chrono::steady_clock::time_point current;
 
-void Time::MakeEntities()
+void Time::Setup()
 {
 	start = std::chrono::high_resolution_clock::now();
 	previous = start;

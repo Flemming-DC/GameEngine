@@ -5,6 +5,8 @@
 #include "Mesh.h"
 #include "glm/glm.hpp"
 #include "Transform.h"
+#include <stduuid/uuid.h>
+#include <optional> 
 
 
 // you should only create or draw gizmo if in editor
@@ -34,7 +36,6 @@ public:
 private:
 	Mesh* mesh; 
 	Material* material;
-	Shader* shader;
 	Transform* transform;
 	int positionCount;
 };

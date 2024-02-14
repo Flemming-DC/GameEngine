@@ -7,7 +7,7 @@ static GLFWwindow* window;
 bool Input::scrollHeldDown = false;
 int Input::scrollDirection = 0;
 
-void Input::MakeEntities(GLFWwindow* window_)
+void Input::Setup(GLFWwindow* window_)
 {
     window = window_;
     glCall(glfwFocusWindow(window)); // this should be called by default
