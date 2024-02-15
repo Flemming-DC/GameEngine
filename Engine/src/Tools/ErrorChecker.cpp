@@ -18,15 +18,12 @@ void glClearError()
 void _glCall(const char* function, const char* file, int line)
 {
     _lastGlCallHadError = false;
-    while (GLenum error = glGetError())
+    while (GLenum errorCode = glGetError())
     {
         _lastGlCallHadError = true;
-        const char* errorString = reinterpret_cast<const char*>(gluErrorString(error));
-        std::cout << "[OpenGL Error] (" << error << "): "
-            << file << " in " << function << " on line " << line
-            << "\nGlErrorMessage: " << errorString
-            << std::endl;
-        //exit(error);
+        const char* errorString = reinterpret_cast<const char*>(gluErrorString(errorCode));
+        auto message = "OpenGL Error [" + std::to_string(errorCode) + "]: " + errorString;
+        _RaiseError(message, function, file, line);
     }
 
 }

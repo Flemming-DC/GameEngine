@@ -13,7 +13,7 @@ class Mesh
 public:
     //Mesh() {}
     Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const VertexLayout& layout)
-        : indexBuffer(indices.data(), indices.size()), vertexBuffer(vertices.data(), vertices.size() * sizeof(float))
+        //: indexBuffer(indices.data(), indices.size()), vertexBuffer(vertices.data(), vertices.size() * sizeof(float))
         { Setup(vertices, indices, layout); }
     void Setup(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const VertexLayout& layout);
 

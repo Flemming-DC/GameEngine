@@ -9,8 +9,12 @@ void Mesh::Setup(const std::vector<float>& vertices, const std::vector<unsigned 
     if (UuidCreator::IsInitialized(id))
         RaiseError("Mesh is already initialized");
     id = UuidCreator::MakeID();
-    //indexBuffer = IndexBuffer(indices.data(), indices.size());
+    // the copying causes the old and the new vertexBuffer to share the same openGLid, which makes the 
+    // destructor of the old vertexBuffer will undo the setup of the new. Thereby causing bind to fail
     //vertexBuffer = VertexBuffer(vertices.data(), vertices.size() * sizeof(float));
+    
+    indexBuffer.Setup(indices.data(), indices.size());
+    vertexBuffer.Setup(vertices.data(), vertices.size() * sizeof(float));
 
     layoutManager.Push<float>(layout.positionDimension);
     layoutManager.Push<float>(layout.textureDimension);

@@ -12,6 +12,9 @@ void VertexBuffer::Setup(const void* data, unsigned int size)
     if (UuidCreator::IsInitialized(id))
         RaiseError("VertexBuffer is already initialized");
     id = UuidCreator::MakeID();
+    // The use of pointers here can cause unexpected bugs, when copying
+    // eg.g. vertexBuffer = VertexBuffer(...)
+    // use Setup instead. 
     glCall(glGenBuffers(1, &openGLid));
     glCall(glBindBuffer(GL_ARRAY_BUFFER, openGLid));
     glCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));

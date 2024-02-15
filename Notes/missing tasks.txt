@@ -5,7 +5,6 @@ diverse
 	generational indices or uuid's over pointers to components and entities
 	buy old used mac, linux, xbox and playstation
 	update view-area on window resize
-	rename rendererID to something more explanatory e.g. openglShaderID
 	put solid color shader in engine
 	introduce check for unwanted destruction and for creation before openGL init
 
