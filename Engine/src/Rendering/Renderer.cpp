@@ -96,5 +96,3 @@ void Renderer::SetupGrid2D(float gridScale)
     Log("Renderer: exit codeblock ");
 }
 
-
-

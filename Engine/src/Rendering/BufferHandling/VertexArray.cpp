@@ -19,6 +19,8 @@ void VertexArray::Setup()
 VertexArray::~VertexArray()
 {
     Log(" VertexArray destroyed with openGLid = " + std::to_string(openGLid));
+    if (!UuidCreator::IsInitialized(id) && openGLid != 0)
+        RaiseError("Uninitialized VertexArray has openGLid != 0");
     if (UuidCreator::IsInitialized(id))
         glCall(glDeleteVertexArrays(1, &openGLid));
 }

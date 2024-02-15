@@ -39,6 +39,8 @@ void Shader::Setup(const std::string& filePath)
 Shader::~Shader()
 {
     Log(" Shader destroyed with openGLid = " + std::to_string(openGLid));
+    if (!UuidCreator::IsInitialized(id) && openGLid != 0)
+        RaiseError("Uninitialized Shader has openGLid != 0");
     if (UuidCreator::IsInitialized(id))
         glCall(glDeleteProgram(openGLid));
 }

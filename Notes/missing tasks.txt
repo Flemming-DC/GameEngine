@@ -6,7 +6,8 @@ diverse
 	buy old used mac, linux, xbox and playstation
 	update view-area on window resize
 	put solid color shader in engine
-	introduce check for unwanted destruction and for creation before openGL init
+	introduce check for unwanted destruction
+	keep track of used openGLid's, and check uniqueness
 
 components & gameobjects
 	separate gamelogic out

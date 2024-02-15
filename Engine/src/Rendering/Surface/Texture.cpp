@@ -35,6 +35,8 @@ void Texture::Setup(const std::string& filePath_)
 Texture::~Texture()
 {
 	Log(" Texture destroyed with openGLid = " + std::to_string(openGLid));
+	if (!UuidCreator::IsInitialized(id) && openGLid != 0)
+		RaiseError("Uninitialized Texture has openGLid != 0");
 	if (UuidCreator::IsInitialized(id))
 		glCall(glDeleteTextures(1, &openGLid));
 }

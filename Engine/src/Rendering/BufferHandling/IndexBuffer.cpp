@@ -24,6 +24,8 @@ void IndexBuffer::Setup(const unsigned int* data, unsigned int count_)
 IndexBuffer::~IndexBuffer()
 {
     Log(" IndexBuffer destroyed with openGLid = " + std::to_string(openGLid));
+    if (!UuidCreator::IsInitialized(id) && openGLid != 0)
+        RaiseError("Uninitialized IndexBuffer has openGLid != 0");
     if (UuidCreator::IsInitialized(id))
         glCall(glDeleteBuffers(1, &openGLid));
 }

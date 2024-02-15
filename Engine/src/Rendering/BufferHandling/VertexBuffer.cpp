@@ -4,7 +4,6 @@
 #include "ErrorChecker.h"
 #include "Initializer.h"
 
-
 void VertexBuffer::Setup(const void* data, unsigned int size)
 {
     if (!Initializer::OpenGLInitialized())
@@ -13,8 +12,7 @@ void VertexBuffer::Setup(const void* data, unsigned int size)
         RaiseError("VertexBuffer is already initialized");
     id = UuidCreator::MakeID();
     // The use of pointers here can cause unexpected bugs, when copying
-    // eg.g. vertexBuffer = VertexBuffer(...)
-    // use Setup instead. 
+    // eg.g. vertexBuffer = VertexBuffer(...). use Setup() instead. 
     glCall(glGenBuffers(1, &openGLid));
     glCall(glBindBuffer(GL_ARRAY_BUFFER, openGLid));
     glCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
@@ -23,8 +21,11 @@ void VertexBuffer::Setup(const void* data, unsigned int size)
 VertexBuffer::~VertexBuffer()
 {
     Log(" VertexBuffer destroyed with openGLid = " + std::to_string(openGLid));
-    if (UuidCreator::IsInitialized(id))
-        glCall(glDeleteBuffers(1, &openGLid));
+    if (!UuidCreator::IsInitialized(id) && openGLid != 0)
+        RaiseError("Uninitialized VertexBuffer has openGLid != 0");
+    if (!UuidCreator::IsInitialized(id))
+        return;
+    glCall(glDeleteBuffers(1, &openGLid));
 }
 
 void VertexBuffer::Bind() const
