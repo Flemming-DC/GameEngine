@@ -10,14 +10,14 @@ class GameAssets
 {
 public:
 	static void Setup();
-	static const Shader& GetShader() { return shader; }
-	static const Texture& GetTexture() { return texture; }
-	static const Material& GetMaterial() { return material; }
+	static Shader& GetShader() { return shader; }
+	static Texture& GetTexture() { return texture; }
+	static Material& GetMaterial() { return material; }
 
 private:
-	static Shader shader;
-	static Texture texture;
-	static Material material;
+	static Shader& shader;
+	static Texture& texture;
+	static Material& material;
 
 
 };

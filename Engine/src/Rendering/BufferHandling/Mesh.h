@@ -25,10 +25,12 @@ public:
 
 private:
     uuids::uuid id;
-    VertexBuffer vertexBuffer;
+    VertexBuffer vertexBuffer; 
     VertexLayoutManager layoutManager;
     VertexArray vertexArray;
     IndexBuffer indexBuffer;
+    // using a ref to buffers might reduce data size, but make Mesh uncopyable and cause them to behave non-independently.
+
     // evt. store vertices and indices, but be aware that this will either make a copy 
     // or refer to external data, which might get deallocated
     

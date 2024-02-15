@@ -65,7 +65,6 @@ void HelloExit(Collider* other)
 
 
 
-
 void run()
 {
     auto uuid = UuidCreator::GetUnInitializedID();
@@ -77,7 +76,7 @@ void run()
 
     // ---------- assets ---------- 
     Mesh mesh = Mesh::CreateSquare();
-    const Material& material = GameAssets::GetMaterial();
+    Material& material = GameAssets::GetMaterial();
     
     /*
     glm::vec4 color = { 0.8f, 0.3f, 0.8f, 1.0f };
@@ -86,7 +85,8 @@ void run()
     const Shader& shader_ = Shader::register_.Get(id_);
     Shader::register_.Remove(id_);
 
-    const Shader& shader = Shader::register_.Add("res/shaders/Image.shader");
+    Shader& shader = Shader::register_.Add();
+    shader.Setup("res/shaders/Image.shader");
 
     //Shader shader = Shader::register_.Add();
     //shader.Setup("res/shaders/Image.shader");

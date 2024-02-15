@@ -8,6 +8,7 @@
 #include "OtherTools.h"
 #include "Initializer.h"
 
+Register<Material> Material::register_;
 
 void Material::Setup(
     const Shader& shader_,
