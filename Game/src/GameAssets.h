@@ -9,9 +9,16 @@
 class GameAssets
 {
 public:
-    //const Shader& shader;
-    //const static Shader& shader = Assets::AddShader(Shader("res/shaders/Image.shader"));
-    //static const Shader& shader;
+	static void Setup();
+	static const Shader& GetShader() { return shader; }
+	static const Texture& GetTexture() { return texture; }
+	static const Material& GetMaterial() { return material; }
+
+private:
+	static Shader shader;
+	static Texture texture;
+	static Material material;
+
 
 };
 

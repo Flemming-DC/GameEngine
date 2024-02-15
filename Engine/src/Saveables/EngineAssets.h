@@ -2,7 +2,6 @@
 #include "Shader.h"
 #include "Material.h"
 #include <stduuid/uuid.h>
-#include <optional>
 
 class EngineAssets
 {

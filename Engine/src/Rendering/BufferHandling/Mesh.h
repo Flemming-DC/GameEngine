@@ -24,7 +24,7 @@ public:
     static Mesh CreateSquare(); // if you make more primitive meshes, then move this into a separate class
 
 private:
-    uuids::uuid id = UuidCreator::GetUnInitializedID();
+    uuids::uuid id;
     VertexBuffer vertexBuffer;
     VertexLayoutManager layoutManager;
     VertexArray vertexArray;

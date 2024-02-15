@@ -18,7 +18,7 @@ void Renderable::OnDestroyed()
 	Tools::Remove(allRenderables, this);
 }
 
-void Renderable::SetByInspector(Mesh* mesh_, Material* material_)
+void Renderable::SetByInspector(const Mesh& mesh_, const Material& material_)
 {
     mesh = mesh_;
     material = material_;
@@ -30,13 +30,13 @@ void Renderable::Draw()
     glm::mat4 projection = Camera::GetCurrent()->GetProjection(); // evt. save the projectionView. at least within each frame
     glm::mat4 view = Camera::GetCurrent()->GetView();
     glm::mat4 model = GetTransform()->GetModel(); // this is inefficient
-    material->SetUniform("u_MVP", projection * view * model);
+    material.SetUniform("u_MVP", projection * view * model);
 
-    material->Bind();
-    mesh->Bind();
+    material.Bind();
+    mesh.Bind();
 
     // GL_TRIANGLES should be soft coded if we want to support other things.
-    glCall(glDrawElements(GL_TRIANGLES, mesh->GetIndexCount(), GL_UNSIGNED_INT, nullptr));
+    glCall(glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr));
 }
 
 

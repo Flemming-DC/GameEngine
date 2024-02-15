@@ -31,11 +31,11 @@ public:
 	uuids::uuid GetID() const { return id; }
 
 	template <typename T> inline T GetUniform(const std::string& uniformName);
-
+	
 
 private:
 	Shader shader;
-	uuids::uuid id = UuidCreator::GetUnInitializedID();
+	uuids::uuid id;
 	std::map<std::string, Texture*> texturesByName; // this is a subset of uniforms by name
 	std::map<std::string, std::any> uniformValuesByName;
 

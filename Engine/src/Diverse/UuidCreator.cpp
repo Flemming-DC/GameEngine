@@ -1,7 +1,7 @@
 #include "UuidCreator.h"
 #include <stduuid/uuid.h>
 
-uuids::uuid UuidCreator::unInitializedID = from_string("dcb8bd08-84c2-45e5-bb8b-07a5fd5bd52b");
+uuids::uuid UuidCreator::unInitializedID;// = from_string("dcb8bd08-84c2-45e5-bb8b-07a5fd5bd52b");
 
 /*
 uuids::uuid_random_generator* UuidCreator::generator = nullptr;

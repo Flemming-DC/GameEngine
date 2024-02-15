@@ -31,6 +31,8 @@ void DemoScene::HelloExit(Collider* other)
 
 std::vector<Entity> DemoScene::MakeEntities()
 {
+    return {};
+    /*
     // ---------- assets ---------- 
     Mesh mesh = Mesh::CreateSquare();
 
@@ -56,14 +58,14 @@ std::vector<Entity> DemoScene::MakeEntities()
 
     Entity picture1("picture 1");
     picture1.AddComponent<Transform>();
-    picture1.AddComponent<Renderable>()->SetByInspector(&mesh, &material);
+    picture1.AddComponent<Renderable>()->SetByInspector(mesh, material);
     picture1.AddComponent<RectangleCollider>()->SetSize({ 1, 1 });
     entitites.push_back(picture1);
 
     Entity picture2("picture 2");
     picture2.AddComponent<Transform>()->SetParent(picture1.GetComponent<Transform>());
-    picture2.AddComponent<Renderable>()->SetByInspector(&mesh, &material);
-    picture2.AddComponent<GameLogic>()->SetByInspector(&material); // this is affecting both pictures due to shared material.
+    picture2.AddComponent<Renderable>()->SetByInspector(mesh, material);
+    picture2.AddComponent<GameLogic>()->SetByInspector(material); // this is affecting both pictures due to shared material.
     picture2.AddComponent<RectangleCollider>()->SetSize({ 1, 1 });
     picture2.GetComponent<RectangleCollider>()->onEnter.Add([&](Collider* other) { HelloEnter(other); });
     picture2.GetComponent<RectangleCollider>()->onExit.Add([&](Collider* other) { HelloExit(other); });
@@ -87,8 +89,9 @@ std::vector<Entity> DemoScene::MakeEntities()
     circle1.GetComponent<Transform>()->localPosition = { -0.5f,  0.6f, 0 };
     circle2.GetComponent<Transform>()->localPosition = { 0.7f,  0.5f, 0 };
     // polygon collider data also goes here, if you need them
-
+    
     return entitites;
+    */
 }
 
 

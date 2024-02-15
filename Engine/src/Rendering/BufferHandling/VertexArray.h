@@ -27,7 +27,7 @@ public:
 	void Push(T value) {}
 
 private:
-	uuids::uuid id = UuidCreator::GetUnInitializedID();
+	uuids::uuid id;
 	unsigned int openGLid = 0;
 	//VertexBuffer vertexBuffer;
 };

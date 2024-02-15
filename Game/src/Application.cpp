@@ -20,6 +20,8 @@
 #include "Register.h"
 #include "ShaderRegister.h"
 #include "UuidCreator.h"
+#include "GameAssets.h"
+
 
 void unused_TransformGUI(const Entity& entity, glm::vec3* eulerAngles)
 {
@@ -71,10 +73,13 @@ void run()
 
     Initializer::Setup();
     Renderer::SetupGrid2D(0.25f);
-    
+    GameAssets::Setup();
+
     // ---------- assets ---------- 
     Mesh mesh = Mesh::CreateSquare();
-
+    const Material& material = GameAssets::GetMaterial();
+    
+    /*
     glm::vec4 color = { 0.8f, 0.3f, 0.8f, 1.0f };
 
     auto id_ = Shader::register_.Add("res/shaders/Image.shader").GetID();
@@ -94,7 +99,7 @@ void run()
         {"u_MVP", Material::MissingUniform()}
     };
     Material material(shader, uniformsByName);
-
+    */
 
     // ---------- cpp scene data ---------- 
 
@@ -105,13 +110,13 @@ void run()
 
     Entity picture1("picture 1");
     picture1.AddComponent<Transform>();
-    picture1.AddComponent<Renderable>()->SetByInspector(&mesh, &material); 
+    picture1.AddComponent<Renderable>()->SetByInspector(mesh, material); 
     picture1.AddComponent<RectangleCollider>()->SetSize({ 1, 1 });
 
     Entity picture2("picture 2");
     picture2.AddComponent<Transform>()->SetParent(picture1.GetComponent<Transform>());
-    picture2.AddComponent<Renderable>()->SetByInspector(&mesh, &material);
-    picture2.AddComponent<GameLogic>()->SetByInspector(&material); // this is affecting both pictures due to shared material.
+    picture2.AddComponent<Renderable>()->SetByInspector(mesh, material);
+    picture2.AddComponent<GameLogic>()->SetByInspector(material); // this is affecting both pictures due to shared material.
     picture2.AddComponent<RectangleCollider>()->SetSize({ 1, 1 });
     picture2.GetComponent<RectangleCollider>()->onEnter.Add(HelloEnter);
     picture2.GetComponent<RectangleCollider>()->onExit.Add(HelloExit);

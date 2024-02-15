@@ -13,10 +13,11 @@
 #include "PolygonCollider.h"
 #include "RectangleCollider.h"
 #include "CircleCollider.h"
-// rendering (this can go in a seperate header)
-	//#include "Renderable.h"
-	//#include "Material.h"
-	//#include "Mesh.h"
+
+// rendering (this can evt. go in a seperate header)
+#include "Renderable.h"
+#include "Material.h"
+#include "Mesh.h"
 
 
 

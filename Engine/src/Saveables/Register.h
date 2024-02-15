@@ -17,6 +17,13 @@ public:
         return dataChunks.back();
     }
 
+    const DataChunk& Add()
+    {
+        dataChunks.emplace_back(DataChunk());
+        indexByID[dataChunks.back().GetID()] = dataChunks.size() - 1;
+        return dataChunks.back();
+    }
+
     void Remove(const uuids::uuid& id)
     {
         if (!Tools::ContainsKey_unordered(indexByID, id))

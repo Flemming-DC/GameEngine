@@ -19,7 +19,7 @@ public:
 	uuids::uuid GetID() const { return id; }
 
 private:
-	uuids::uuid id = UuidCreator::GetUnInitializedID();
+	uuids::uuid id;
 	unsigned int openGLid = 0;
 	unsigned int count = 0;
 };

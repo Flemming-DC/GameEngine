@@ -21,7 +21,7 @@ public:
 	uuids::uuid GetID() const { return id; }
 
 private:
-	uuids::uuid id = UuidCreator::GetUnInitializedID();
+	uuids::uuid id;
 	unsigned int openGLid = 0;
 	std::string filePath = "";
 	unsigned char* localBuffer = nullptr;

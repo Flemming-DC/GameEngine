@@ -1,13 +1,10 @@
 
 diverse
 	move openGL errorhandling into rendering folder thereby seperating it from general tools
-	set uniform should act on separate material instances, not shared materials.
-	generational indices or uuid's over pointers to components and entities
 	buy old used mac, linux, xbox and playstation
 	update view-area on window resize
-	put solid color shader in engine
 	introduce check for unwanted destruction
-	keep track of used openGLid's, and check uniqueness
+	evt. replace openGL destructors with cleanup functions
 
 components & gameobjects
 	separate gamelogic out

@@ -19,6 +19,6 @@ public:
 
 private:
 	unsigned int openGLid = 0;
-	uuids::uuid id = UuidCreator::GetUnInitializedID();
+	uuids::uuid id;
 };
 
