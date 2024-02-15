@@ -32,7 +32,7 @@ public:
 	uuids::uuid GetID() const { return id; }
 
 private:
-	uuids::uuid id = UuidCreator::GetUnInitializedID(); 
+	uuids::uuid id; 
 	std::string path = "";
 	unsigned int openGLid = 0;
 	std::unordered_map<std::string, int> locationByName;

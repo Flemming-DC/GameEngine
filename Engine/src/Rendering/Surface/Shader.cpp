@@ -33,16 +33,16 @@ void Shader::Setup(const std::string& filePath)
         idByFilePath[filePath] = openGLid;
     }
     glCall(glUseProgram(openGLid));
-    Log(" Shader contructed with openGLid = " + std::to_string(openGLid));
+    Log(" Shader " + path + " contructed with openGLid = " + std::to_string(openGLid));
 }
 
 Shader::~Shader()
 {
-    Log(" Shader destroyed with openGLid = " + std::to_string(openGLid));
-    if (!UuidCreator::IsInitialized(id) && openGLid != 0)
-        RaiseError("Uninitialized Shader has openGLid != 0");
-    if (UuidCreator::IsInitialized(id))
-        glCall(glDeleteProgram(openGLid));
+    Log(" Shader " + path + " destroyed with openGLid = " + std::to_string(openGLid));
+    if (UuidCreator::IsInitialized(id) != (openGLid != 0))
+        RaiseError("UuidCreator::IsInitialized(id) doesn't match (openGLid != 0)");
+    //if (UuidCreator::IsInitialized(id))
+    //    glCall(glDeleteProgram(openGLid));
 }
 
 void Shader::Bind() const
