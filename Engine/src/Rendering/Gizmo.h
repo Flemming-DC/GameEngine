@@ -34,8 +34,7 @@ public:
 		Transform* transform_, 
 		glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 private:
-	Mesh* mesh; 
-	//Material* material;
+	Mesh mesh;
 	glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
 	Material material;
 	Transform* transform;

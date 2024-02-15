@@ -22,9 +22,8 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
     float point_size = 5;
     glCall(glPointSize(point_size));
 
-    //material = new Material(EngineAssets::SolidColorShader(), { {"u_color", color}, {"u_MVP", Material::MissingUniform()} });
     material = EngineAssets::GreenGizmoMaterial(); // color unspecified
-    mesh = new Mesh(positionsRaw, {}, { 2, 0, 0, 0 });
+    mesh.Setup(positionsRaw, {}, { 2, 0, 0, 0 });
     transform = transform_;
     positionCount = position2Ds.size();
 }
@@ -36,8 +35,6 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
 Gizmo::~Gizmo()
 {
     Tools::Remove(allGizmos, this);
-    delete mesh;
-    //delete material;
 }
 
 void Gizmo::Draw()
@@ -49,7 +46,7 @@ void Gizmo::Draw()
     material.SetUniform("u_color", color);
 
     material.Bind();
-    mesh->Bind();
+    mesh.Bind();
 
     glCall(glDrawArrays(loop ? GL_LINE_LOOP : GL_LINE_STRIP, 0, positionCount));
     if (showPoints)
