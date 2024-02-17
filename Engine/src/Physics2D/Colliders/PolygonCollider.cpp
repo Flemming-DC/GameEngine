@@ -34,11 +34,6 @@ void PolygonCollider::Setup(std::vector<glm::vec2> position2Ds_)
 			localNormals[i] *= -1;
 	}
 	gizmo = Gizmo(position2Ds_, GetTransform());
-	/*
-	if (gizmo != nullptr)
-		delete gizmo;
-	gizmo = new Gizmo(position2Ds_, GetTransform());
-	*/
 	
 }
 

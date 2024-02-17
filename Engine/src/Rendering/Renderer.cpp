@@ -8,11 +8,11 @@
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
 #include "VertexArray.h"
-
+#include "OpenGLidChecker.h"
 
 bool Renderer::showBlackScreenDebugInfo = true;
-Gizmo* Renderer::horizontalGrid = nullptr;
-Gizmo* Renderer::verticalGrid = nullptr;
+Gizmo Renderer::horizontalGrid;
+Gizmo Renderer::verticalGrid;
 
 
 
@@ -23,7 +23,9 @@ void Renderer::Draw()
         renderable->Draw();
     for (Gizmo* gizmo : Gizmo::allGizmos)
         gizmo->Draw();
-    
+    //for (Gizmo& gizmo : Gizmo::register_.GetData())
+    //    gizmo.Draw();
+
     
     if (showBlackScreenDebugInfo && ScreenIsBlack())
         Log("The screen is black. Here are some possible causes:\n"
@@ -69,8 +71,8 @@ bool Renderer::ScreenIsBlack()
 
 void Renderer::SetupGrid2D(float gridScale)
 {
-    if (verticalGrid)
-        delete verticalGrid;
+    //if (verticalGrid.IsInitialized())
+    //    return;
 
     float brightness = 0.2f;
     glm::vec4 color = glm::vec4(brightness, brightness, brightness, 1);
@@ -88,28 +90,19 @@ void Renderer::SetupGrid2D(float gridScale)
 
     }
 
-    Log("Renderer: make gizmo");
-    horizontalGrid = new Gizmo(horizontallyOrganizedPosition2Ds, nullptr, color);
-    horizontalGrid->loop = false;
-    horizontalGrid->showPoints = false;
+    horizontalGrid = Gizmo(horizontallyOrganizedPosition2Ds, nullptr, color);
+    horizontalGrid.loop = false;
+    horizontalGrid.showPoints = false;
 
-    Log("Renderer: make gizmo");
-    verticalGrid = new Gizmo(verticallyOrganizedPosition2Ds, nullptr, color);
-    Log("Renderer: done making gizmos");
-    verticalGrid->loop = false;
-    verticalGrid->showPoints = false;
-    Log("Renderer: exit codeblock ");
+    verticalGrid = Gizmo(verticallyOrganizedPosition2Ds, nullptr, color);
+    verticalGrid.loop = false;
+    verticalGrid.showPoints = false;
+    
 }
 
 
 void Renderer::ShutDown()
 {
-    /*
-    for (Renderable* renderable : Renderable::allRenderables)
-        renderable->ShutDown();
-    for (Gizmo* gizmo : Gizmo::allGizmos)
-        gizmo->ShutDown();
-    */
     for (Shader& shader : Shader::register_.GetData())
         shader.ShutDown();
     for (Texture& texture : Texture::register_.GetData())
@@ -121,5 +114,6 @@ void Renderer::ShutDown()
     for (VertexArray& vertexArray : VertexArray::register_.GetData())
         vertexArray.ShutDown();
 
+    OpenGLidChecker::CheckCleanup();
 }
 

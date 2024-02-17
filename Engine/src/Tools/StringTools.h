@@ -11,6 +11,13 @@ namespace Tools
 	
 	std::string Trim(const std::string& str);
 	std::string Trim(const char* str);
+	std::string RemovePrefix(const std::string& str, const std::string& prefix);
+
+	template<typename T>
+	std::string to_string(const T obj)
+	{
+		return RemovePrefix(typeid(obj).name(), "class ");
+	}
 
 
 }

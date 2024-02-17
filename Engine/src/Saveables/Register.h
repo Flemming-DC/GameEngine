@@ -9,7 +9,7 @@ template<typename DataChunk>
 class Register
 {
 public:
-    Register() { Log("Register constructed"); }
+    //Register() { Log("Register constructed"); }
 
     // this the use of uninitialized ID doesn't line up with the register, 
     // so the register only allows initiliazed values. 

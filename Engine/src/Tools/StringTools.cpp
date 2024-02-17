@@ -48,6 +48,13 @@ namespace Tools
 	}
 
 
+	std::string RemovePrefix(const std::string& str, const std::string& prefix)
+	{
+		if (str.substr(0, prefix.size()) == prefix)
+			return str.substr(prefix.size());
+		else
+			return str;
+	}
 
 
 }

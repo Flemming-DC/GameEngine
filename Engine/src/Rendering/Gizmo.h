@@ -20,16 +20,10 @@ public:
 	bool showPoints = true;
 	bool loop = true;
 
-	Gizmo() { allGizmos.push_back(this); }
-	Gizmo(std::vector<glm::vec2> position2Ds,
-		Transform* transform, // transform is allowed to be null
-		glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-/* { Setup(position2Ds, transform, color); }
-	void Setup(
-		std::vector<glm::vec2> position2Ds, 
-		Transform* transform, // transform is allowed to be null
-		glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-		*/
+	Gizmo();
+	Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform, glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+		//{ Setup(position2Ds, transform, color); } // transform is allowed to be null
+	void Setup(std::vector<glm::vec2> position2Ds, Transform* transform, glm::vec4 color);
 	~Gizmo();
 	void Draw();
 	void UnBind();
@@ -39,6 +33,7 @@ public:
 		float radius, 
 		Transform* transform_, 
 		glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+
 private:
 	Mesh mesh;
 	glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
@@ -47,4 +42,3 @@ private:
 	int positionCount = 0;
 	bool initialized = false;
 };
-

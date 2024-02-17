@@ -8,6 +8,7 @@
 #include "ErrorChecker.h"
 #include "StringTools.h"
 #include "Initializer.h"
+#include "OpenGLidChecker.h"
 
 // ---------------- public ----------------
 Register<Shader> Shader::register_;
@@ -33,16 +34,17 @@ void Shader::Setup(const std::string& filePath)
         idByFilePath[filePath] = openGLid;
     }
     glCall(glUseProgram(openGLid));
-    Log(" Shader " + path + " contructed with openGLid = " + std::to_string(openGLid));
+    OpenGLidChecker::Add(Tools::to_string(*this), openGLid);
 }
 
 void Shader::ShutDown()
 {
-    Log("ShutDown Shader " + path + " with openGLid = " + std::to_string(openGLid));
     if (UuidCreator::IsInitialized(id) != (openGLid != 0))
         RaiseError("UuidCreator::IsInitialized(id) doesn't match (openGLid != 0)");
-    if (UuidCreator::IsInitialized(id))
-        glCall(glDeleteProgram(openGLid));
+    if (!UuidCreator::IsInitialized(id))
+        return;
+    glCall(glDeleteProgram(openGLid));
+    OpenGLidChecker::Remove(Tools::to_string(*this), openGLid);
 }
 
 void Shader::Bind() const

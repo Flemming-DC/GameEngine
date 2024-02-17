@@ -9,7 +9,6 @@ Material& GameAssets::material = Material();
 
 void GameAssets::Setup()
 {
-    Log("GameAssets::Setup");
     // parameters
     std::map<std::string, std::any> uniformsByName = {
         {"u_textureSampler", &texture},

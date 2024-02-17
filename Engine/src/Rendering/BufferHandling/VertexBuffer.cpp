@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "ErrorChecker.h"
 #include "Initializer.h"
+#include "OpenGLidChecker.h"
 
 Register<VertexBuffer> VertexBuffer::register_;
 
@@ -18,16 +19,17 @@ void VertexBuffer::Setup(const void* data, unsigned int size)
     glCall(glGenBuffers(1, &openGLid));
     glCall(glBindBuffer(GL_ARRAY_BUFFER, openGLid));
     glCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
+    OpenGLidChecker::Add(Tools::to_string(*this), openGLid);
 }
 
 void VertexBuffer::ShutDown()
 {
-    Log("ShutDown VertexBuffer with openGLid = " + std::to_string(openGLid));
     if (!UuidCreator::IsInitialized(id) && openGLid != 0)
         RaiseError("Uninitialized VertexBuffer has openGLid != 0");
     if (!UuidCreator::IsInitialized(id))
         return;
     glCall(glDeleteBuffers(1, &openGLid));
+    OpenGLidChecker::Remove(Tools::to_string(*this), openGLid);
 }
 
 void VertexBuffer::Bind() const

@@ -2,6 +2,7 @@
 #include "ErrorChecker.h"
 #include "stb_image/stb_image.h"
 #include "Initializer.h"
+#include "OpenGLidChecker.h"
 
 Register<Texture> Texture::register_;
 
@@ -26,20 +27,20 @@ void Texture::Setup(const std::string& filePath_)
 	glCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 
 	glCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, localBuffer));
-
 	glCall(glBindTexture(GL_TEXTURE_2D, 0));
 	
-	if (localBuffer)
-		stbi_image_free(localBuffer);
+	stbi_image_free(localBuffer);
+	OpenGLidChecker::Add(Tools::to_string(*this), openGLid);
 }
 
 void Texture::ShutDown()
 {
-	Log("ShutDown Texture " + filePath + " with openGLid = " + std::to_string(openGLid));
 	if (!UuidCreator::IsInitialized(id) && openGLid != 0)
 		RaiseError("Uninitialized Texture has openGLid != 0");
-	if (UuidCreator::IsInitialized(id))
-		glCall(glDeleteTextures(1, &openGLid));
+	if (!UuidCreator::IsInitialized(id))
+		return;
+	glCall(glDeleteTextures(1, &openGLid));
+	OpenGLidChecker::Remove(Tools::to_string(*this), openGLid);
 }
 
 void Texture::Bind(unsigned int slot) const

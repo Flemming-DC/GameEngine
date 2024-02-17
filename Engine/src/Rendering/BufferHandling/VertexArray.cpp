@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "ErrorChecker.h"
 #include "Initializer.h"
+#include "OpenGLidChecker.h"
 
 Register<VertexArray> VertexArray::register_;
 
@@ -15,15 +16,19 @@ void VertexArray::Setup()
     id = UuidCreator::MakeID();
     glCall(glGenVertexArrays(1, &openGLid));
     glCall(glBindVertexArray(openGLid));
+    //OpenGLidChecker::Add(Tools::to_string(*this), openGLid);
+    //Log("VertexArray setup with openGLid = " + std::to_string(openGLid));
 
 }
 void VertexArray::ShutDown()
 {
-    Log("ShutDown VertexArray with openGLid = " + std::to_string(openGLid));
     if (!UuidCreator::IsInitialized(id) && openGLid != 0)
         RaiseError("Uninitialized VertexArray has openGLid != 0");
-    if (UuidCreator::IsInitialized(id))
-        glCall(glDeleteVertexArrays(1, &openGLid));
+    if (!UuidCreator::IsInitialized(id))
+        return;
+    glCall(glDeleteVertexArrays(1, &openGLid));
+    //OpenGLidChecker::Remove(Tools::to_string(*this), openGLid);
+
 }
 
 void VertexArray::Bind() const

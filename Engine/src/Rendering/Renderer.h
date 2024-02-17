@@ -14,8 +14,8 @@ public:
 
 private:
 	static bool showBlackScreenDebugInfo;
-	static Gizmo* horizontalGrid;
-	static Gizmo* verticalGrid;
+	static Gizmo horizontalGrid;
+	static Gizmo verticalGrid;
 
 	static bool ScreenIsBlack();
 	

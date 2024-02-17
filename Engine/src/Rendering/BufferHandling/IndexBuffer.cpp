@@ -3,6 +3,8 @@
 #include <GLFW/glfw3.h>
 #include "ErrorChecker.h"
 #include "Initializer.h"
+#include "OpenGLidChecker.h"
+
 
 Register<IndexBuffer> IndexBuffer::register_;
 
@@ -20,15 +22,17 @@ void IndexBuffer::Setup(const unsigned int* data, unsigned int count_)
     glCall(glGenBuffers(1, &openGLid));
     glCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, openGLid));
     glCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count_ * sizeof(unsigned int), data, GL_STATIC_DRAW));
+    OpenGLidChecker::Add(Tools::to_string(*this), openGLid);
 }
 
 void IndexBuffer::ShutDown()
 {
-    Log("ShutDown IndexBuffer with openGLid = " + std::to_string(openGLid));
     if (!UuidCreator::IsInitialized(id) && openGLid != 0)
         RaiseError("Uninitialized IndexBuffer has openGLid != 0");
-    if (UuidCreator::IsInitialized(id))
-        glCall(glDeleteBuffers(1, &openGLid));
+    if (!UuidCreator::IsInitialized(id))
+        return;
+    glCall(glDeleteBuffers(1, &openGLid));
+    OpenGLidChecker::Remove(Tools::to_string(*this), openGLid);
 }
 
 void IndexBuffer::Bind() const

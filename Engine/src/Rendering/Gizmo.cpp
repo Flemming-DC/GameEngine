@@ -7,8 +7,18 @@
 
 std::vector<Gizmo*> Gizmo::allGizmos;
 
+Gizmo::Gizmo()
+{
+    allGizmos.push_back(this); 
+}
 
-Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec4 color_)
+Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform, glm::vec4 color)
+{
+    allGizmos.push_back(this);
+    Setup(position2Ds, transform, color);
+}
+
+void Gizmo::Setup(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec4 color_)
 {
     color = color_;
     std::vector<float> positionsRaw;
@@ -18,7 +28,7 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
         positionsRaw.push_back(position2D.y);
     }
 
-    allGizmos.push_back(this);
+    //allGizmos.push_back(this);
     float point_size = 5;
     glCall(glPointSize(point_size));
 
@@ -32,6 +42,7 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
 
 Gizmo::~Gizmo()
 {
+    //if (initialized)
     Tools::Remove(allGizmos, this);
 }
 
@@ -76,9 +87,9 @@ Gizmo Gizmo::MakeCircle(glm::vec2 center, float radius, Transform* transform_, g
             center.y + radius * std::sin(angle) });
     }
 
-    return Gizmo(position2Ds, transform_, color);
+    Gizmo circle = Gizmo(position2Ds, transform_, color);
+    circle.showPoints = false;
+    return circle;
 }
-
-
 
 
