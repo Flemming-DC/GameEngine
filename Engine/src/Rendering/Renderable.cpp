@@ -24,6 +24,12 @@ void Renderable::SetByInspector(const Mesh& mesh_, const Material& material_)
     material = material_;
 }
 
+void Renderable::ShutDown()
+{
+    mesh.ShutDown();
+    material.ShutDown();
+}
+
 
 void Renderable::Draw()
 {

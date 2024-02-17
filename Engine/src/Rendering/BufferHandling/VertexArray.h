@@ -15,7 +15,7 @@ public:
 	//void Setup();
 
 	VertexArray() {}
-	~VertexArray();
+	void ShutDown();
 	void Setup();
 
 	void Bind() const;

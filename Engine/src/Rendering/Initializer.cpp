@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "Time_.h"
 #include "EngineAssets.h"
+#include "Renderer.h"
 
 static GLFWwindow* window;
 bool Initializer::openGLInitialized = false;
@@ -52,6 +53,7 @@ void Initializer::Setup()
 
 void Initializer::Shutdown()
 {
+    Renderer::ShutDown();
     ImGui_ImplGlfwGL3_Shutdown();
     ImGui::DestroyContext();
     glfwTerminate();

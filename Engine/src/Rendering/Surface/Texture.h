@@ -10,7 +10,7 @@ public:
 
 	Texture() {}
 	Texture(const std::string& filePath) { Setup(filePath); }
-	~Texture();
+	void ShutDown();
 	void Setup(const std::string& filePath_);
 
 	void Bind(unsigned int slot = 0) const;

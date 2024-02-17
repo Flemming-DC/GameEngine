@@ -19,9 +19,9 @@ class Shader
 public:
 	static Register<Shader> register_;
 
-	Shader() {}
+	Shader() { Log("Shader constructed"); }
 	Shader(const std::string& filePath) { Setup(filePath); }
-	~Shader();
+	void ShutDown();
 	void Setup(const std::string& filePath);
 	void Bind() const;
 	static void UnBind();

@@ -4,6 +4,7 @@
 #include "ErrorChecker.h"
 #include "Initializer.h"
 
+Register<IndexBuffer> IndexBuffer::register_;
 
 void IndexBuffer::Setup(const unsigned int* data, unsigned int count_)
 {
@@ -21,7 +22,7 @@ void IndexBuffer::Setup(const unsigned int* data, unsigned int count_)
     glCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count_ * sizeof(unsigned int), data, GL_STATIC_DRAW));
 }
 
-IndexBuffer::~IndexBuffer()
+void IndexBuffer::ShutDown()
 {
     Log(" IndexBuffer destroyed with openGLid = " + std::to_string(openGLid));
     if (!UuidCreator::IsInitialized(id) && openGLid != 0)

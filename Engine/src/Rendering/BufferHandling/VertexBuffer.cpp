@@ -4,6 +4,8 @@
 #include "ErrorChecker.h"
 #include "Initializer.h"
 
+Register<VertexBuffer> VertexBuffer::register_;
+
 void VertexBuffer::Setup(const void* data, unsigned int size)
 {
     if (!Initializer::OpenGLInitialized())
@@ -18,7 +20,7 @@ void VertexBuffer::Setup(const void* data, unsigned int size)
     glCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
 }
 
-VertexBuffer::~VertexBuffer()
+void VertexBuffer::ShutDown()
 {
     Log(" VertexBuffer destroyed with openGLid = " + std::to_string(openGLid));
     if (!UuidCreator::IsInitialized(id) && openGLid != 0)

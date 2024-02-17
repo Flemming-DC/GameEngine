@@ -25,6 +25,7 @@ public:
 		Transform* transform, // transform is allowed to be null
 		glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 	~Gizmo();
+	void ShutDown(); // openGL shutdown, not the same as destructor
 	void Draw();
 	void UnBind();
 

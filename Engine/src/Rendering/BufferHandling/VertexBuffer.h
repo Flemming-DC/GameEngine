@@ -10,7 +10,7 @@ public:
 
 	VertexBuffer() {}
 	VertexBuffer(const void* data, unsigned int size) { Setup(data, size); }
-	~VertexBuffer();
+	void ShutDown();
 	void Setup(const void* data, unsigned int size);
 
 	void Bind() const;

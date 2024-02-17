@@ -10,7 +10,7 @@ public:
 
 	IndexBuffer() {}
 	IndexBuffer(const unsigned int* data, unsigned int count_) { Setup(data, count_); }
-	~IndexBuffer();
+	void ShutDown();
 	void Setup(const unsigned int* data, unsigned int count_);
 
 	void Bind() const;

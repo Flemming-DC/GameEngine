@@ -10,6 +10,7 @@ class Renderer
 public:
 	static void Draw();
 	static void SetupGrid2D(float gridScale);
+	static void ShutDown();
 
 private:
 	static bool showBlackScreenDebugInfo;

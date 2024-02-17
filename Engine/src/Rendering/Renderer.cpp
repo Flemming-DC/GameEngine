@@ -3,6 +3,11 @@
 #include "ErrorChecker.h"
 #include "Renderable.h"
 #include "Gizmo.h"
+#include "Shader.h"
+#include "Texture.h"
+#include "IndexBuffer.h"
+#include "VertexBuffer.h"
+#include "VertexArray.h"
 
 
 bool Renderer::showBlackScreenDebugInfo = true;
@@ -94,5 +99,27 @@ void Renderer::SetupGrid2D(float gridScale)
     verticalGrid->loop = false;
     verticalGrid->showPoints = false;
     Log("Renderer: exit codeblock ");
+}
+
+
+void Renderer::ShutDown()
+{
+    /*
+    for (Renderable* renderable : Renderable::allRenderables)
+        renderable->ShutDown();
+    for (Gizmo* gizmo : Gizmo::allGizmos)
+        gizmo->ShutDown();
+    */
+    for (Shader& shader : Shader::register_.GetData())
+        shader.ShutDown();
+    for (Texture& texture : Texture::register_.GetData())
+        texture.ShutDown();
+    for (IndexBuffer& indexBuffer : IndexBuffer::register_.GetData())
+        indexBuffer.ShutDown();
+    for (VertexBuffer& vertexBuffer : VertexBuffer::register_.GetData())
+        vertexBuffer.ShutDown();
+    for (VertexArray& vertexArray : VertexArray::register_.GetData())
+        vertexArray.ShutDown();
+
 }
 

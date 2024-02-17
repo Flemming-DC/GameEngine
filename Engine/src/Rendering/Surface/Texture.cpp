@@ -33,7 +33,7 @@ void Texture::Setup(const std::string& filePath_)
 		stbi_image_free(localBuffer);
 }
 
-Texture::~Texture()
+void Texture::ShutDown()
 {
 	Log(" Texture destroyed with openGLid = " + std::to_string(openGLid));
 	if (!UuidCreator::IsInitialized(id) && openGLid != 0)

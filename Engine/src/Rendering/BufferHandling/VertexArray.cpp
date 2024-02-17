@@ -4,6 +4,8 @@
 #include "ErrorChecker.h"
 #include "Initializer.h"
 
+Register<VertexArray> VertexArray::register_;
+
 void VertexArray::Setup()
 {
     if (!Initializer::OpenGLInitialized())
@@ -15,8 +17,7 @@ void VertexArray::Setup()
     glCall(glBindVertexArray(openGLid));
 
 }
-
-VertexArray::~VertexArray()
+void VertexArray::ShutDown()
 {
     Log(" VertexArray destroyed with openGLid = " + std::to_string(openGLid));
     if (!UuidCreator::IsInitialized(id) && openGLid != 0)

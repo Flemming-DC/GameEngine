@@ -184,6 +184,7 @@ void run()
         Renderer::Draw();
         Initializer::EndFrame();
     }
+    Log("------- Shutdown --------");
     Initializer::Shutdown();
 }
 

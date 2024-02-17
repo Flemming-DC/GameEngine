@@ -35,6 +35,10 @@ public:
         return dataChunks[indexByID[id]];
     }
 
+    std::vector<DataChunk>& GetData()
+    {
+        return dataChunks;
+    }
 
 private:
     std::vector<DataChunk> dataChunks;
