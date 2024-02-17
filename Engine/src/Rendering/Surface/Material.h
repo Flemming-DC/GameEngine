@@ -21,7 +21,6 @@ public:
 		{ Setup(shader_, uniformValuesByName_); }
 
 	void Setup(const Shader& shader_, const std::map<std::string, std::any>& uniformValuesByName_);
-	void ShutDown();
 
 	void Bind(bool allowMissingUniforms = false);
 	static void UnBind();

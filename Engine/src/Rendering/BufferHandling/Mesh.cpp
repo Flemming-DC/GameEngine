@@ -24,12 +24,6 @@ void Mesh::Setup(const std::vector<float>& vertices, const std::vector<unsigned 
     vertexArray.AddBuffer(vertexBuffer, layoutManager);
 }
 
-void Mesh::ShutDown()
-{
-    vertexBuffer.ShutDown();
-    vertexArray.ShutDown();
-    indexBuffer.ShutDown();
-}
 
 void Mesh::Bind() const
 {

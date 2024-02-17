@@ -26,21 +26,6 @@ void Material::Setup(
     Bind(true);
 }
 
-void Material::ShutDown()
-{
-    Log(" Material destroyed  ");
-    //if (!UuidCreator::IsInitialized(id))
-    //    return;
-    shader.ShutDown();
-    for (const auto& pair : texturesByName)
-        pair.second->ShutDown();
-
-
-    //if (UuidCreator::IsInitialized(id))
-    //  check if there are other references to the textures. If not, then delete them.
-    //for (auto texture : textures)
-        //delete texture;
-}
 
 void Material::SetUniform(const std::string& name, std::any value)
 {

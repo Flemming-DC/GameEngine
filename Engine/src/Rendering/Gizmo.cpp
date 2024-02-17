@@ -28,11 +28,6 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
     positionCount = position2Ds.size();
 }
 
-void Gizmo::ShutDown()
-{
-    mesh.ShutDown();
-    material.ShutDown();
-}
 
 Gizmo::~Gizmo()
 {

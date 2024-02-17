@@ -13,7 +13,6 @@ public:
 	static std::vector<Renderable*> allRenderables;
 
 	void SetByInspector(const Mesh& mesh, const Material& material);
-	void ShutDown(); // openGL shutdown, not the same as destructor
 	void Draw();
 	static void UnBind();
 	Material& GetMaterial() { return material; } // not used in engine
