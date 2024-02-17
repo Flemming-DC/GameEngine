@@ -15,6 +15,6 @@ void Collider::OnConstructed()
 void Collider::OnDestroyed()
 {
 	Tools::Remove(allColliders, this);
-	delete gizmo;
+	//delete gizmo;
 }
 

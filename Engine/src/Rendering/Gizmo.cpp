@@ -26,6 +26,7 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
     mesh.Setup(positionsRaw, {}, { 2, 0, 0, 0 });
     transform = transform_;
     positionCount = position2Ds.size();
+    initialized = true;
 }
 
 
@@ -36,6 +37,8 @@ Gizmo::~Gizmo()
 
 void Gizmo::Draw()
 {
+    if (!initialized)
+        RaiseError("Cannot draw uninitialized gizmo");
     glm::mat4 projection = Camera::GetCurrent()->GetProjection(); // evt. save the projectionView. at least within each frame
     glm::mat4 view = Camera::GetCurrent()->GetView();
     glm::mat4 model = transform != nullptr ? transform->GetModel() : glm::mat4(1.0f); // this is inefficient
@@ -60,7 +63,7 @@ void Gizmo::UnBind()
 
 
 
-Gizmo* Gizmo::MakeCircle(glm::vec2 center, float radius, Transform* transform_, glm::vec4 color)
+Gizmo Gizmo::MakeCircle(glm::vec2 center, float radius, Transform* transform_, glm::vec4 color)
 {
     std::vector<glm::vec2> position2Ds;
     int segmentCount = 40;
@@ -73,7 +76,7 @@ Gizmo* Gizmo::MakeCircle(glm::vec2 center, float radius, Transform* transform_, 
             center.y + radius * std::sin(angle) });
     }
 
-    return new Gizmo(position2Ds, transform_, color);
+    return Gizmo(position2Ds, transform_, color);
 }
 
 

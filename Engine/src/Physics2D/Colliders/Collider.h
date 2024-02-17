@@ -18,7 +18,8 @@ public:
 	//Bounds GetBounds() { return bounds; }
 
 protected:
-	Gizmo* gizmo;
+	Gizmo gizmo;
+	//Gizmo* gizmo;
 private:
 	static std::vector<Collider*> allColliders;
 	//std::vector<Collider*> overlaps = {};
