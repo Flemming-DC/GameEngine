@@ -1,5 +1,6 @@
 #include "Mesh.h"
 #include "Initializer.h"
+#include "EngineAssets.h"
 
 
 void Mesh::Setup(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const VertexLayout& layout)
@@ -13,14 +14,18 @@ void Mesh::Setup(const std::vector<float>& vertices, const std::vector<unsigned 
     // destructor of the old vertexBuffer will undo the setup of the new. Thereby causing bind to fail
     // vertexBuffer = VertexBuffer(vertices.data(), vertices.size() * sizeof(float));
     
-    indexBuffer.Setup(indices.data(), indices.size());
-    vertexBuffer.Setup(vertices.data(), vertices.size() * sizeof(float));
+    //indexBuffer.Setup(indices.data(), indices.size());
+    //vertexBuffer.Setup(vertices.data(), vertices.size() * sizeof(float));
+
+    indexBuffer = IndexBuffer::register_.Add(indices.data(), indices.size());
+    vertexBuffer = VertexBuffer::register_.Add(vertices.data(), vertices.size() * sizeof(float));
+    vertexArray = VertexArray::register_.Add();
+    vertexArray.Setup();
 
     layoutManager.Push<float>(layout.positionDimension);
     layoutManager.Push<float>(layout.textureDimension);
     layoutManager.Push<float>(layout.colorDimension);
     layoutManager.Push<float>(layout.textureID);
-    vertexArray.Setup();
     vertexArray.AddBuffer(vertexBuffer, layoutManager);
 }
 
@@ -39,21 +44,3 @@ void Mesh::UnBind()
     IndexBuffer::UnBind();
 }
 
-
-
-Mesh Mesh::CreateSquare()
-{
-    std::vector<float> vertexVector =
-    {//  pos.x  pos.y tex.u tex.v
-        -0.5f, -0.5f, 0.0f, 0.0f, // LD
-        -0.5f,  0.5f, 0.0f, 1.0f, // LU
-         0.5f,  0.5f, 1.0f, 1.0f, // RU
-         0.5f, -0.5f, 1.0f, 0.0f, // RD
-    };
-    std::vector<unsigned int> indexVector =
-    {
-        0, 3, 2, // triangle(LD, RD, RU)
-        0, 1, 2, // triangle(LD, LU, RU)
-    };
-    return Mesh(vertexVector, indexVector, VertexLayout());
-}

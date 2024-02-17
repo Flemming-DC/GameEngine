@@ -20,8 +20,8 @@ void Renderable::OnDestroyed()
 
 void Renderable::SetByInspector(const Mesh& mesh_, const Material& material_)
 {
-    mesh = mesh_;
-    material = material_;
+    mesh = mesh_; // copy, not ref
+    material = material_; // copy, not ref
 }
 
 
@@ -46,3 +46,16 @@ void Renderable::UnBind()
     Mesh::UnBind();
     Material::UnBind();
 }
+
+/*
+Mesh& operator=(const Mesh& other) // use if introducing ref members
+{
+    if (this != &other) // Check for self-assignment
+    {
+        vertexBuffer = other.vertexBuffer; // Copy or assign each member
+        vertexArray = other.vertexArray;
+        indexBuffer = other.indexBuffer;
+    }
+    return *this;
+}*/
+

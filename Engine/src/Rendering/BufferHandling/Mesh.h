@@ -13,7 +13,6 @@ class Mesh
 public:
     Mesh() {}
     Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const VertexLayout& layout)
-        //: indexBuffer(indices.data(), indices.size()), vertexBuffer(vertices.data(), vertices.size() * sizeof(float))
         { Setup(vertices, indices, layout); }
     void Setup(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const VertexLayout& layout);
 
@@ -21,18 +20,16 @@ public:
     static void UnBind();
     inline unsigned int GetIndexCount() const { return indexBuffer.GetCount(); }
     uuids::uuid GetID() const { return id; }
-    static Mesh CreateSquare(); // if you make more primitive meshes, then move this into a separate class
+
 
 private:
     uuids::uuid id;
-    VertexBuffer vertexBuffer; 
+    VertexBuffer vertexBuffer;
     VertexLayoutManager layoutManager;
     VertexArray vertexArray;
     IndexBuffer indexBuffer;
     // using a ref to buffers might reduce data size, but make Mesh uncopyable and cause them to behave non-independently.
 
-    // evt. store vertices and indices, but be aware that this will either make a copy 
-    // or refer to external data, which might get deallocated
     
 
 };

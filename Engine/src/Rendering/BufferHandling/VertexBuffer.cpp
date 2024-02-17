@@ -22,7 +22,7 @@ void VertexBuffer::Setup(const void* data, unsigned int size)
 
 void VertexBuffer::ShutDown()
 {
-    Log(" VertexBuffer destroyed with openGLid = " + std::to_string(openGLid));
+    Log("ShutDown VertexBuffer with openGLid = " + std::to_string(openGLid));
     if (!UuidCreator::IsInitialized(id) && openGLid != 0)
         RaiseError("Uninitialized VertexBuffer has openGLid != 0");
     if (!UuidCreator::IsInitialized(id))

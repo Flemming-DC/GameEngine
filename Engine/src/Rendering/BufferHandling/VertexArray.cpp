@@ -19,7 +19,7 @@ void VertexArray::Setup()
 }
 void VertexArray::ShutDown()
 {
-    Log(" VertexArray destroyed with openGLid = " + std::to_string(openGLid));
+    Log("ShutDown VertexArray with openGLid = " + std::to_string(openGLid));
     if (!UuidCreator::IsInitialized(id) && openGLid != 0)
         RaiseError("Uninitialized VertexArray has openGLid != 0");
     if (UuidCreator::IsInitialized(id))

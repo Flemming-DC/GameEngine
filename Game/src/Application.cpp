@@ -21,6 +21,7 @@
 #include "ShaderRegister.h"
 #include "UuidCreator.h"
 #include "GameAssets.h"
+#include "EngineAssets.h"
 
 
 void unused_TransformGUI(const Entity& entity, glm::vec3* eulerAngles)
@@ -75,7 +76,7 @@ void run()
     GameAssets::Setup();
 
     // ---------- assets ---------- 
-    Mesh mesh = Mesh::CreateSquare();
+    Mesh mesh = EngineAssets::SquareMesh();
     Material& material = GameAssets::GetMaterial();
     
     /*

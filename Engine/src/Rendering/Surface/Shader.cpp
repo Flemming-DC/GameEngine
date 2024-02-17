@@ -38,7 +38,7 @@ void Shader::Setup(const std::string& filePath)
 
 void Shader::ShutDown()
 {
-    Log(" Shader " + path + " destroyed with openGLid = " + std::to_string(openGLid));
+    Log("ShutDown Shader " + path + " with openGLid = " + std::to_string(openGLid));
     if (UuidCreator::IsInitialized(id) != (openGLid != 0))
         RaiseError("UuidCreator::IsInitialized(id) doesn't match (openGLid != 0)");
     if (UuidCreator::IsInitialized(id))
