@@ -28,7 +28,7 @@
 void unused_TransformGUI(const Entity& entity, glm::vec3* eulerAngles)
 {
     auto name = entity.name;
-    Transform* transform = entity.GetComponent<Transform>();
+    Transform* transform = Entity::Get<Transform>(entity.GetID()); // entity.GetComponent<Transform>();
     ImGui::Text(name.c_str());
     auto pointerToTranslation = &transform->localPosition.x;
     auto pointerToangles = &eulerAngles->x;
@@ -43,7 +43,7 @@ void unused_TransformGUI(const Entity& entity, glm::vec3* eulerAngles)
 void TransformGUI2D(const Entity& entity, glm::vec3* eulerAngles)
 {
     auto name = entity.name;
-    Transform* transform = entity.GetComponent<Transform>();
+    Transform* transform = Entity::Get<Transform>(entity.GetID()); // entity.GetComponent<Transform>();
     ImGui::Text(name.c_str());
     auto pointerToTranslation = &transform->localPosition.x;
     auto pointerToangles = &eulerAngles->z; // we point to the z component
