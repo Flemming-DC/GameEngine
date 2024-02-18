@@ -22,6 +22,7 @@
 #include "GameAssets.h"
 #include "EngineAssets.h"
 #include "DemoScene.h"
+#include "ListTools.h"
 
 
 void unused_TransformGUI(const Entity& entity, glm::vec3* eulerAngles)
@@ -81,44 +82,77 @@ void run()
     
 
     // ---------- cpp scene data ---------- 
-    /*
-    Entity camera("camera");
+    ///*
+    //Entity camera("camera");
+    Entity& camera = Entity::register_.Add("camera");
     camera.AddComponent<Transform>();
     camera.AddComponent<Camera>()->SetOrthographicProjection();
 
+    //Entity picture1("picture 1");
+    auto picture1ID = Entity::register_.Add("picture 1").GetID();
+    Entity::register_.Get(picture1ID).AddComponent<Transform>();
+    Entity::register_.Get(picture1ID).GetComponent<Transform>();
+    Entity::register_.Get(picture1ID).AddComponent<Renderable>()->SetByInspector(mesh, material);
+    Entity::register_.Get(picture1ID).AddComponent<RectangleCollider>()->SetSize({ 1, 1 });
+    
+    //Entity picture2("picture 2");
+    auto picture2ID = Entity::register_.Add("picture 2").GetID();
+    Entity::register_.Get(picture2ID).AddComponent<Transform>()->SetParent(
+        Entity::register_.Get(picture1ID).GetComponent<Transform>());
+    Entity::register_.Get(picture2ID).AddComponent<Renderable>()->SetByInspector(mesh, material);
+    Entity::register_.Get(picture2ID).AddComponent<GameLogic>()->SetByInspector(material);
+    Entity::register_.Get(picture2ID).AddComponent<RectangleCollider>()->SetSize({ 1, 1 });
+    Entity::register_.Get(picture2ID).GetComponent<RectangleCollider>()->onEnter.Add(HelloEnter);
+    Entity::register_.Get(picture2ID).GetComponent<RectangleCollider>()->onExit.Add(HelloExit);
 
-    Entity picture1("picture 1");
-    picture1.AddComponent<Transform>();
-    picture1.AddComponent<Renderable>()->SetByInspector(mesh, material); 
-    picture1.AddComponent<RectangleCollider>()->SetSize({ 1, 1 });
+    for (const auto& pair : Entity::componentsByID)
+    {
+        auto id = UuidCreator::to_string(pair.first);
+        auto c = Tools::to_string(pair.second);
+        Log(id + ": " + c);
+    }
 
-    Entity picture2("picture 2");
-    picture2.AddComponent<Transform>()->SetParent(picture1.GetComponent<Transform>());
-    picture2.AddComponent<Renderable>()->SetByInspector(mesh, material);
-    picture2.AddComponent<GameLogic>()->SetByInspector(material);
-    picture2.AddComponent<RectangleCollider>()->SetSize({ 1, 1 });
-    picture2.GetComponent<RectangleCollider>()->onEnter.Add(HelloEnter);
-    picture2.GetComponent<RectangleCollider>()->onExit.Add(HelloExit);
-
-    Entity circle1("circle 1");
+    //Entity circle1("circle 1");
+    Entity& circle1 = Entity::register_.Add("circle 1");
+    auto circle1ID = circle1.GetID();
     circle1.AddComponent<Transform>();
     circle1.AddComponent<CircleCollider>()->SetLocalRadius(0.5f);
 
-    Entity circle2("circle 2");
+
+    for (const auto& pair : Entity::componentsByID)
+    {
+        auto id = UuidCreator::to_string(pair.first);
+        auto c = Tools::to_string(pair.second);
+        Log(id + ": " + c);
+    }
+
+    //Entity circle2("circle 2");
+    Entity& circle2 = Entity::register_.Add("circle 2");
+    auto circle2ID = circle2.GetID();
     circle2.AddComponent<Transform>();
     circle2.AddComponent<CircleCollider>()->SetLocalRadius(0.5f);
     circle2.GetComponent<CircleCollider>()->onEnter.Add(HelloEnter);
     circle2.GetComponent<CircleCollider>()->onExit.Add(HelloExit);
 
     // ---------- saved scene data ---------- 
-    picture1.GetComponent<Transform>()->localPosition = { -0.5f, -0.5f, 0 };
-    picture2.GetComponent<Transform>()->localPosition = { 1.5f, -0.5f, 0 };
-    circle1.GetComponent<Transform>()->localPosition = { -0.5f,  0.6f, 0 };
-    circle2.GetComponent<Transform>()->localPosition = { 0.7f,  0.5f, 0 };
+    Entity::register_.Get(picture1ID).GetComponent<Transform>()->localPosition = { -0.5f, -0.5f, 0 };
+    Entity::register_.Get(picture2ID).GetComponent<Transform>()->localPosition = { 1.5f, -0.5f, 0 };
+    Entity::register_.Get(circle1ID).GetComponent<Transform>()->localPosition = { -0.5f,  0.6f, 0 };
+    Entity::register_.Get(circle2ID).GetComponent<Transform>()->localPosition = { 0.7f,  0.5f, 0 };
+    //*/
+
+    /*
+    for (const auto& pair : Entity::componentsByID)
+    {
+        auto id = UuidCreator::to_string(pair.first);
+        auto c = Tools::to_string(pair.second);
+        Log(id + ": " + c);
+    }
+
     */
 
-    DemoScene demoScene;// = DemoScene("demo");
-    std::vector<Entity>& entities = demoScene.MakeEntities();
+    //DemoScene demoScene;// = DemoScene("demo");
+    //std::vector<Entity>& entities = demoScene.MakeEntities();
 
     //LoadSpatialData(entities);
 
@@ -129,7 +163,7 @@ void run()
     glm::vec3 eulerAnglesCircle1(0);
     glm::vec3 eulerAnglesCircle2(0);
 
-    Log("starting loop");
+    Log("--------- starting loop --------- ");
     while (Initializer::NewFrame())
     {
         CollisionLoop::Update();

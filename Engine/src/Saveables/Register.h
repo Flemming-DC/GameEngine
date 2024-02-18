@@ -30,7 +30,7 @@ public:
         Tools::RemoveKey_unordered(indexByID, id);
     }
 
-    const DataChunk& Get(const uuids::uuid& id)
+    DataChunk& Get(const uuids::uuid& id)
     {
         return dataChunks[indexByID[id]];
     }

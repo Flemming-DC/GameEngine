@@ -20,8 +20,8 @@ public:
 	std::string to_string() const;
 
 	template <typename ComponentType>
-	inline ComponentType* Get() const { return entity->GetComponent<ComponentType>(); }
-	inline Entity* GetEntity() const { return entity; }
+	inline ComponentType* Get() const { return GetEntity()->GetComponent<ComponentType>(); }
+	inline Entity* GetEntity() const { return &Entity::register_.Get(entityID); } //{ return entity; }
 	inline Transform* GetTransform() const { return transform; }
 
 
@@ -29,12 +29,14 @@ public:
 	bool has_equal_id(const Component& other) { return this->id == other.id; }
 
 private:
-	Entity* entity = nullptr; 
+	uuids::uuid entityID;
+	//Entity* entity;
 	Transform* transform = nullptr;
 	bool entityIsDoingcleanup = false;
 	uuids::uuid id;
 
-	void InternalConstructor(Entity* entity); // only called by AddComponent in Entity
+	void InternalConstructor(uuids::uuid entityID_); // only called by AddComponent in Entity
+	//void InternalConstructor(Entity* entity_); // only called by AddComponent in Entity
 
 	virtual void OnConstructed() {}
 	virtual void OnDestroyed() {}

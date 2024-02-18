@@ -18,7 +18,11 @@ namespace Tools
 	{
 		return RemovePrefix(typeid(obj).name(), "class ");
 	}
-
+	template<typename T>
+	std::string to_string()
+	{
+		return RemovePrefix(typeid(T).name(), "class ");
+	}
 
 }
 

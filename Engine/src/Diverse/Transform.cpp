@@ -63,6 +63,8 @@ Transform* Transform::GetParent() const
 }
 void Transform::SetParent(Transform* newParent) 
 {
+	if (newParent == nullptr)
+		RaiseError("It it currently not possible to set parent to null.");
 	if (parent != nullptr)
 		Tools::Remove(parent->children, this);
 	parent = newParent;
