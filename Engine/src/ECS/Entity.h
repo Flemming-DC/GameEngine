@@ -17,17 +17,6 @@ public:
 	std::string name;
 
 	Entity(std::string name = "Entity");
-	/*
-	Entity(const Entity& other) : name(other.name), id(other.id) {} // Copy constructor
-	Entity& operator=(const Entity& other)
-	{ // Assignment operator
-		if (this != &other)
-		{
-			name = other.name;
-			id = other.id;
-		}
-		return *this;
-	}*/
 	void Destroy();
 	//~Entity();
 	static void UpdateAllEntities(); 
@@ -35,8 +24,8 @@ public:
 
 
 	static uuids::uuid Make(std::string name = "Entity");
-	template <typename ComponentType> static ComponentType* Get(uuids::uuid entityID);
-	template <typename ComponentType> static ComponentType* Add(uuids::uuid entityID);
+	template <typename ComponentType> static ComponentType& Get(uuids::uuid entityID);
+	template <typename ComponentType> static ComponentType& Add(uuids::uuid entityID);
 
 
 	template <typename ComponentType> ComponentType* GetComponent() const;

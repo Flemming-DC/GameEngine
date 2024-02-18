@@ -37,15 +37,15 @@ ComponentType* Entity::AddComponent()
 
 
 template <typename ComponentType> 
-ComponentType* Entity::Get(uuids::uuid entityID)
+ComponentType& Entity::Get(uuids::uuid entityID)
 {
-	return Entity::register_.Get(entityID).GetComponent<ComponentType>();
+	return *Entity::register_.Get(entityID).GetComponent<ComponentType>();
 }
 
 template <typename ComponentType> 
-ComponentType* Entity::Add(uuids::uuid entityID)
+ComponentType& Entity::Add(uuids::uuid entityID)
 {
-	return Entity::register_.Get(entityID).AddComponent<ComponentType>();
+	return *Entity::register_.Get(entityID).AddComponent<ComponentType>();
 }
 
 
