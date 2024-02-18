@@ -78,9 +78,9 @@ std::vector<Transform*> Transform::GetChildren() const
 std::string Transform::GetPath() const
 {
 	if (parent == nullptr)
-		return GetEntity()->name;
+		return GetEntity().name;
 	else
-		return parent->GetPath() + "/" + GetEntity()->name;
+		return parent->GetPath() + "/" + GetEntity().name;
 }
 
 glm::vec3 Transform::ToWorldSpace(glm::vec3 localPosition_, bool isPosition) const

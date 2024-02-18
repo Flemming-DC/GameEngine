@@ -20,8 +20,8 @@ public:
 	std::string to_string() const;
 
 	template <typename ComponentType>
-	inline ComponentType* Get() const { return GetEntity()->GetComponent<ComponentType>(); }
-	inline Entity* GetEntity() const { return &Entity::register_.Get(entityID); } //{ return entity; }
+	//inline ComponentType* Get() const { return GetEntity().GetComponent<ComponentType>(); }
+	inline Entity& GetEntity() const { return Entity::register_.Get(entityID); } //{ return entity; }
 	inline Transform* GetTransform() const { return transform; }
 
 
@@ -30,13 +30,11 @@ public:
 
 private:
 	uuids::uuid entityID;
-	//Entity* entity;
 	Transform* transform = nullptr;
 	bool entityIsDoingcleanup = false;
 	uuids::uuid id;
 
 	void InternalConstructor(uuids::uuid entityID_); // only called by AddComponent in Entity
-	//void InternalConstructor(Entity* entity_); // only called by AddComponent in Entity
 
 	virtual void OnConstructed() {}
 	virtual void OnDestroyed() {}

@@ -2,23 +2,14 @@
 #include "Transform.h"
 #include "UuidCreator.h"
 
-/*
-void Component::InternalConstructor(Entity* entity_)
-{
-	id = UuidCreator::MakeID();
-	entity = entity_;
-	transform = Get<Transform>();
-	OnConstructed();
-}
-*/
-///*
+
 void Component::InternalConstructor(uuids::uuid entityID_)
 {
 	id = UuidCreator::MakeID();
 	entityID = entityID_;
 	transform = Get<Transform>();
 	OnConstructed();
-}//*/
+}
 
 Component::~Component()
 {
@@ -30,16 +21,16 @@ Component::~Component()
 	OnDestroyed();
 	// If the entity is dead, then it will handle cleanup itself.
 	if (!entityIsDoingcleanup)
-		Tools::Remove(GetEntity()->GetComponents(), this);
+		Tools::Remove(GetEntity().GetComponents(), this);
 }
 
 std::string Component::to_string() const
 {
-	Transform* transform = GetEntity()->GetComponent<Transform>();
+	Transform* transform = GetEntity().GetComponent<Transform>();
 	if (transform == nullptr)
-		return GetEntity()->name;
+		return GetEntity().name;// +"." + Tools::to_string(*this);
 	else
-		return transform->GetPath();
+		return transform->GetPath();// + "." + Tools::to_string(*this);
 }
 
 

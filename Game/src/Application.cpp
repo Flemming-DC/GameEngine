@@ -57,11 +57,11 @@ void TransformGUI2D(const Entity& entity, glm::vec3* eulerAngles)
 
 void HelloEnter(Collider* other)
 {
-    Log("Enter " + other->GetEntity()->name);
+    Log("Enter " + other->GetEntity().name);
 }
 void HelloExit(Collider* other)
 {
-    Log("Exit " + other->GetEntity()->name);
+    Log("Exit " + other->GetEntity().name);
 }
 
 
@@ -82,7 +82,7 @@ void run()
     
 
     // ---------- cpp scene data ---------- 
-    ///*
+    /*
     auto cameraID = Entity::Make("camera");
     Entity::Add<Transform>(cameraID);
     Entity::Add<Camera>(cameraID)->SetOrthographicProjection();
@@ -118,7 +118,7 @@ void run()
     Entity::Get<Transform>(circle1ID)->localPosition = { -0.5f,  0.6f, 0 };
     Entity::Get<Transform>(circle2ID)->localPosition = { 0.7f,  0.5f, 0 };
 
-    //*/
+    */
 
     /*
     for (const auto& pair : Entity::componentsByID)
@@ -130,8 +130,9 @@ void run()
 
     */
 
-    //DemoScene demoScene;// = DemoScene("demo");
-    //std::vector<Entity>& entities = demoScene.MakeEntities();
+    DemoScene demoScene;// = DemoScene("demo");
+    //std::vector<uuids::uuid>& entities = demoScene.MakeEntities();
+    demoScene.MakeEntities();
 
     //LoadSpatialData(entities);
 
@@ -148,6 +149,10 @@ void run()
         CollisionLoop::Update();
 
         // --------- custom logic start -----------
+        TransformGUI2D(demoScene.GetEntity(0), &eulerAngles1);
+        TransformGUI2D(demoScene.GetEntity(1), &eulerAngles2);
+        TransformGUI2D(demoScene.GetEntity(2), &eulerAnglesCircle1);
+        TransformGUI2D(demoScene.GetEntity(3), &eulerAnglesCircle2);
         /*
         TransformGUI2D(picture1, &eulerAngles1);
         TransformGUI2D(picture2, &eulerAngles2);
@@ -160,21 +165,21 @@ void run()
         {
             Log("K");
             for (const auto& overlap : CollisionChecker::GetOverlaps())
-                Log(overlap.first->GetEntity()->name + " overlaps " + overlap.second->GetEntity()->name);
+                Log(overlap.first->GetEntity().name + " overlaps " + overlap.second->GetEntity().name);
         }
         if (Input::KeyHeldDown(GLFW_KEY_L))
         {
             Log("L");
             auto colliders = CollisionChecker::RayOverlaps(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
             for (const auto& col : colliders)
-                Log(col->GetEntity()->name + " was hit");
+                Log(col->GetEntity().name + " was hit");
         }
         if (Input::KeyHeldDown(GLFW_KEY_P))
         {
             Log("P");
             auto collider = CollisionChecker::RayCast(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
             if (collider != nullptr)
-                Log(collider->GetEntity()->name + " was hit");
+                Log(collider->GetEntity().name + " was hit");
             else
                 Log("Hit nothing");
         }

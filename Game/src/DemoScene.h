@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine.h"
+#include <stduuid/uuid.h>
 
 
 class DemoScene //: public Scene
@@ -7,12 +8,15 @@ class DemoScene //: public Scene
 public:
 	//DemoScene(const std::string& name);// : Scene(name) {}
 	
-	std::vector<Entity>& MakeEntities();// override;
+	std::vector<uuids::uuid>& MakeEntities();// override;
+	Entity& GetEntity(int index) { return Entity::register_.Get(entities[index]); } // temp tool for GUI
 
 private:
-	void DemoScene::HelloEnter(Collider* other);
-	void DemoScene::HelloExit(Collider* other);
-	std::vector<Entity> entities;
+	//void DemoScene::HelloEnter(Collider* other);
+	//void DemoScene::HelloExit(Collider* other);
+	static void DemoScene::HelloEnter(Collider* other);
+	static void DemoScene::HelloExit(Collider* other);
+	std::vector<uuids::uuid> entities;
 
 };
 
