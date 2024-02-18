@@ -35,11 +35,11 @@ void Entity::UpdateAllEntities()
 {
 	for (const auto& pair : componentsByID)
 	{
-		Log(Entity::register_.Get(pair.first).name);
-		Log(Tools::to_string(pair.second));
+		//Log(Entity::register_.Get(pair.first).name);
+		//Log(Tools::to_string(pair.second));
 		for (const auto& c : pair.second)
 		{
-			Log("    " + c->to_string());
+			//Log("    " + c->to_string());
 			c->OnUpdate();
 		}
 	}
@@ -47,7 +47,7 @@ void Entity::UpdateAllEntities()
 
 
 
-uuids::uuid Make(std::string name = "Entity")
+uuids::uuid Entity::Make(std::string name)
 {
 	return Entity::register_.Add(name).GetID();
 }
