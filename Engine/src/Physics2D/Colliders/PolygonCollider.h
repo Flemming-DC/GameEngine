@@ -12,7 +12,7 @@ public:
 
 	const std::vector<glm::vec2>& GetLocalPosition2Ds() const { return localPosition2Ds; } 
 	std::pair<float, float> ShadowAlongNormal(glm::vec2 normal) const override;
-	const glm::vec2 GetNormalByIndex(int i) const { return GetTransform()->ToWorldSpace(localNormals[i], false); };
+	const glm::vec2 GetNormalByIndex(int i) const { return GetTransform().ToWorldSpace(localNormals[i], false); };
 
 private:
 	std::vector<glm::vec2> localPosition2Ds; // positions in local space i.e. relative to transform.GetPosition()

@@ -20,9 +20,9 @@ public:
 	std::string to_string() const;
 
 	template <typename ComponentType>
-	//inline ComponentType* Get() const { return GetEntity().GetComponent<ComponentType>(); }
+	inline ComponentType& Get() const { return *GetEntity().GetComponent<ComponentType>(); }
 	inline Entity& GetEntity() const { return Entity::register_.Get(entityID); } //{ return entity; }
-	inline Transform* GetTransform() const { return transform; }
+	inline Transform& GetTransform() const { return *transform; }
 
 
 	bool operator==(const Component& other) { return this->has_equal_id(other); }

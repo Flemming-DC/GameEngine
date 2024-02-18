@@ -74,7 +74,7 @@ void Gizmo::UnBind()
 
 
 
-Gizmo Gizmo::MakeCircle(glm::vec2 center, float radius, Transform* transform_, glm::vec4 color)
+Gizmo Gizmo::MakeCircle(glm::vec2 center, float radius, Transform& transform_, glm::vec4 color)
 {
     std::vector<glm::vec2> position2Ds;
     int segmentCount = 40;
@@ -87,7 +87,7 @@ Gizmo Gizmo::MakeCircle(glm::vec2 center, float radius, Transform* transform_, g
             center.y + radius * std::sin(angle) });
     }
 
-    Gizmo circle = Gizmo(position2Ds, transform_, color);
+    Gizmo circle = Gizmo(position2Ds, &transform_, color);
     circle.showPoints = false;
     return circle;
 }

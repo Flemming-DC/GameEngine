@@ -13,7 +13,7 @@ void CircleCollider::SetLocalRadius(float radius_)
 
 float CircleCollider::GetRadius() const
 {
-	auto scale = GetTransform()->GetScale();
+	auto scale = GetTransform().GetScale();
 
 	// replace error checking with constrained proportions
 	float error = (scale.x - scale.y) / std::max(0.005f, scale.x + scale.y);
@@ -25,6 +25,6 @@ float CircleCollider::GetRadius() const
 
 std::pair<float, float> CircleCollider::ShadowAlongNormal(glm::vec2 normal) const
 {
-	float positionAlongNormal = glm::dot((glm::vec2)GetTransform()->GetPosition(), normal);
+	float positionAlongNormal = glm::dot((glm::vec2)GetTransform().GetPosition(), normal);
 	return { positionAlongNormal - GetRadius(), positionAlongNormal + GetRadius() };
 }

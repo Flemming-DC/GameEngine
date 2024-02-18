@@ -33,7 +33,7 @@ void PolygonCollider::Setup(std::vector<glm::vec2> position2Ds_)
 		for (int i = 0; i < count; i++)
 			localNormals[i] *= -1;
 	}
-	gizmo = Gizmo(position2Ds_, GetTransform());
+	gizmo = Gizmo(position2Ds_, &GetTransform());
 	
 }
 
@@ -46,8 +46,8 @@ std::pair<float, float> PolygonCollider::ShadowAlongNormal(glm::vec2 normal) con
 	float max = -INFINITY;
 	for (auto localPosition2D : localPosition2Ds)
 	{
-		//glm::vec2 position2D = isLocal ? localPosition2D : GetTransform()->ToWorldSpace(localPosition2D, true);
-		glm::vec2 position2D = GetTransform()->ToWorldSpace(localPosition2D, true);
+		//glm::vec2 position2D = isLocal ? localPosition2D : GetTransform().ToWorldSpace(localPosition2D, true);
+		glm::vec2 position2D = GetTransform().ToWorldSpace(localPosition2D, true);
 		float coordinateAlongNormal = glm::dot(position2D, normal);
 		if (coordinateAlongNormal < min)
 			min = coordinateAlongNormal;

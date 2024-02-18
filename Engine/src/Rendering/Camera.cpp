@@ -45,13 +45,13 @@ glm::mat4 Camera::GetProjection() const
 
 glm::mat4 Camera::GetView() //const
 {
-    if (nearClipping > -GetTransform()->GetPosition().z)
+    if (nearClipping > -GetTransform().GetPosition().z)
         Warning(
             "near clipping plane is closer than minus camera z position, which can cause black screen\n"
             "nearClipping = " + std::to_string(nearClipping) + "\n"
-            "camera position.z = " + std::to_string(GetTransform()->GetPosition().z));
+            "camera position.z = " + std::to_string(GetTransform().GetPosition().z));
 
-    return GetTransform()->GetInverseModel();
+    return GetTransform().GetInverseModel();
 }
 
 
@@ -69,7 +69,7 @@ void Camera::OnUpdate()
     if (moveDirection.x != 0 && moveDirection.y != 0)
         moveDirection = glm::normalize(moveDirection);
 
-    GetTransform()->localPosition += moveDirection * moveSpeed * Time::GetDelta();
+    GetTransform().localPosition += moveDirection * moveSpeed * Time::GetDelta();
 
     float scaling = 1 + Input::GetScrollDirection() * scrollSpeed * Time::GetDelta(); // exp(x) = 1 + x + O(x^2) is used
     projection = glm::scale(projection, glm::vec3(scaling));

@@ -30,7 +30,7 @@ void Renderable::Draw()
 {
     glm::mat4 projection = Camera::GetCurrent()->GetProjection(); // evt. save the projectionView. at least within each frame
     glm::mat4 view = Camera::GetCurrent()->GetView();
-    glm::mat4 model = GetTransform()->GetModel(); // this is inefficient
+    glm::mat4 model = GetTransform().GetModel(); // this is inefficient
     material.SetUniform("u_MVP", projection * view * model);
 
     material.Bind();

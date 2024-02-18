@@ -59,7 +59,7 @@ bool NarrowPhase::IsOverLapping(Collider* collider1, Collider* collider2)
 
 bool NarrowPhase::IsOverLapping(CircleCollider* circle1, CircleCollider* circle2)
 {
-	glm::vec3 displacement = circle1->GetTransform()->GetPosition() - circle2->GetTransform()->GetPosition();
+	glm::vec3 displacement = circle1->GetTransform().GetPosition() - circle2->GetTransform().GetPosition();
 	float sqrDistance = displacement.x * displacement.x + displacement.y * displacement.y;
 	float sqrSumRadii = (circle1->GetRadius() + circle2->GetRadius()) * (circle1->GetRadius() + circle2->GetRadius());
 	return sqrDistance <= sqrSumRadii;
@@ -72,7 +72,7 @@ bool NarrowPhase::IsOverLapping(CircleCollider* circle, PolygonCollider* polygon
 	// normal on the circle https://www.youtube.com/watch?v=vWs33LVrs74&ab_channel=Two-BitCoding
 
 	// we use world coordinates
-	glm::vec2 circlePosition = circle->GetTransform()->GetPosition();
+	glm::vec2 circlePosition = circle->GetTransform().GetPosition();
 
 	int count = (int)polygon->GetLocalPosition2Ds().size();
 	for (int i = 0; i < count; i++)
@@ -89,7 +89,7 @@ bool NarrowPhase::IsOverLapping(CircleCollider* circle, PolygonCollider* polygon
 	glm::vec2 closestCorner; // evt. put GetClosestCorner calculation inside the collider class
 	for (glm::vec2 localPosition2D : polygon->GetLocalPosition2Ds())
 	{
-		auto position2D = polygon->GetTransform()->ToWorldSpace(localPosition2D, true);
+		auto position2D = polygon->GetTransform().ToWorldSpace(localPosition2D, true);
 		float sqrDistance = glm::dot(position2D - circlePosition, position2D - circlePosition);
 		if (sqrDistance < minSqrDistance)
 		{

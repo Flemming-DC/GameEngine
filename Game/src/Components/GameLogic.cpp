@@ -10,7 +10,7 @@ void GameLogic::SetByInspector(const Material& material_)
 
 void GameLogic::OnUpdate()
 {
-    Get<Renderable>()->GetMaterial().SetUniform("u_color", color);
+    Get<Renderable>().GetMaterial().SetUniform("u_color", color);
     //material.SetUniform("u_color", color);
 
     if (color.r > 1)
