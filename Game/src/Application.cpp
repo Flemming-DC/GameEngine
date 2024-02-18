@@ -18,10 +18,10 @@
 #include "CollisionChecker.h"
 #include "Input.h"
 #include "Register.h"
-#include "ShaderRegister.h"
 #include "UuidCreator.h"
 #include "GameAssets.h"
 #include "EngineAssets.h"
+#include "DemoScene.h"
 
 
 void unused_TransformGUI(const Entity& entity, glm::vec3* eulerAngles)
@@ -76,34 +76,12 @@ void run()
     GameAssets::Setup();
 
     // ---------- assets ---------- 
-    Mesh mesh = EngineAssets::SquareMesh();
+    Mesh& mesh = EngineAssets::SquareMesh();
     Material& material = GameAssets::GetMaterial();
     
-    /*
-    glm::vec4 color = { 0.8f, 0.3f, 0.8f, 1.0f };
-
-    auto id_ = Shader::register_.Add("res/shaders/Image.shader").GetID();
-    const Shader& shader_ = Shader::register_.Get(id_);
-    Shader::register_.Remove(id_);
-
-    Shader& shader = Shader::register_.Add();
-    shader.Setup("res/shaders/Image.shader");
-
-    //Shader shader = Shader::register_.Add();
-    //shader.Setup("res/shaders/Image.shader");
-
-    
-    Texture texture("res/textures/blizzard attacking fans.png");
-    std::map<std::string, std::any> uniformsByName = {
-        {"u_textureSampler", &texture},
-        {"u_color", color},
-        {"u_MVP", Material::MissingUniform()}
-    };
-    Material material(shader, uniformsByName);
-    */
 
     // ---------- cpp scene data ---------- 
-
+    /*
     Entity camera("camera");
     camera.AddComponent<Transform>();
     camera.AddComponent<Camera>()->SetOrthographicProjection();
@@ -117,7 +95,7 @@ void run()
     Entity picture2("picture 2");
     picture2.AddComponent<Transform>()->SetParent(picture1.GetComponent<Transform>());
     picture2.AddComponent<Renderable>()->SetByInspector(mesh, material);
-    picture2.AddComponent<GameLogic>()->SetByInspector(material); // this is affecting both pictures due to shared material.
+    picture2.AddComponent<GameLogic>()->SetByInspector(material);
     picture2.AddComponent<RectangleCollider>()->SetSize({ 1, 1 });
     picture2.GetComponent<RectangleCollider>()->onEnter.Add(HelloEnter);
     picture2.GetComponent<RectangleCollider>()->onExit.Add(HelloExit);
@@ -137,7 +115,12 @@ void run()
     picture2.GetComponent<Transform>()->localPosition = { 1.5f, -0.5f, 0 };
     circle1.GetComponent<Transform>()->localPosition = { -0.5f,  0.6f, 0 };
     circle2.GetComponent<Transform>()->localPosition = { 0.7f,  0.5f, 0 };
-    
+    */
+
+    DemoScene demoScene;// = DemoScene("demo");
+    std::vector<Entity>& entities = demoScene.MakeEntities();
+
+    //LoadSpatialData(entities);
 
     // ------------ loop ------------
 
@@ -152,10 +135,12 @@ void run()
         CollisionLoop::Update();
 
         // --------- custom logic start -----------
+        /*
         TransformGUI2D(picture1, &eulerAngles1);
         TransformGUI2D(picture2, &eulerAngles2);
         TransformGUI2D(circle1, &eulerAnglesCircle1);
         TransformGUI2D(circle2, &eulerAnglesCircle2);
+        */
         Entity::UpdateAllEntities();
 
         if (Input::KeyHeldDown(GLFW_KEY_K))

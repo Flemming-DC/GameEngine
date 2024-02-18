@@ -24,6 +24,15 @@ Overlaps NarrowPhase::GetOverlaps(Overlaps potentialOverlaps)
 
 bool NarrowPhase::IsOverLapping(Collider* collider1, Collider* collider2)
 {
+	if (collider1 == nullptr)
+		RaiseError("collider1 is nullptr");
+	if (collider1->GetEntity() == nullptr)
+		RaiseError("collider1->GetEntity() is nullptr");
+	if (collider2 == nullptr)
+		RaiseError("collider2 is nullptr");
+	if (collider2->GetEntity() == nullptr)
+		RaiseError("collider2->GetEntity() is nullptr");
+
 	CircleCollider* cirle1 = dynamic_cast<CircleCollider*>(collider1);
 	CircleCollider* cirle2 = dynamic_cast<CircleCollider*>(collider2);
 	if (cirle1 != nullptr && cirle2 != nullptr)

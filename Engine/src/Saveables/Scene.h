@@ -7,13 +7,13 @@
 class Scene
 {
 public:
-	Scene(std::string name);
-	virtual std::vector<Entity> MakeEntities() = 0;
-	
-private:
+	//Scene(std::string name);
+	virtual std::vector<Entity>& MakeEntities() = 0;
+
+protected:
 	std::string name;
 	std::vector<Entity> entities;
 
-	void LoadSpatialData(std::vector<Entity> entities);
+	void LoadSpatialData(const std::vector<Entity>& entities);
 };
 

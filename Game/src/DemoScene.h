@@ -2,14 +2,17 @@
 #include "Engine.h"
 
 
-class DemoScene : public Scene
+class DemoScene //: public Scene
 {
 public:
-	std::vector<Entity> MakeEntities() override;
+	//DemoScene(const std::string& name);// : Scene(name) {}
+	
+	std::vector<Entity>& MakeEntities();// override;
 
 private:
 	void DemoScene::HelloEnter(Collider* other);
 	void DemoScene::HelloExit(Collider* other);
+	std::vector<Entity> entities;
 
 };
 

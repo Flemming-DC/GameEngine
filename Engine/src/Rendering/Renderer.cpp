@@ -23,8 +23,6 @@ void Renderer::Draw()
         renderable->Draw();
     for (Gizmo* gizmo : Gizmo::allGizmos)
         gizmo->Draw();
-    //for (Gizmo& gizmo : Gizmo::register_.GetData())
-    //    gizmo.Draw();
 
     
     if (showBlackScreenDebugInfo && ScreenIsBlack())
@@ -71,9 +69,6 @@ bool Renderer::ScreenIsBlack()
 
 void Renderer::SetupGrid2D(float gridScale)
 {
-    //if (verticalGrid.IsInitialized())
-    //    return;
-
     float brightness = 0.2f;
     glm::vec4 color = glm::vec4(brightness, brightness, brightness, 1);
     
