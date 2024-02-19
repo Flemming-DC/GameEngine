@@ -63,14 +63,18 @@ Transform* Transform::GetParent() const
 }
 void Transform::SetParent(Transform* newParent) 
 {
+	// the local data (which is stored explicitly) is relative to a given parent.
+	// therefore we must adjust for the effect that changing parent has on the world
+	// position, rotation and scale
+	glm::mat4 oldParentModel = parent ? parent->GetModel() : glm::mat4(1.0f);
+	glm::mat4 newParentInverseModel = newParent ? newParent->GetInverseModel() : glm::mat4(1.0f);
+	SetLocalDataUsingTransform(newParentInverseModel * oldParentModel * GetModel());
+
 	if (parent)
 		Tools::Remove(parent->children, this);
-	// apply parent transform to this, in order to counteract the loss of its transform
 	parent = newParent;
-	// apply inverse newParent transform to this, in order to counteract the gain of its transform
 	if (newParent)
 		newParent->children.push_back(this);;
-
 }
 std::vector<Transform*> Transform::GetChildren() const
 {
@@ -106,7 +110,17 @@ glm::vec2 Transform::ToLocalSpace(glm::vec2 worldPosition2D, bool isPosition) co
 	return matrix * glm::vec4(worldPosition2D.x, worldPosition2D.y, 0, 1);
 }
 
+void Transform::SetLocalDataUsingTransform(const glm::mat4& transform)
+{
+	localPosition = glm::vec3(transform[3]);
 
+	localScale.x = glm::length(glm::vec3(transform[0]));
+	localScale.y = glm::length(glm::vec3(transform[1]));
+	localScale.z = glm::length(glm::vec3(transform[2]));
+
+	glm::mat3 rotationMatrix(transform);
+	localRotation = glm::quat_cast(rotationMatrix);
+}
 
 
 

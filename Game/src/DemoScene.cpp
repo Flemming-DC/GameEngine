@@ -39,7 +39,6 @@ std::vector<uuids::uuid>& DemoScene::MakeEntities()
 
     auto picture2ID = Entity::Make("picture 2");
     Entity::Add<Transform>(picture2ID).SetParent(&Entity::Get<Transform>(picture1ID));
-    Entity::Get<Transform>(picture2ID).SetParent(nullptr);
     Entity::Add<Renderable>(picture2ID).SetByInspector(mesh, material);
     Entity::Add<GameLogic>(picture2ID).SetByInspector(material);
     Entity::Add<RectangleCollider>(picture2ID).SetSize({ 1, 1 });
@@ -63,6 +62,8 @@ std::vector<uuids::uuid>& DemoScene::MakeEntities()
     Entity::Get<Transform>(picture2ID).localPosition = { 1.5f, -0.5f, 0 };
     Entity::Get<Transform>(circle1ID ).localPosition = { -0.5f,  0.6f, 0 };
     Entity::Get<Transform>(circle2ID ).localPosition = { 0.7f,  0.5f, 0 };
+
+    
 
     entities.push_back(picture1ID);
     entities.push_back(picture2ID);

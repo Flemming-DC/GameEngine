@@ -37,15 +37,17 @@ public:
 	glm::vec3 ToLocalSpace(glm::vec3 position, bool isPosition) const;
 	glm::vec2 ToLocalSpace(glm::vec2 position2D, bool isPosition) const;
 
+
 private:
 	Transform* parent = nullptr;
 	bool isUpToDate = false; // i.e. caches are up to data
-	glm::mat4 model = glm::mat4(1.0f); // cached value
+	//glm::mat4 model = glm::mat4(1.0f); // cached value
 	std::vector<Transform*> children;
 
 	void OnDestroyed() override;
 	glm::mat4 GetLocalModel() const;
 	glm::mat4 GetInverseLocalModel() const; // probably only used by camera
+	void SetLocalDataUsingTransform(const glm::mat4& transform); 
 
 };
 
