@@ -20,7 +20,7 @@ public:
 	void Destroy();
 	//~Entity();
 	static void UpdateAllEntities(); 
-	std::vector<Component*>& GetComponents() const { return componentsByID.at(id); }
+	//std::vector<Component&>& GetComponents() const { return componentsByID.at(id); }
 
 
 	static uuids::uuid Make(std::string name = "Entity");
@@ -39,10 +39,8 @@ public:
 	//static Entity& GetEntity(uuids::uuid id) { return entitiesByID[id]; }
 	uuids::uuid GetID() const { return id; }
 
-//private:
-	//static std::unordered_map<uuids::uuid, Entity&> entitiesByID;
-	//static std::unordered_map<const Entity*, std::vector<Component*>> componentsByID; // this is not by id !!
-	static std::unordered_map<uuids::uuid, std::vector<Component*>> componentsByID; // this is not by id !!
+private:
+	static std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> componentsByID_unique;
 	uuids::uuid id;
 };
 

@@ -49,9 +49,16 @@ std::vector<uuids::uuid>& DemoScene::MakeEntities()
     Entity::Add<Camera>(cameraID).SetOrthographicProjection();
 
     auto picture1ID = Entity::Make("picture 1");
+    auto& pic1 = Entity::register_.Get(picture1ID);
     Entity::Add<Transform>(picture1ID);
+    auto& t = Entity::Get<Transform>(picture1ID);
     Entity::Add<Renderable>(picture1ID).SetByInspector(mesh, material);
+    auto& rend = Entity::Get<Renderable>(picture1ID);
+    
     Entity::Add<RectangleCollider>(picture1ID).SetSize({ 1, 1 });
+    //auto& rect = *Entity::register_.Get(picture1ID).GetComponent<RectangleCollider>();
+    auto& rect = Entity::Get<RectangleCollider>(picture1ID);
+
 
     auto picture2ID = Entity::Make("picture 2");
     Entity::Add<Transform>(picture2ID).SetParent(&Entity::Get<Transform>(picture1ID));

@@ -9,7 +9,6 @@ template<typename DataChunk>
 class Register
 {
 public:
-    //Register() { Log("Register constructed"); }
 
     // this the use of uninitialized ID doesn't line up with the register, 
     // so the register only allows initiliazed values. 
@@ -20,6 +19,7 @@ public:
         indexByID[dataChunks.back().GetID()] = dataChunks.size() - 1;
         return dataChunks.back();
     }
+
 
 
     void Remove(const uuids::uuid& id)
