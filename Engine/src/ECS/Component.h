@@ -37,7 +37,7 @@ private:
 	static Register<Component> register_;
 	uuids::uuid entityID;
 	Transform* transform = nullptr;
-	bool entityIsDoingcleanup = false;
+	//bool entityIsDoingcleanup = false;
 	uuids::uuid id;
 
 	void InternalConstructor(uuids::uuid entityID_); // only called by AddComponent in Entity

@@ -40,7 +40,7 @@ public:
 	uuids::uuid GetID() const { return id; }
 
 private:
-	static std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> componentsByID_unique;
+	static std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> componentsByEntity;
 	uuids::uuid id;
 };
 
