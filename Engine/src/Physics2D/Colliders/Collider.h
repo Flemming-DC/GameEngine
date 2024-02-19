@@ -19,7 +19,6 @@ public:
 	//Bounds GetBounds() { return bounds; }
 
 protected:
-	//Gizmo gizmo;
 	uuids::uuid gizmoID;
 private:
 	static std::vector<Collider*> allColliders;

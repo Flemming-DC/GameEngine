@@ -21,8 +21,6 @@ void Renderer::Draw()
     Renderable::UnBind();
     for (Renderable* renderable : Renderable::allRenderables)
         renderable->Draw();
-    //for (Gizmo* gizmo : Gizmo::allGizmos)
-    //    gizmo->Draw();
     for (Gizmo& gizmo : Gizmo::register_.GetData())
         gizmo.Draw();
     
@@ -86,18 +84,10 @@ void Renderer::SetupGrid2D(float gridScale)
         }
 
     }
-    Log("Renderer: Make 2 Gizmos");
-    Gizmo& horizontalGrid_ = Gizmo::register_.Add(horizontallyOrganizedPosition2Ds, nullptr, color);
-    //horizontalGrid.Setup(horizontallyOrganizedPosition2Ds, nullptr, color);
-    horizontalGrid_.loop = false;
-    horizontalGrid_.showPoints = false;
-    horizontalGridID = horizontalGrid_.GetID();
-
-    Gizmo& verticalGrid_ = Gizmo::register_.Add(verticallyOrganizedPosition2Ds, nullptr, color);
-    //verticalGrid = Gizmo(verticallyOrganizedPosition2Ds, nullptr, color);
-    verticalGrid_.loop = false;
-    verticalGrid_.showPoints = false;
-    verticalGridID = verticalGrid_.GetID();
+    horizontalGridID = Gizmo::register_.Add(
+        horizontallyOrganizedPosition2Ds, nullptr, color, false, false).GetID();
+    verticalGridID = Gizmo::register_.Add(
+        verticallyOrganizedPosition2Ds, nullptr, color, false, false).GetID();
 
 }
 

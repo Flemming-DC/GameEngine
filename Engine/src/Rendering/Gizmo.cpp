@@ -5,31 +5,20 @@
 #include "UuidCreator.h"
 #include "EngineAssets.h"
 
-std::vector<Gizmo*> Gizmo::allGizmos;
-std::map<uuids::uuid, Gizmo&> Gizmo::allGizmosMap;
 Register<Gizmo> Gizmo::register_;
 
-Gizmo::Gizmo()
-{
-    //allGizmos.push_back(this);
-}
 
-Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform, glm::vec4 color)
-{
-    if (!transform)
-        Log("Gizmo.Gizmo: !transform");
-    //allGizmos.push_back(this);
-    Setup(position2Ds, transform, color);
-}
 
-void Gizmo::Setup(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec4 color_)
+Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec4 color_, bool showPoints_, bool loop_)
 {
     if (UuidCreator::IsInitialized(id))
-        RaiseError("Material is already initialized");
+        RaiseError("Gizmo is already initialized");
     id = UuidCreator::MakeID();
-    //allGizmosMap[id] = *this;
 
     color = color_;
+    showPoints = showPoints_;
+    loop = loop_;
+
     std::vector<float> positionsRaw;
     for (glm::vec2 position2D : position2Ds)
     {
@@ -37,7 +26,6 @@ void Gizmo::Setup(std::vector<glm::vec2> position2Ds, Transform* transform_, glm
         positionsRaw.push_back(position2D.y);
     }
 
-    //allGizmos.push_back(this);
     float point_size = 5;
     glCall(glPointSize(point_size));
 
@@ -45,26 +33,14 @@ void Gizmo::Setup(std::vector<glm::vec2> position2Ds, Transform* transform_, glm
     mesh.Setup(positionsRaw, {}, { 2, 0, 0, 0 });
     transform = transform_;
     positionCount = position2Ds.size();
-    initialized = true;
 
-    if (!transform)
-        Log("Gizmo.Setup: !transform");
 }
 
 
-Gizmo::~Gizmo()
-{
-    if(!loop)
-        Log("Gizmo.~Gizmo: !loop");
-    //if (initialized)
-    Tools::Remove(allGizmos, this);
-}
 
 void Gizmo::Draw()
 {
-    if (!loop)
-        Log("Gizmo.Draw: !loop");
-    if (!initialized)
+    if (!UuidCreator::IsInitialized(id))
         RaiseError("Cannot draw uninitialized gizmo");
     glm::mat4 projection = Camera::GetCurrent()->GetProjection(); // evt. save the projectionView. at least within each frame
     glm::mat4 view = Camera::GetCurrent()->GetView();
@@ -103,10 +79,7 @@ uuids::uuid Gizmo::MakeCircle(glm::vec2 center, float radius, Transform& transfo
             center.y + radius * std::sin(angle) });
     }
 
-    Gizmo& circle = Gizmo::register_.Add(position2Ds, &transform_, color);
-    //Gizmo circle = Gizmo(position2Ds, &transform_, color);
-    circle.showPoints = false;
-    return circle.GetID();
+    return Gizmo::register_.Add(position2Ds, &transform_, color, false).GetID();
 }
 
 
