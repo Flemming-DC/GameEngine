@@ -9,7 +9,8 @@
 #define RaiseError(message) _RaiseError(message, __func__, __FILE__, __LINE__)  // using namespace std::string_literals;
 #define Warning(message) _Warning(message, __func__, __FILE__, __LINE__)  // using namespace std::string_literals;
 
-template<typename T>
+
+template<typename T> [[noreturn]] 
 void _RaiseError(T message, const char* func, const char* file, int line)
 {
     std::cout << "\nBackTrace: " << std::endl;

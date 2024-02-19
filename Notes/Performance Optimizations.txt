@@ -11,4 +11,4 @@ optimizations:
 	CalculateShadowAlongNormal is expensive for polygon collider. evt. use some form of precalculation
 	use broadShadow in raycast as a broadPhase
 	activation / enabling of entities and components
-
+	make updatable class, so restrict update call to where it is necessary

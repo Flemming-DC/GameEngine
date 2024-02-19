@@ -24,24 +24,25 @@ public:
 
 
 	static uuids::uuid Make(std::string name = "Entity");
-	template <typename ComponentType> static ComponentType& Get(uuids::uuid entityID);
-	template <typename ComponentType> static ComponentType& Add(uuids::uuid entityID);
+	template <typename ComponentType> inline static ComponentType* TryGet(uuids::uuid entityID);
+	template <typename ComponentType> inline static ComponentType& Get(uuids::uuid entityID);
+	template <typename ComponentType> inline static ComponentType& Add(uuids::uuid entityID);
 
-
-	template <typename ComponentType> ComponentType* GetComponent() const;
-	template <typename ComponentType> ComponentType* AddComponent();
 
 	// evt. bool TryGetComponent(Component* component) or HasComponent
 	// evt. get component in children, parent, siblings etc.
 
 	bool operator==(const Entity& other) { return this->has_equal_id(other); }
 	bool has_equal_id(const Entity& other) { return this->id == other.id; }
-	//static Entity& GetEntity(uuids::uuid id) { return entitiesByID[id]; }
-	uuids::uuid GetID() const { return id; }
+	inline uuids::uuid GetID() const { return id; }
 
 private:
 	static std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> componentsByEntity;
 	uuids::uuid id;
+
+	template <typename ComponentType> ComponentType* TryGetComponent() const;
+	template <typename ComponentType> inline ComponentType& GetComponent() const;
+	template <typename ComponentType> ComponentType& AddComponent();
 };
 
 

@@ -5,14 +5,25 @@
 
 
 template <typename ComponentType>
-ComponentType* Entity::GetComponent() const
+ComponentType& Entity::GetComponent() const
+{
+	ComponentType* comp = TryGetComponent<ComponentType>();
+	if (comp)
+		return *comp;
+	else
+		RaiseError("Failed to find " + Tools::to_string<ComponentType>() + " on " + name);
+}
+
+
+template <typename ComponentType>
+ComponentType* Entity::TryGetComponent() const
 {
 	static_assert(std::is_base_of<Component, ComponentType>::value,
 		"GetComponent can only get components, not other types");
 
-	for (const auto& c : componentsByEntity[id])
+	for (const auto& comp : componentsByEntity[id])
 	{
-		ComponentType* afterCast = dynamic_cast<ComponentType*>(c.get());
+		ComponentType* afterCast = dynamic_cast<ComponentType*>(comp.get());
 		if (afterCast == nullptr)
 			continue;
 		return afterCast;
@@ -21,7 +32,7 @@ ComponentType* Entity::GetComponent() const
 }
 
 template <typename ComponentType>
-ComponentType* Entity::AddComponent()
+ComponentType& Entity::AddComponent()
 {
 	static_assert(std::is_base_of<Component, ComponentType>::value,
 		"AddComponent can only add components, not other types");
@@ -32,20 +43,26 @@ ComponentType* Entity::AddComponent()
 	if (afterCast == nullptr)
 		RaiseError("dynamic_cast failed for " + name + ".AddComponent<" + Tools::to_string<ComponentType>() + ">()");
 	afterCast->InternalConstructor(id);
-	return afterCast;
+	return *afterCast;
 
+}
+
+template <typename ComponentType>
+ComponentType* Entity::TryGet(uuids::uuid entityID)
+{
+	return Entity::register_.Get(entityID).TryGetComponent<ComponentType>();
 }
 
 template <typename ComponentType> 
 ComponentType& Entity::Get(uuids::uuid entityID)
 {
-	return *Entity::register_.Get(entityID).GetComponent<ComponentType>();
+	return Entity::register_.Get(entityID).GetComponent<ComponentType>();
 }
 
 template <typename ComponentType> 
 ComponentType& Entity::Add(uuids::uuid entityID)
 {
-	return *Entity::register_.Get(entityID).AddComponent<ComponentType>();
+	return Entity::register_.Get(entityID).AddComponent<ComponentType>();
 }
 
 

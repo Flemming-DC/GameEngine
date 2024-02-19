@@ -63,12 +63,13 @@ Transform* Transform::GetParent() const
 }
 void Transform::SetParent(Transform* newParent) 
 {
-	if (newParent == nullptr)
-		RaiseError("It it currently not possible to set parent to null.");
-	if (parent != nullptr)
+	if (parent)
 		Tools::Remove(parent->children, this);
+	// apply parent transform to this, in order to counteract the loss of its transform
 	parent = newParent;
-	newParent->children.push_back(this);;
+	// apply inverse newParent transform to this, in order to counteract the gain of its transform
+	if (newParent)
+		newParent->children.push_back(this);;
 
 }
 std::vector<Transform*> Transform::GetChildren() const

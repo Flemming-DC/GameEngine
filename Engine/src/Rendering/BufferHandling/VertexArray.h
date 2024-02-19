@@ -21,7 +21,7 @@ public:
 	void Bind() const;
 	static void UnBind();
 	void AddBuffer(const VertexBuffer& vb, const VertexLayoutManager& layout) const;
-	uuids::uuid GetID() const { return id; }
+	inline uuids::uuid GetID() const { return id; }
 
 	template<typename T>
 	void Push(T value) {}

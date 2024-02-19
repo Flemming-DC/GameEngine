@@ -22,19 +22,19 @@ public:
 	~Component();
 	std::string to_string() const;
 
-	template <typename ComponentType>
-	inline ComponentType& Get() const { return *GetEntity().GetComponent<ComponentType>(); }
+	template <typename ComponentType> inline 
+		ComponentType* TryGet() const { return Entity::TryGet<ComponentType>(entityID); }
+	template <typename ComponentType> inline 
+		ComponentType& Get() const { return Entity::Get<ComponentType>(entityID); }
 	inline Entity& GetEntity() const { return Entity::register_.Get(entityID); } //{ return entity; }
 	inline Transform& GetTransform() const { return *transform; }
 
 
 	bool operator==(const Component& other) { return this->has_equal_id(other); }
 	bool has_equal_id(const Component& other) { return this->id == other.id; }
-	uuids::uuid GetID() const { return id; }
+	inline uuids::uuid GetID() const { return id; }
 
 private:
-	//static std::unordered_map<std::type_info, Register<Component>> registers;
-	static Register<Component> register_;
 	uuids::uuid entityID;
 	Transform* transform = nullptr;
 	//bool entityIsDoingcleanup = false;

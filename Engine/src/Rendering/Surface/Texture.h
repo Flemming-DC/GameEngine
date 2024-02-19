@@ -18,7 +18,7 @@ public:
 
 	inline int GetWidth() const { return width; }
 	inline int GetHeight() const { return height; }
-	uuids::uuid GetID() const { return id; }
+	inline uuids::uuid GetID() const { return id; }
 
 private:
 	uuids::uuid id;

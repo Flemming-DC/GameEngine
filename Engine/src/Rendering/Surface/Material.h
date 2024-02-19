@@ -27,7 +27,7 @@ public:
 	// Sets the uniform internally in the material. 
 	// nb: it wont be sent to the GPU until the renderer issues a draw call.
 	void SetUniform(const std::string& name, std::any value);
-	uuids::uuid GetID() const { return id; }
+	inline uuids::uuid GetID() const { return id; }
 
 	template <typename T> inline T GetUniform(const std::string& uniformName);
 	

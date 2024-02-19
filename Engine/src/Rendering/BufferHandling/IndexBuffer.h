@@ -16,7 +16,7 @@ public:
 	void Bind() const;
 	static void UnBind();
 	inline unsigned int GetCount() const { return count; }
-	uuids::uuid GetID() const { return id; }
+	inline uuids::uuid GetID() const { return id; }
 
 private:
 	uuids::uuid id;

@@ -29,7 +29,7 @@ public:
 	std::string GetPath() const { return path; }
 	std::unordered_map<std::string, std::string> GetUniformTypesByName() const { return uniformTypesByName; }
 	int GetTextureSlot(std::string uniformName) { return textureSlotsByName[uniformName]; }
-	uuids::uuid GetID() const { return id; }
+	inline uuids::uuid GetID() const { return id; }
 
 private:
 	uuids::uuid id; 
