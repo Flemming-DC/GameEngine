@@ -4,6 +4,7 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "Gizmo.h"
+#include <stduuid/uuid.h>
 
 class Renderer
 {
@@ -14,8 +15,8 @@ public:
 
 private:
 	static bool showBlackScreenDebugInfo;
-	static Gizmo horizontalGrid;
-	static Gizmo verticalGrid;
+	static uuids::uuid horizontalGridID;
+	static uuids::uuid verticalGridID;
 
 	static bool ScreenIsBlack();
 	

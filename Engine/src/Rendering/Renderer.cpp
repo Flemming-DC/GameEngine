@@ -11,8 +11,8 @@
 #include "OpenGLidChecker.h"
 
 bool Renderer::showBlackScreenDebugInfo = true;
-Gizmo Renderer::horizontalGrid;
-Gizmo Renderer::verticalGrid;
+uuids::uuid Renderer::horizontalGridID;
+uuids::uuid Renderer::verticalGridID;
 
 
 
@@ -21,9 +21,11 @@ void Renderer::Draw()
     Renderable::UnBind();
     for (Renderable* renderable : Renderable::allRenderables)
         renderable->Draw();
-    for (Gizmo* gizmo : Gizmo::allGizmos)
-        gizmo->Draw();
-
+    //for (Gizmo* gizmo : Gizmo::allGizmos)
+    //    gizmo->Draw();
+    for (Gizmo& gizmo : Gizmo::register_.GetData())
+        gizmo.Draw();
+    
     
     if (showBlackScreenDebugInfo && ScreenIsBlack())
         Log("The screen is black. Here are some possible causes:\n"
@@ -84,15 +86,19 @@ void Renderer::SetupGrid2D(float gridScale)
         }
 
     }
+    Log("Renderer: Make 2 Gizmos");
+    Gizmo& horizontalGrid_ = Gizmo::register_.Add(horizontallyOrganizedPosition2Ds, nullptr, color);
+    //horizontalGrid.Setup(horizontallyOrganizedPosition2Ds, nullptr, color);
+    horizontalGrid_.loop = false;
+    horizontalGrid_.showPoints = false;
+    horizontalGridID = horizontalGrid_.GetID();
 
-    horizontalGrid = Gizmo(horizontallyOrganizedPosition2Ds, nullptr, color);
-    horizontalGrid.loop = false;
-    horizontalGrid.showPoints = false;
+    Gizmo& verticalGrid_ = Gizmo::register_.Add(verticallyOrganizedPosition2Ds, nullptr, color);
+    //verticalGrid = Gizmo(verticallyOrganizedPosition2Ds, nullptr, color);
+    verticalGrid_.loop = false;
+    verticalGrid_.showPoints = false;
+    verticalGridID = verticalGrid_.GetID();
 
-    verticalGrid = Gizmo(verticallyOrganizedPosition2Ds, nullptr, color);
-    verticalGrid.loop = false;
-    verticalGrid.showPoints = false;
-    
 }
 
 

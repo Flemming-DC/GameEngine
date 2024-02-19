@@ -6,20 +6,29 @@
 #include "EngineAssets.h"
 
 std::vector<Gizmo*> Gizmo::allGizmos;
+std::map<uuids::uuid, Gizmo&> Gizmo::allGizmosMap;
+Register<Gizmo> Gizmo::register_;
 
 Gizmo::Gizmo()
 {
-    allGizmos.push_back(this); 
+    //allGizmos.push_back(this);
 }
 
 Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform, glm::vec4 color)
 {
-    allGizmos.push_back(this);
+    if (!transform)
+        Log("Gizmo.Gizmo: !transform");
+    //allGizmos.push_back(this);
     Setup(position2Ds, transform, color);
 }
 
 void Gizmo::Setup(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec4 color_)
 {
+    if (UuidCreator::IsInitialized(id))
+        RaiseError("Material is already initialized");
+    id = UuidCreator::MakeID();
+    //allGizmosMap[id] = *this;
+
     color = color_;
     std::vector<float> positionsRaw;
     for (glm::vec2 position2D : position2Ds)
@@ -37,17 +46,24 @@ void Gizmo::Setup(std::vector<glm::vec2> position2Ds, Transform* transform_, glm
     transform = transform_;
     positionCount = position2Ds.size();
     initialized = true;
+
+    if (!transform)
+        Log("Gizmo.Setup: !transform");
 }
 
 
 Gizmo::~Gizmo()
 {
+    if(!loop)
+        Log("Gizmo.~Gizmo: !loop");
     //if (initialized)
     Tools::Remove(allGizmos, this);
 }
 
 void Gizmo::Draw()
 {
+    if (!loop)
+        Log("Gizmo.Draw: !loop");
     if (!initialized)
         RaiseError("Cannot draw uninitialized gizmo");
     glm::mat4 projection = Camera::GetCurrent()->GetProjection(); // evt. save the projectionView. at least within each frame
@@ -74,7 +90,7 @@ void Gizmo::UnBind()
 
 
 
-Gizmo Gizmo::MakeCircle(glm::vec2 center, float radius, Transform& transform_, glm::vec4 color)
+uuids::uuid Gizmo::MakeCircle(glm::vec2 center, float radius, Transform& transform_, glm::vec4 color)
 {
     std::vector<glm::vec2> position2Ds;
     int segmentCount = 40;
@@ -87,9 +103,10 @@ Gizmo Gizmo::MakeCircle(glm::vec2 center, float radius, Transform& transform_, g
             center.y + radius * std::sin(angle) });
     }
 
-    Gizmo circle = Gizmo(position2Ds, &transform_, color);
+    Gizmo& circle = Gizmo::register_.Add(position2Ds, &transform_, color);
+    //Gizmo circle = Gizmo(position2Ds, &transform_, color);
     circle.showPoints = false;
-    return circle;
+    return circle.GetID();
 }
 
 

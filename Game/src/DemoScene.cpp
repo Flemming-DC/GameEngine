@@ -21,6 +21,7 @@ DemoScene::DemoScene(const std::string& name) : Scene(name)
 
 std::vector<uuids::uuid>& DemoScene::MakeEntities()
 {
+
     Mesh& mesh = EngineAssets::SquareMesh();
     Material& material = GameAssets::GetMaterial();
     //std::vector<Entity> _entities;

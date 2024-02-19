@@ -7,7 +7,7 @@ void CircleCollider::SetLocalRadius(float radius_)
 {
 	localRadius = radius_;
 	glm::vec2 center = glm::vec2(0.0f); // evt. make this a variable
-	gizmo = Gizmo::MakeCircle(center, radius_, GetTransform());
+	gizmoID = Gizmo::MakeCircle(center, radius_, GetTransform());
 }
 
 

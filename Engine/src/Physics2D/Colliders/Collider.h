@@ -4,6 +4,7 @@
 #include "Gizmo.h"
 #include "Event.h"
 #include <vector>
+#include <stduuid/uuid.h>
 
 //struct Bounds { float x, y; };
 
@@ -18,7 +19,8 @@ public:
 	//Bounds GetBounds() { return bounds; }
 
 protected:
-	Gizmo gizmo;
+	//Gizmo gizmo;
+	uuids::uuid gizmoID;
 private:
 	static std::vector<Collider*> allColliders;
 	//std::vector<Collider*> overlaps = {};
