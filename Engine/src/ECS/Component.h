@@ -39,6 +39,7 @@ private:
 	Transform* transform = nullptr;
 	//bool entityIsDoingcleanup = false;
 	uuids::uuid id;
+	//static std::unordered_map<uuids::uuid, Component*> componentsByID;
 
 	void InternalConstructor(uuids::uuid entityID_); // only called by AddComponent in Entity
 

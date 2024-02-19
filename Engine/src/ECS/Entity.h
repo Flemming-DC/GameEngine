@@ -29,7 +29,6 @@ public:
 	template <typename ComponentType> inline static ComponentType& Add(uuids::uuid entityID);
 
 
-	// evt. bool TryGetComponent(Component* component) or HasComponent
 	// evt. get component in children, parent, siblings etc.
 
 	bool operator==(const Entity& other) { return this->has_equal_id(other); }
