@@ -15,7 +15,7 @@ void Scene::Load()
 {
 
     // really shitty error message, if path isn't found. Fix that!!
-    YAML::Node dataLoaded = YAML::LoadFile("res/data.yml");
+    YAML::Node dataLoaded = YAML::LoadFile(Path());
 
     if (dataLoaded["name"] && dataLoaded["age"])
     {
@@ -55,7 +55,7 @@ void Scene::Save()
     dataSaved["subNode"] = subNode;
 
     // Serialize the data to a YAML file
-    std::ofstream outStream("res/data.yml"); // insert name
+    std::ofstream outStream(Path()); // insert name
     outStream << dataSaved;
     outStream.close();
 

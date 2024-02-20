@@ -18,6 +18,6 @@ protected:
 	std::vector<uuids::uuid> entityIDs;
 	// register
 
-	std::string Path(std::string name) { return "res/Scenes/" + name + ".yml"; } // evt. store path rather than name
+	std::string Path() { return "res/Scenes/" + name + ".yml"; } // evt. store path rather than name
 };
 
