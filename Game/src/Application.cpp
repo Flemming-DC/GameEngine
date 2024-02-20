@@ -69,8 +69,6 @@ void HelloExit(Collider* other)
 
 void run()
 {
-    auto uuid = UuidCreator::GetUnInitializedID();
-    Log(UuidCreator::to_string(uuid));
 
     Initializer::Setup();
     Renderer::SetupGrid2D(0.25f);
