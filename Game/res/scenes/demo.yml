@@ -1,8 +1,21 @@
-name: John
-age: 40
-seq:
-  - first element
-  - second element
-subNode:
-  subName: Jo
-  subAge: 10
+name: demo
+id: ---
+entities:
+  camera:
+    id: 9a92f39e-872d-4500-a534-d944d72f6cbc
+    Transform: 
+        localPosition: [, , ]
+        localRotation: [, , ]
+        localScale:    [, , ]
+
+  picture 1: 
+    id: db0b16ba-9da6-4e81-b754-fbc5d7eb2761
+
+  picture 2: 
+    id: 4fd4e622-a777-41a8-ad95-d4cb2a382aa6
+
+  circle 1: 
+    id: 465e6f11-1daa-46ed-9eab-ada19408dd94
+
+  circle 2: 
+    id: 8d26e12b-d0e6-4905-9cf9-f6dba6d84cde

@@ -69,7 +69,7 @@ void HelloExit(Collider* other)
 
 void run()
 {
-
+    Log(UuidCreator::to_string(UuidCreator::MakeID()));
     Initializer::Setup();
     Renderer::SetupGrid2D(0.25f);
     GameAssets::Setup();
@@ -81,8 +81,8 @@ void run()
 
     DemoScene demoScene;// = DemoScene("demo");
     demoScene.Setup("demo");
-    demoScene.Save();
-    demoScene.Load();
+    //demoScene.Save();
+    //demoScene.Load();
 
     // ------------ loop ------------
 

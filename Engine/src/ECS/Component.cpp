@@ -17,7 +17,7 @@ Component::~Component()
 	// been called yet in which case it doesn't count as having been fully created
 	if (!UuidCreator::IsInitialized(entityID))
 		return;
-	Log("~Component");
+	//Log("~Component");
 	OnDestroyed();
 	// If the entity is dead, then it will handle cleanup itself.
 	//if (!entityIsDoingcleanup)

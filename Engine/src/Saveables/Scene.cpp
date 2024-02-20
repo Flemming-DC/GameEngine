@@ -3,6 +3,7 @@
 #define YAML_CPP_STATIC_DEFINE // put evt. denne macro i en dedikeret Asset class eller YML class
 #include <yaml-cpp/yaml.h>
 #include <fstream>
+#include <filesystem>
 
 void Scene::Setup(std::string name_) 
 {
@@ -15,6 +16,8 @@ void Scene::Load()
 {
 
     // really shitty error message, if path isn't found. Fix that!!
+    if (!std::filesystem::exists(Path()))
+        RaiseError("Cannot load Scene at " + Path() + ", since there is no Scene there.");
     YAML::Node dataLoaded = YAML::LoadFile(Path());
 
     if (dataLoaded["name"] && dataLoaded["age"])
@@ -42,21 +45,26 @@ void Scene::Load()
 
 void Scene::Save()
 {
+    /*
     // Create a YAML document
-    YAML::Node dataSaved;
-    dataSaved["name"] = "John";
-    dataSaved["age"] = 40;
-    dataSaved["seq"].push_back("first element");  // node["seq"] automatically becomes a sequence
-    dataSaved["seq"].push_back("second element");
+    YAML::Node data;
+    data["name"] = "John";
+    data["age"] = 40;
+    data["seq"].push_back("first element");  // node["seq"] automatically becomes a sequence
+    data["seq"].push_back("second element");
     //dataSaved["mirror"] = dataSaved["seq"][0];  // this creates an alias
     YAML::Node subNode;
     subNode["subName"] = "Jo";
     subNode["subAge"] = 10;
-    dataSaved["subNode"] = subNode;
+    data["subNode"] = subNode;
+    */
+
+    YAML::Node data;
+
 
     // Serialize the data to a YAML file
     std::ofstream outStream(Path()); // insert name
-    outStream << dataSaved;
+    outStream << data;
     outStream.close();
 
 
