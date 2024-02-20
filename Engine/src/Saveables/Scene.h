@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include <stduuid/uuid.h>
-#include "Entity.h"
+#include "Register.h"
 
 
 class Scene
@@ -12,11 +12,14 @@ public:
 	virtual std::vector<uuids::uuid> MakeEntities() = 0;
 	void Load(); // load from file
 	void Save(); // save to file
+	//inline uuids::uuid GetID() const { return id; }
 
 protected:
-	std::string name;
 	std::vector<uuids::uuid> entityIDs;
-	// register
+private:
+	std::string name;
+	uuids::uuid id;
+	//static Register<Scene> register_;
 
 	std::string Path() { return "res/Scenes/" + name + ".yml"; } // evt. store path rather than name
 };

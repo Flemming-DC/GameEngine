@@ -1,21 +1,38 @@
-name: demo
-id: ---
-entities:
+id: 01858818-d664-4f37-abb8-101eb243324b
+Entities:
   camera:
-    id: 9a92f39e-872d-4500-a534-d944d72f6cbc
-    Transform: 
-        localPosition: [, , ]
-        localRotation: [, , ]
-        localScale:    [, , ]
-
-  picture 1: 
-    id: db0b16ba-9da6-4e81-b754-fbc5d7eb2761
-
-  picture 2: 
-    id: 4fd4e622-a777-41a8-ad95-d4cb2a382aa6
-
-  circle 1: 
-    id: 465e6f11-1daa-46ed-9eab-ada19408dd94
-
-  circle 2: 
-    id: 8d26e12b-d0e6-4905-9cf9-f6dba6d84cde
+    id: 2b0ed073-8ad6-4573-8f27-831820099116
+    Transform:
+      id: 6485cc6f-8a70-45ce-8be6-0d9438e4c950
+    Camera:
+      id: ddd9c7b2-80c9-4470-a549-97657c6f0b74
+  picture 1:
+    id: f752e087-867f-42f1-a2d1-a235cfc2cdb5
+    Transform:
+      id: 3f3ea509-d8a9-47be-a62d-a252ad04a6ad
+    Renderable:
+      id: 097b9cb0-a075-42d6-9c3c-942fcbd05913
+    RectangleCollider:
+      id: 744d15d7-33a2-47c5-a901-987f0db256ee
+  picture 2:
+    id: 3d349229-57b8-43ff-a1c8-f7b7cc0b52c6
+    Transform:
+      id: dd16699b-26cc-4c67-ad25-ad55748550b7
+    Renderable:
+      id: 7346865a-5bed-42ac-a02f-b7871ff20f5d
+    GameLogic:
+      id: eacd904d-a42d-4d2c-9f14-6e06f59c7564
+    RectangleCollider:
+      id: 3accce5e-0538-4bd9-aeff-0be3dbb99367
+  circle 1:
+    id: 08809418-4218-4949-a5ae-29fb85267cde
+    Transform:
+      id: ce0009ff-670c-4435-93ad-5d6d19477c17
+    CircleCollider:
+      id: 420dfee5-3ffa-4087-b43d-48fe34aa88b5
+  circle 2:
+    id: 8c25d03c-82ec-447f-a4ed-4c17d0eb9dbe
+    Transform:
+      id: fcbafaa5-ffa5-4d25-9630-571dd0ea6239
+    CircleCollider:
+      id: 84c007f4-c632-4d8f-9f2c-fb0a94ceb104

@@ -1,14 +1,14 @@
 # Missing: build-order, activation of entity and components, custom type-dependent data
-name: demo
+# we dont store scene-name, since it is in the filename
 id: ---
 entities:
   camera:
     id: 9a92f39e-872d-4500-a534-d944d72f6cbc
     Transform: 
       id: ---
-      localPosition: [, , ]
-      localRotation: [, , ]
-      localScale:    [, , ]
+      localPosition: [0, 0, 0]
+      localRotation: [0, 0, 0]
+      localScale:    [1, 1, 1]
       parent: null
     Camera:
       id: ---

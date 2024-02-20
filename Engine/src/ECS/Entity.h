@@ -20,7 +20,7 @@ public:
 	void Destroy();
 	//~Entity();
 	static void UpdateAllEntities(); 
-	//std::vector<Component&>& GetComponents() const { return componentsByID.at(id); }
+	const std::vector<std::unique_ptr<Component>>& GetComponents() const { return componentsByEntity.at(id); }
 
 
 	static uuids::uuid Make(std::string name = "Entity");
