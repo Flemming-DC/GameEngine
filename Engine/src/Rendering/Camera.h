@@ -9,7 +9,7 @@
 class Camera : public Component
 {
 public:
-	void SetOrthographicProjection(float scale = 1.0f, float nearClipping = 0.0f, float farClipping = 1000.0f);
+	void SetToOrthographic(float scale = 1.0f, float nearClipping = 0.0f, float farClipping = 1000.0f);
 	//glm::mat4 GetProjectionView() const; // returns projectionMatrix times viewMatrix
 	glm::mat4 GetProjection() const;
 	glm::mat4 GetView(); //const

@@ -1,81 +1,10 @@
 /*
-#include "Shader.h"
-#include "Renderer.h"
-#include "Texture.h"
-#include "glm/gtc/matrix_transform.hpp"
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw_gl3.h"
-#include "Initializer.h"
-#include "Material.h"
-#include "Renderable.h"
-#include "Mesh.h"
-#include <map>
-#include <unordered_map>
-#include <vector>
-#include "Event.h"
-#include "Engine.h"
-#include "Components/GameLogic.h"
-#include <stduuid/uuid.h>
 #define YAML_CPP_STATIC_DEFINE
 #include <yaml-cpp/yaml.h>
 #include <fstream>
 #include "UuidCreator.h"
 
 
-void DummyUUID()
-{
-    std::random_device rd;
-    auto seed_data = std::array<int, std::mt19937::state_size> {};
-    std::generate(std::begin(seed_data), std::end(seed_data), std::ref(rd));
-    std::seed_seq seq(std::begin(seed_data), std::end(seed_data));
-    std::mt19937 generator(seq);
-    uuids::uuid_random_generator gen{ generator };
-
-    std::vector<uuids::uuid> ids;
-    int count = 100;
-    for (int i = 0; i < count; i++)
-        ids.push_back(gen());
-    Log("ids created");
-
-    bool any_equal_ids = false;
-    for (int i = 0; i < count; i++)
-    {
-        for (int j = 0; j < i; j++)
-        {
-            if (ids[j] == ids[i])
-            {
-                any_equal_ids = true;
-                break;
-            }
-        }
-    }
-    Log("any_equal_ids = " + std::to_string(any_equal_ids));
-
-
-    std::vector<std::string> idStrings;
-    for (int i = 0; i < count; i++)
-        idStrings.push_back(uuids::to_string((ids[i])));
-    Log("idStrings created");
-
-    std::vector<uuids::uuid> idsLoaded;
-    for (int i = 0; i < count; i++)
-        idsLoaded.push_back(uuids::uuid::from_string(idStrings[i]).value());
-
-    Log("idsLoaded created");
-
-    bool all_correctly_reloaded = true;
-    for (int i = 0; i < count; i++)
-    {
-        if (idsLoaded[i] != ids[i])
-        {
-            all_correctly_reloaded = false;
-            Log("reloading error at " + std::to_string(i) + ": "
-                + uuids::to_string(idsLoaded[i]) + ", " + uuids::to_string(ids[i]));
-            break;
-        }
-    }
-    Log("all_correctly_reloaded = " + std::to_string(all_correctly_reloaded));
-}
 
 void DummyYAML()
 {

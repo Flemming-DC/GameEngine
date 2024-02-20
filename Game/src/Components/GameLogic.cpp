@@ -2,7 +2,7 @@
 
 
 
-void GameLogic::SetByInspector(const Material& material_)
+void GameLogic::Setup(const Material& material_)
 {
     material = material_;
     color = material.GetUniform<glm::vec4>("u_color");

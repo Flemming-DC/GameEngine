@@ -5,7 +5,7 @@
 class GameLogic : public Component
 {
 public:
-	void SetByInspector(const Material& material); // temporary function
+	void Setup(const Material& material); // temporary function. 
 
 private:
 	float increment = 0.01f;

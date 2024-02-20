@@ -12,7 +12,7 @@ class Renderable : public Component
 public:
 	static std::vector<Renderable*> allRenderables;
 
-	void SetByInspector(const Mesh& mesh, const Material& material);
+	void Setup(const Mesh& mesh, const Material& material);
 	void Draw();
 	static void UnBind();
 	Material& GetMaterial() { return material; } // not used in engine

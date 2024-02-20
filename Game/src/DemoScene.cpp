@@ -12,36 +12,29 @@ void DemoScene::HelloExit(Collider* other)
 {
     Log("DemoScene::Exit " + other->GetEntity().name);
 }
-/*
-DemoScene::DemoScene(const std::string& name) : Scene(name)
-{
-    entities = MakeEntities();
-    LoadSpatialData(entities);
-}*/
 
-std::vector<uuids::uuid>& DemoScene::MakeEntities()
+std::vector<uuids::uuid> DemoScene::MakeEntities()
 {
 
     Mesh& mesh = EngineAssets::SquareMesh();
     Material& material = GameAssets::GetMaterial();
-    //std::vector<Entity> _entities;
 
     // ---------- cpp scene data ---------- 
 
     auto cameraID = Entity::Make("camera");
     Entity::Add<Transform>(cameraID);
-    Entity::Add<Camera>(cameraID).SetOrthographicProjection();
+    Entity::Add<Camera>(cameraID).SetToOrthographic();
 
     auto picture1ID = Entity::Make("picture 1");
     Entity::Add<Transform>(picture1ID);
-    Entity::Add<Renderable>(picture1ID).SetByInspector(mesh, material);
+    Entity::Add<Renderable>(picture1ID).Setup(mesh, material);
     Entity::Add<RectangleCollider>(picture1ID).SetSize({ 1, 1 });
 
 
     auto picture2ID = Entity::Make("picture 2");
     Entity::Add<Transform>(picture2ID).SetParent(&Entity::Get<Transform>(picture1ID));
-    Entity::Add<Renderable>(picture2ID).SetByInspector(mesh, material);
-    Entity::Add<GameLogic>(picture2ID).SetByInspector(material);
+    Entity::Add<Renderable>(picture2ID).Setup(mesh, material);
+    Entity::Add<GameLogic>(picture2ID).Setup(material);
     Entity::Add<RectangleCollider>(picture2ID).SetSize({ 1, 1 });
     Entity::Get<RectangleCollider>(picture2ID).onEnter.Add(HelloEnter);
     Entity::Get<RectangleCollider>(picture2ID).onExit.Add(HelloExit);
@@ -65,13 +58,13 @@ std::vector<uuids::uuid>& DemoScene::MakeEntities()
     Entity::Get<Transform>(circle2ID ).localPosition = { 0.7f,  0.5f, 0 };
 
     
-
-    entities.push_back(picture1ID);
-    entities.push_back(picture2ID);
-    entities.push_back(circle1ID);
-    entities.push_back(circle2ID);
-
-    return entities;
+    /*
+    entityIDs.push_back(picture1ID);
+    entityIDs.push_back(picture2ID);
+    entityIDs.push_back(circle1ID);
+    entityIDs.push_back(circle2ID);
+    */
+    return { cameraID, picture1ID, picture2ID, circle1ID, circle2ID };
 }
 
 

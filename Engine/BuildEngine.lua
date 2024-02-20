@@ -32,11 +32,11 @@ Engine = project "Engine"
         "glfw3", 
         "Opengl32",
         "Glu32", 
-        "yaml-cppd"
+        "yaml-cppd" -- 'd' means debug. You also have a release version.
     }
     ignoredefaultlibraries { "/NODEFAULTLIB:LIBCMT" }
 
-    libdirs { 
+    libdirs { -- evt. copy all libs to one folder and grab them from there
         "../Engine/Dependencies/BinDependencies/OpenGL/lib-vc2022",
         "../Engine/Dependencies/BinDependencies/yaml-cpp-master/build/Debug",
         "../Engine/Dependencies/BinDependencies/GLEW/lib/Release/Win32"

@@ -15,7 +15,7 @@ void Camera::OnConstructed()
 }
 
 
-void Camera::SetOrthographicProjection(float scale, float nearClipping, float farClipping)
+void Camera::SetToOrthographic(float scale, float nearClipping, float farClipping)
 {
     isProjectionInitialized = true;
     this->nearClipping = nearClipping;
