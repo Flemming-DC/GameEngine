@@ -82,7 +82,9 @@ void run()
     DemoScene demoScene;// = DemoScene("demo");
     demoScene.Setup("demo");
     demoScene.Save();
-    demoScene.Load();
+    //demoScene.Load();
+
+
 
     // ------------ loop ------------
 

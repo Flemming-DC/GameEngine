@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include "Component.h"
+#include "YAML.h"
 
 // evt. use local model as the authoritative parameter with model cached and everything else generated from those two.
 // evt. apply to caching in self and ancestors. use set local / glocal parameters instead of direct exposure of local
@@ -37,6 +38,8 @@ public:
 	glm::vec3 ToLocalSpace(glm::vec3 position, bool isPosition) const;
 	glm::vec2 ToLocalSpace(glm::vec2 position2D, bool isPosition) const;
 
+	void Save(YAML::Node& node) const override;
+	void Load(const YAML::Node& node) override;
 
 private:
 	Transform* parent = nullptr;
@@ -50,6 +53,5 @@ private:
 	void SetLocalDataUsingTransform(const glm::mat4& transform); 
 
 };
-
 
 

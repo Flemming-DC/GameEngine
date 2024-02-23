@@ -68,6 +68,10 @@ std::vector<uuids::uuid> DemoScene::MakeEntities()
 }
 
 
+void PostLoadingComponents()
+{
+    //Entity::Add<GameLogic>(picture2ID).Setup(material);
 
+}
 
 

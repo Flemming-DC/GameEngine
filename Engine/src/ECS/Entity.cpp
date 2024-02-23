@@ -42,3 +42,10 @@ uuids::uuid Entity::Make(std::string name)
 {
 	return Entity::register_.Add(name).GetID();
 }
+
+
+Entity& Entity::Load(uuids::uuid id, std::string name)
+{
+	return Entity::register_.Load(id, name);
+}
+

@@ -3,6 +3,8 @@
 #include <utility>
 #include "ErrorChecker.h"
 #include "UuidCreator.h"
+#include "ListTools.h"
+#include "StringTools.h"
 
 
 template<typename DataChunk>
@@ -20,12 +22,23 @@ public:
         return dataChunks.back();
     }
 
+    template<typename... Args>
+    DataChunk& Load(uuids::uuid id, Args&&... args)
+    {
+        if (Tools::ContainsKey_unordered(indexByID, id))
+            RaiseError("This id is already in the register: id = " + UuidCreator::to_string(id)
+                + "\nto_string(problematic object) = " + Tools::to_string(Get(id)));
+        dataChunks.emplace_back(std::forward<Args>(args)...);
+        dataChunks.back().SetID(id);
+        indexByID[id] = dataChunks.size() - 1;
+        return dataChunks.back();
+    }
 
 
     void Remove(const uuids::uuid& id)
     {
         if (!Tools::ContainsKey_unordered(indexByID, id))
-            RaiseError("Trying to reomve an object, which isn't in the register.");
+            RaiseError("Trying to remove an object, which isn't in the register.");
         dataChunks.erase(dataChunks.begin() + indexByID[id]);
         Tools::RemoveKey_unordered(indexByID, id);
     }

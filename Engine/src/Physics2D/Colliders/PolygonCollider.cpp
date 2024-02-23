@@ -2,9 +2,9 @@
 #include "ErrorChecker.h"
 
 
-void PolygonCollider::Setup(std::vector<glm::vec2> position2Ds_)
+void PolygonCollider::Setup(std::vector<glm::vec2> localPosition2Ds_)
 {
-	localPosition2Ds = position2Ds_;
+	localPosition2Ds = localPosition2Ds_;
 
 	localNormals.clear();
 	int count = (int)localPosition2Ds.size();
@@ -33,7 +33,7 @@ void PolygonCollider::Setup(std::vector<glm::vec2> position2Ds_)
 		for (int i = 0; i < count; i++)
 			localNormals[i] *= -1;
 	}
-	gizmoID = Gizmo::register_.Add(position2Ds_, &GetTransform()).GetID();
+	gizmoID = Gizmo::register_.Add(localPosition2Ds, &GetTransform()).GetID();
 }
 
 
@@ -61,6 +61,18 @@ std::pair<float, float> PolygonCollider::ShadowAlongNormal(glm::vec2 normal) con
 	return { min, max };
 }
 
+
+void PolygonCollider::Save(YAML::Node& node) const
+{
+	Log("PolygonCollider: save");
+	node["localPosition2Ds"] = localPosition2Ds;
+}
+
+void PolygonCollider::Load(const YAML::Node& node)
+{
+	Log("PolygonCollider: Load");
+	Setup(node["localPosition2Ds"].as<std::vector<glm::vec2>>());
+}
 
 
 

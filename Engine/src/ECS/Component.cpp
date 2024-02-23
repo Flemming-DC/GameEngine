@@ -3,12 +3,14 @@
 #include "UuidCreator.h"
 
 
-void Component::InternalConstructor(uuids::uuid entityID_)
+void Component::InternalConstructor(uuids::uuid entityID_, YAML::Node* node)
 {
-	id = UuidCreator::MakeID();
+	id = node == nullptr ? UuidCreator::MakeID() : (*node)["id"].as<uuids::uuid>();
 	entityID = entityID_;
 	transform = &Get<Transform>();
-	OnConstructed();
+	if (node)
+		Load(*node);
+	OnConstructed(); // evt. combine Load and OnConstructed into Load with nullable pointer
 }
 
 Component::~Component()

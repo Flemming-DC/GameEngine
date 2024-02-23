@@ -124,3 +124,25 @@ void Transform::SetLocalDataUsingTransform(const glm::mat4& transform)
 
 
 
+void Transform::Save(YAML::Node& node) const
+{
+	node["localPosition"] = localPosition;
+	node["localRotation"] = localRotation;
+	node["localScale"] = localScale;
+	if (parent != nullptr)
+		node["parent"] = parent->GetID();
+}
+
+void Transform::Load(const YAML::Node& node)
+{
+	localPosition = node["localPosition"].as<glm::vec3>();
+	localRotation = node["localRotation"].as<glm::quat>();
+	localScale = node["localScale"].as<glm::vec3>();
+	if (node["parent"])
+	{
+		auto parentID = node["parent"].as<uuids::uuid>();
+
+	}
+	Log("cant load parent, since map: id -> component is not implemented");
+}
+

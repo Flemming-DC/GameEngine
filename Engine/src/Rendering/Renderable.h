@@ -16,6 +16,8 @@ public:
 	void Draw();
 	static void UnBind();
 	Material& GetMaterial() { return material; } // not used in engine
+	void Save(YAML::Node& node) const override;
+	void Load(const YAML::Node& node) override;
 	
 private:
 	Mesh mesh;

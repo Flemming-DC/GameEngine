@@ -48,3 +48,21 @@ void Renderable::UnBind()
 }
 
 
+void Renderable::Save(YAML::Node& node) const
+{
+    Log("Renderable: save");
+    node["mesh"] = mesh.GetID();
+    node["material"] = material.GetID();
+
+}
+
+void Renderable::Load(const YAML::Node& node)
+{
+    Log("Renderable: Load");
+    auto meshID = node["mesh"].as<uuids::uuid>();
+    auto materialID = node["material"].as<uuids::uuid>();
+
+    //mesh = ; // copy, not ref
+    material = Material::register_.Get(materialID); // copy, not ref
+}
+

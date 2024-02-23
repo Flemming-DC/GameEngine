@@ -5,13 +5,17 @@ diverse
 	update view-area on window resize
 	introduce check for unwanted destruction
 	evt. replace openGL destructors with cleanup functions
+	check realease of openGL resources
+	evt. check untimely calls to component destructors
+	evt. create the initializable class and let assets and components inhirit from it. 
 
 components & gameobjects
 	separate gamelogic out
 	updatable
 	handle activation
-	asset instances
+	asset instances / prefabs (implement them by function calls that create an entity)
 	component destroyed warning
+	evt. introduce name and component statistics that can be used to search for entities
 
 dynamics
 	startObject, endObject, update, enable, disable, startScene, endScene, starGame, endGame
@@ -36,6 +40,7 @@ collision
 scenes
 run function / master loop
 read/save files from/to disk
+	Load function might make SetByInspector functions unnecessary
 
 headers
 	common, tools, rendering

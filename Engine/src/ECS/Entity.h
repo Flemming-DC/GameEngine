@@ -5,6 +5,7 @@
 #include <memory>
 #include <stduuid/uuid.h>
 #include "Register.h"
+#include "YAML.h"
 
 // this pseudo entity component system doesn't handle memory layout in a contigous way
 class Component;
@@ -14,7 +15,7 @@ class Entity
 {
 public:
 	static Register<Entity> register_;
-	std::string name;
+	const std::string name; 
 
 	Entity(std::string name = "Entity");
 	void Destroy();
@@ -24,9 +25,11 @@ public:
 
 
 	static uuids::uuid Make(std::string name = "Entity");
+	static Entity& Load(uuids::uuid id, std::string name);
 	template <typename ComponentType> inline static ComponentType* TryGet(uuids::uuid entityID);
 	template <typename ComponentType> inline static ComponentType& Get(uuids::uuid entityID);
 	template <typename ComponentType> inline static ComponentType& Add(uuids::uuid entityID);
+	template <typename ComponentType> ComponentType& LoadComponent(YAML::Node& node);
 
 
 	// evt. get component in children, parent, siblings etc.
@@ -34,6 +37,7 @@ public:
 	bool operator==(const Entity& other) { return this->has_equal_id(other); }
 	bool has_equal_id(const Entity& other) { return this->id == other.id; }
 	inline uuids::uuid GetID() const { return id; }
+	inline void SetID(uuids::uuid id_) { id = id_; }
 
 private:
 	static std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> componentsByEntity;
@@ -41,7 +45,7 @@ private:
 
 	template <typename ComponentType> ComponentType* TryGetComponent() const;
 	template <typename ComponentType> inline ComponentType& GetComponent() const;
-	template <typename ComponentType> ComponentType& AddComponent();
+	template <typename ComponentType> ComponentType& AddComponent(YAML::Node* node = nullptr); // id is only used by load
 };
 
 

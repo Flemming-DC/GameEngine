@@ -28,3 +28,16 @@ std::pair<float, float> CircleCollider::ShadowAlongNormal(glm::vec2 normal) cons
 	float positionAlongNormal = glm::dot((glm::vec2)GetTransform().GetPosition(), normal);
 	return { positionAlongNormal - GetRadius(), positionAlongNormal + GetRadius() };
 }
+
+
+void CircleCollider::Save(YAML::Node& node) const
+{
+	node["localRadius"] = localRadius;
+}
+
+void CircleCollider::Load(const YAML::Node& node)
+{
+	SetLocalRadius(node["localRadius"].as<float>());
+}
+
+

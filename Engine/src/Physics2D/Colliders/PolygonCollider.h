@@ -7,12 +7,14 @@
 class PolygonCollider : public Collider
 {
 public:
-	void Setup(std::vector<glm::vec2> position2Ds_);
+	void Setup(std::vector<glm::vec2> localPosition2Ds);
 	// add position and remove position would be useful in an editor
 
 	const std::vector<glm::vec2>& GetLocalPosition2Ds() const { return localPosition2Ds; } 
 	std::pair<float, float> ShadowAlongNormal(glm::vec2 normal) const override;
 	const glm::vec2 GetNormalByIndex(int i) const { return GetTransform().ToWorldSpace(localNormals[i], false); };
+	void Save(YAML::Node& node) const override;
+	void Load(const YAML::Node& node) override;
 
 private:
 	std::vector<glm::vec2> localPosition2Ds; // positions in local space i.e. relative to transform.GetPosition()

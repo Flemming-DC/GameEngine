@@ -15,7 +15,8 @@ public:
 	//inline uuids::uuid GetID() const { return id; }
 
 protected:
-	std::vector<uuids::uuid> entityIDs;
+	std::vector<uuids::uuid> entityIDs; // is this dublicate info? They are also in the register. 
+	// what about map: name -> id for convenience
 private:
 	std::string name;
 	uuids::uuid id;

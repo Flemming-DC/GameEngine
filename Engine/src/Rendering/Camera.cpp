@@ -12,6 +12,7 @@ void Camera::OnConstructed()
 {
     if (currentCamera == nullptr)
         currentCamera = this;
+    SetToOrthographic(); // this is hardcoded, since Im only aiming for a 2D game
 }
 
 

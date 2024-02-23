@@ -32,7 +32,7 @@ ComponentType* Entity::TryGetComponent() const
 }
 
 template <typename ComponentType>
-ComponentType& Entity::AddComponent()
+ComponentType& Entity::AddComponent(YAML::Node* node)
 {
 	static_assert(std::is_base_of<Component, ComponentType>::value,
 		"AddComponent can only add components, not other types");
@@ -42,10 +42,18 @@ ComponentType& Entity::AddComponent()
 	ComponentType* afterCast = dynamic_cast<ComponentType*>(ptr);
 	if (afterCast == nullptr)
 		RaiseError("dynamic_cast failed for " + name + ".AddComponent<" + Tools::to_string<ComponentType>() + ">()");
-	afterCast->InternalConstructor(id);
+	afterCast->InternalConstructor(id, node);
 	return *afterCast;
 
 }
+
+
+template <typename ComponentType> 
+ComponentType& Entity::LoadComponent(YAML::Node& node)
+{
+	return AddComponent<ComponentType>(&node);
+}
+
 
 template <typename ComponentType>
 ComponentType* Entity::TryGet(uuids::uuid entityID)
