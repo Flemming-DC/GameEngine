@@ -25,7 +25,6 @@ public:
 
 
 	static uuids::uuid Make(std::string name = "Entity");
-	static Entity& Load(uuids::uuid id, std::string name);
 	template <typename ComponentType> inline static ComponentType* TryGet(uuids::uuid entityID);
 	template <typename ComponentType> inline static ComponentType& Get(uuids::uuid entityID);
 	template <typename ComponentType> inline static ComponentType& Add(uuids::uuid entityID);

@@ -24,7 +24,7 @@ public:
 
 	// transform is allowed to be null
 	Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform, 
-		glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), bool showPoints = true, bool loop = false);
+		glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), bool showPoints = true, bool loop = true);
 	void Draw();
 	void UnBind();
 

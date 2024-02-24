@@ -5,7 +5,7 @@ Entities:
         Transform:
             id: 8041bbf2-e0ed-408c-8836-0db47cc5a0ef
             localPosition: [0, 0, 0]
-            localRotation: [0, 0, 0, 1]
+            localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
         Camera:
             id: b07698b9-f912-4a39-8a9e-158405c47088
@@ -14,7 +14,7 @@ Entities:
         Transform:
             id: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
             localPosition: [-0.5, -0.5, 0]
-            localRotation: [0, 0, 0, 1]
+            localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
         Renderable:
             id: 8f2e1e26-e6d6-4917-ad9e-61e1e3c81791
@@ -28,7 +28,7 @@ Entities:
         Transform:
             id: a5be3ef9-f754-42ca-af89-8842ab357ab7
             localPosition: [1.5, -0.5, 0]
-            localRotation: [0, 0, 0, 1]
+            localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
             parent: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
         Renderable:
@@ -45,7 +45,7 @@ Entities:
         Transform:
             id: e3c36af0-1d29-4168-b050-71b69ca4dee5
             localPosition: [-0.5, 0.600000024, 0]
-            localRotation: [0, 0, 0, 1]
+            localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
         CircleCollider:
             id: 9dfbdb8b-5f77-4385-a4b1-bf7055108c73
@@ -55,7 +55,7 @@ Entities:
         Transform:
             id: 2e002505-8cd3-4da6-8a61-332630b45a94
             localPosition: [0.699999988, 0.5, 0]
-            localRotation: [0, 0, 0, 1]
+            localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
         CircleCollider:
             id: a61bc6e3-6caf-4b28-870a-3dbd0754d585

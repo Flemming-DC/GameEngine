@@ -22,18 +22,6 @@ public:
         return dataChunks.back();
     }
 
-    template<typename... Args>
-    DataChunk& Load(uuids::uuid id, Args&&... args)
-    {
-        if (Tools::ContainsKey_unordered(indexByID, id))
-            RaiseError("This id is already in the register: id = " + UuidCreator::to_string(id)
-                + "\n problematic object type = " + Tools::type_as_string(Get(id)));
-        dataChunks.emplace_back(std::forward<Args>(args)...);
-        dataChunks.back().SetID(id);
-        indexByID[id] = dataChunks.size() - 1;
-        return dataChunks.back();
-    }
-
 
     void Remove(const uuids::uuid& id)
     {

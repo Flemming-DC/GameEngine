@@ -80,7 +80,7 @@ uuids::uuid Gizmo::MakeCircle(glm::vec2 center, float radius, Transform& transfo
             center.y + radius * std::sin(angle) });
     }
 
-    return Gizmo::register_.Add(position2Ds, &transform_, color, false, true).GetID();
+    return Gizmo::register_.Add(position2Ds, &transform_, color, false).GetID();
 }
 
 
