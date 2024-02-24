@@ -25,7 +25,7 @@ private:
 	//std::vector<Collider*> overlaps = {};
 	//Bounds bounds;
 
-	void OnConstructed() override;
+	void OnStart() override;
 	void OnDestroyed() override;
 };
 

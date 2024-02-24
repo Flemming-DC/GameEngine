@@ -11,6 +11,8 @@
 class Mesh
 {
 public:
+    static Register<Mesh> register_;
+
     Mesh() {}
     Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const VertexLayout& layout)
         { Setup(vertices, indices, layout); }

@@ -30,7 +30,7 @@ void Texture::Setup(const std::string& filePath_)
 	glCall(glBindTexture(GL_TEXTURE_2D, 0));
 	
 	stbi_image_free(localBuffer);
-	OpenGLidChecker::Add(Tools::to_string(*this), openGLid);
+	OpenGLidChecker::Add(Tools::type_as_string(*this), openGLid);
 }
 
 void Texture::ShutDown()
@@ -40,7 +40,7 @@ void Texture::ShutDown()
 	if (!UuidCreator::IsInitialized(id))
 		return;
 	glCall(glDeleteTextures(1, &openGLid));
-	OpenGLidChecker::Remove(Tools::to_string(*this), openGLid);
+	OpenGLidChecker::Remove(Tools::type_as_string(*this), openGLid);
 }
 
 void Texture::Bind(unsigned int slot) const

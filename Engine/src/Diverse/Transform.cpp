@@ -141,8 +141,7 @@ void Transform::Load(const YAML::Node& node)
 	if (node["parent"])
 	{
 		auto parentID = node["parent"].as<uuids::uuid>();
-
+		parent = &GetComponent<Transform>(parentID);
 	}
-	Log("cant load parent, since map: id -> component is not implemented");
 }
 

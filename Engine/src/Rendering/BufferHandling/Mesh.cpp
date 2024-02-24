@@ -2,6 +2,7 @@
 #include "Initializer.h"
 #include "EngineAssets.h"
 
+Register<Mesh> Mesh::register_;
 
 void Mesh::Setup(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const VertexLayout& layout)
 {

@@ -8,7 +8,7 @@
 // static variables must be initialized in the cpp file not the header file
 Camera* Camera::currentCamera = nullptr;
 
-void Camera::OnConstructed()
+void Camera::OnStart()
 {
     if (currentCamera == nullptr)
         currentCamera = this;

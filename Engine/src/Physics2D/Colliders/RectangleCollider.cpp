@@ -22,13 +22,11 @@ void RectangleCollider::SetSize(glm::vec2 size_)
 
 void RectangleCollider::Save(YAML::Node& node) const
 {
-	Log("RectangleCollider: save");
-	node["size"] = size; // yields zero ???
+	node["size"] = size;
 }
 
 void RectangleCollider::Load(const YAML::Node& node)
 {
-	Log("RectangleCollider: Load");
 	SetSize(node["size"].as<glm::vec2>());
 }
 

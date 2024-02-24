@@ -7,7 +7,7 @@ std::vector<Collider*> Collider::allColliders = {};
 
 
 
-void Collider::OnConstructed()
+void Collider::OnStart()
 {
 	allColliders.push_back(this);
 }

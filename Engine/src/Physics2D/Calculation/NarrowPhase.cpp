@@ -2,8 +2,6 @@
 #include "RectangleCollider.h"
 #include "GlmTools.h"
 
-// rectangle on rectangle
-// position ok, but rotation is ignored and scale seems to be inverted
 
 using namespace std;
 using Overlaps = std::vector<std::pair<Collider*, Collider*>>;
@@ -26,28 +24,24 @@ bool NarrowPhase::IsOverLapping(Collider* collider1, Collider* collider2)
 {
 	if (collider1 == nullptr)
 		RaiseError("collider1 is nullptr");
-	//if (collider1->GetEntity() == nullptr)
-	//	RaiseError("collider1->GetEntity() is nullptr");
 	if (collider2 == nullptr)
 		RaiseError("collider2 is nullptr");
-	//if (collider2->GetEntity() == nullptr)
-	//	RaiseError("collider2->GetEntity() is nullptr");
 
 	CircleCollider* cirle1 = dynamic_cast<CircleCollider*>(collider1);
 	CircleCollider* cirle2 = dynamic_cast<CircleCollider*>(collider2);
 	if (cirle1 != nullptr && cirle2 != nullptr)
-		return IsOverLapping(cirle1, cirle2);
+		return IsOverLapping_CC(cirle1, cirle2);
 
 	PolygonCollider* polygon2 = dynamic_cast<PolygonCollider*>(collider2);
 	if (cirle1 != nullptr && polygon2 != nullptr)
-		return IsOverLapping(cirle1, polygon2);
+		return IsOverLapping_CP(cirle1, polygon2);
 
 	PolygonCollider* polygon1 = dynamic_cast<PolygonCollider*>(collider1);
 	if (polygon1 != nullptr && cirle2 != nullptr)
-		return IsOverLapping(polygon1, cirle2);
+		return IsOverLapping_CP(cirle2, polygon1);
 
 	if (polygon1 != nullptr && polygon2 != nullptr)
-		return IsOverLapping(polygon1, polygon2);
+		return IsOverLapping_PP(polygon1, polygon2);
 
 	RaiseError(
 		"Failed to find a function for computing overlap between colliders\n"
@@ -57,7 +51,7 @@ bool NarrowPhase::IsOverLapping(Collider* collider1, Collider* collider2)
 	return false; // this is merely to make the warnings shut up
 }
 
-bool NarrowPhase::IsOverLapping(CircleCollider* circle1, CircleCollider* circle2)
+bool NarrowPhase::IsOverLapping_CC(CircleCollider* circle1, CircleCollider* circle2)
 {
 	glm::vec3 displacement = circle1->GetTransform().GetPosition() - circle2->GetTransform().GetPosition();
 	float sqrDistance = displacement.x * displacement.x + displacement.y * displacement.y;
@@ -65,7 +59,7 @@ bool NarrowPhase::IsOverLapping(CircleCollider* circle1, CircleCollider* circle2
 	return sqrDistance <= sqrSumRadii;
 }
 
-bool NarrowPhase::IsOverLapping(CircleCollider* circle, PolygonCollider* polygon)
+bool NarrowPhase::IsOverLapping_CP(CircleCollider* circle, PolygonCollider* polygon)
 {
 	// we use a modified version of the SAT algorithm, in which the we treat 
 	// the direction from the circle to closest point in the polygon as the only relevant
@@ -110,7 +104,7 @@ bool NarrowPhase::IsOverLapping(CircleCollider* circle, PolygonCollider* polygon
 	return true;
 }
 
-bool NarrowPhase::IsOverLapping(PolygonCollider* polygon1, PolygonCollider* polygon2)
+bool NarrowPhase::IsOverLapping_PP(PolygonCollider* polygon1, PolygonCollider* polygon2)
 {
 	// we use the SAT algorithm https://www.youtube.com/watch?v=59BTXB-kFNs&ab_channel=Nybbit
 	

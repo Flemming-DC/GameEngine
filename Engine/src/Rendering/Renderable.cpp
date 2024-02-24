@@ -8,7 +8,7 @@
 // static variables must be initialized in the cpp file not the header file
 std::vector<Renderable*> Renderable::allRenderables; 
 
-void Renderable::OnConstructed()
+void Renderable::OnStart()
 {
     allRenderables.push_back(this);
 }
@@ -50,7 +50,6 @@ void Renderable::UnBind()
 
 void Renderable::Save(YAML::Node& node) const
 {
-    Log("Renderable: save");
     node["mesh"] = mesh.GetID();
     node["material"] = material.GetID();
 
@@ -58,11 +57,10 @@ void Renderable::Save(YAML::Node& node) const
 
 void Renderable::Load(const YAML::Node& node)
 {
-    Log("Renderable: Load");
     auto meshID = node["mesh"].as<uuids::uuid>();
     auto materialID = node["material"].as<uuids::uuid>();
 
-    //mesh = ; // copy, not ref
+    mesh = Mesh::register_.Get(meshID); // copy, not ref
     material = Material::register_.Get(materialID); // copy, not ref
 }
 

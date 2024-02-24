@@ -42,7 +42,7 @@ ComponentType& Entity::AddComponent(YAML::Node* node)
 	ComponentType* afterCast = dynamic_cast<ComponentType*>(ptr);
 	if (afterCast == nullptr)
 		RaiseError("dynamic_cast failed for " + name + ".AddComponent<" + Tools::to_string<ComponentType>() + ">()");
-	afterCast->InternalConstructor(id, node);
+	afterCast->OnAddComponent(id, node);
 	return *afterCast;
 
 }

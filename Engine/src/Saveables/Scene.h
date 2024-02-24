@@ -21,7 +21,6 @@ private:
 	std::string name;
 	uuids::uuid id;
 	//static Register<Scene> register_;
-
 	std::string Path() { return "res/Scenes/" + name + ".yml"; } // evt. store path rather than name
 };
 

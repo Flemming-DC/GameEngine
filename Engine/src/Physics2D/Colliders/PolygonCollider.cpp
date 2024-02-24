@@ -64,13 +64,11 @@ std::pair<float, float> PolygonCollider::ShadowAlongNormal(glm::vec2 normal) con
 
 void PolygonCollider::Save(YAML::Node& node) const
 {
-	Log("PolygonCollider: save");
 	node["localPosition2Ds"] = localPosition2Ds;
 }
 
 void PolygonCollider::Load(const YAML::Node& node)
 {
-	Log("PolygonCollider: Load");
 	Setup(node["localPosition2Ds"].as<std::vector<glm::vec2>>());
 }
 

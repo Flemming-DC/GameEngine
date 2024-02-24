@@ -8,6 +8,7 @@ diverse
 	check realease of openGL resources
 	evt. check untimely calls to component destructors
 	evt. create the initializable class and let assets and components inhirit from it. 
+	looping lacks in circle gizmo
 
 components & gameobjects
 	separate gamelogic out
@@ -16,6 +17,7 @@ components & gameobjects
 	asset instances / prefabs (implement them by function calls that create an entity)
 	component destroyed warning
 	evt. introduce name and component statistics that can be used to search for entities
+	handle cleanup in ~Component() to remove it from GetEntity().GetComponents()
 
 dynamics
 	startObject, endObject, update, enable, disable, startScene, endScene, starGame, endGame
@@ -46,6 +48,7 @@ read/save files from/to disk
 	get entity by name
 	hardcode custom gamelogic
 	multiple scenes
+	dont expose onconstructed, exppose a seperate function that is called after loading
 
 headers
 	common, tools, rendering

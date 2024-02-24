@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <map>
 #include <algorithm>
 #include <numeric>
 #include <string>
@@ -14,7 +15,7 @@ namespace Tools
 	std::string RemovePrefix(const std::string& str, const std::string& prefix);
 
 	template<typename T>
-	std::string to_string(const T& obj)
+	std::string type_as_string(const T& obj)
 	{
 		return RemovePrefix(typeid(obj).name(), "class ");
 	}
@@ -22,6 +23,29 @@ namespace Tools
 	std::string to_string()
 	{
 		return RemovePrefix(typeid(T).name(), "class ");
+	}
+
+
+
+	template<typename T>
+	std::string to_string(std::vector<T>& vec)
+	{
+		std::string out = "";
+		for (T t : vec)
+			out += ", " + Tools::to_string(t);
+		RemovePrefix(out, ", ");
+		return "[" + out + "]";
+	}
+
+	// remove by index is simple myVector.erase(myVector.begin() + index);
+
+	template<typename Tkey, typename Tval>
+	std::string to_string(std::map<Tkey, Tval>& dict)
+	{
+		std::string out = "";
+		for (const auto& pair : dict)
+			out += "\n    " + Tools::to_string(pair.first) + ": " + Tools::to_string(pair.second);
+		return "{" + out + "\n    }";
 	}
 
 }

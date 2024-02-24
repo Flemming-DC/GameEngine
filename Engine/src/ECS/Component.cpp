@@ -2,15 +2,33 @@
 #include "Transform.h"
 #include "UuidCreator.h"
 
+std::unordered_map<uuids::uuid, Component*> Component::componentsByID;
 
-void Component::InternalConstructor(uuids::uuid entityID_, YAML::Node* node)
+
+void Component::OnAddComponent(uuids::uuid entityID_, YAML::Node* node_)
 {
-	id = node == nullptr ? UuidCreator::MakeID() : (*node)["id"].as<uuids::uuid>();
-	entityID = entityID_;
+	if (node_)
+	{
+		node = *node_;
+		id = node["id"].as<uuids::uuid>();
+		entityID = entityID_;
+		componentsByID[id] = this;
+	}
+	else
+	{
+		id = UuidCreator::MakeID();
+		entityID = entityID_;
+		componentsByID[id] = this;
+		transform = &Get<Transform>();
+		OnStart();
+	}
+}
+
+void Component::OnSceneLoaded()
+{
 	transform = &Get<Transform>();
-	if (node)
-		Load(*node);
-	OnConstructed(); // evt. combine Load and OnConstructed into Load with nullable pointer
+	Load(node);
+	OnStart(); // evt. combine Load and OnConstructed into Load with nullable pointer
 }
 
 Component::~Component()
@@ -21,8 +39,10 @@ Component::~Component()
 		return;
 	//Log("~Component");
 	OnDestroyed();
+	Tools::RemoveKey_unordered(componentsByID, id);
+	
 	// If the entity is dead, then it will handle cleanup itself.
-	//if (!entityIsDoingcleanup)
+	//if (!entity still exists)
 	//	Tools::Remove(GetEntity().GetComponents(), this);   //<------------------ temp fix
 }
 
@@ -33,6 +53,5 @@ std::string Component::to_string() const
 	else
 		return transform->GetPath();
 }
-
 
 

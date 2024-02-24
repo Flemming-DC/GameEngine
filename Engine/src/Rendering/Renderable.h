@@ -23,7 +23,7 @@ private:
 	Mesh mesh;
 	Material material;
 
-	void OnConstructed() override;
+	void OnStart() override;
 	void OnDestroyed() override;
 };
 

@@ -27,7 +27,7 @@ public:
     {
         if (Tools::ContainsKey_unordered(indexByID, id))
             RaiseError("This id is already in the register: id = " + UuidCreator::to_string(id)
-                + "\nto_string(problematic object) = " + Tools::to_string(Get(id)));
+                + "\n problematic object type = " + Tools::type_as_string(Get(id)));
         dataChunks.emplace_back(std::forward<Args>(args)...);
         dataChunks.back().SetID(id);
         indexByID[id] = dataChunks.size() - 1;

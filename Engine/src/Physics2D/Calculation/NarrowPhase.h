@@ -17,9 +17,9 @@ private:
 	// evt. make IsOverLapping public. or make it available from the collider class
 	static bool IsOverLapping(Collider* collider1, Collider* collider2);
 
-	static bool IsOverLapping(CircleCollider* cirle1, CircleCollider* cirle2);
-	static bool IsOverLapping(CircleCollider* cirle, PolygonCollider* polygon);
-	static bool IsOverLapping(PolygonCollider* polygon1, PolygonCollider* polygon2);
+	static bool IsOverLapping_CC(CircleCollider* cirle1, CircleCollider* cirle2);
+	static bool IsOverLapping_CP(CircleCollider* cirle, PolygonCollider* polygon);
+	static bool IsOverLapping_PP(PolygonCollider* polygon1, PolygonCollider* polygon2);
 
 };
 

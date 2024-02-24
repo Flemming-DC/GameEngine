@@ -1,11 +1,12 @@
 #pragma once
 #include <string>
-#include "Entity.h"
-#include "Event.h"
 #include <stduuid/uuid.h>
-#include "Register.h"
 #include <unordered_map>
 #include <typeinfo>
+#include "ErrorChecker.h"
+#include "Entity.h"
+#include "Event.h"
+#include "Register.h"
 
 class Transform;
 class Entity;
@@ -25,12 +26,25 @@ public:
 	template <typename ComponentType> inline 
 		ComponentType& Get() const { return Entity::Get<ComponentType>(entityID); }
 	inline Entity& GetEntity() const { return Entity::register_.Get(entityID); } //{ return entity; }
-	inline Transform& GetTransform() const { return *transform; }
+	inline Transform& GetTransform() const { return *transform; };
 
 	bool operator==(const Component& other) { return this->has_equal_id(other); }
 	bool has_equal_id(const Component& other) { return this->id == other.id; }
 	inline uuids::uuid GetID() const { return id; }
 	virtual void Save(YAML::Node& node) const {}
+	void OnSceneLoaded();
+	Component& GetComponent(uuids::uuid id_) const {return *componentsByID[id_]; }
+
+	template <typename ComponentType>
+	ComponentType& GetComponent(uuids::uuid id_) const
+	{
+		ComponentType* afterCast = dynamic_cast<ComponentType*>(componentsByID[id_]);
+		if (!afterCast)
+			RaiseError("Failed to find " + Tools::to_string<ComponentType>() 
+				+ " with id " + UuidCreator::to_string(id_));
+		return *afterCast;
+	}
+
 
 protected:
 	Component() {}; // called by Entity
@@ -41,11 +55,13 @@ private:
 	Transform* transform = nullptr;
 	//bool entityIsDoingcleanup = false;
 	uuids::uuid id;
-	//static std::unordered_map<uuids::uuid, Component*> componentsByID;
+	static std::unordered_map<uuids::uuid, Component*> componentsByID;
+	YAML::Node node; // This is the node from which the component was loaded, if it was loaded at all
 
-	void InternalConstructor(uuids::uuid entityID_, YAML::Node* node = nullptr); // called by Entity
 
-	virtual void OnConstructed() {}
+	void OnAddComponent(uuids::uuid entityID_, YAML::Node* node = nullptr); // called by Entity
+
+	virtual void OnStart() {} // called when the component is created, activated and loaded, whichever happens last.
 	virtual void OnDestroyed() {}
 	virtual void OnUpdate() {}
 

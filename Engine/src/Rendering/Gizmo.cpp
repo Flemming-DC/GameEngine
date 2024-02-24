@@ -30,7 +30,8 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
     glCall(glPointSize(point_size));
 
     material = EngineAssets::GreenGizmoMaterial(); // color unspecified
-    mesh.Setup(positionsRaw, {}, { 2, 0, 0, 0 });
+    mesh = Mesh::register_.Add(positionsRaw, std::vector<unsigned int>(), VertexLayout({ 2, 0, 0, 0 }));
+    //mesh.Setup(positionsRaw, {}, { 2, 0, 0, 0 });
     transform = transform_;
     positionCount = position2Ds.size();
 
@@ -79,7 +80,7 @@ uuids::uuid Gizmo::MakeCircle(glm::vec2 center, float radius, Transform& transfo
             center.y + radius * std::sin(angle) });
     }
 
-    return Gizmo::register_.Add(position2Ds, &transform_, color, false).GetID();
+    return Gizmo::register_.Add(position2Ds, &transform_, color, false, true).GetID();
 }
 
 

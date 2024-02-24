@@ -24,13 +24,6 @@ using namespace std;
 using namespace uuids; 
 using namespace YAML;
 
-struct ReverseStringComparator
-{
-    bool operator()(const std::string& lhs, const std::string& rhs) const
-    {
-        return lhs > rhs; // Order strings in reverse
-    }
-};
 
 //static Register<Scene> register_;
 
@@ -43,6 +36,7 @@ void Scene::Setup(string name_)
 	entityIDs = MakeEntities();
 	//Load();
 }
+
 
 void Scene::Load()
 {
@@ -58,22 +52,24 @@ void Scene::Load()
     for (auto& pair : entitiesMap)
     {
         string entityName = pair.first;
+        Log("entityName: " + entityName);
         uuid entityID = pair.second["id"].as<uuid>();
         Entity& entity = Entity::Load(entityID, entityName);
 
-        auto componentsMap = pair.second.as<map<string, Node, ReverseStringComparator>>();
-        //std::sort(std::begin(componentsMap), std::end(componentsMap), );
-        //Tools::RemoveKey(componentsMap, (string)"id");
-        Log("HUSK AT HÅNDTERE COMPONENT RÆKKEFØLGEN ORDENLIGT");
+        auto componentsMap = pair.second.as<map<string, Node>>();
+        
+        for (auto& pair_ : componentsMap)
+        {
+            string compTypeName = pair_.first;
+            Log("comp proto loop:" + compTypeName);
+        }
+        Log("-------------------");
         for (auto& pair_ : componentsMap)
         {
             string compTypeName = pair_.first;
             Log(compTypeName);
             Node compYML = pair_.second;
-            //uuid compID = pair_.second["id"].as<uuid>();
 
-            // There is an annoying ordering dependence in Transform vs. Camera
-            // The custom logic cannot be included in this way, since the Engine mustn't refer to the Game
             if (compTypeName == "Transform")
                 entity.LoadComponent<Transform>(compYML);
             else if (compTypeName == "Camera")
@@ -86,16 +82,17 @@ void Scene::Load()
                 entity.LoadComponent<RectangleCollider>(compYML);
             else if (compTypeName == "CircleCollider")
                 entity.LoadComponent<CircleCollider>(compYML);
-            else
-                Warning("Unrecognized componentType: " + compTypeName + " . This component cannot be loaded.");
 
-            // component-type dependent data
-
-            // add component width fixed id
-            // entity.LoadComponent<>(); // compType from compTypeName
         }
+        
         entityIDs.push_back(entityID);
     }
+    for (const auto& entity : Entity::register_.GetData())
+    {
+        for (const auto& comp : entity.GetComponents())
+            comp->OnSceneLoaded();
+    }
+
 }
 
 
@@ -114,7 +111,7 @@ void Scene::Save()
             Node compYML;
             compYML["id"] = comp->GetID();
             comp->Save(compYML); // component-type dependent data
-            entityYML[Tools::to_string(*comp)] = compYML;
+            entityYML[Tools::type_as_string(*comp)] = compYML;
         }
         entitiesYML[entity.name] = entityYML;
     }
