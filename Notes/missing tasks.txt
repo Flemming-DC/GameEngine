@@ -37,10 +37,15 @@ collision
 	generate collision data
 		normals, velocity, collisionPoint
 
-scenes
 run function / master loop
 read/save files from/to disk
 	Load function might make SetByInspector functions unnecessary
+	comments in yml files for uuids
+	component ordering
+	load mesh and parent from id
+	get entity by name
+	hardcode custom gamelogic
+	multiple scenes
 
 headers
 	common, tools, rendering
