@@ -9,6 +9,7 @@ public:
 	//DemoScene(const std::string& name) : Scene(name) {}
 	
 	std::vector<uuids::uuid> MakeEntities() override;
+	void ManualSetup() override;
 	Entity& GetEntity(int index) { return Entity::register_.Get(entityIDs[index]); } // temp tool for GUI
 
 private:

@@ -10,6 +10,7 @@ class Scene
 public:
 	void Setup(std::string name_);
 	virtual std::vector<uuids::uuid> MakeEntities() = 0;
+	virtual void ManualSetup() = 0;
 	void Load(); // load from file
 	void Save(); // save to file
 	//inline uuids::uuid GetID() const { return id; }

@@ -91,7 +91,10 @@ void Material::CheckUniforms()
     for (const auto& pair : shader.GetUniformTypesByName())
     {
         std::string name = pair.first;
-        if (!Tools::ContainsKey(uniformValuesByName, name))
+        // we add "u_MVP": MissingUniform ourselves, since its an implementation detail.
+        if (name == "u_MVP" && !Tools::ContainsKey(uniformValuesByName, name))
+            uniformValuesByName["u_MVP"] = MissingUniform(); 
+        else if (!Tools::ContainsKey(uniformValuesByName, name))
             RaiseError(
                 "Material lacks a uniforms named " + name + ", even though this uniform is a part of the shader.");
     }

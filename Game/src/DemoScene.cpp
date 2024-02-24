@@ -68,10 +68,23 @@ std::vector<uuids::uuid> DemoScene::MakeEntities()
 }
 
 
-void PostLoadingComponents()
+void DemoScene::ManualSetup()
 {
-    //Entity::Add<GameLogic>(picture2ID).Setup(material);
+    Mesh& mesh = EngineAssets::SquareMesh();
+    Material& material = GameAssets::GetMaterial();
 
+    auto picture1ID = Entity::GetID("picture 1");
+    Entity::Get<Renderable>(picture1ID).Setup(mesh, material);
+    /*
+
+    Entity::Add<Renderable>(picture2ID).Setup(mesh, material);
+    Entity::Add<GameLogic>(picture2ID).Setup(material);
+    Entity::Get<RectangleCollider>(picture2ID).onEnter.Add(HelloEnter);
+    Entity::Get<RectangleCollider>(picture2ID).onExit.Add(HelloExit);
+
+    Entity::Get<CircleCollider>(circle2ID).onEnter.Add(HelloEnter);
+    Entity::Get<CircleCollider>(circle2ID).onExit.Add(HelloExit);
+    */
 }
 
 

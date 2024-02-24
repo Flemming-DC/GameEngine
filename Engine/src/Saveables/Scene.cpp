@@ -33,8 +33,9 @@ void Scene::Setup(string name_)
         RaiseError("Scene is already initialized");
     id = UuidCreator::MakeID();
 	name = name_;
-	entityIDs = MakeEntities();
-	//Load();
+	//entityIDs = MakeEntities();
+	Load();
+    ManualSetup();
 }
 
 
@@ -46,28 +47,18 @@ void Scene::Load()
     Node sceneYML = LoadFile(Path());
     id = sceneYML["id"].as<uuid>();
 
-    Node entityNode = sceneYML["Entities"];
-    auto entitiesMap = entityNode.as<map<string, Node>>(); // this randomly gave a bug? weird!
-    //auto entitiesMap = sceneYML["Entities"].as<map<string, Node>>(); // this randomly gave a bug? weird!
+    auto entitiesMap = sceneYML["Entities"].as<map<string, Node>>();
     for (auto& pair : entitiesMap)
     {
         string entityName = pair.first;
         Log("entityName: " + entityName);
         uuid entityID = pair.second["id"].as<uuid>();
-        Entity& entity = Entity::Load(entityID, entityName);
+        Entity& entity = Entity::register_.Add(entityName, &entityID);
 
         auto componentsMap = pair.second.as<map<string, Node>>();
-        
         for (auto& pair_ : componentsMap)
         {
             string compTypeName = pair_.first;
-            Log("comp proto loop:" + compTypeName);
-        }
-        Log("-------------------");
-        for (auto& pair_ : componentsMap)
-        {
-            string compTypeName = pair_.first;
-            Log(compTypeName);
             Node compYML = pair_.second;
 
             if (compTypeName == "Transform")
@@ -84,7 +75,6 @@ void Scene::Load()
                 entity.LoadComponent<CircleCollider>(compYML);
 
         }
-        
         entityIDs.push_back(entityID);
     }
     for (const auto& entity : Entity::register_.GetData())

@@ -13,7 +13,6 @@ void GameAssets::Setup()
     std::map<std::string, std::any> uniformsByName = {
         {"u_textureSampler", &texture},
         {"u_color", glm::vec4(0.8f, 0.3f, 0.8f, 1.0f)},
-        {"u_MVP", Material::MissingUniform()}
     };
 
     // assets

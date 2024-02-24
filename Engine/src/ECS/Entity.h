@@ -17,7 +17,7 @@ public:
 	static Register<Entity> register_;
 	const std::string name; 
 
-	Entity(std::string name = "Entity");
+	Entity(std::string name = "Entity", uuids::uuid* id = nullptr);
 	void Destroy();
 	//~Entity();
 	static void UpdateAllEntities(); 
@@ -36,11 +36,13 @@ public:
 
 	bool operator==(const Entity& other) { return this->has_equal_id(other); }
 	bool has_equal_id(const Entity& other) { return this->id == other.id; }
+	static uuids::uuid GetID(std::string name);
 	inline uuids::uuid GetID() const { return id; }
 	inline void SetID(uuids::uuid id_) { id = id_; }
 
 private:
 	static std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> componentsByEntity;
+	static std::unordered_map<std::string, std::vector<uuids::uuid>> EntitiesByName;
 	uuids::uuid id;
 
 	template <typename ComponentType> ComponentType* TryGetComponent() const;

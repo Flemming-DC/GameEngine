@@ -11,9 +11,7 @@ void EngineAssets::Setup()
 {
 	solidColorShader = Shader::register_.Add("res/shaders/SolidColor.shader");
 
-	std::map<std::string, std::any> uniformsByName = {
-	{"u_color", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)},
-	{"u_MVP", Material::MissingUniform()} };
+	std::map<std::string, std::any> uniformsByName = { {"u_color", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)} };
 	gizmoMaterial = Material::register_.Add(EngineAssets::SolidColorShader(), uniformsByName);
 
 
