@@ -11,8 +11,8 @@
 class Collider : public Component
 {
 public:
-	Event<Collider*> onEnter; // invoked  by the collision detection system
-	Event<Collider*> onExit; // invoked  by the collision detection system
+	Event<Collider&> onEnter; // invoked  by the collision detection system
+	Event<Collider&> onExit; // invoked  by the collision detection system
 
 	static std::vector<Collider*>& GetAllColliders() { return allColliders; }
 	virtual std::pair<float, float> ShadowAlongNormal(glm::vec2 normal) const = 0;

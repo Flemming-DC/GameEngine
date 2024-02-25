@@ -1,9 +1,11 @@
 #include "Renderable.h"
 #include "Camera.h"
 #include "ErrorChecker.h"
+#include "EngineAssets.h"
 #include "ListTools.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+
 
 // static variables must be initialized in the cpp file not the header file
 std::vector<Renderable*> Renderable::allRenderables; 
@@ -18,9 +20,13 @@ void Renderable::OnDestroyed()
 	Tools::Remove(allRenderables, this);
 }
 
-void Renderable::Setup(const Mesh& mesh_, const Material& material_)
+void Renderable::Setup(const Material& material_, const Mesh& mesh_)
 {
+    material = material_; // copy, not ref
     mesh = mesh_; // copy, not ref
+}
+void Renderable::Setup(const Material& material_)
+{
     material = material_; // copy, not ref
 }
 
@@ -50,17 +56,26 @@ void Renderable::UnBind()
 
 void Renderable::Save(YAML::Node& node) const
 {
-    node["mesh"] = mesh.GetID();
+    if (mesh.GetID() != EngineAssets::SquareMesh().GetID())
+        node["mesh"] = mesh.GetID();
     node["material"] = material.GetID();
 
 }
 
 void Renderable::Load(const YAML::Node& node)
 {
-    auto meshID = node["mesh"].as<uuids::uuid>();
     auto materialID = node["material"].as<uuids::uuid>();
-
-    mesh = Mesh::register_.Get(meshID); // copy, not ref
     material = Material::register_.Get(materialID); // copy, not ref
+
+    if (node["mesh"])
+    {
+        auto meshID = node["mesh"].as<uuids::uuid>();
+        mesh = Mesh::register_.Get(meshID); // copy, not ref
+    }
+    else
+    {
+        mesh = EngineAssets::SquareMesh(); // copy, not ref
+    }
+
 }
 

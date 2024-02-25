@@ -16,7 +16,7 @@ public:
 	struct MissingUniform {};
 	static Register<Material> register_;
 
-	Material() {}
+	Material() { Log("Material contructed"); }
 	Material(const Shader& shader_, const std::map<std::string, std::any>& uniformValuesByName_) 
 		{ Setup(shader_, uniformValuesByName_); }
 

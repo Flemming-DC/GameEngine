@@ -15,8 +15,8 @@ public:
 private:
 	//void DemoScene::HelloEnter(Collider* other);
 	//void DemoScene::HelloExit(Collider* other);
-	static void DemoScene::HelloEnter(Collider* other);
-	static void DemoScene::HelloExit(Collider* other);
+	//static void DemoScene::HelloEnter(Collider* other);
+	//static void DemoScene::HelloExit(Collider* other);
 
 };
 

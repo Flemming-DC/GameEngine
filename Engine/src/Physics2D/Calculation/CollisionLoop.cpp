@@ -20,20 +20,24 @@ void CollisionLoop::Update()
 
 void CollisionLoop::HandleCollisionInfo(Overlaps newOverlaps)
 {
-	for (const auto& pair : newOverlaps)
+	for (const auto& pair : newOverlaps) // enter
 	{
 		if (!Tools::Contains(overlaps, pair))
 		{
-			pair.first->onEnter.Invoke(pair.second);
-			pair.second->onEnter.Invoke(pair.first);
+			if (pair.first == nullptr || pair.second == nullptr)
+				RaiseError("Collider is null");
+			pair.first->onEnter.Invoke(*pair.second); // first enters second
+			pair.second->onEnter.Invoke(*pair.first); // second enters first
 		}
 	}
-	for (const auto& pair : overlaps)
+	for (const auto& pair : overlaps) // exit
 	{
 		if (!Tools::Contains(newOverlaps, pair))
 		{
-			pair.first->onExit.Invoke(pair.second);
-			pair.second->onExit.Invoke(pair.first);
+			if (pair.first == nullptr || pair.second == nullptr)
+				RaiseError("Collider is null");
+			pair.first->onExit.Invoke(*pair.second); // first exits second
+			pair.second->onExit.Invoke(*pair.first); // second exits first
 		}
 	}
 	overlaps = newOverlaps;

@@ -18,6 +18,8 @@ components & gameobjects
 	component destroyed warning
 	evt. introduce name and component statistics that can be used to search for entities
 	handle cleanup in ~Component() to remove it from GetEntity().GetComponents()
+	uninitialized components for the sake of the gameLogic
+	introduce ordering of start function. call it first on builtin components, then on others
 
 dynamics
 	startObject, endObject, update, enable, disable, startScene, endScene, starGame, endGame

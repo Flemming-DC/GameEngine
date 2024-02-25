@@ -3,18 +3,20 @@
 #include "CollisionChecker.h"
 
 
-
-void GameLogic::Setup(const Material& material_)
+void GameLogic::OnStart()
 {
-    material = material_;
-    color = material.GetUniform<glm::vec4>("u_color");
+    material = &Get<Renderable>().GetMaterial();
+    color = material->GetUniform<glm::vec4>("u_color");
+    Get<RectangleCollider>().onEnter.Add([](Collider& other)
+        { Log("DemoScene::Enter " + other.GetEntity().name); });
+    Get<RectangleCollider>().onExit.Add([](Collider& other) 
+        { Log("DemoScene::Exit " + other.GetEntity().name); });
 }
 
 void GameLogic::OnUpdate()
 {
-    Get<Renderable>().GetMaterial().SetUniform("u_color", color);
-    //material.SetUniform("u_color", color);
-
+    material->SetUniform("u_color", color);
+    
     if (color.r > 1)
         increment = -0.1f;
     if (color.r < 0)
