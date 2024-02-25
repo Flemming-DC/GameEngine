@@ -7,9 +7,10 @@ void GameLogic::OnStart()
 {
     material = &Get<Renderable>().GetMaterial();
     color = material->GetUniform<glm::vec4>("u_color");
+
     Get<RectangleCollider>().onEnter.Add([](Collider& other)
         { Log("DemoScene::Enter " + other.GetEntity().name); });
-    Get<RectangleCollider>().onExit.Add([](Collider& other) 
+    Get<RectangleCollider>().onExit.Add([](Collider& other)
         { Log("DemoScene::Exit " + other.GetEntity().name); });
 }
 
