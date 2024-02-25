@@ -82,8 +82,8 @@ void run()
     Material& material = GameAssets::GetMaterial();
     
 
-    DemoScene demoScene;// = DemoScene("demo");
-    demoScene.Setup("demo");
+    DemoScene demoScene;
+    demoScene.Setup();
     //demoScene.Save();
     //demoScene.Load();
 

@@ -27,13 +27,12 @@ using namespace YAML;
 
 //static Register<Scene> register_;
 
-void Scene::Setup(string name_) 
+void Scene::Setup() 
 {
     if (UuidCreator::IsInitialized(id))
         RaiseError("Scene is already initialized");
     id = UuidCreator::MakeID();
-	name = name_;
-	//entityIDs = MakeEntities();
+	//entityIDs = PurelyManualSetup();
 	Load();
     ManualSetup();
 }

@@ -13,7 +13,7 @@ void DemoScene::HelloExit(Collider* other)
     Log("DemoScene::Exit " + other->GetEntity().name);
 }
 
-std::vector<uuids::uuid> DemoScene::MakeEntities()
+std::vector<uuids::uuid> DemoScene::PurelyManualSetup()
 {
 
     Mesh& mesh = EngineAssets::SquareMesh();
