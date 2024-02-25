@@ -13,6 +13,7 @@ public:
 	static bool OpenGLInitialized() { return openGLInitialized; }
 private:
 	static bool openGLInitialized;
+	//static ImGuiIO io;
 };
 
 

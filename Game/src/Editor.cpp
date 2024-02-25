@@ -1,12 +1,12 @@
 #include "Editor.h"
 #include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw_gl3.h"
+//#include "imgui/imgui_impl_glfw_gl3.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_opengl3.h"
 
 
 namespace Editor
 {
-
-
     void unused_TransformGUI(const Entity& entity, glm::vec3* eulerAngles)
     {
         auto name = entity.name;
@@ -40,13 +40,49 @@ namespace Editor
         transform.localRotation = glm::quat(glm::radians(glm::vec3(0.0f, angle, 0.0f)));
     }
 
+    void Inspector() {}
+    void SceneEditor() {}
+    void GameView() {}
+    void AssetFolder() {}
+    void Hierarchy()
+    {
+
+        if (ImGui::TreeNode("Basic trees"))
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                // Use SetNextItemOpen() so set the default state of a node to be open. We could
+                // also use TreeNodeEx() with the ImGuiTreeNodeFlags_DefaultOpen flag to achieve the same thing!
+                //if (i == 0)
+                    //ImGui::SetNextItemOpen(true); // ImGuiCond_Once = 2
+
+                if (ImGui::TreeNode((void*)(intptr_t)i, "Child %d", i))
+                {
+                    ImGui::Text("blah blah");
+                    ImGui::SameLine();
+                    if (ImGui::SmallButton("button")) {}
+                    ImGui::TreePop();
+                }
+            }
+            ImGui::TreePop();
+        }
+    }
+
     void Update()
     {
-        Editor::TransformGUI2D(Entity::register_.Get(Entity::GetID("camera")));
-        Editor::TransformGUI2D(Entity::register_.Get(Entity::GetID("picture 1")));
-        Editor::TransformGUI2D(Entity::register_.Get(Entity::GetID("picture 2")));
-        Editor::TransformGUI2D(Entity::register_.Get(Entity::GetID("circle 1")));
-        Editor::TransformGUI2D(Entity::register_.Get(Entity::GetID("circle 2")));
+        TransformGUI2D(Entity::register_.Get(Entity::GetID("camera")));
+        TransformGUI2D(Entity::register_.Get(Entity::GetID("picture 1")));
+        TransformGUI2D(Entity::register_.Get(Entity::GetID("picture 2")));
+        TransformGUI2D(Entity::register_.Get(Entity::GetID("circle 1")));
+        TransformGUI2D(Entity::register_.Get(Entity::GetID("circle 2")));
+
+        void Inspector();
+        void SceneEditor();
+        void GameView();
+        void AssetFolder();
+        void Hierarchy();
+
+        ImGui::ShowDemoWindow();
     }
 };
 
