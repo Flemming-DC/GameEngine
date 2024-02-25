@@ -50,7 +50,6 @@ void Scene::Load()
     for (auto& pair : entitiesMap)
     {
         string entityName = pair.first;
-        Log("entityName: " + entityName);
         uuid entityID = pair.second["id"].as<uuid>();
         Entity& entity = Entity::register_.Add(entityName, &entityID);
 

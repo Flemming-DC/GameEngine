@@ -12,7 +12,6 @@ Register<Entity> Entity::register_;
 Entity::Entity(std::string name, uuids::uuid* id_) : name(name)
 {
 	id = id_ == nullptr ? UuidCreator::MakeID() : *id_; // you get an input id_ iff it is loaded as an asset.
-	Log("Entity: " + name + ", " + UuidCreator::to_string(id));
 	if (!Tools::ContainsKey_unordered(EntitiesByName, name))
 		EntitiesByName[name] = {};
 	EntitiesByName[name].push_back(id);
