@@ -4,6 +4,8 @@
 
 namespace Editor
 {
+	// bool is_editor
+
 	void Update();
 
 };
