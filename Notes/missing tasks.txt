@@ -9,6 +9,7 @@ diverse
 	evt. check untimely calls to component destructors
 	evt. create the initializable class and let assets and components inhirit from it. 
 	looping lacks in circle gizmo
+	evt. cleanup unsued get so and so functions for the texture
 
 components & gameobjects
 	separate gamelogic out

@@ -19,6 +19,7 @@ public:
 	inline int GetWidth() const { return width; }
 	inline int GetHeight() const { return height; }
 	inline uuids::uuid GetID() const { return id; }
+	inline unsigned int GetOpenGLid() const { return openGLid; }
 
 private:
 	uuids::uuid id;

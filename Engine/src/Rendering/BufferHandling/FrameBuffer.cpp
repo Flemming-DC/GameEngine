@@ -34,7 +34,7 @@ void FrameBuffer::Setup(int width_, int height_)
     glCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
     glCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture_openGLid, 0));
 
-    // make renbuffer for depth and stencil
+    // make renderbuffer for depth and stencil
     glCall(glGenRenderbuffers(1, &renderBuffer_openGLid));
     glCall(glBindRenderbuffer(GL_RENDERBUFFER, renderBuffer_openGLid));
     glCall(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height));
@@ -44,6 +44,7 @@ void FrameBuffer::Setup(int width_, int height_)
     if (fboStatus != GL_FRAMEBUFFER_COMPLETE)
         Log("framebuffer failed with errorcode: " + std::to_string(fboStatus));
 
+    UnBind();
     OpenGLidChecker::Add(Tools::type_as_string(*this), openGLid);
 }
 
@@ -64,7 +65,7 @@ void FrameBuffer::Bind() const
     if (!UuidCreator::IsInitialized(id))
         RaiseError("You cannot bind an uninitialized FrameBuffer");
     glCall(glBindFramebuffer(GL_FRAMEBUFFER, openGLid));
-    // bind texture and renderBuffer ?
+    // only bind texture and renderBuffer if you need to edit them as opposed to simply displaying them
 }
 
 void FrameBuffer::UnBind()
@@ -82,9 +83,8 @@ void FrameBuffer::Draw()
 
     // draw framebuffer to rectangle which is then drawn to screen
     UnBind();
-    // activate framebufferprogram (whatever that is) this is a shader program
+    // activate framebufferprogram, which is a shader program
     glDisable(GL_DEPTH_TEST);
-    unsigned int texture_openGLid = -1;
     glBindTexture(GL_TEXTURE_2D, texture_openGLid);
     glDrawArrays(GL_TRIANGLES, 0, 6);
 

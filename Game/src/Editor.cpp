@@ -3,7 +3,11 @@
 //#include "imgui/imgui_impl_glfw_gl3.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
+#include "GameAssets.h"
+#include "FrameBuffer.h"
+#include "Renderer.h"
 
+static FrameBuffer frameBuffer;
 
 namespace Editor
 {
@@ -41,7 +45,30 @@ namespace Editor
     }
 
     void Inspector() {}
-    void SceneEditor() {}
+    void SceneEditor()
+    {
+        if (!UuidCreator::IsInitialized(frameBuffer.GetID()))
+            frameBuffer = FrameBuffer::register_.Add(960, 519);
+
+        frameBuffer.Bind();
+        Renderer::Draw();
+        //frameBuffer.UnBind();
+
+        GLuint texOpenGLid = frameBuffer.GetTextureOpenGLid();
+        int texWidth = 960;
+        int texHeight = 519;
+        /*
+        GLuint texOpenGLid = GameAssets::GetTexture().GetOpenGLid();
+        int texWidth = GameAssets::GetTexture().GetWidth(); // Width of the texture
+        int texHeight = GameAssets::GetTexture().GetHeight(); // Height of the texture
+        */
+
+        ImGui::Begin("Texture Display");
+
+        ImGui::Image((void*)(intptr_t)texOpenGLid, ImVec2(texWidth, texHeight));
+
+        ImGui::End();
+    }
     void GameView() {}
     void AssetFolder() {}
 
@@ -163,9 +190,9 @@ namespace Editor
         SceneEditor();
         GameView();
         AssetFolder();
-        Hierarchy();
+        //Hierarchy();
 
-        ImGui::ShowDemoWindow();
+        //ImGui::ShowDemoWindow();
     }
 };
 

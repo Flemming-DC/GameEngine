@@ -19,7 +19,7 @@ uuids::uuid Renderer::verticalGridID;
 
 void Renderer::Draw()
 {
-    Renderable::UnBind();
+    Renderable::UnBind(); //  evt. add framebuffer unbind
     for (Renderable* renderable : Renderable::allRenderables)
         renderable->Draw();
     for (Gizmo& gizmo : Gizmo::register_.GetData())

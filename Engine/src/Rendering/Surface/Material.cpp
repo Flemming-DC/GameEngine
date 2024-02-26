@@ -5,7 +5,6 @@
 #include "ErrorChecker.h"
 #include "StringTools.h"
 #include "ListTools.h"
-#include "OtherTools.h"
 #include "Initializer.h"
 
 Register<Material> Material::register_;
