@@ -6,7 +6,7 @@
 #include "Entity.h"
 #include "Renderable.h"
 #include "Editor.h" // evt. temp
-
+#include "FrameBuffer.h"
 
 void run()
 {
@@ -21,6 +21,7 @@ void run()
     //demoScene.Load();
 
     
+    //FrameBuffer frameBuffer = FrameBuffer::register_.Add(960, 519);
 
     Log("--------- starting loop --------- ");
     while (Initializer::NewFrame())

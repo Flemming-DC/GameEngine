@@ -52,7 +52,8 @@ void Material::Bind(bool allowMissingUniforms)
     {
         string name = pair.first;
         any value = pair.second;
-        bool hasValue = value.has_value() && !Tools::IsOfType<MissingUniform>(value);
+        bool hasValue = value.has_value() && value.type() != typeid(MissingUniform);
+        
         if (!hasValue)
         {
             if (allowMissingUniforms)
@@ -104,12 +105,12 @@ void Material::SetupTexturesByName()
 {
     for (const auto& pair : uniformValuesByName)
     {
-        try
+        if (pair.second.type() == typeid(Texture*))
         {
             Texture* texturePtr = std::any_cast<Texture*>(pair.second);
             if (texturePtr)
                 texturesByName[pair.first] = texturePtr;
         }
-        catch (const std::bad_any_cast& _) { (void)_; } // the expression (void)_ prevents an unused variable warning
+
     }
 }

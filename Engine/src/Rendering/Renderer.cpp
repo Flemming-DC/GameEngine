@@ -8,6 +8,7 @@
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
 #include "VertexArray.h"
+#include "FrameBuffer.h"
 #include "OpenGLidChecker.h"
 
 bool Renderer::showBlackScreenDebugInfo = true;
@@ -104,6 +105,8 @@ void Renderer::ShutDown()
         vertexBuffer.ShutDown();
     for (VertexArray& vertexArray : VertexArray::register_.GetData())
         vertexArray.ShutDown();
+    for (FrameBuffer& frameBuffer : FrameBuffer::register_.GetData())
+        frameBuffer.ShutDown();
 
     OpenGLidChecker::CheckCleanup();
 }

@@ -25,8 +25,6 @@ void OpenGLidChecker::Remove(const string& typeName, unsigned int openGLid)
 		RaiseError("Trying to remove a typeName openGLid, but there are none.");
 
 	Tools::Remove(openGLidByType[typeName], openGLid);
-	if (typeName == "VertexArray")
-		Log(typeName + ".openGLid removed: " + std::to_string(openGLid));
 }
 
 void OpenGLidChecker::CheckCleanup()
