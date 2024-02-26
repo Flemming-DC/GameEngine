@@ -7,6 +7,11 @@
 #include "FrameBuffer.h"
 #include "Renderer.h"
 
+// cleanup frameBuffer
+// allow Renderer to pass in a framebuffer
+// debug vindue frøs da, jeg undockede viewporten
+// make viewport framebuffer size sensitive to my viewport vindow size.
+
 static FrameBuffer frameBuffer;
 
 namespace Editor
@@ -52,21 +57,18 @@ namespace Editor
 
         frameBuffer.Bind();
         Renderer::Draw();
-        //frameBuffer.UnBind();
+        frameBuffer.UnBind();
 
-        GLuint texOpenGLid = frameBuffer.GetTextureOpenGLid();
-        int texWidth = 960;
-        int texHeight = 519;
-        /*
-        GLuint texOpenGLid = GameAssets::GetTexture().GetOpenGLid();
-        int texWidth = GameAssets::GetTexture().GetWidth(); // Width of the texture
-        int texHeight = GameAssets::GetTexture().GetHeight(); // Height of the texture
-        */
+        unsigned int texOpenGLid = frameBuffer.GetTextureOpenGLid();
+        float texWidth = 960;
+        float texHeight = 519;
+        
+        ImVec2 uvBottumLeft = { 0, 1 };
+        ImVec2 uvTopRight = { 1, 0 };
+        ImVec2 size = { texWidth, texHeight };
 
-        ImGui::Begin("Texture Display");
-
-        ImGui::Image((void*)(intptr_t)texOpenGLid, ImVec2(texWidth, texHeight));
-
+        ImGui::Begin("ViewPort");
+        ImGui::Image((void*)(intptr_t)texOpenGLid, size, uvBottumLeft, uvTopRight);
         ImGui::End();
     }
     void GameView() {}

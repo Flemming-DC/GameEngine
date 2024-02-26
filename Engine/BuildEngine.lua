@@ -32,13 +32,13 @@ Engine = project "Engine"
         "glfw3", 
         "Opengl32",
         "Glu32", 
-        "yaml-cppd" -- 'd' means debug. You also have a release version.
     }
     ignoredefaultlibraries { "/NODEFAULTLIB:LIBCMT" }
 
     libdirs { -- evt. copy all libs to one folder and grab them from there
         "../Engine/Dependencies/BinDependencies/OpenGL/lib-vc2022",
         "../Engine/Dependencies/BinDependencies/yaml-cpp-master/build/Debug",
+        "../Engine/Dependencies/BinDependencies/yaml-cpp-master/build/Release",
         "../Engine/Dependencies/BinDependencies/GLEW/lib/Release/Win32"
     }
 
@@ -54,9 +54,11 @@ Engine = project "Engine"
         defines { "GLEW_STATIC", "WIN32", "_DEBUG", "_CONSOLE" } 
         runtime "Debug"
         symbols "On"
+        links { "yaml-cppd" } -- append yaml-cppd library for Windows
 
     filter "configurations:Release"
         defines { "GLEW_STATIC", "WIN32", "NDEBUG", "_CONSOLE" } 
         runtime "Release"
         --optimize "On" -- this breaks openGL
         symbols "On"
+        links { "yaml-cpp" } -- append yaml-cpp library for Windows

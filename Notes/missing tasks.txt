@@ -10,6 +10,7 @@ diverse
 	evt. create the initializable class and let assets and components inhirit from it. 
 	looping lacks in circle gizmo
 	evt. cleanup unsued get so and so functions for the texture
+	debug vindue fryser, når jeg hiver viewporten væk fra det.
 
 components & gameobjects
 	separate gamelogic out
