@@ -20,6 +20,7 @@ components & gameobjects
 	handle cleanup in ~Component() to remove it from GetEntity().GetComponents()
 	uninitialized components for the sake of the gameLogic
 	introduce ordering of start function. call it first on builtin components, then on others
+	remove entity from register upon destruction.
 
 dynamics
 	startObject, endObject, update, enable, disable, startScene, endScene, starGame, endGame

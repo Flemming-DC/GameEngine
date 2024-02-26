@@ -39,7 +39,8 @@ void Entity::Destroy() // Entity::~Entity()
 		else
 			Tools::Remove(EntitiesByName[name], id); // remove id, but keep name
 	}
-
+	
+	// Entity::register_.Remove(id); <------- take care of this
 }
 
 void Entity::UpdateAllEntities()

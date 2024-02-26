@@ -23,7 +23,7 @@ public:
     }
 
 
-    void Remove(const uuids::uuid& id)
+    void Remove(const uuids::uuid& id) // this has not passed testing
     {
         if (!Tools::ContainsKey_unordered(indexByID, id))
             RaiseError("Trying to remove an object, which isn't in the register.");

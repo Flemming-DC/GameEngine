@@ -55,6 +55,7 @@ void Initializer::Setup()
     ImGui_ImplOpenGL3_Init(glsl_version);
     //ImGui::SetCurrentWindow(window);
     ImGui::StyleColorsDark();
+    io.FontGlobalScale = 1.2f; // font size
 
 
     openGLInitialized = true;
