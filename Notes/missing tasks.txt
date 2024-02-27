@@ -25,7 +25,29 @@ components & gameobjects
 	remove entity from register upon destruction.
 
 dynamics
-	startObject, endObject, update, enable, disable, startScene, endScene, starGame, endGame
+	enable, disable, startScene, endScene, starGame, endGame
+
+Editor
+	hide default window
+	ImGUI input i.e. input when hide default window is out of focus
+	save changes automatically and/or on ctrl+s
+	seperate core loop into editor vs game and evt. also seperate game-in-editor from game-in-build
+
+	Inspector
+	SceneEditor / Viewport
+		run button width shortcut
+		resize
+		selection: single, box, evt. type
+		move camera and objects by wasd/arrows and by mouse click+drag (without conflict)
+		pause game in viewport
+		save scene automatically
+	GameView
+		bring default window up in front of ImGUI and put in focus 
+		run game on play and reload scene on stop
+	AssetFolder
+	Hierarchy
+	
+	viewport
 
 collision
 	use constrained proportions for circleCollider. this proporty is set on transform and used

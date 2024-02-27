@@ -61,20 +61,21 @@ void Camera::OnUpdate()
     float scaling = 1 + Input::GetScrollDirection() * scrollSpeed * Time::GetDelta(); // exp(x) = 1 + x + O(x^2) is used
     projection = glm::scale(projection, glm::vec3(scaling));
 
+
+
     glm::vec3 moveDirection = glm::vec3(0.0f);
-    if (Input::KeyHeldDown(GLFW_KEY_A))
+    if (Input::KeyHeldDown(Keyboard::A))
         moveDirection.x -= 1;
-    if (Input::KeyHeldDown(GLFW_KEY_D))
+    if (Input::KeyHeldDown(Keyboard::D))
         moveDirection.x += 1;
-    if (Input::KeyHeldDown(GLFW_KEY_S))
+    if (Input::KeyHeldDown(Keyboard::S))
         moveDirection.y -= 1;
-    if (Input::KeyHeldDown(GLFW_KEY_W))
+    if (Input::KeyHeldDown(Keyboard::W))
         moveDirection.y += 1;
     if (moveDirection.x != 0 && moveDirection.y != 0)
         moveDirection = glm::normalize(moveDirection);
 
     moveSpeed /= scaling; // large scaling means stuff looks bigger, which means zooming in.
-    Log(moveSpeed);
     GetTransform().localPosition += moveDirection * moveSpeed * Time::GetDelta();
 }
 

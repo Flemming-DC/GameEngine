@@ -49,6 +49,8 @@ Engine = project "Engine"
     filter "system:windows"
         systemversion "latest"
         defines { }
+    filter { "action:vs*" }
+        buildoptions "/wd26812" -- Disable warning C26812 (unscoped enum) in Visual Studio
 
     filter "configurations:Debug"
         defines { "GLEW_STATIC", "WIN32", "_DEBUG", "_CONSOLE" } 

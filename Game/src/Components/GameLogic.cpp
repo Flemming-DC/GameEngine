@@ -25,20 +25,20 @@ void GameLogic::OnUpdate()
     color.r += increment;
 
 
-    if (Input::KeyHeldDown(GLFW_KEY_K))
+    if (Input::KeyHeldDown(Keyboard::K))
     {
         Log("K");
         for (const auto& overlap : CollisionChecker::GetOverlaps())
             Log(overlap.first->GetEntity().name + " overlaps " + overlap.second->GetEntity().name);
     }
-    if (Input::KeyHeldDown(GLFW_KEY_L))
+    if (Input::KeyHeldDown(Keyboard::L))
     {
         Log("L");
         auto colliders = CollisionChecker::RayOverlaps(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
         for (const auto& col : colliders)
             Log(col->GetEntity().name + " was hit");
     }
-    if (Input::KeyHeldDown(GLFW_KEY_P))
+    if (Input::KeyHeldDown(Keyboard::P))
     {
         Log("P");
         auto collider = CollisionChecker::RayCast(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
