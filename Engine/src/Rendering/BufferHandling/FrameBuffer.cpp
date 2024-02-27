@@ -42,10 +42,14 @@ void FrameBuffer::Setup(int width_, int height_)
 
     glCall(unsigned int fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER)); // fboStatus = 36053
     if (fboStatus != GL_FRAMEBUFFER_COMPLETE)
-        Log("framebuffer failed with errorcode: " + std::to_string(fboStatus));
+        RaiseError("framebuffer failed with ErrorCode: " + std::to_string(fboStatus));
 
     UnBind();
+    glCall(glBindTexture(GL_TEXTURE_2D, 0)); // unbind
+    glCall(glBindRenderbuffer(GL_RENDERBUFFER, 0)); // unbind
     OpenGLidChecker::Add(Tools::type_as_string(*this), openGLid);
+    OpenGLidChecker::Add(Tools::type_as_string(*this) + ".Texture", texture_openGLid);
+    OpenGLidChecker::Add(Tools::type_as_string(*this) + ".RenderBuffer", renderBuffer_openGLid);
 }
 
 void FrameBuffer::ShutDown()
@@ -54,10 +58,12 @@ void FrameBuffer::ShutDown()
         RaiseError("Uninitialized VertexBuffer has openGLid != 0");
     if (!UuidCreator::IsInitialized(id))
         return;
-    glCall(glDeleteFramebuffers(1, &openGLid)); // hyp
-    glCall(glDeleteTextures(1, &texture_openGLid)); // hyp
-    glCall(glDeleteRenderbuffers(1, &renderBuffer_openGLid)); // hyp
+    glCall(glDeleteFramebuffers(1, &openGLid)); 
+    glCall(glDeleteTextures(1, &texture_openGLid));
+    glCall(glDeleteRenderbuffers(1, &renderBuffer_openGLid));
     OpenGLidChecker::Remove(Tools::type_as_string(*this), openGLid);
+    OpenGLidChecker::Remove(Tools::type_as_string(*this) + ".Texture", texture_openGLid);
+    OpenGLidChecker::Remove(Tools::type_as_string(*this) + ".RenderBuffer", renderBuffer_openGLid);
 }
 
 void FrameBuffer::Bind() const
@@ -70,7 +76,7 @@ void FrameBuffer::Bind() const
 
 void FrameBuffer::UnBind()
 {
-    glCall(glBindFramebuffer(GL_FRAMEBUFFER, 0)); // hyp
+    glCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 }
 
 void FrameBuffer::Draw()
