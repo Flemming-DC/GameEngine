@@ -11,9 +11,9 @@ void Input::Setup(GLFWwindow* window_)
 {
     window = window_;
     glCall(glfwFocusWindow(window)); // this should be called by default
-    glCall(glfwSetWindowFocusCallback(window, LogFocusChange));
-    glCall(glfwSetKeyCallback(window, KeyboardCallback));
-    glCall(glfwSetScrollCallback(window, ScrollCallback));
+    glCall(glfwSetWindowFocusCallback(window, GlfwLogFocusChange));
+    glCall(glfwSetKeyCallback(window, GlfwKeyboardCallback));
+    glCall(glfwSetScrollCallback(window, GlfwScrollCallback));
 }
 
 void Input::Update()
@@ -24,22 +24,22 @@ void Input::Update()
 }
 
 
-void Input::LogFocusChange(GLFWwindow* window, int focused)
+void Input::GlfwLogFocusChange(GLFWwindow* window, int focused)
 {
     if (focused == GLFW_FALSE)
-        Log("Lost focus");
+        Log("glfw Lost focus");
     else if (focused == GLFW_TRUE)
-        Log("Gained focus");
+        Log("glfw Gained focus");
 }
 
 
-void Input::KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+void Input::GlfwKeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     // if you implement an event type, then you can invoke it here with (key, action, mods) as input
     // or perhaps listen for specific key, action, mods combination rather than receiving this as parameters
 }
 
-void Input::ScrollCallback(GLFWwindow* window, double pressed, double direction)
+void Input::GlfwScrollCallback(GLFWwindow* window, double pressed, double direction)
 {
     glwfScrollHeldDown = (pressed == 1);
     glwfScrollDirection = (int)direction;
