@@ -27,7 +27,7 @@ void run()
         CollisionLoop::Update();
         Editor::Update(); // if is_editor
         Entity::UpdateAllEntities();
-        Renderer::Draw();
+        Renderer::DrawToScreen();
         Initializer::EndFrame();
     }
     Log("------- Shutdown --------");

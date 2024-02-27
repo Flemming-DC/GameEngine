@@ -6,14 +6,13 @@
 #include "ListTools.h"
 #include "StringTools.h"
 
-
+// the the use of uninitialized ID doesn't line up with the register, 
+// so the register only allows initiliazed values. 
 template<typename DataChunk>
 class Register
 {
 public:
 
-    // this the use of uninitialized ID doesn't line up with the register, 
-    // so the register only allows initiliazed values. 
     template<typename... Args>
     DataChunk& Add(Args&&... args)
     {

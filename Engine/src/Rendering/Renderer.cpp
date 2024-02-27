@@ -14,10 +14,10 @@
 bool Renderer::showBlackScreenDebugInfo = true;
 uuids::uuid Renderer::horizontalGridID;
 uuids::uuid Renderer::verticalGridID;
+FrameBuffer Renderer::frameBuffer;
 
 
-
-void Renderer::Draw()
+void Renderer::DrawToScreen()
 {
     Renderable::UnBind(); //  evt. add framebuffer unbind
     for (Renderable* renderable : Renderable::allRenderables)
@@ -33,6 +33,18 @@ void Renderer::Draw()
             "   * You might have provided an incorrect type to a gl function. fx GL_INT instead of GL_UNSIGNED_INT.\n"
             "   * You might have set the z coordinate of the view and the models, such that they are outside the clipping planes.\n"
             );
+}
+
+
+Renderer::RenderResult Renderer::DrawToFrameBuffer()
+{
+    if (!UuidCreator::IsInitialized(frameBuffer.GetID()))
+        frameBuffer = FrameBuffer::register_.Add(Initializer::GetWidth(), Initializer::GetHeight());
+    frameBuffer.Bind();
+    glCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+    Renderer::DrawToScreen();
+    frameBuffer.UnBind();
+    return { frameBuffer.GetTextureOpenGLid(), Initializer::GetWidth(), Initializer::GetHeight() };
 }
 
 

@@ -11,8 +11,9 @@
 // allow Renderer to pass in a framebuffer
 // debug vindue frøs da, jeg undockede viewporten
 // make viewport framebuffer size sensitive to my viewport vindow size.
+// exception upon closing some windows but not others
+// upside down
 
-static FrameBuffer frameBuffer;
 
 namespace Editor
 {
@@ -52,23 +53,14 @@ namespace Editor
     void Inspector() {}
     void SceneEditor()
     {
-        if (!UuidCreator::IsInitialized(frameBuffer.GetID()))
-            frameBuffer = FrameBuffer::register_.Add(960, 519);
-
-        frameBuffer.Bind();
-        Renderer::Draw();
-        frameBuffer.UnBind();
-
-        unsigned int texOpenGLid = frameBuffer.GetTextureOpenGLid();
-        float texWidth = 960;
-        float texHeight = 519;
+        auto renderResult = Renderer::DrawToFrameBuffer();
         
         ImVec2 uvBottumLeft = { 0, 1 };
         ImVec2 uvTopRight = { 1, 0 };
-        ImVec2 size = { texWidth, texHeight };
+        ImVec2 size = { (float)renderResult.width, (float)renderResult.height };
 
         ImGui::Begin("ViewPort");
-        ImGui::Image((void*)(intptr_t)texOpenGLid, size, uvBottumLeft, uvTopRight);
+        ImGui::Image((void*)(intptr_t)renderResult.textureOpenGlid, size, uvBottumLeft, uvTopRight);
         ImGui::End();
     }
     void GameView() {}

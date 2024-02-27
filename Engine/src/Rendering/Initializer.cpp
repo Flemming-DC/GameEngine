@@ -12,8 +12,10 @@
 #include "Renderer.h"
 
 static GLFWwindow* window;
-bool Initializer::openGLInitialized = false;
 static const char* glsl_version = "#version 460";
+bool Initializer::openGLInitialized = false;
+int Initializer::width = 960;
+int Initializer::height = 720;
 
 void Initializer::Setup()
 {
@@ -24,7 +26,7 @@ void Initializer::Setup()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
-    window = glfwCreateWindow(960, 720, "Hello World", NULL, NULL); // Create a windowed mode window and its OpenGL context
+    window = glfwCreateWindow(width, height, "Hello World", NULL, NULL); // Create a windowed mode window and its OpenGL context
     if (!window)
     {
         glfwTerminate();

@@ -11,9 +11,13 @@ public:
 	static bool NewFrame();
 	static void EndFrame();
 	static bool OpenGLInitialized() { return openGLInitialized; }
+	inline static int GetWidth() { return width; }
+	inline static int GetHeight() { return height; }
 private:
 	static bool openGLInitialized;
 	//static ImGuiIO io;
+	static int width;
+	static int height;
 };
 
 
