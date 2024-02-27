@@ -18,6 +18,8 @@ enum class Mouse
 	left, middle, right, //scroll
 };
 
+// enum class Gamepad
+
 class KeyMap
 {
 public:
