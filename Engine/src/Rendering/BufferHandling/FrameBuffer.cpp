@@ -23,7 +23,8 @@ void FrameBuffer::Setup(int width_, int height_)
     glCall(glBindFramebuffer(GL_FRAMEBUFFER, openGLid));
 
     // color and depth can be stored in texture or renderbuffer. This latter is fastest, but cannot be accessed from a shader
-    // make texture for color (Texture GL_LINEAR vs GL_NEAREST)
+    // 
+    // make texture for color
     glCall(glGenTextures(1, &texture_openGLid));
     glCall(glBindTexture(GL_TEXTURE_2D, texture_openGLid));
     glCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL));
@@ -77,24 +78,6 @@ void FrameBuffer::Bind() const
 void FrameBuffer::UnBind()
 {
     glCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
-}
-
-void FrameBuffer::Draw()
-{
-    Bind();
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_DEPTH_TEST);
-
-    // draw scene (presumably this gets drawn to framebuffer)
-
-    // draw framebuffer to rectangle which is then drawn to screen
-    UnBind();
-    // activate framebufferprogram, which is a shader program
-    glDisable(GL_DEPTH_TEST);
-    glBindTexture(GL_TEXTURE_2D, texture_openGLid);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-
-    // swap buffers and poll events
 }
 
 

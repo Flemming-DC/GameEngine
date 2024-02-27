@@ -14,7 +14,6 @@ public:
 
 	void Bind() const;
 	static void UnBind();
-	void Draw();
 	inline uuids::uuid GetID() const { return id; }
 	inline unsigned int GetTextureOpenGLid() const { return texture_openGLid; }
 	// resize / invalidate recreate state

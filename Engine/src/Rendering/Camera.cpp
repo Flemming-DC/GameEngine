@@ -58,6 +58,9 @@ glm::mat4 Camera::GetView() //const
 
 void Camera::OnUpdate()
 {
+    float scaling = 1 + Input::GetScrollDirection() * scrollSpeed * Time::GetDelta(); // exp(x) = 1 + x + O(x^2) is used
+    projection = glm::scale(projection, glm::vec3(scaling));
+
     glm::vec3 moveDirection = glm::vec3(0.0f);
     if (Input::KeyHeldDown(GLFW_KEY_A))
         moveDirection.x -= 1;
@@ -70,10 +73,9 @@ void Camera::OnUpdate()
     if (moveDirection.x != 0 && moveDirection.y != 0)
         moveDirection = glm::normalize(moveDirection);
 
+    moveSpeed /= scaling; // large scaling means stuff looks bigger, which means zooming in.
+    Log(moveSpeed);
     GetTransform().localPosition += moveDirection * moveSpeed * Time::GetDelta();
-
-    float scaling = 1 + Input::GetScrollDirection() * scrollSpeed * Time::GetDelta(); // exp(x) = 1 + x + O(x^2) is used
-    projection = glm::scale(projection, glm::vec3(scaling));
 }
 
 
