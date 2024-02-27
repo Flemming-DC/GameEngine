@@ -32,6 +32,7 @@ Editor
 	ImGUI input i.e. input when hide default window is out of focus
 	save changes automatically and/or on ctrl+s
 	seperate core loop into editor vs game and evt. also seperate game-in-editor from game-in-build
+	put focus window in front
 
 	Inspector
 	SceneEditor / Viewport
