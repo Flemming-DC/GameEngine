@@ -1,15 +1,15 @@
 #include "Input.h"
 #include "ErrorChecker.h"
+#include "Initializer.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-static GLFWwindow* window;
 bool Input::glwfScrollHeldDown = false;
 int Input::glwfScrollDirection = 0;
 
-void Input::Setup(GLFWwindow* window_)
+void Input::Setup()
 {
-    window = window_;
+    GLFWwindow* window = Initializer::GetWindow();
     glCall(glfwFocusWindow(window)); // this should be called by default
     glCall(glfwSetWindowFocusCallback(window, GlfwLogFocusChange));
     glCall(glfwSetKeyCallback(window, GlfwKeyboardCallback));
@@ -51,7 +51,7 @@ bool Input::KeyHeldDown(Keyboard key)
         return ImGui::IsKeyDown(KeyMap::ToImGui(key));
     else
     {
-        glCall(int state = glfwGetKey(window, KeyMap::ToGlfw(key)));
+        glCall(int state = glfwGetKey(Initializer::GetWindow(), KeyMap::ToGlfw(key)));
         return state == GLFW_PRESS;
     }
 }

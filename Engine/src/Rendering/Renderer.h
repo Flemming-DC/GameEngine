@@ -8,6 +8,7 @@
 #include "Initializer.h"
 #include <stduuid/uuid.h>
 
+
 class Renderer
 {
 public:
@@ -17,6 +18,10 @@ public:
 	static RenderResult DrawToFrameBuffer(); // returns the texture_openGLid that contains the render result.
 	static void SetupGrid2D(float gridScale);
 	static void ShutDown();
+	//static void ToggleGameWindow() { Initializer::ToggleGlfwWindow(); }
+	static void ShowWindow(bool show);
+	static bool IsWindowVisible();
+
 
 private:
 	static bool showBlackScreenDebugInfo;

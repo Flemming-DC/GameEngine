@@ -1,6 +1,7 @@
 #include "GameLogic.h"
 #include "Input.h"
 #include "CollisionChecker.h"
+#include "Renderer.h"
 
 
 void GameLogic::OnStart()
@@ -48,6 +49,11 @@ void GameLogic::OnUpdate()
             Log("Hit nothing");
     }
 
+    if (Input::KeyHeldDown(Keyboard::O))
+    {
+        Log("O");
+        Renderer::ShowWindow(!Renderer::IsWindowVisible());
+    }
 
 }
 

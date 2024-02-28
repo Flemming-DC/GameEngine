@@ -11,11 +11,10 @@
 #include "EngineAssets.h"
 #include "Renderer.h"
 
-static GLFWwindow* window;
-static const char* glsl_version = "#version 460";
 bool Initializer::openGLInitialized = false;
 int Initializer::width = 960;
 int Initializer::height = 720;
+GLFWwindow* Initializer::window = nullptr;
 
 void Initializer::Setup()
 {
@@ -36,7 +35,7 @@ void Initializer::Setup()
 
     // glew setup
     if (glewInit() != GLEW_OK)
-        std::cout << "glewInit failed" << std::endl;
+        RaiseError("glewInit failed");
     std::cout << glGetString(GL_VERSION) << std::endl;
     glfwSwapInterval(1);
 
@@ -52,18 +51,16 @@ void Initializer::Setup()
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
-    //ImGui_ImplGlfwGL3_Init(window, true);
     ImGui_ImplGlfw_InitForOpenGL(window, true);
+    const char* glsl_version = "#version 460";
     ImGui_ImplOpenGL3_Init(glsl_version);
-    //ImGui::SetCurrentWindow(window);
     ImGui::StyleColorsDark();
     io.FontGlobalScale = 1.2f; // font size
-
 
     openGLInitialized = true;
 
     //custom setup
-    Input::Setup(window);
+    Input::Setup();
     Time::Setup();
     EngineAssets::Setup();
 
@@ -73,7 +70,6 @@ void Initializer::Setup()
 void Initializer::Shutdown()
 {
     Renderer::ShutDown();
-    //ImGui_ImplGlfwGL3_Shutdown();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
@@ -86,7 +82,6 @@ bool Initializer::NewFrame()
     if (close)
         return false;
     glCall(glClear(GL_COLOR_BUFFER_BIT)); // same as renderer.Clear()
-    //ImGui_ImplGlfwGL3_NewFrame();
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
@@ -98,7 +93,6 @@ void Initializer::EndFrame()
 {
     Input::Update(); // resetting input data, must happen before glfwPollEvents
     ImGui::Render();
-    //ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
     // handle docking
@@ -111,9 +105,7 @@ void Initializer::EndFrame()
         glfwMakeContextCurrent(backup_current_context);
     }
 
-
     glCall(glfwSwapBuffers(window)); // Swap front and back buffers
     glCall(glfwPollEvents()); // Poll for and process events
 }
-
 

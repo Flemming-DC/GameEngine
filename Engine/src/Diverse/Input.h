@@ -8,7 +8,7 @@
 class Input
 {
 public:
-	static void Setup(GLFWwindow* window_);
+	static void Setup();
 	static void Update();
 
 	static bool KeyHeldDown(Keyboard key);

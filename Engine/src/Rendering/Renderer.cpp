@@ -123,3 +123,23 @@ void Renderer::ShutDown()
     OpenGLidChecker::CheckCleanup();
 }
 
+
+void Renderer::ShowWindow(bool show)
+{
+    auto window = Initializer::GetWindow();
+    if (IsWindowVisible())
+    {
+        glCall(glfwHideWindow(window));
+    }
+    else
+    {
+        glCall(glfwShowWindow(window));
+    }
+}
+
+bool Renderer::IsWindowVisible()
+{
+    auto window = Initializer::GetWindow();
+    glCall(bool isVisible = glfwGetWindowAttrib(window, GLFW_VISIBLE));
+    return isVisible;
+}
