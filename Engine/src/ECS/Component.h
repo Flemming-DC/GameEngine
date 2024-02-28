@@ -18,7 +18,7 @@ class Component
 	// entity must access InternalConstructor and OnUpdate and it must notify component about entity being dead
 	friend class Entity; 
 public:
-	~Component();
+	virtual ~Component();
 	std::string to_string() const;
 
 	template <typename ComponentType> inline 

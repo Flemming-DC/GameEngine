@@ -109,3 +109,8 @@ void Initializer::EndFrame()
     glCall(glfwPollEvents()); // Poll for and process events
 }
 
+void Initializer::Exit()
+{
+    glCall(glfwSetWindowShouldClose(window, GLFW_TRUE));
+    //std::exit(0);
+}

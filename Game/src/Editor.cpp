@@ -6,6 +6,7 @@
 #include "GameAssets.h"
 #include "FrameBuffer.h"
 #include "Renderer.h"
+#include "Input.h"
 
 // cleanup frameBuffer
 // allow Renderer to pass in a framebuffer
@@ -187,6 +188,9 @@ namespace Editor
         //Hierarchy();
 
         //ImGui::ShowDemoWindow();
+
+        if (Input::KeyHeldDown(Keyboard::exc))
+            Initializer::Exit(); // save first
     }
 };
 

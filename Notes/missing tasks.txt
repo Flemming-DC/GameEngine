@@ -23,16 +23,16 @@ components & gameobjects
 	uninitialized components for the sake of the gameLogic
 	introduce ordering of start function. call it first on builtin components, then on others
 	remove entity from register upon destruction.
+	Tools::RemoveKey_unordered(componentsByID, id); upon exc is buggy
+	
 
 dynamics
 	enable, disable, startScene, endScene, starGame, endGame
 
 Editor
-	hide default window
 	ctrl input for saving
 	save changes automatically and/or on ctrl+s
 	seperate core loop into editor vs game and evt. also seperate game-in-editor from game-in-build
-	put focus window in front
 
 	Inspector
 	SceneEditor / Viewport

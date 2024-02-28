@@ -7,6 +7,7 @@ int KeyMap::ToGlfw(Keyboard key)
 {
     switch (key)
     {
+    case Keyboard::exc: return GLFW_KEY_ESCAPE;
     case Keyboard::_1: return GLFW_KEY_1;
     case Keyboard::_2: return GLFW_KEY_2;
     case Keyboard::_3: return GLFW_KEY_3;
@@ -84,7 +85,7 @@ int KeyMap::ToGlfw(Keyboard key)
     case Keyboard::numpad_0: return GLFW_KEY_KP_0;
     //case Keyboard::numpad_del: return GLFW_KEY_KP_DECIMAL;
     default:
-        RaiseError("Missing key");
+        RaiseError("KeyMap::ToGlfw(Keyboard key): Missing key");
         return -1; // dummy return value
     }
 }
@@ -97,7 +98,7 @@ int KeyMap::ToGlfw(Mouse key)
     case Mouse::middle: return GLFW_MOUSE_BUTTON_MIDDLE;
     case Mouse::right: return GLFW_MOUSE_BUTTON_RIGHT;
     default:
-        RaiseError("Missing key");
+        RaiseError("KeyMap::ToGlfw(Mouse key): Missing key");
         return -1; // dummy return value
     }
 }
@@ -197,7 +198,7 @@ ImGuiKey KeyMap::ToImGui(Keyboard key)
     case Keyboard::numpad_del: return ImGuiKey_KeypadDecimal;
 
     default:
-        RaiseError("Missing key");
+        RaiseError("KeyMap::ToImGui(Keyboard key): Missing key");
         return ImGuiKey_COUNT; // dummy return value
     }               
 }
@@ -210,7 +211,7 @@ ImGuiKey KeyMap::ToImGui(Mouse key)
     case Mouse::middle: return ImGuiKey_MouseMiddle;
     case Mouse::right: return ImGuiKey_MouseRight;
     default:
-        RaiseError("Missing key");
+        RaiseError("KeyMap::ToImGui(Mouse key): Missing key");
         return ImGuiKey_COUNT; // dummy return value
     }
 }

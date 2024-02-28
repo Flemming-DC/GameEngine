@@ -14,6 +14,8 @@ public:
 	inline static int GetWidth() { return width; }
 	inline static int GetHeight() { return height; }
 	inline static GLFWwindow* GetWindow() { return window; }
+	static void Exit();
+
 private:
 	static bool openGLInitialized;
 	//static ImGuiIO io;

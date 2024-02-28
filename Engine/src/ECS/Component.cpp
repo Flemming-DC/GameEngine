@@ -37,9 +37,8 @@ Component::~Component()
 	// been called yet in which case it doesn't count as having been fully created
 	if (!UuidCreator::IsInitialized(entityID))
 		return;
-	//Log("~Component");
 	OnDestroyed();
-	Tools::RemoveKey_unordered(componentsByID, id);
+	Tools::RemoveKey_unordered(componentsByID, id); // this is buggy !!!
 	
 	// If the entity is dead, then it will handle cleanup itself.
 	//if (!entity still exists)
