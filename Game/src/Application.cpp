@@ -32,7 +32,9 @@ void run()
         Initializer::EndFrame();
     }
     Log("------- Shutdown --------");
+    demoScene.ShutDown();
     Initializer::Shutdown();
+    Log("------- Done --------");
 }
 
 

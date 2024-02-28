@@ -43,6 +43,7 @@ ComponentType& Entity::AddComponent(YAML::Node* node)
 	if (afterCast == nullptr)
 		RaiseError("dynamic_cast failed for " + name + ".AddComponent<" + Tools::to_string<ComponentType>() + ">()");
 	afterCast->OnAddComponent(id, node);
+	componentsByID[afterCast->id] = ptr;
 	return *afterCast;
 
 }
@@ -74,9 +75,36 @@ ComponentType& Entity::Add(uuids::uuid entityID)
 }
 
 
+template <typename ComponentType>
+ComponentType& Entity::GetComponent(uuids::uuid id_)
+{
+	ComponentType* afterCast = dynamic_cast<ComponentType*>(componentsByID[id_]);
+	if (!afterCast)
+		RaiseError("Failed to find " + Tools::to_string<ComponentType>()
+			+ " with id " + UuidCreator::to_string(id_));
+	return *afterCast;
+}
 
+/*
+template <typename ComponentType>
+bool Entity::RemoveComponent(ComponentType comp)
+{
+	auto compPtr = TryGet<ComponentType>();
+	if (compPtr == nullptr)
+		return false;
+	Tools::RemoveKey_unordered(componentsByID, compPtr->GetID());
 
-
+	for (const auto& _compPtr : componentsByEntity[id])
+	{
+		if (_compPtr->GetID() == compPtr->GetID())
+		{
+			Tools::Remove(componentsByEntity[id], _compPtr); // loop cannot continue after remove
+			return true;
+		}
+	}
+	
+}
+*/
 
 
 

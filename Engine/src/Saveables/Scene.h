@@ -14,6 +14,7 @@ public:
 	void Load(); // load from file
 	void Save(); // save to file
 	//inline uuids::uuid GetID() const { return id; }
+	void ShutDown();
 
 protected:
 	std::vector<uuids::uuid> entityIDs; // is this dublicate info? They are also in the register. 

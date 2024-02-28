@@ -75,7 +75,6 @@ int KeyMap::ToGlfw(Keyboard key)
     case Keyboard::numpad_2: return GLFW_KEY_KP_2;
     case Keyboard::numpad_3: return GLFW_KEY_KP_3;
     case Keyboard::numpad_enter: return GLFW_KEY_KP_ENTER;
-    case Keyboard::ctrl: return GLFW_KEY_LEFT_CONTROL;
     case Keyboard::alt: return GLFW_KEY_LEFT_ALT;
     case Keyboard::space: return GLFW_KEY_SPACE;
     case Keyboard::altgr: return GLFW_KEY_RIGHT_ALT;
@@ -84,6 +83,9 @@ int KeyMap::ToGlfw(Keyboard key)
     case Keyboard::rightArrow: return GLFW_KEY_RIGHT;
     case Keyboard::numpad_0: return GLFW_KEY_KP_0;
     //case Keyboard::numpad_del: return GLFW_KEY_KP_DECIMAL;
+    case Keyboard::ctrl: 
+        Warning("KeyMap::ToGlfw() returns GLFW_KEY_LEFT_CONTROL, which ignores GLFW_KEY_RIGHT_CONTROL");
+        return GLFW_KEY_LEFT_CONTROL; //GLFW_KEY_LEFT_CONTROL || GLFW_KEY_RIGHT_CONTROL;
     default:
         RaiseError("KeyMap::ToGlfw(Keyboard key): Missing key");
         return -1; // dummy return value
@@ -187,7 +189,7 @@ ImGuiKey KeyMap::ToImGui(Keyboard key)
     case Keyboard::numpad_2: return ImGuiKey_Keypad2;
     case Keyboard::numpad_3: return ImGuiKey_Keypad3;
     case Keyboard::numpad_enter: return ImGuiKey_KeypadEnter;
-    // case Keyboard::ctrl: return ImGUI doesn't yet have a ctrl key
+    case Keyboard::ctrl: return ImGuiMod_Ctrl;
     case Keyboard::alt: return ImGuiKey_LeftAlt;
     case Keyboard::space: return ImGuiKey_Space;
     // case Keyboard::altgr: return 

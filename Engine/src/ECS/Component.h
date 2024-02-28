@@ -18,7 +18,8 @@ class Component
 	// entity must access InternalConstructor and OnUpdate and it must notify component about entity being dead
 	friend class Entity; 
 public:
-	virtual ~Component();
+	//void Destroy();
+	//~Component() {}
 	std::string to_string() const;
 
 	template <typename ComponentType> inline 
@@ -33,17 +34,7 @@ public:
 	inline uuids::uuid GetID() const { return id; }
 	virtual void Save(YAML::Node& node) const {}
 	void OnSceneLoaded();
-	Component& GetComponent(uuids::uuid id_) const {return *componentsByID[id_]; }
 
-	template <typename ComponentType>
-	ComponentType& GetComponent(uuids::uuid id_) const
-	{
-		ComponentType* afterCast = dynamic_cast<ComponentType*>(componentsByID[id_]);
-		if (!afterCast)
-			RaiseError("Failed to find " + Tools::to_string<ComponentType>() 
-				+ " with id " + UuidCreator::to_string(id_));
-		return *afterCast;
-	}
 
 
 protected:
@@ -55,7 +46,6 @@ private:
 	Transform* transform = nullptr;
 	//bool entityIsDoingcleanup = false;
 	uuids::uuid id;
-	static std::unordered_map<uuids::uuid, Component*> componentsByID;
 	YAML::Node node; // This is the node from which the component was loaded, if it was loaded at all
 
 

@@ -49,6 +49,12 @@ bool Input::KeyHeldDown(Keyboard key)
 {
     if (ImGui::GetIO().WantCaptureKeyboard)
         return ImGui::IsKeyDown(KeyMap::ToImGui(key));
+    else if (key == Keyboard::ctrl)
+    {
+        glCall(int leftCtrl = glfwGetKey(Initializer::GetWindow(), GLFW_KEY_LEFT_CONTROL));
+        glCall(int rightCtrl = glfwGetKey(Initializer::GetWindow(), GLFW_KEY_RIGHT_CONTROL));
+        return leftCtrl == GLFW_PRESS || rightCtrl == GLFW_PRESS;
+    }
     else
     {
         glCall(int state = glfwGetKey(Initializer::GetWindow(), KeyMap::ToGlfw(key)));

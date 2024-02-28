@@ -17,18 +17,21 @@ public:
 	static Register<Entity> register_;
 	const std::string name; 
 
+	static uuids::uuid Make(std::string name = "Entity");
 	Entity(std::string name = "Entity", uuids::uuid* id = nullptr);
 	void Destroy();
 	//~Entity();
 	static void UpdateAllEntities(); 
 	const std::vector<std::unique_ptr<Component>>& GetComponents() const { return componentsByEntity.at(id); }
-
-
-	static uuids::uuid Make(std::string name = "Entity");
+	//static Component& GetComponent(uuids::uuid id_) { return *componentsByID[id_]; }
+	bool RemoveComponent(const Component& comp);
+	
 	template <typename ComponentType> inline static ComponentType* TryGet(uuids::uuid entityID);
 	template <typename ComponentType> inline static ComponentType& Get(uuids::uuid entityID);
 	template <typename ComponentType> inline static ComponentType& Add(uuids::uuid entityID);
+	template <typename ComponentType> static ComponentType& GetComponent(uuids::uuid componentID);
 	template <typename ComponentType> ComponentType& LoadComponent(YAML::Node& node);
+	//template <typename ComponentType> bool RemoveComponent();
 
 
 	// evt. get component in children, parent, siblings etc.
@@ -42,6 +45,7 @@ public:
 private:
 	static std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> componentsByEntity;
 	static std::unordered_map<std::string, std::vector<uuids::uuid>> EntitiesByName;
+	static std::unordered_map<uuids::uuid, Component*> componentsByID;
 	uuids::uuid id;
 
 	template <typename ComponentType> ComponentType* TryGetComponent() const;

@@ -5,6 +5,7 @@
 
 std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> Entity::componentsByEntity;
 std::unordered_map<std::string, std::vector<uuids::uuid>> Entity::EntitiesByName;
+std::unordered_map<uuids::uuid, Component*> Entity::componentsByID;
 Register<Entity> Entity::register_;
 
 
@@ -24,6 +25,9 @@ void Entity::Destroy() // Entity::~Entity()
 	for (const auto& c : componentsByEntity[id])
 		c->entityIsDoingcleanup = true;
 	*/
+
+	for (int i = componentsByEntity[id].size() - 1; i>=0; i--)
+		RemoveComponent(*componentsByEntity[id][i]);
 
 	// here we remove the entity. The functions in the toolbox do not help, due to some junk "features" about const
 	auto iterator1 = componentsByEntity.find(id);
@@ -72,4 +76,21 @@ uuids::uuid Entity::GetID(std::string name_)
 		RaiseError("Search for an entity named " + name_ + " found one named " + register_.Get(id).name);
 
 	return id;
+}
+
+
+
+bool Entity::RemoveComponent(const Component& comp)
+{
+	for (const auto& compPtr : componentsByEntity[id])
+	{
+		if (compPtr->GetID() != comp.GetID())
+			continue;
+		auto iterator = std::find(componentsByEntity[id].begin(), componentsByEntity[id].end(), compPtr);
+		if (iterator != componentsByEntity[id].end())
+			componentsByEntity[id].erase(iterator);
+		Tools::RemoveKey_unordered(componentsByID, comp.GetID());
+		return true;
+	}
+	return false;
 }

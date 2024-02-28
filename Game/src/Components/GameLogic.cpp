@@ -55,6 +55,13 @@ void GameLogic::OnUpdate()
         Renderer::ShowWindow(!Renderer::IsWindowVisible());
     }
 
+    if (Input::KeyHeldDown(Keyboard::ctrl))
+    {
+        Log("ctrl");
+        auto& me = Entity::GetComponent<GameLogic>(GetID());
+        Log("me == this: " + std::to_string(me == *this));
+    }
+
 }
 
 

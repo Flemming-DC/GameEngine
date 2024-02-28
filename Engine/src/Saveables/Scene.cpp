@@ -119,5 +119,12 @@ void Scene::Save()
 }
 
 
-
+void Scene::ShutDown() 
+{
+    for (const auto& entityID : entityIDs)
+    {
+        Entity::register_.Get(entityID).Destroy();
+        //Entity::register_.Remove(entityID);
+    }
+}
 

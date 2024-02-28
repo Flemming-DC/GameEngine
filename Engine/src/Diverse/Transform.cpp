@@ -141,7 +141,7 @@ void Transform::Load(const YAML::Node& node)
 	if (node["parent"])
 	{
 		auto parentID = node["parent"].as<uuids::uuid>();
-		parent = &GetComponent<Transform>(parentID);
+		parent = &Entity::GetComponent<Transform>(parentID);
 	}
 }
 

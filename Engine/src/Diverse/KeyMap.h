@@ -10,7 +10,7 @@ enum class Keyboard
 	tab, Q, W, E, R, T, Y, U, I, O, P, hat, enter, _delete, end, pagedown, numpad_home, numpad_7, numpad_8, numpad_9, numpad_plus,
 	capslock, A, S, D, F, G, H, J, K, L, pling, numpad_4, numpad_5, numpad_6,
 	leftShift, lessThan, Z, X, C, V, B, N, comma, period, dash, rightShift, upArrow, numpad_1, numpad_2, numpad_3, numpad_enter,
-	ctrl, alt, space, altgr, leftArrow, downArrow, rightArrow, numpad_0, numpad_del, 
+	ctrl, alt, space, altgr, leftArrow, downArrow, rightArrow, numpad_0, numpad_del,
 };
 
 enum class Mouse
