@@ -18,8 +18,6 @@ class Component
 	// entity must access InternalConstructor and OnUpdate and it must notify component about entity being dead
 	friend class Entity; 
 public:
-	//void Destroy();
-	//~Component() {}
 	std::string to_string() const;
 
 	template <typename ComponentType> inline 
@@ -44,7 +42,6 @@ protected:
 private:
 	uuids::uuid entityID;
 	Transform* transform = nullptr;
-	//bool entityIsDoingcleanup = false;
 	uuids::uuid id;
 	YAML::Node node; // This is the node from which the component was loaded, if it was loaded at all
 

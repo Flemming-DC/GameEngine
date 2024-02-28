@@ -23,7 +23,7 @@ components & gameobjects
 	uninitialized components for the sake of the gameLogic
 	introduce ordering of start function. call it first on builtin components, then on others
 	remove entity from register upon destruction.
-	Tools::RemoveKey_unordered(componentsByID, id); upon exc is buggy
+	data dudlication and leak in Entity::register_, scene.EntityIDs
 	
 
 dynamics

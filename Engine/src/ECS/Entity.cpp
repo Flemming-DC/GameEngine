@@ -21,10 +21,6 @@ Entity::Entity(std::string name, uuids::uuid* id_) : name(name)
 void Entity::Destroy() // Entity::~Entity()
 {
 	Log("Entity.Destroy " + name);
-	/*
-	for (const auto& c : componentsByEntity[id])
-		c->entityIsDoingcleanup = true;
-	*/
 
 	for (int i = componentsByEntity[id].size() - 1; i>=0; i--)
 		RemoveComponent(*componentsByEntity[id][i]);
@@ -44,7 +40,7 @@ void Entity::Destroy() // Entity::~Entity()
 			Tools::Remove(EntitiesByName[name], id); // remove id, but keep name
 	}
 	
-	// Entity::register_.Remove(id); <------- take care of this
+	// Entity::register_.Remove(id); // <------- take care of this
 }
 
 void Entity::UpdateAllEntities()
