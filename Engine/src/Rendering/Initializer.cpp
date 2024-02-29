@@ -10,6 +10,7 @@
 #include "Time_.h"
 #include "EngineAssets.h"
 #include "Renderer.h"
+#include "Scene.h"
 
 bool Initializer::openGLInitialized = false;
 int Initializer::width = 960;
@@ -69,6 +70,7 @@ void Initializer::Setup()
 
 void Initializer::Shutdown()
 {
+    Scene::GetActiveScene().ShutDown();
     Renderer::ShutDown();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();

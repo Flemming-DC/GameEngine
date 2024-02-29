@@ -5,38 +5,66 @@
 #include "StringTools.h"
 #include "ListTools.h"
 #include "YAML.h"
-#include "Transform.h" // temp
-#include "Camera.h" // temp
-#include "Renderable.h" // temp
-#include "PolygonCollider.h" // temp
-#include "RectangleCollider.h" // temp
-#include "CircleCollider.h" // temp
+#include "Transform.h" 
+#include "Camera.h" 
+#include "Renderable.h" 
+#include "PolygonCollider.h" 
+#include "RectangleCollider.h" 
+#include "CircleCollider.h" 
 #include <fstream>
 #include <filesystem>
 #include <sstream>
 
 // decode(const Node& node, uuid& out) skal udvides sådan at vis en id mangler så oprettes
 // den og en warning logges. Hvis den er ugyldig så rejses en fejl.
-// loading a scene should eliminate the previous scene
 // raise callbacks or events onSceneStart and onSceneEnd
 
 using namespace std; 
 using namespace uuids; 
 using namespace YAML;
 
+std::unique_ptr<Scene> Scene::activeScene = nullptr;
 
-//static Register<Scene> register_;
 
-void Scene::Setup() 
+void Scene::MakeBlankSceneFile(string name)
 {
-    if (UuidCreator::IsInitialized(id))
-        RaiseError("Scene is already initialized");
-    id = UuidCreator::MakeID();
-	//entityIDs = PurelyManualSetup();
-	Load();
-    ManualSetup();
-}
+    string path = "res/Scenes/" + name + ".yml";
+    if (filesystem::exists(path))
+        RaiseError("Cannot create Scene at " + path + ", since there is already a Scene there.");
 
+    Node transformYML;
+    transformYML["id"] = UuidCreator::MakeID();
+    transformYML["localPosition"] = glm::vec3(0, 0, 0);
+    transformYML["localRotation"] = glm::quat(1, 0, 0, 0);
+    transformYML["localScale"] = glm::vec3(1, 1, 1);
+
+    Node cameraYML;
+    cameraYML["id"] = UuidCreator::MakeID();
+
+    Node cameraEntityYML;
+    cameraEntityYML["id"] = UuidCreator::MakeID();
+    cameraEntityYML["Transform"] = transformYML;
+    cameraEntityYML["Camera"] = cameraYML;
+
+    Node entitiesYML;
+    entitiesYML["camera"] = cameraEntityYML;
+
+    Node sceneYML;
+    sceneYML["id"] = UuidCreator::MakeID();
+    sceneYML["Entities"] = entitiesYML;
+
+
+    // configure yaml file using emitter
+    Emitter emitter;
+    emitter.SetIndent(4);
+    emitter.SetSeqFormat(YAML::Flow); // write lists horizontally, not vertically
+    emitter << sceneYML;
+
+    // write yaml data to output stream
+    ofstream outStream(path);
+    outStream << emitter.c_str();
+    outStream.close();
+}
 
 void Scene::Load()
 {
@@ -86,6 +114,9 @@ void Scene::Load()
 
 void Scene::Save()
 {
+    if (!UuidCreator::IsInitialized(id))
+        id = UuidCreator::MakeID();
+
     Node sceneYML;
     sceneYML["id"] = id;
     Node entitiesYML;

@@ -66,6 +66,7 @@ int KeyMap::ToGlfw(Keyboard key)
     case Keyboard::V: return GLFW_KEY_V;
     case Keyboard::B: return GLFW_KEY_B;
     case Keyboard::N: return GLFW_KEY_N;
+    case Keyboard::M: return GLFW_KEY_M;
     case Keyboard::comma: return GLFW_KEY_COMMA;
     case Keyboard::period: return GLFW_KEY_PERIOD;
     case Keyboard::dash: return GLFW_KEY_MINUS;
@@ -180,6 +181,7 @@ ImGuiKey KeyMap::ToImGui(Keyboard key)
     case Keyboard::V: return ImGuiKey_V;
     case Keyboard::B: return ImGuiKey_B;
     case Keyboard::N: return ImGuiKey_N;
+    case Keyboard::M: return ImGuiKey_M;
     case Keyboard::comma: return ImGuiKey_Comma;
     case Keyboard::period: return ImGuiKey_Period;
     case Keyboard::dash: return ImGuiKey_Minus;

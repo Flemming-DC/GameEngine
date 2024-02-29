@@ -2,6 +2,8 @@
 #include "Input.h"
 #include "CollisionChecker.h"
 #include "Renderer.h"
+#include "..\DemoScene.h"
+#include "..\SecondScene.h"
 
 
 void GameLogic::OnStart()
@@ -54,14 +56,18 @@ void GameLogic::OnUpdate()
         Log("O");
         Renderer::ShowWindow(!Renderer::IsWindowVisible());
     }
-
-    if (Input::KeyHeldDown(Keyboard::ctrl))
+    
+    if (Input::KeyHeldDown(Keyboard::M))
     {
-        Log("ctrl");
-        auto& me = Entity::GetComponent<GameLogic>(GetID());
-        Log("me == this: " + std::to_string(me == *this));
+        Log("M");
+        Scene::Activate<DemoScene>();
     }
-
+    if (Input::KeyHeldDown(Keyboard::N))
+    {
+        Log("N");
+        Scene::Activate<SecondScene>();
+    }
+    
 }
 
 

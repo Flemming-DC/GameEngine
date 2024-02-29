@@ -28,6 +28,7 @@ void Renderable::Setup(const Material& material_, const Mesh& mesh_)
 void Renderable::Setup(const Material& material_)
 {
     material = material_; // copy, not ref
+    mesh = EngineAssets::SquareMesh(); // copy, not ref
 }
 
 

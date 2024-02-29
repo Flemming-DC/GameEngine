@@ -12,3 +12,4 @@ optimizations:
 	use broadShadow in raycast as a broadPhase
 	activation / enabling of entities and components
 	make updatable class, so restrict update call to where it is necessary
+	load scene in background

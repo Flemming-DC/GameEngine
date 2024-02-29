@@ -1,0 +1,40 @@
+id: be40d063-33a4-4118-9063-09b278b1fd96
+Entities:
+    camera:
+        id: 68c60e26-6941-4bdb-bfeb-e851e77a1701
+        Camera:
+            id: 78476f23-16d7-43c8-abd8-2c5ad3b96bfd
+        Transform:
+            id: 3c7b3b0f-a48d-4f44-aac2-f76e34c3d43c
+            localPosition: [0, 0, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+    picture 1:
+        id: 17518d64-c1d2-4c70-a9ff-c7e1c3f31dc6
+        Transform:
+            id: b2cd4db8-e561-488d-b630-1db280aaccdf
+            localPosition: [-0.5, -0.5, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+        Renderable:
+            id: f38fb973-97cc-431b-9145-b0dd663590a2
+            material: 4c893b60-5501-4daa-9fcb-4773b553c98e
+        RectangleCollider:
+            id: fb5733f1-42bc-433e-9dc5-0f847911ef42
+            size: [1, 1]
+    picture 2:
+        id: 16c0b97d-8500-4050-b412-0bb084ebe3b2
+        Transform:
+            id: 8f9a4988-7c98-414b-9931-6f9e45c08811
+            localPosition: [1.5, -0.5, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: b2cd4db8-e561-488d-b630-1db280aaccdf
+        Renderable:
+            id: 4a9aad54-3376-466b-a29a-bfcae1a9b32c
+            material: 4c893b60-5501-4daa-9fcb-4773b553c98e
+        RectangleCollider:
+            id: d0dae862-9843-46ad-9d12-02ce196cab6d
+            size: [1, 1]
+        GameLogic:
+            id: f555434e-445a-4767-ab4e-7f2833780251

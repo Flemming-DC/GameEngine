@@ -3,6 +3,7 @@
 #include "CollisionLoop.h"
 #include "GameAssets.h"
 #include "DemoScene.h"
+#include "SecondScene.h"
 #include "Entity.h"
 #include "Renderable.h"
 #include "Editor.h" // evt. temp
@@ -16,10 +17,12 @@ void run()
     GameAssets::Setup(); // not a part of the engine
 
 
-    DemoScene demoScene;
-    demoScene.Setup();
-    //demoScene.Save();
-    //demoScene.Load();
+    Scene::Activate<SecondScene>();
+    //Scene::Activate<DemoScene>();
+
+    //Scene::MakeBlankSceneFile("SecondScene");
+    //Scene::GetActiveScene().PurelyManualSetup();
+    //Scene::GetActiveScene().Save();
     
 
     Log("--------- starting loop --------- ");
@@ -32,7 +35,6 @@ void run()
         Initializer::EndFrame();
     }
     Log("------- Shutdown --------");
-    demoScene.ShutDown();
     Initializer::Shutdown();
     Log("------- Done --------");
 }

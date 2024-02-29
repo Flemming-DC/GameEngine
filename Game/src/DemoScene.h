@@ -6,9 +6,8 @@
 class DemoScene : public Scene
 {
 public:
-	//DemoScene(const std::string& name) : Scene(name) {}
 	
-	std::vector<uuids::uuid> PurelyManualSetup() override;
+	void PurelyManualSetup() override;
 	void ManualSetup() override;
 	Entity& GetEntity(int index) { return Entity::register_.Get(entityIDs[index]); } // temp tool for GUI
 

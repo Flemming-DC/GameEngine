@@ -82,10 +82,10 @@ namespace YAML
         static Node encode(const glm::quat& in) // save
         {
             Node node;
+            node.push_back(in.w);
             node.push_back(in.x);
             node.push_back(in.y);
             node.push_back(in.z);
-            node.push_back(in.w);
             return node;
         }
 
