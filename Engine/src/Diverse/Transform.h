@@ -42,6 +42,7 @@ public:
 	void Load(const YAML::Node& node) override;
 
 private:
+	//uuids::uuid parentID;
 	Transform* parent = nullptr;
 	bool isUpToDate = false; // i.e. caches are up to data
 	//glm::mat4 model = glm::mat4(1.0f); // cached value

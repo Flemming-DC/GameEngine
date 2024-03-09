@@ -20,8 +20,8 @@ FrameBuffer Renderer::frameBuffer;
 void Renderer::DrawToScreen()
 {
     Renderable::UnBind(); //  evt. add framebuffer unbind
-    for (Renderable* renderable : Renderable::allRenderables)
-        renderable->Draw();
+    for (const uuids::uuid& renderableID : Renderable::allRenderables)
+        Entity::GetComponent<Renderable>(renderableID).Draw();
     for (Gizmo& gizmo : Gizmo::register_.GetData())
         gizmo.Draw();
     

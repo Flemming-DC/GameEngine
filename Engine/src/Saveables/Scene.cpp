@@ -155,7 +155,9 @@ void Scene::ShutDown()
     for (const auto& entityID : entityIDs)
     {
         Entity::register_.Get(entityID).Destroy();
-        //Entity::register_.Remove(entityID); <--- this is missing
+        //Entity::register_.Remove(entityID); //<--- this is missing
     }
+    Entity::register_.Clear();
+    Gizmo::register_.Clear();
 }
 

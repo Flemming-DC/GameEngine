@@ -13,14 +13,15 @@ Collider* CollisionChecker::RayCast(
 	auto normal = glm::vec2(-direction.y, direction.x);
 	float startPosAlongNormal = glm::dot(startPosition, normal);
 
-	for (const auto col : Collider::GetAllColliders())
+	for (const auto colID : Collider::GetAllColliders())
 	{
+		auto& col = Entity::GetComponent<Collider>(colID);
 		// checking for overlap
-		auto shadowNormal = col->ShadowAlongNormal(normal);
+		auto shadowNormal = col.ShadowAlongNormal(normal);
 		bool noOverlapNormal = shadowNormal.first > startPosAlongNormal || startPosAlongNormal > shadowNormal.second;
 		if (noOverlapNormal)
 			continue;
-		auto shadow = col->ShadowAlongNormal(direction);
+		auto shadow = col.ShadowAlongNormal(direction);
 		bool noOverlap = shadow.first > rayShadow.second || rayShadow.first > shadow.second;
 		if (noOverlap)
 			continue;
@@ -30,7 +31,7 @@ Collider* CollisionChecker::RayCast(
 		if (posAlongDir < minPosAlongDir)
 		{
 			minPosAlongDir = posAlongDir;
-			nearestHit = col;
+			nearestHit = &col;
 		}
 	}
 	return nearestHit;
@@ -49,19 +50,20 @@ std::vector<Collider*> CollisionChecker::RayOverlaps(
 	auto normal = glm::vec2(-direction.y, direction.x);
 	float startPosAlongNormal = glm::dot(startPosition, normal);
 
-	for (const auto col : Collider::GetAllColliders())
+	for (const auto colID : Collider::GetAllColliders())
 	{
+		auto& col = Entity::GetComponent<Collider>(colID);
 		// checking for overlap
-		auto shadowNormal = col->ShadowAlongNormal(normal);
+		auto shadowNormal = col.ShadowAlongNormal(normal);
 		bool noOverlapNormal = shadowNormal.first > startPosAlongNormal || startPosAlongNormal > shadowNormal.second;
 		if (noOverlapNormal)
 			continue;
-		auto shadow = col->ShadowAlongNormal(direction);
+		auto shadow = col.ShadowAlongNormal(direction);
 		bool noOverlap = shadow.first > rayShadow.second || rayShadow.first > shadow.second;
 		if (noOverlap)
 			continue;
 		// appending to list
-		hits.push_back(col);
+		hits.push_back(&col);
 	}
 	return hits;
 

@@ -40,6 +40,12 @@ public:
         return dataChunks;
     }
 
+    void Clear()
+    {
+        dataChunks.clear();
+        indexByID.clear();
+    }
+
 private:
     std::vector<DataChunk> dataChunks;
     std::unordered_map<uuids::uuid, int> indexByID;

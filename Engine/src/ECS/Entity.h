@@ -7,8 +7,7 @@
 #include "Register.h"
 #include "YAML.h"
 
-// this pseudo entity component system doesn't handle memory layout in a contigous way
-class Component;
+class Component; // forward declaration
 	
 
 class Entity
@@ -27,8 +26,9 @@ public:
 	template <typename ComponentType> inline static ComponentType* TryGet(uuids::uuid entityID);
 	template <typename ComponentType> inline static ComponentType& Get(uuids::uuid entityID);
 	template <typename ComponentType> inline static ComponentType& Add(uuids::uuid entityID);
-	template <typename ComponentType> static ComponentType& GetComponent(uuids::uuid componentID);
 	template <typename ComponentType> ComponentType& LoadComponent(YAML::Node& node);
+	template <typename ComponentType> static ComponentType& GetComponent(uuids::uuid componentID);
+	template <typename ComponentType> static ComponentType* TryGetComponent(uuids::uuid componentID);
 
 
 	// evt. get component in children, parent, siblings etc.
@@ -44,6 +44,7 @@ private:
 	static std::unordered_map<std::string, std::vector<uuids::uuid>> EntitiesByName;
 	static std::unordered_map<uuids::uuid, Component*> componentsByID;
 	uuids::uuid id;
+	bool isDestroyed = false; // this means that destroy has been called
 
 	template <typename ComponentType> ComponentType* TryGetComponent() const;
 	template <typename ComponentType> inline ComponentType& GetComponent() const;

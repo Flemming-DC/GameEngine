@@ -10,7 +10,7 @@
 class Renderable : public Component
 {
 public:
-	static std::vector<Renderable*> allRenderables;
+	static std::vector<uuids::uuid> allRenderables;
 	Material material;
 
 	void Setup(const Material& material, const Mesh& mesh);

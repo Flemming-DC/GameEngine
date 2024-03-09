@@ -25,6 +25,13 @@ components & gameobjects
 	remove entity from register upon destruction.
 	data dudlication and leak in Entity::register_, scene.EntityIDs
 	
+	error handling ved uninitialized material / mesh (the !UuidCreator::IsInitialized(id) check didn't catch missing setup call) 
+	Entity::register_ doesn't get cleaned up at shutdown
+	destroy gizmo if its associated transform goes nullptr
+	destruction and scene change at end of loop
+	handle ids pointing to dead components
+	on destroy parent, destroy children too.
+	
 
 dynamics
 	enable, disable, startScene, endScene, starGame, endGame

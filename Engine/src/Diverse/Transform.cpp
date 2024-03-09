@@ -6,6 +6,9 @@
 
 void Transform::OnDestroyed()
 {
+	Log("Transform.OnDestroyed: children = ");
+	for (Transform* child : children)
+		Log(child->to_string());
 	SetParent(nullptr);
 }
 glm::mat4 Transform::GetLocalModel() const
@@ -59,6 +62,7 @@ glm::mat4 Transform::GetInverseModel() const
 
 Transform* Transform::GetParent() const
 {
+	//return Entity::TryGetComponent<Transform>(parentID);
 	return parent;
 }
 void Transform::SetParent(Transform* newParent) 
@@ -141,7 +145,7 @@ void Transform::Load(const YAML::Node& node)
 	if (node["parent"])
 	{
 		auto parentID = node["parent"].as<uuids::uuid>();
-		parent = &Entity::GetComponent<Transform>(parentID);
+		SetParent(&Entity::GetComponent<Transform>(parentID));
 	}
 }
 

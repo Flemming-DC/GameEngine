@@ -85,6 +85,13 @@ ComponentType& Entity::GetComponent(uuids::uuid id_)
 	return *afterCast;
 }
 
+template <typename ComponentType>
+ComponentType* Entity::TryGetComponent(uuids::uuid id_)
+{
+	ComponentType* afterCast = dynamic_cast<ComponentType*>(componentsByID[id_]);
+	return afterCast;
+}
+
 /*
 template <typename ComponentType>
 bool Entity::RemoveComponent(ComponentType comp)

@@ -8,16 +8,20 @@
 
 
 // static variables must be initialized in the cpp file not the header file
-std::vector<Renderable*> Renderable::allRenderables; 
+std::vector<uuids::uuid> Renderable::allRenderables;
 
 void Renderable::OnStart()
 {
-    allRenderables.push_back(this);
+    allRenderables.push_back(GetID());
+    Log("Renderable.OnStart: allRenderables.size " + std::to_string(allRenderables.size()));
 }
 
 void Renderable::OnDestroyed()
 {
-	Tools::Remove(allRenderables, this);
+	bool wasThere = Tools::Remove(allRenderables, GetID());
+    if (!wasThere)
+        RaiseError("RenderableID has been removed from allRenderables prematurely");
+    Log("Renderable.OnDestroyed: allRenderables.size " + std::to_string(allRenderables.size()));
 }
 
 void Renderable::Setup(const Material& material_, const Mesh& mesh_)

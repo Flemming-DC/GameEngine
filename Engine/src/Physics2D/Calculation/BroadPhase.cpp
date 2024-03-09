@@ -7,11 +7,15 @@ Overlaps BroadPhase::GetPotentialOverlaps()
 {
 	Overlaps allPairs;
 
-	auto colliders = Collider::GetAllColliders();
-	for (int i=0; i<(int)colliders.size(); i++)
+	auto colliderIDs = Collider::GetAllColliders();
+	for (int i=0; i<(int)colliderIDs.size(); i++)
 	{
-		for (int j=0; j<i; j++)
-			allPairs.push_back({ colliders[i], colliders[j] });
+		for (int j = 0; j < i; j++)
+		{
+			auto& col1 = Entity::GetComponent<Collider>(colliderIDs[i]);
+			auto& col2 = Entity::GetComponent<Collider>(colliderIDs[i]);
+			allPairs.push_back({ &col1, &col2 });
+		}
 	}
 	return allPairs;
 }
