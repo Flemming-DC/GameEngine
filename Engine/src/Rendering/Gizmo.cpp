@@ -51,6 +51,10 @@ void Gizmo::Draw()
 
     material.Bind();
     mesh.Bind();
+    if (DebugFlag())
+    {
+        Log("Gizmo.Draw: " + material.to_string());
+    }
 
     glCall(glDrawArrays(loop ? GL_LINE_LOOP : GL_LINE_STRIP, 0, positionCount));
     if (showPoints)

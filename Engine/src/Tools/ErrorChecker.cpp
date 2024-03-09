@@ -100,5 +100,5 @@ void PrintBacktrace()
 #endif
 }
 
-void SetDebugFlag() { debugFlag = true; }
+void SetDebugFlag() { Log("SetDebugFlag"); debugFlag = true; }
 bool DebugFlag() { return debugFlag; }

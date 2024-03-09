@@ -18,8 +18,8 @@ void run()
     GameAssets::Setup(); // not a part of the engine
 
 
-    //Scene::Activate<SecondScene>();
-    Scene::Activate<DemoScene>();
+    Scene::Activate<SecondScene>();
+    //Scene::Activate<DemoScene>();
 
     //Scene::MakeBlankSceneFile("SecondScene");
     //Scene::GetActiveScene().PurelyManualSetup();
@@ -39,6 +39,7 @@ void run()
             Scene::Activate<DemoScene>();
             CollisionLoop::OnSceneEnd();
             Renderer::SetupGrid2D(0.25f); // if is_editor
+            SetDebugFlag();
         }
         if (Input::KeyHeldDown(Keyboard::N))
         {

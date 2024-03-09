@@ -17,6 +17,7 @@ public:
 	static void UnBind();
 	inline unsigned int GetCount() const { return count; }
 	inline uuids::uuid GetID() const { return id; }
+	std::string to_string() const;
 
 private:
 	uuids::uuid id;

@@ -30,7 +30,7 @@ public:
 	inline uuids::uuid GetID() const { return id; }
 
 	template <typename T> inline T GetUniform(const std::string& uniformName);
-	
+	std::string to_string() const;
 
 private:
 	Shader shader;

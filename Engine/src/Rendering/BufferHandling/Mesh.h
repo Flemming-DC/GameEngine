@@ -22,6 +22,7 @@ public:
     static void UnBind();
     inline unsigned int GetIndexCount() const { return indexBuffer.GetCount(); }
     uuids::uuid GetID() const { return id; }
+    std::string to_string() const;
 
 
 private:

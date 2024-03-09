@@ -28,7 +28,27 @@ public:
 
 	inline unsigned int GetStride() const { return stride; }
 	inline std::vector<VertexElement> GetElements() const { return elements; }
+	std::string to_string() const 
+	{
+		std::string newline = "\n    ";
+		std::string out = "VertexLayoutManager:" + newline;
 
+		std::string elementsStr = "{ ";
+		for (const auto& e : elements)
+			elementsStr += "(" 
+				+ std::to_string(e.type) + ", "
+				+ std::to_string(e.count) + ", "
+				+ std::to_string(e.normalized) + ", "
+				+ std::to_string(e.sizeOfType) + ", "
+				+ "), ";
+		elementsStr += "}";
+
+		out += "stride: " + std::to_string(stride) + newline;
+		out += "elements: " + elementsStr + newline;
+
+		return out;
+	}
+	
 
 	template<typename T>
 	void Push(unsigned int count) { static_assert(false, "missing implementation"); }

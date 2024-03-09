@@ -22,6 +22,7 @@ public:
 	static void UnBind();
 	void AddBuffer(const VertexBuffer& vb, const VertexLayoutManager& layout) const;
 	inline uuids::uuid GetID() const { return id; }
+	std::string to_string() const;
 
 	template<typename T>
 	void Push(T value) {}

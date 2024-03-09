@@ -82,6 +82,45 @@ void Shader::SetUniform(const std::string& name, std::any value)
         Log("Did you bind the shader before setting the uniform?");
 }
 
+std::string Shader::to_string() const
+{
+    std::string newline = "\n    ";
+    std::string out = "Shader:" + newline;
+
+    std::string locationByNameStr = "{ ";
+    for (const auto& pair : locationByName)
+        locationByNameStr += pair.first + ": " + std::to_string(pair.second) + ", ";
+    locationByNameStr += "}";
+
+    std::string idByFilePathStr = "{ ";
+    for (const auto& pair : idByFilePath)
+        idByFilePathStr += pair.first + ": " + std::to_string(pair.second) + ", ";
+    idByFilePathStr += "}";
+
+    std::string uniformTypesByNameStr = "{ ";
+    for (const auto& pair : uniformTypesByName)
+        uniformTypesByNameStr += pair.first + ": " + pair.second + ", ";
+    uniformTypesByNameStr += "}";
+
+    std::string textureSlotsByNameStr = "{ ";
+    for (const auto& pair : textureSlotsByName)
+        textureSlotsByNameStr += pair.first + ": " + std::to_string(pair.second) + ", ";
+    textureSlotsByNameStr += "}";
+
+    int boundOpenGLid;
+    glCall(glGetIntegerv(GL_CURRENT_PROGRAM, &boundOpenGLid));
+
+    out += "id: "                 + UuidCreator::to_string(id)  + newline;
+    out += "openGLid: "           + std::to_string(openGLid)    + newline;
+    out += "locationByName: "     + locationByNameStr           + newline;
+    out += "idByFilePath: "       + idByFilePathStr             + newline;
+    out += "uniformTypesByName: " + uniformTypesByNameStr       + newline;
+    out += "textureSlotsByName: " + textureSlotsByNameStr       + newline;
+    out += "isBound: " + std::to_string(openGLid == boundOpenGLid) + newline;
+
+    return out;
+}
+
 // ---------------- private ----------------
 
 // ---------- internal uniform functions ----------

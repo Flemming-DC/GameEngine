@@ -15,7 +15,7 @@ void Texture::Setup(const std::string& filePath_)
 	id = UuidCreator::MakeID();
 	filePath = filePath_;
 	stbi_set_flip_vertically_on_load(1);
-	localBuffer = stbi_load(filePath.c_str(), &width, &height, &bytesPerPixel, 4); // 4 = channel count
+	unsigned char* localBuffer = stbi_load(filePath.c_str(), &width, &height, &bytesPerPixel, 4); // 4 = channel count
 	if (!localBuffer)
 		RaiseError("Failed to load texture image " + filePath + "due to " + stbi_failure_reason());
 	glCall(glGenTextures(1, &openGLid));
@@ -56,4 +56,23 @@ void Texture::Bind(unsigned int slot) const
 void Texture::UnBind()
 {
 	glCall(glBindTexture(GL_TEXTURE_2D, 0));
+}
+
+std::string Texture::to_string() const
+{
+	std::string newline = "\n    ";
+	std::string out = "Texture:" + newline;
+
+	int boundOpenGLid;
+	glCall(glGetIntegerv(GL_TEXTURE_BINDING_2D, &boundOpenGLid));
+
+	out += "id: "			 + UuidCreator::to_string(id)	 + newline;
+	out += "openGLid: "		 + std::to_string(openGLid)		 + newline;
+	out += "filePath: "		 + filePath						 + newline;
+	out += "width: "		 + std::to_string(width)		 + newline;
+	out += "height: "		 + std::to_string(height)		 + newline;
+	out += "bytesPerPixel: " + std::to_string(bytesPerPixel) + newline;
+	out += "isBound: " + std::to_string(openGLid == boundOpenGLid) + newline;
+
+	return out; 
 }

@@ -20,12 +20,12 @@ public:
 	inline int GetHeight() const { return height; }
 	inline uuids::uuid GetID() const { return id; }
 	inline unsigned int GetOpenGLid() const { return openGLid; }
+	std::string to_string() const;
 
 private:
 	uuids::uuid id;
 	unsigned int openGLid = 0;
 	std::string filePath = "";
-	unsigned char* localBuffer = nullptr;
 	int width = -1;
 	int height = -1;
 	int bytesPerPixel = -1;

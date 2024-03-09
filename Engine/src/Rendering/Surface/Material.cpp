@@ -113,3 +113,22 @@ void Material::SetupTexturesByName()
 
     }
 }
+
+std::string Material::to_string() const
+{
+    std::string newline = "\n    ";
+    std::string out = "Material:" + newline;
+    out += "id: " + UuidCreator::to_string(id) + newline;
+    out += "shader: " + Tools::Replace(shader.to_string(), "\n", newline) + newline;
+    for (const auto& pair : uniformValuesByName)
+    {
+        if (Tools::ContainsKey(texturesByName, pair.first)) //check if its a texture
+        {
+            std::string textureStr = texturesByName.at(pair.first)->to_string();
+            out += "texture: " + Tools::Replace(textureStr, "\n", newline) + newline;
+        }
+        else
+            out += "non-texture uniform: " + pair.first + newline;
+    }
+    return out;
+}

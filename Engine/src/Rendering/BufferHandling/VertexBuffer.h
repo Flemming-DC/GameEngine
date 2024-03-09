@@ -16,6 +16,7 @@ public:
 	void Bind() const;
 	static void UnBind();
 	inline uuids::uuid GetID() const { return id; }
+	std::string to_string() const;
 
 private:
 	unsigned int openGLid = 0;

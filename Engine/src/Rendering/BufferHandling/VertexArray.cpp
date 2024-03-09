@@ -70,6 +70,20 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexLayoutManager& l
 }
 
 
+std::string VertexArray::to_string() const
+{
+    std::string newline = "\n    ";
+    std::string out = "VertexArray:" + newline;
+
+    int boundOpenGLid;
+    glCall(glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &boundOpenGLid));
+
+    out += "id: " + UuidCreator::to_string(id) + newline;
+    out += "openGLid: " + std::to_string(openGLid) + newline;
+    out += "isBound: " + std::to_string(openGLid == boundOpenGLid) + newline;
+
+    return out;
+}
 
 
 

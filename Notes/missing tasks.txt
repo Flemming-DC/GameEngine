@@ -10,7 +10,12 @@ diverse
 	evt. create the initializable class and let assets and components inhirit from it. 
 	looping lacks in circle gizmo
 	evt. cleanup unsued get so and so functions for the texture
-	debug vindue fryser, når jeg hiver viewporten væk fra det.
+	activate CollisionLoop::OnSceneEnd from a propor callback
+	color is input to gizmo, but it is not used
+	destroy gizmo if its associated transform goes nullptr
+	error handling ved uninitialized material / mesh (the !UuidCreator::IsInitialized(id) check didn't catch missing setup call) 
+	destruction and scene change at end of loop
+	replace to_string width str
 
 components & gameobjects
 	separate gamelogic out
@@ -25,13 +30,9 @@ components & gameobjects
 	remove entity from register upon destruction.
 	data dudlication and leak in Entity::register_, scene.EntityIDs
 	
-	error handling ved uninitialized material / mesh (the !UuidCreator::IsInitialized(id) check didn't catch missing setup call) 
 	Entity::register_ doesn't get cleaned up at shutdown
-	destroy gizmo if its associated transform goes nullptr
-	destruction and scene change at end of loop
 	handle ids pointing to dead components
-	on destroy parent, destroy children too.
-	activate CollisionLoop::OnSceneEnd from a propor callback
+	remove entity from register on destroy
 
 dynamics
 	enable, disable, startScene, endScene, starGame, endGame

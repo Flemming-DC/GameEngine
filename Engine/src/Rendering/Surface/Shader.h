@@ -30,6 +30,7 @@ public:
 	std::unordered_map<std::string, std::string> GetUniformTypesByName() const { return uniformTypesByName; }
 	int GetTextureSlot(std::string uniformName) { return textureSlotsByName[uniformName]; }
 	inline uuids::uuid GetID() const { return id; }
+	std::string to_string() const;
 
 private:
 	uuids::uuid id; 

@@ -57,4 +57,18 @@ namespace Tools
 	}
 
 
+	std::string Replace(std::string str, const std::string& toBeReplaced, const std::string& replacement)
+	{
+		size_t pos = 0;
+		while ((pos = str.find(toBeReplaced, pos)) != std::string::npos)
+		{
+			str.replace(pos, toBeReplaced.length(), replacement);
+			pos += replacement.length(); // Advance to the end of the replacement
+		}
+		return str;
+	}
+
+
+
+
 }

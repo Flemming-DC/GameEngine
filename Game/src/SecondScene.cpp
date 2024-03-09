@@ -54,18 +54,10 @@ void SecondScene::ManualSetup()
     auto picture2ID = Entity::GetID("picture 2");
 
     // ------------ setup components ------------
-    Entity::Get<Renderable>(picture1ID).Setup(material);
+    //Entity::Get<Renderable>(picture1ID).Setup(material);
     Entity::Get<Renderable>(picture2ID).Setup(material);
     Entity::Add<GameLogic>(picture2ID);
 
-    for (const auto& entity : Entity::register_.GetData())
-        Log("SecondScene::ManualSetup: " + entity.name);
-
-    auto t1 = Entity::Get<Transform>(picture1ID);
-    auto t2 = Entity::Get<Transform>(picture2ID);
-    auto tc = Entity::Get<Transform>(Entity::GetID("camera"));
-    std::string parentStr = tc.GetParent() ? tc.GetParent()->to_string() : "null";
-    Log("SecondScene::ManualSetup: " + parentStr);
 }
 
 

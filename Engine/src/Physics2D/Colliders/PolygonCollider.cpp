@@ -33,6 +33,10 @@ void PolygonCollider::Setup(std::vector<glm::vec2> localPosition2Ds_)
 		for (int i = 0; i < count; i++)
 			localNormals[i] *= -1;
 	}
+	if (DebugFlag())
+	{
+		Log("PolygonCollider::Setup: ");
+	}
 	gizmoID = Gizmo::register_.Add(localPosition2Ds, &GetTransform()).GetID();
 }
 

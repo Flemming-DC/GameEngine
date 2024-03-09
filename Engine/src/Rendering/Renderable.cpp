@@ -33,12 +33,14 @@ void Renderable::Setup(const Material& material_)
 {
     material = material_; // copy, not ref
     mesh = EngineAssets::SquareMesh(); // copy, not ref
+
 }
 
 
 
 void Renderable::Draw()
 {
+
     glm::mat4 projection = Camera::GetCurrent()->GetProjection(); // evt. save the projectionView. at least within each frame
     glm::mat4 view = Camera::GetCurrent()->GetView();
     glm::mat4 model = GetTransform().GetModel(); // this is inefficient
@@ -82,5 +84,8 @@ void Renderable::Load(const YAML::Node& node)
         mesh = EngineAssets::SquareMesh(); // copy, not ref
     }
 
+    Log("Renderable::Load");
+    Log(material.to_string());
+    Log(mesh.to_string());
 }
 

@@ -45,3 +45,19 @@ void Mesh::UnBind()
     IndexBuffer::UnBind();
 }
 
+std::string Mesh::to_string() const
+{
+    std::string newline = "\n    ";
+    std::string out = "Mesh:" + newline;
+
+    int boundOpenGLid;
+    glCall(glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &boundOpenGLid));
+
+    out += "id: "            + UuidCreator::to_string(id)                               + newline;
+    out += "vertexBuffer: "  + Tools::Replace(vertexBuffer.to_string() , "\n", newline) + newline;
+    out += "layoutManager: " + Tools::Replace(layoutManager.to_string(), "\n", newline) + newline;
+    out += "vertexArray: "   + Tools::Replace(vertexArray.to_string()  , "\n", newline) + newline;
+    out += "indexBuffer: "   + Tools::Replace(indexBuffer.to_string()  , "\n", newline) + newline;
+
+    return out;
+}

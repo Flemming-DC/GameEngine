@@ -45,6 +45,21 @@ void VertexBuffer::UnBind()
 }
 
 
+std::string VertexBuffer::to_string() const
+{
+    std::string newline = "\n    ";
+    std::string out = "VertexBuffer:" + newline;
+
+    int boundOpenGLid;
+    glCall(glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &boundOpenGLid));
+
+    out += "id: " + UuidCreator::to_string(id) + newline;
+    out += "openGLid: " + std::to_string(openGLid) + newline;
+    out += "isBound: " + std::to_string(openGLid == boundOpenGLid) + newline;
+
+    return out;
+}
+
 
 
 

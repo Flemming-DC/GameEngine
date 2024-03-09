@@ -16,9 +16,9 @@ Entities:
             localPosition: [-0.5, -0.5, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
-        Renderable:
-            id: f38fb973-97cc-431b-9145-b0dd663590a2
-            material: 4c893b60-5501-4daa-9fcb-4773b553c98e
+        #Renderable:
+        #    id: f38fb973-97cc-431b-9145-b0dd663590a2
+        #    material: 4c893b60-5501-4daa-9fcb-4773b553c98e
         RectangleCollider:
             id: fb5733f1-42bc-433e-9dc5-0f847911ef42
             size: [1, 1]
