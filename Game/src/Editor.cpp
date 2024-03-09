@@ -18,6 +18,7 @@
 
 namespace Editor
 {
+
     void unused_TransformGUI(const Entity& entity, glm::vec3* eulerAngles)
     {
         auto name = entity.name;
@@ -175,12 +176,13 @@ namespace Editor
 
     void Update()
     {
+        /*
         TransformGUI2D(Entity::register_.Get(Entity::GetID("camera")));
         TransformGUI2D(Entity::register_.Get(Entity::GetID("picture 1")));
         TransformGUI2D(Entity::register_.Get(Entity::GetID("picture 2")));
         TransformGUI2D(Entity::register_.Get(Entity::GetID("circle 1")));
         TransformGUI2D(Entity::register_.Get(Entity::GetID("circle 2")));
-
+        */
         Inspector();
         SceneEditor();
         GameView();

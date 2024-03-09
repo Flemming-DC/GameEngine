@@ -94,7 +94,7 @@ bool Entity::RemoveComponent(const Component& comp)
 	{
 		if (compPtr->GetID() != comp.GetID())
 			continue;
-		compPtr->OnDestroyed();
+		compPtr->OnDestroy();
 		auto iterator = std::find(componentsByEntity[id].begin(), componentsByEntity[id].end(), compPtr);
 		if (iterator != componentsByEntity[id].end())
 			componentsByEntity[id].erase(iterator);

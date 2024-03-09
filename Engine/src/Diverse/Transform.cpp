@@ -4,11 +4,8 @@
 
 
 
-void Transform::OnDestroyed()
+void Transform::OnDestroy()
 {
-	Log("Transform.OnDestroyed: children = ");
-	for (Transform* child : children)
-		Log(child->to_string());
 	SetParent(nullptr);
 }
 glm::mat4 Transform::GetLocalModel() const
@@ -78,7 +75,7 @@ void Transform::SetParent(Transform* newParent)
 		Tools::Remove(parent->children, this);
 	parent = newParent;
 	if (newParent)
-		newParent->children.push_back(this);;
+		newParent->children.push_back(this);
 }
 std::vector<Transform*> Transform::GetChildren() const
 {

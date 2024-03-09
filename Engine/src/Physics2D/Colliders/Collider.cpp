@@ -13,12 +13,12 @@ void Collider::OnStart()
 	Log("Collider.OnStart: allColliders.size " + std::to_string(allColliders.size()));
 }
 
-void Collider::OnDestroyed()
+void Collider::OnDestroy()
 {
 	bool wasThere = Tools::Remove(allColliders, GetID());
 	if (!wasThere)
 		RaiseError("ColliderID has been removed from allColliders prematurely");
-	Log("Collider.OnDestroyed: allColliders.size " + std::to_string(allColliders.size()));
+	Log("Collider.OnDestroy: allColliders.size " + std::to_string(allColliders.size()));
 	/*
 	bool wasThere = Tools::Remove(allRenderables, GetID());
     if (!wasThere)

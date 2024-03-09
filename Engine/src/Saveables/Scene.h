@@ -4,11 +4,15 @@
 #include <stduuid/uuid.h>
 #include <memory>
 #include "Register.h"
+#include "Event.h"
 
 
 class Scene
 {
 public:
+	static Event<Scene&> onStart;
+	static Event<Scene&> onEnd; 
+
 	static void MakeBlankSceneFile(std::string name);
 	template <typename SceneType> static void Activate();
 	void ShutDown(); // should probably not be exposed.
@@ -36,10 +40,12 @@ template <typename SceneType> static void Scene::Activate()
 	static_assert(std::is_base_of<Scene, SceneType>::value,
 		"Scene::Make can only makes Scenes, not other types");
 	if (activeScene)
+	{
 		activeScene->ShutDown();
+	}
 	activeScene = std::make_unique<SceneType>();
 
 	activeScene->Load();
 	activeScene->ManualSetup();
-
+	onStart.Invoke(*activeScene);
 }

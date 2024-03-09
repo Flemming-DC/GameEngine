@@ -17,7 +17,6 @@
 class Gizmo
 {
 public:
-	static std::map<uuids::uuid, Gizmo&> allGizmosMap;
 	static Register<Gizmo> register_;
 	bool showPoints = true;
 	bool loop = true;

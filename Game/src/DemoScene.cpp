@@ -47,6 +47,7 @@ void DemoScene::PurelyManualSetup()
 
     
     entityIDs = { cameraID, picture1ID, picture2ID, circle1ID, circle2ID };
+    onStart.Invoke(*this);
 }
 
 

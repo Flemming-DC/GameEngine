@@ -48,7 +48,7 @@ private:
 	//glm::mat4 model = glm::mat4(1.0f); // cached value
 	std::vector<Transform*> children;
 
-	void OnDestroyed() override;
+	void OnDestroy() override;
 	glm::mat4 GetLocalModel() const;
 	glm::mat4 GetInverseLocalModel() const; // probably only used by camera
 	void SetLocalDataUsingTransform(const glm::mat4& transform); 

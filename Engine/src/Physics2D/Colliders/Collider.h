@@ -26,6 +26,6 @@ private:
 	//Bounds bounds;
 
 	void OnStart() override;
-	void OnDestroyed() override;
+	void OnDestroy() override;
 };
 

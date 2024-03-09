@@ -24,6 +24,8 @@ using namespace uuids;
 using namespace YAML;
 
 std::unique_ptr<Scene> Scene::activeScene = nullptr;
+Event<Scene&> Scene::onStart;
+Event<Scene&> Scene::onEnd;
 
 
 void Scene::MakeBlankSceneFile(string name)
@@ -159,5 +161,6 @@ void Scene::ShutDown()
     }
     Entity::register_.Clear();
     Gizmo::register_.Clear();
+    onEnd.Invoke(*activeScene);
 }
 

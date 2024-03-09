@@ -37,11 +37,16 @@ void run()
         {
             Log("M");
             Scene::Activate<DemoScene>();
+            CollisionLoop::OnSceneEnd();
+            Renderer::SetupGrid2D(0.25f); // if is_editor
         }
         if (Input::KeyHeldDown(Keyboard::N))
         {
             Log("N");
             Scene::Activate<SecondScene>();
+            CollisionLoop::OnSceneEnd();
+            Renderer::SetupGrid2D(0.25f); // if is_editor
+            SetDebugFlag();
         }
         Initializer::EndFrame();
     }

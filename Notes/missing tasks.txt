@@ -31,7 +31,7 @@ components & gameobjects
 	destruction and scene change at end of loop
 	handle ids pointing to dead components
 	on destroy parent, destroy children too.
-	
+	activate CollisionLoop::OnSceneEnd from a propor callback
 
 dynamics
 	enable, disable, startScene, endScene, starGame, endGame

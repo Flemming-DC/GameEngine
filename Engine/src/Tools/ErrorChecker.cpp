@@ -9,8 +9,9 @@
 #endif
 
 static bool _lastGlCallHadError = false;
+bool debugFlag = false;
 
-void glClearError()
+void _glClearError()
 {
     while (glGetError() != GL_NO_ERROR);
 }
@@ -28,7 +29,7 @@ void _glCall(const char* function, const char* file, int line)
 
 }
 
-bool LastGlCallHadError() { return _lastGlCallHadError; }
+bool _LastGlCallHadError() { return _lastGlCallHadError; }
 
 /* -- linux and mac back trace (from chatGPT)
 #include <iostream>
@@ -53,13 +54,13 @@ void PrintBacktrace()
 */
 
 // currently, the Backtrace is windows only
-void _PrintBacktrace()
+void PrintBacktrace()
 {
 #ifdef _WIN32 
     if (!SymInitialize(GetCurrentProcess(), nullptr, TRUE))
     {
         DWORD dwError = GetLastError();
-        std::cerr << "_PrintBacktrace: Failed to initialize. ErrorCode: " << dwError << std::endl;
+        std::cerr << "PrintBacktrace: Failed to initialize. ErrorCode: " << dwError << std::endl;
         return;
     }
 
@@ -70,7 +71,7 @@ void _PrintBacktrace()
     SYMBOL_INFO* symbol = (SYMBOL_INFO*)calloc(sizeof(SYMBOL_INFO) + 256 * sizeof(char), 1);
     if (symbol == nullptr)
     {
-        std::cerr << "_PrintBacktrace: Failed to allocate memory\n" << std::endl;
+        std::cerr << "PrintBacktrace: Failed to allocate memory\n" << std::endl;
         return;
     }
     symbol->MaxNameLen = 255;
@@ -84,7 +85,7 @@ void _PrintBacktrace()
         if (!success)
         {
             DWORD dwError = GetLastError();
-            std::cerr << "_PrintBacktrace: Failed to get function name from address. ErrorCode = "
+            std::cerr << "PrintBacktrace: Failed to get function name from address. ErrorCode = "
                 << dwError << "\n" << std::endl;
             break;
         }
@@ -98,3 +99,6 @@ void _PrintBacktrace()
     free(symbol);
 #endif
 }
+
+void SetDebugFlag() { debugFlag = true; }
+bool DebugFlag() { return debugFlag; }

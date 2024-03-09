@@ -15,6 +15,12 @@ void Camera::OnStart()
     SetToOrthographic(); // this is hardcoded, since Im only aiming for a 2D game
 }
 
+void Camera::OnDestroy()
+{
+    if (currentCamera == this)
+        currentCamera = nullptr;
+}
+
 
 void Camera::SetToOrthographic(float scale, float nearClipping, float farClipping)
 {

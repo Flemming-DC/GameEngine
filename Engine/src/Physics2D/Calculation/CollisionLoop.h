@@ -11,6 +11,7 @@ class CollisionLoop
 public:
 	static void Update();
 	static Overlaps GetOverlaps() { return overlaps; }
+	static void OnSceneEnd() { overlaps.clear(); }
 
 private:
 	static Overlaps overlaps;

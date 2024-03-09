@@ -43,4 +43,3 @@ void CollisionLoop::HandleCollisionInfo(Overlaps newOverlaps)
 	overlaps = newOverlaps;
 }
 
-

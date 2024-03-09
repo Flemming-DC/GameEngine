@@ -25,6 +25,6 @@ private:
 	Mesh mesh;
 
 	void OnStart() override;
-	void OnDestroyed() override;
+	void OnDestroy() override;
 };
 

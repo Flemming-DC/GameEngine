@@ -49,7 +49,7 @@ private:
 	void OnAddComponent(uuids::uuid entityID_, YAML::Node* node = nullptr); // called by Entity
 
 	virtual void OnStart() {} // called when the component is created, activated and loaded, whichever happens last.
-	virtual void OnDestroyed() {}
+	virtual void OnDestroy() {}
 	virtual void OnUpdate() {}
 
 
