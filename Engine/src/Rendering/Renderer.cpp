@@ -97,6 +97,8 @@ void Renderer::SetupGrid2D(float gridScale)
         }
 
     }
+    unsigned int count = horizontallyOrganizedPosition2Ds.size();
+    Log("Renderer::SetupGrid2D: " + std::to_string(count));
     horizontalGridID = Gizmo::register_.Add(
         horizontallyOrganizedPosition2Ds, nullptr, color, false, false).GetID();
     verticalGridID = Gizmo::register_.Add(

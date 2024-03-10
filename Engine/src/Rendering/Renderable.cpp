@@ -13,7 +13,6 @@ std::vector<uuids::uuid> Renderable::allRenderables;
 void Renderable::OnStart()
 {
     allRenderables.push_back(GetID());
-    Log("Renderable.OnStart: allRenderables.size " + std::to_string(allRenderables.size()));
 }
 
 void Renderable::OnDestroy()
@@ -21,7 +20,6 @@ void Renderable::OnDestroy()
 	bool wasThere = Tools::Remove(allRenderables, GetID());
     if (!wasThere)
         RaiseError("RenderableID has been removed from allRenderables prematurely");
-    Log("Renderable.OnDestroy: allRenderables.size " + std::to_string(allRenderables.size()));
 }
 
 void Renderable::Setup(const Material& material_, const Mesh& mesh_)
@@ -83,9 +81,5 @@ void Renderable::Load(const YAML::Node& node)
     {
         mesh = EngineAssets::SquareMesh(); // copy, not ref
     }
-
-    Log("Renderable::Load");
-    Log(material.to_string());
-    Log(mesh.to_string());
 }
 

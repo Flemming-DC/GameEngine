@@ -31,7 +31,6 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
 
     material = EngineAssets::GreenGizmoMaterial(); // color unspecified
     mesh = Mesh::register_.Add(positionsRaw, std::vector<unsigned int>(), VertexLayout({ 2, 0, 0, 0 }));
-    //mesh.Setup(positionsRaw, {}, { 2, 0, 0, 0 });
     transform = transform_;
     positionCount = position2Ds.size();
 
@@ -51,10 +50,6 @@ void Gizmo::Draw()
 
     material.Bind();
     mesh.Bind();
-    if (DebugFlag())
-    {
-        Log("Gizmo.Draw: " + material.to_string());
-    }
 
     glCall(glDrawArrays(loop ? GL_LINE_LOOP : GL_LINE_STRIP, 0, positionCount));
     if (showPoints)

@@ -4,6 +4,7 @@
 #include "GameAssets.h"
 #include "DemoScene.h"
 #include "SecondScene.h"
+#include "MiniScene.h"
 #include "Entity.h"
 #include "Renderable.h"
 #include "Editor.h" // evt. temp
@@ -12,14 +13,16 @@
 
 void run()
 {
+    //Log(UuidCreator::to_string(UuidCreator::MakeID()));
+
     Initializer::Setup();
     Renderer::ShowWindow(false); // if is_editor
-    Renderer::SetupGrid2D(0.25f); // if is_editor
+    //Renderer::SetupGrid2D(0.25f); // if is_editor
     GameAssets::Setup(); // not a part of the engine
 
 
-    Scene::Activate<SecondScene>();
-    //Scene::Activate<DemoScene>();
+    //Scene::Activate<SecondScene>();
+    Scene::Activate<DemoScene>();
 
     //Scene::MakeBlankSceneFile("SecondScene");
     //Scene::GetActiveScene().PurelyManualSetup();
@@ -38,16 +41,12 @@ void run()
             Log("M");
             Scene::Activate<DemoScene>();
             CollisionLoop::OnSceneEnd();
-            Renderer::SetupGrid2D(0.25f); // if is_editor
-            SetDebugFlag();
         }
         if (Input::KeyHeldDown(Keyboard::N))
         {
             Log("N");
             Scene::Activate<SecondScene>();
             CollisionLoop::OnSceneEnd();
-            Renderer::SetupGrid2D(0.25f); // if is_editor
-            SetDebugFlag();
         }
         Initializer::EndFrame();
     }

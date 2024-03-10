@@ -4,30 +4,28 @@
 
 Register<Mesh> Mesh::register_;
 
-void Mesh::Setup(const std::vector<float>& vertices, const std::vector<unsigned int>& indices, const VertexLayout& layout)
+void Mesh::Setup(const std::vector<float>& vertices_, const std::vector<unsigned int>& indices_, const VertexLayout& layout_)
 {
     if (!Initializer::OpenGLInitialized())
         RaiseError("Mesh cannot be setup before Initializer::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("Mesh is already initialized");
     id = UuidCreator::MakeID();
-    // the copying causes the old and the new vertexBuffer to share the same openGLid, which makes the 
-    // destructor of the old vertexBuffer will undo the setup of the new. Thereby causing bind to fail
-    // vertexBuffer = VertexBuffer(vertices.data(), vertices.size() * sizeof(float));
     
-    //indexBuffer.Setup(indices.data(), indices.size());
-    //vertexBuffer.Setup(vertices.data(), vertices.size() * sizeof(float));
-
-    indexBuffer = IndexBuffer::register_.Add(indices.data(), indices.size());
-    vertexBuffer = VertexBuffer::register_.Add(vertices.data(), vertices.size() * sizeof(float));
+    indexBuffer = IndexBuffer::register_.Add(indices_.data(), indices_.size());
+    vertexBuffer = VertexBuffer::register_.Add(vertices_.data(), vertices_.size() * sizeof(float));
     vertexArray = VertexArray::register_.Add();
     vertexArray.Setup();
 
-    layoutManager.Push<float>(layout.positionDimension);
-    layoutManager.Push<float>(layout.textureDimension);
-    layoutManager.Push<float>(layout.colorDimension);
-    layoutManager.Push<float>(layout.textureID);
+    layoutManager.Push<float>(layout_.positionDimension);
+    layoutManager.Push<float>(layout_.textureDimension);
+    layoutManager.Push<float>(layout_.colorDimension);
+    layoutManager.Push<float>(layout_.textureID);
     vertexArray.AddBuffer(vertexBuffer, layoutManager);
+
+    vertices = vertices_;
+    indices = indices_;
+    layout = layout_;
 }
 
 
@@ -57,7 +55,12 @@ std::string Mesh::to_string() const
     out += "vertexBuffer: "  + Tools::Replace(vertexBuffer.to_string() , "\n", newline) + newline;
     out += "layoutManager: " + Tools::Replace(layoutManager.to_string(), "\n", newline) + newline;
     out += "vertexArray: "   + Tools::Replace(vertexArray.to_string()  , "\n", newline) + newline;
-    out += "indexBuffer: "   + Tools::Replace(indexBuffer.to_string()  , "\n", newline) + newline;
+    out += "indexBuffer: " + Tools::Replace(indexBuffer.to_string(), "\n", newline) + newline;
+    
+
+    out += "vertices: " + Tools::to_string(vertices) + newline;
+    out += "indices: " + Tools::to_string(indices) + newline;
+    out += "layout: " + layout.to_string() + newline;
 
     return out;
 }

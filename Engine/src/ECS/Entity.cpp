@@ -23,7 +23,6 @@ Entity::Entity(std::string name, uuids::uuid* id_) : name(name)
 // currently, this just removes all data on the entity, turning it into a blank entity, but it leaves a blank entity behind
 void Entity::Destroy() // Entity::~Entity()
 {
-	Log("Entity.Destroy " + name);
 	if (isDestroyed)
 		return;
 

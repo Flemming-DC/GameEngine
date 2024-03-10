@@ -5,6 +5,7 @@
 #include <memory>
 #include "Register.h"
 #include "Event.h"
+#include "Renderer.h"
 
 
 class Scene
@@ -42,6 +43,7 @@ template <typename SceneType> static void Scene::Activate()
 	if (activeScene)
 	{
 		activeScene->ShutDown();
+		Renderer::SetupGrid2D(0.25f); // if is_editor
 	}
 	activeScene = std::make_unique<SceneType>();
 

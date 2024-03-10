@@ -33,6 +33,9 @@ private:
     IndexBuffer indexBuffer;
     // using a ref to buffers might reduce data size, but make Mesh uncopyable and cause them to behave non-independently.
 
+    std::vector<float> vertices; // for debug only. You could save space by removing them rfom release build
+    std::vector<unsigned int> indices; // for debug only. You could save space by removing them rfom release build
+    VertexLayout layout; // for debug only. You could save space by removing them rfom release build
     
 
 };
