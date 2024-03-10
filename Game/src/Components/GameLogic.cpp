@@ -2,8 +2,8 @@
 #include "Input.h"
 #include "CollisionChecker.h"
 #include "Renderer.h"
-#include "..\DemoScene.h"
-#include "..\SecondScene.h"
+#include "DemoScene.h"
+#include "SecondScene.h"
 
 
 void GameLogic::OnStart()

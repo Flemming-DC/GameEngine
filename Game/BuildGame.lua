@@ -9,17 +9,15 @@ project "Game"
     -- dont use engine.files, since it creates a mess in Visual Studio
     files { "src/**.h", "src/**.cpp", "src/**.hpp", "src/**.inl" } 
    
-    --includedirs(Engine.includedirs)
     includedirs {
-        Engine.includedirs,
-        "../Game/src/Components"
+        "../Game/src",
+        "../Game/src/Components",
+        "../Game/src/Scenes",
+        Engine.includedirs
     }
     links {
         "Engine",
-        "glew32s",
-        "glfw3", 
-        "Opengl32",
-        "Glu32"
+        Engine.links
     }
     ignoredefaultlibraries(Engine.ignoredefaultlibraries)
     libdirs(Engine.libdirs)

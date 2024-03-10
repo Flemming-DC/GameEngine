@@ -2,7 +2,7 @@
 #include "Engine.h"
 #include "GameAssets.h"
 #include "EngineAssets.h"
-#include "Components/DummyComp.h"
+#include "DummyComp.h"
 
 
 void MiniScene::PurelyManualSetup()

@@ -8,12 +8,7 @@
 #include "Renderer.h"
 #include "Input.h"
 
-// cleanup frameBuffer
-// allow Renderer to pass in a framebuffer
-// debug vindue frøs da, jeg undockede viewporten
 // make viewport framebuffer size sensitive to my viewport vindow size.
-// exception upon closing some windows but not others
-// upside down
 
 
 namespace Editor
