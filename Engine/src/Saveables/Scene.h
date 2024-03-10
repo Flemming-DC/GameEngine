@@ -41,11 +41,10 @@ template <typename SceneType> static void Scene::Activate()
 	static_assert(std::is_base_of<Scene, SceneType>::value,
 		"Scene::Make can only makes Scenes, not other types");
 	if (activeScene)
-	{
 		activeScene->ShutDown();
-		Renderer::SetupGrid2D(0.25f); // if is_editor
-	}
+	
 	activeScene = std::make_unique<SceneType>();
+	Renderer::SetupGrid2D(0.25f); // if is_editor
 
 	activeScene->Load();
 	activeScene->ManualSetup();

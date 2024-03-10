@@ -85,20 +85,22 @@ void Renderer::SetupGrid2D(float gridScale)
     float brightness = 0.2f;
     glm::vec4 color = glm::vec4(brightness, brightness, brightness, 1);
     
-    float gridSize = 100;
+    float gridSize = 50;
     std::vector<glm::vec2> horizontallyOrganizedPosition2Ds;
     std::vector<glm::vec2> verticallyOrganizedPosition2Ds;
+
+    for (float y = -gridSize; y < gridSize; y += gridScale)
+    {
+        horizontallyOrganizedPosition2Ds.push_back({ -gridSize, y });
+        horizontallyOrganizedPosition2Ds.push_back({  gridSize, y });
+    }
     for (float x = -gridSize; x < gridSize; x += gridScale)
     {
-        for (float y = -gridSize; y < gridSize; y += gridScale)
-        {
-            horizontallyOrganizedPosition2Ds.push_back({ y, x }); // this swap x<->y effectively swaps columns and rows
-            verticallyOrganizedPosition2Ds.push_back({ x, y });
-        }
-
+        verticallyOrganizedPosition2Ds.push_back({ x, -gridSize });
+        verticallyOrganizedPosition2Ds.push_back({ x,  gridSize });
     }
-    unsigned int count = horizontallyOrganizedPosition2Ds.size();
-    Log("Renderer::SetupGrid2D: " + std::to_string(count));
+
+
     horizontalGridID = Gizmo::register_.Add(
         horizontallyOrganizedPosition2Ds, nullptr, color, false, false).GetID();
     verticalGridID = Gizmo::register_.Add(

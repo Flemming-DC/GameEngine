@@ -17,7 +17,6 @@ void run()
 
     Initializer::Setup();
     Renderer::ShowWindow(false); // if is_editor
-    //Renderer::SetupGrid2D(0.25f); // if is_editor
     GameAssets::Setup(); // not a part of the engine
 
 
