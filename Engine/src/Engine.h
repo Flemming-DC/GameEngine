@@ -9,6 +9,7 @@
 #include "Gizmo.h"
 #include "Scene.h"
 #include "Register.h"
+#include "Delay.h"
 
 #include "PolygonCollider.h"
 #include "RectangleCollider.h"

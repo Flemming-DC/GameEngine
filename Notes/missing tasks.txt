@@ -34,6 +34,7 @@ components & gameobjects
 	Entity::register_ doesn't get cleaned up at shutdown
 	handle ids pointing to dead components
 	remove entity from register on destroy
+	scene activation and removing entities from register should be pushed until end of frame, otherwise you get and inconsistent update loop, which can destroy the things it is looping over.
 
 dynamics
 	enable, disable, startScene, endScene, starGame, endGame

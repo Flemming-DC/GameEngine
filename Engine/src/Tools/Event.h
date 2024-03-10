@@ -15,9 +15,15 @@ public:
         return maxId;
     }
 
-    void Remove(unsigned int id)
+    bool Remove(unsigned int id)
     {
-        Tools::RemoveKey_unordered(functionsById, id);
+        return Tools::RemoveKey_unordered(functionsById, id);
+        // we do not need to do maxId--, since its not an index, but a key in a map
+    }
+
+    void Clear()
+    {
+        functionsById.clear();
     }
 
     void Invoke(Args... args) const

@@ -11,10 +11,10 @@ void GameLogic::OnStart()
     material = &Get<Renderable>().GetMaterial();
     color = material->GetUniform<glm::vec4>("u_color");
 
-    Get<RectangleCollider>().onEnter.Add([](Collider& other)
-        { Log("GameLogic.Enter " + other.GetEntity().name); });
-    Get<RectangleCollider>().onExit.Add([](Collider& other)
-        { Log("GameLogic.Exit " + other.GetEntity().name); });
+    Get<RectangleCollider>().onEnter.Add([this](Collider& other)
+        { Log("GameLogic.OnStart: Collider.Enter: " + other.GetEntity().name + " enters " + this->GetEntity().name); });
+    Get<RectangleCollider>().onExit.Add([this](Collider& other)
+        { Log("GameLogic: Collider.Enter: " + other.GetEntity().name + " enters " + this->GetEntity().name); });
 }
 
 void GameLogic::OnUpdate()
@@ -56,8 +56,24 @@ void GameLogic::OnUpdate()
         Log("O");
         Renderer::ShowWindow(!Renderer::IsWindowVisible());
     }
-    
-    
+    if (Input::KeyHeldDown(Keyboard::M))
+    {
+        Log("M");
+        Delay::ToFrameEnd([]()
+        {
+            Scene::Activate<DemoScene>();
+            CollisionLoop::OnSceneEnd();
+        });
+    }
+    if (Input::KeyHeldDown(Keyboard::N))
+    {
+        Log("N");
+        Delay::ToFrameEnd([]()
+        {
+            Scene::Activate<SecondScene>();
+            CollisionLoop::OnSceneEnd();
+        });
+    }
 }
 
 

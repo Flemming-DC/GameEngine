@@ -13,9 +13,10 @@ Overlaps BroadPhase::GetPotentialOverlaps()
 		for (int j = 0; j < i; j++)
 		{
 			auto& col1 = Entity::GetComponent<Collider>(colliderIDs[i]);
-			auto& col2 = Entity::GetComponent<Collider>(colliderIDs[i]);
+			auto& col2 = Entity::GetComponent<Collider>(colliderIDs[j]);
 			allPairs.push_back({ &col1, &col2 });
 		}
 	}
+
 	return allPairs;
 }
