@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <sstream>
 #include <ErrorChecker.h>
-
+#include "logger.h"
 
 namespace Tools
 {
@@ -86,27 +86,23 @@ namespace Tools
 		return keys;
 	};
 
+}
+
+namespace logger
+{
+
 	template <typename T>
 	std::string to_string(const std::vector<T>& vec)
 	{
-		std::ostringstream result;
-		for (int i=0; i<(int)vec.size(); i++)
+		std::string out = "";
+		int count = vec.size();
+		for (int i = 0; i < count; i++)
 		{
-			try
-			{
-				result << vec[i];
-				if (i < (int)vec.size() - 1)
-					result << ", ";
-			}
-			catch (const std::exception& _)
-			{
-				(void)_; // eliminate unused warning
-				RaiseError("Failed to pipe element " + std::to_string(i) + " of vector into ostringstream");
-			}
-
+			out += logger::to_string(vec[i]);
+			if (i < count - 1)
+				out += ", ";
 		}
-		
-		return "{ " + result.str() + " }";
+		return "{ " + out + " }";
 	}
 
 }

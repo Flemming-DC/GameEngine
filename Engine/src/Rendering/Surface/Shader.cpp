@@ -78,8 +78,6 @@ void Shader::SetUniform(const std::string& name, std::any value)
             "Unrecognized type " + type + " for uniform " + name + "\n"
             "Consider creating an additional SetUniformXXX function to deal with it.");
     }
-    if (_LastGlCallHadError())
-        Log("Did you bind the shader before setting the uniform?");
 }
 
 std::string Shader::to_string() const

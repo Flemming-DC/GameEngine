@@ -32,7 +32,7 @@ void Material::SetUniform(const std::string& name, std::any value)
         RaiseError(
             "The uniform " + name + " is not recognized.\n"
             "The material contains the following uniforms\n" + 
-            Tools::to_string(Tools::GetKeys(uniformValuesByName))
+            logger::to_string(Tools::GetKeys(uniformValuesByName))
             );
     uniformValuesByName[name] = value;
 }

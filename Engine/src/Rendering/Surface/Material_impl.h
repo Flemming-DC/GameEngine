@@ -11,7 +11,7 @@ inline T Material::GetUniform(const std::string& uniformName)
 		RaiseError(
 			"The uniform " + uniformName + " is not recognized.\n"
 			"The material contains the following uniforms\n" +
-			Tools::to_string(Tools::GetKeys(uniformValuesByName))
+			logger::to_string(Tools::GetKeys(uniformValuesByName))
 		);
 	
 	if (uniformValuesByName[uniformName].type() != typeid(T))
@@ -19,7 +19,7 @@ inline T Material::GetUniform(const std::string& uniformName)
 			"The uniform " + uniformName + " exists, but it doesn't have "
 			"the type specified by the caller of GetUniform.\n"
 			"The material contains the following uniforms\n" +
-			Tools::to_string(Tools::GetKeys(uniformValuesByName))
+			logger::to_string(Tools::GetKeys(uniformValuesByName))
 		);
 
 	T uniform = std::any_cast<T>(uniformValuesByName[uniformName]);

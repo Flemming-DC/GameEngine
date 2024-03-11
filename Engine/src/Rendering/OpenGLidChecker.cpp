@@ -15,8 +15,6 @@ void OpenGLidChecker::Add(const string& typeName, unsigned int openGLid)
 		openGLidByType[typeName] = {};
 
 	openGLidByType[typeName].push_back(openGLid);
-	if (typeName == "VertexArray")
-		Log(typeName + ".openGLid added: " + std::to_string(openGLid));
 }
 
 void OpenGLidChecker::Remove(const string& typeName, unsigned int openGLid)
@@ -33,6 +31,6 @@ void OpenGLidChecker::CheckCleanup()
 	{
 		if (pair.second.size() != 0)
 			RaiseError("Some openGLids haven't been cleaned up.\n" 
-				+ pair.first + " openGLids: " + Tools::to_string(pair.second));
+				+ pair.first + " openGLids: " + logger::to_string(pair.second));
 	}
 }

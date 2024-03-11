@@ -58,8 +58,8 @@ std::string Mesh::to_string() const
     out += "indexBuffer: " + Tools::Replace(indexBuffer.to_string(), "\n", newline) + newline;
     
 
-    out += "vertices: " + Tools::to_string(vertices) + newline;
-    out += "indices: " + Tools::to_string(indices) + newline;
+    out += "vertices: " + logger::to_string(vertices) + newline;
+    out += "indices: " + logger::to_string(indices) + newline;
     out += "layout: " + layout.to_string() + newline;
 
     return out;

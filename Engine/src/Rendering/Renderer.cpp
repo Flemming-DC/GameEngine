@@ -25,14 +25,10 @@ void Renderer::DrawToScreen()
     for (Gizmo& gizmo : Gizmo::register_.GetData())
         gizmo.Draw();
     
-    
+    /*
     if (showBlackScreenDebugInfo && ScreenIsBlack())
-        Log("The screen is black. Here are some possible causes:\n"
-            "   * You might have forgotten to bind a texture, shader or vertexArray\n"
-            "   * You might have forgotten to set a uniform.\n"
-            "   * You might have provided an incorrect type to a gl function. fx GL_INT instead of GL_UNSIGNED_INT.\n"
-            "   * You might have set the z coordinate of the view and the models, such that they are outside the clipping planes.\n"
-            );
+        info
+    */
 }
 
 
