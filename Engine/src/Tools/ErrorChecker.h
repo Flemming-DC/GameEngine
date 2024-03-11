@@ -26,6 +26,7 @@ void _Warning(T message, const char* func, const char* file, int line)
     std::cout << "WARNING MESSAGE: " << message << "\nWARNING in " << func << " at " << file << ":" << line << std::endl;
 }
 
+// simple print function. As opposed to the more advanced logger::print function that can accept almost any input
 template<typename T>
 void Log(T message)
 {

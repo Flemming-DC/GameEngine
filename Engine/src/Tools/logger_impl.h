@@ -3,7 +3,7 @@
 #include <memory>
 #include "StringTools.h"
 #include "GlmTools.h" // this contains some overloads of to_string that might be counterintuitively absent without this include
-
+#include "ErrorChecker.h"
 
 namespace logger
 {
@@ -37,19 +37,7 @@ namespace logger
 
 	// --------------------- overloads of to_string ---------------------
 
-	template<typename T> string inline to_string(const T& value) 
-	{
-		try
-		{
-			return value.to_string(); // this is for my custom classes
-		}
-		catch (...)
-		{
-			return Tools::type_as_string(value) + " has no overload for logger::to_string";
-		}
-	}
-
-	//template<typename T> string inline to_string(const T& value) { return Tools::type_as_string(value) + " has no overload for logger::to_string"; }
+	template<typename T> string inline to_string(const T& value) { return value.to_string(); } // default to try and get a to_string method
 	template<typename T> string inline to_string(T* value) { return "raw_ptr " + to_string(*value); } // raw pointer
 	template<typename T> string inline to_string(std::unique_ptr<T> value) { return "unique_ptr " + to_string(*value); } // unique pointer
 	template<typename T> string inline to_string(std::shared_ptr<T> value) { return "shared_ptr " + to_string(*value); } // shared pointer

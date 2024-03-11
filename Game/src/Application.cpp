@@ -19,7 +19,6 @@ void run()
     Renderer::ShowWindow(false); // if is_editor
     GameAssets::Setup(); // not a part of the engine
 
-
     Scene::Activate<SecondScene>();
     //Scene::Activate<DemoScene>();
 
