@@ -108,7 +108,7 @@ std::string Shader::to_string() const
     int boundOpenGLid;
     glCall(glGetIntegerv(GL_CURRENT_PROGRAM, &boundOpenGLid));
 
-    out += "id: "                 + UuidCreator::to_string(id)  + newline;
+    out += "id: "                 + logger::to_string(id)       + newline;
     out += "openGLid: "           + std::to_string(openGLid)    + newline;
     out += "locationByName: "     + locationByNameStr           + newline;
     out += "idByFilePath: "       + idByFilePathStr             + newline;

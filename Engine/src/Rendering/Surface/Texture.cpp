@@ -66,7 +66,7 @@ std::string Texture::to_string() const
 	int boundOpenGLid;
 	glCall(glGetIntegerv(GL_TEXTURE_BINDING_2D, &boundOpenGLid));
 
-	out += "id: "			 + UuidCreator::to_string(id)	 + newline;
+	out += "id: "			 + logger::to_string(id)		 + newline;
 	out += "openGLid: "		 + std::to_string(openGLid)		 + newline;
 	out += "filePath: "		 + filePath						 + newline;
 	out += "width: "		 + std::to_string(width)		 + newline;

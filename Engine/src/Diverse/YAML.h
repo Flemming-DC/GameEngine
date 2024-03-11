@@ -15,7 +15,7 @@ namespace YAML
         static Node encode(const uuids::uuid& in) // save
         {
             Node node;
-            node = UuidCreator::to_string(in);
+            node = logger::to_string(in);
             return node;
         }
 

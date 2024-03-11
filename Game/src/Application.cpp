@@ -26,6 +26,12 @@ void run()
     bool b = true;
     p(&b, ", ", UuidCreator::MakeID());
 
+    std::map<int, bool> m = {
+        {1, true},
+        {5, false},
+        {2, true}
+    };
+    p(m);
     //Log(UuidCreator::to_string(UuidCreator::MakeID()));
 
     Initializer::Setup();

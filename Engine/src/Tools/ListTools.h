@@ -69,7 +69,7 @@ namespace Tools
 	
 
 	template<typename Tkey, typename Tval>
-	std::vector<Tkey> GetKeys_unordered(const std::unordered_map<Tkey, Tval>& dict)
+	std::vector<Tkey> GetKeys(const std::map<Tkey, Tval>& dict)
 	{
 		std::vector<Tkey> keys;
 		for (const auto& pair : dict)
@@ -78,7 +78,7 @@ namespace Tools
 	};
 
 	template<typename Tkey, typename Tval>
-	std::vector<Tkey> GetKeys(const std::map<Tkey, Tval>& dict)
+	std::vector<Tkey> GetKeys_unordered(const std::unordered_map<Tkey, Tval>& dict)
 	{
 		std::vector<Tkey> keys;
 		for (const auto& pair : dict)
@@ -104,5 +104,23 @@ namespace logger
 		}
 		return "{ " + out + " }";
 	}
+
+	template<typename Tkey, typename Tval>
+	std::string to_string(const std::map<Tkey, Tval>& dict)
+	{
+		std::string out = "\n";
+		for (const auto& pair : dict)
+			out += "{ " + logger::to_string(pair.first) + ": " + logger::to_string(pair.second) + " },\n";
+		return "{ " + out + " }";
+	};
+
+	template<typename Tkey, typename Tval>
+	std::string to_string_unordered(const std::unordered_map<Tkey, Tval>& dict)
+	{
+		std::string out = "\n";
+		for (const auto& pair : dict)
+			out += "{ " + logger::to_string(pair.first) + ": " + logger::to_string(pair.second) + " },\n";
+		return "{ " + out + " }";
+	};
 
 }

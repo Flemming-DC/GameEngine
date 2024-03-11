@@ -51,7 +51,7 @@ std::string Mesh::to_string() const
     int boundOpenGLid;
     glCall(glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &boundOpenGLid));
 
-    out += "id: "            + UuidCreator::to_string(id)                               + newline;
+    out += "id: "            + logger::to_string(id)                               + newline;
     out += "vertexBuffer: "  + Tools::Replace(vertexBuffer.to_string() , "\n", newline) + newline;
     out += "layoutManager: " + Tools::Replace(layoutManager.to_string(), "\n", newline) + newline;
     out += "vertexArray: "   + Tools::Replace(vertexArray.to_string()  , "\n", newline) + newline;

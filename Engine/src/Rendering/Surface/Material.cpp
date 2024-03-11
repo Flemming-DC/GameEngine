@@ -118,7 +118,7 @@ std::string Material::to_string() const
 {
     std::string newline = "\n    ";
     std::string out = "Material:" + newline;
-    out += "id: " + UuidCreator::to_string(id) + newline;
+    out += "id: " + logger::to_string(id) + newline;
     out += "shader: " + Tools::Replace(shader.to_string(), "\n", newline) + newline;
     for (const auto& pair : uniformValuesByName)
     {

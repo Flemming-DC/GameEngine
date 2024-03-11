@@ -32,7 +32,3 @@ uuids::uuid UuidCreator::MakeID()
     return generator();
 }
 
-namespace logger
-{
-    std::string to_string(uuids::uuid id) { return UuidCreator::to_string(id); }
-}

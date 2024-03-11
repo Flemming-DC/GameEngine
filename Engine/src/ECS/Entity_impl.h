@@ -81,7 +81,7 @@ ComponentType& Entity::GetComponent(uuids::uuid id_)
 	ComponentType* afterCast = dynamic_cast<ComponentType*>(componentsByID[id_]);
 	if (!afterCast)
 		RaiseError("Failed to find " + Tools::to_string<ComponentType>()
-			+ " with id " + UuidCreator::to_string(id_));
+			+ " with id " + logger::to_string(id_));
 	return *afterCast;
 }
 

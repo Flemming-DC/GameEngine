@@ -56,7 +56,7 @@ std::string IndexBuffer::to_string() const
     int boundOpenGLid;
     glCall(glGetIntegerv(GL_ELEMENT_ARRAY_BUFFER_BINDING, &boundOpenGLid));
 
-    out += "id: " + UuidCreator::to_string(id) + newline;
+    out += "id: " + logger::to_string(id) + newline;
     out += "openGLid: " + std::to_string(openGLid) + newline;
     out += "isBound: " + std::to_string(openGLid == boundOpenGLid) + newline;
 
