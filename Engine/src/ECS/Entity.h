@@ -38,6 +38,7 @@ public:
 	static uuids::uuid GetID(std::string name);
 	inline uuids::uuid GetID() const { return id; }
 	inline void SetID(uuids::uuid id_) { id = id_; }
+	std::string to_string() const;
 
 private:
 	static std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> componentsByEntity;

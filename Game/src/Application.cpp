@@ -10,29 +10,10 @@
 #include "Editor.h" // evt. temp
 #include "FrameBuffer.h"
 #include "Input.h" // temp
-#include "logger.h" // temp
-#include "logger.h"
 
 void run()
 {
-    //Log(log::to_string("hi"));
-    
-    Log(logger::to_string(3));
-    Log(logger::to_string(false));
-    Log(logger::make_string(3, ", ", false));
-    logger::print(3, ", ", false);
-    p(3, ", ", false, ", ", glm::vec3(1, 3, 2));
-
-    bool b = true;
-    p(&b, ", ", UuidCreator::MakeID());
-
-    std::map<int, bool> m = {
-        {1, true},
-        {5, false},
-        {2, true}
-    };
-    p(m);
-    //Log(UuidCreator::to_string(UuidCreator::MakeID()));
+    //logger::print(UuidCreator::MakeID());
 
     Initializer::Setup();
     Renderer::ShowWindow(false); // if is_editor

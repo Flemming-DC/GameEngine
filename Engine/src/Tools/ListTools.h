@@ -92,7 +92,7 @@ namespace logger
 {
 
 	template <typename T>
-	std::string to_string(const std::vector<T>& vec)
+	inline std::string to_string(const std::vector<T>& vec)
 	{
 		std::string out = "";
 		int count = vec.size();
@@ -106,7 +106,7 @@ namespace logger
 	}
 
 	template<typename Tkey, typename Tval>
-	std::string to_string(const std::map<Tkey, Tval>& dict)
+	inline std::string to_string(const std::map<Tkey, Tval>& dict)
 	{
 		std::string out = "\n";
 		for (const auto& pair : dict)
@@ -115,7 +115,7 @@ namespace logger
 	};
 
 	template<typename Tkey, typename Tval>
-	std::string to_string_unordered(const std::unordered_map<Tkey, Tval>& dict)
+	inline std::string to_string_unordered(const std::unordered_map<Tkey, Tval>& dict)
 	{
 		std::string out = "\n";
 		for (const auto& pair : dict)

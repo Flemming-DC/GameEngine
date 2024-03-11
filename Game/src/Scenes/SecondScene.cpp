@@ -3,6 +3,7 @@
 #include "GameLogic.h"
 #include "GameAssets.h"
 #include "EngineAssets.h"
+#include "logger.h"
 
 
 void SecondScene::PurelyManualSetup()
@@ -57,6 +58,7 @@ void SecondScene::ManualSetup()
     //Entity::Get<Renderable>(picture1ID).Setup(material);
     Entity::Get<Renderable>(picture2ID).Setup(material);
     Entity::Add<GameLogic>(picture2ID);
+
 
 }
 

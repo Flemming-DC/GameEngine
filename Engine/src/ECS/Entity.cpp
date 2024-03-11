@@ -102,3 +102,13 @@ bool Entity::RemoveComponent(const Component& comp)
 	}
 	return false;
 }
+
+std::string Entity::to_string() const
+{
+	Transform* transform = TryGetComponent<Transform>();
+	if (transform == nullptr)
+		return name;
+	else
+		return transform->GetPath();
+}
+

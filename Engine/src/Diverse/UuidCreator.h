@@ -17,6 +17,6 @@ private:
 
 namespace logger
 {
-	inline std::string to_string(uuids::uuid id) { return uuids::to_string(id); }
+	inline std::string to_string(const uuids::uuid& id) { return uuids::to_string(id); }
 }
 

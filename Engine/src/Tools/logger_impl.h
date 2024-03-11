@@ -37,7 +37,19 @@ namespace logger
 
 	// --------------------- overloads of to_string ---------------------
 
-	template<typename T> string inline to_string(const T& value) { return std::to_string(value); } // default to std::to_string if nothing else is available
+	template<typename T> string inline to_string(const T& value) 
+	{
+		try
+		{
+			return value.to_string(); // this is for my custom classes
+		}
+		catch (...)
+		{
+			return Tools::type_as_string(value) + " has no overload for logger::to_string";
+		}
+	}
+
+	//template<typename T> string inline to_string(const T& value) { return Tools::type_as_string(value) + " has no overload for logger::to_string"; }
 	template<typename T> string inline to_string(T* value) { return "raw_ptr " + to_string(*value); } // raw pointer
 	template<typename T> string inline to_string(std::unique_ptr<T> value) { return "unique_ptr " + to_string(*value); } // unique pointer
 	template<typename T> string inline to_string(std::shared_ptr<T> value) { return "shared_ptr " + to_string(*value); } // shared pointer
@@ -45,6 +57,23 @@ namespace logger
 	string inline to_string(const char* value) { return string(value); }
 	string inline to_string(bool value) { return value ? "true" : "false"; }
 
+	string inline to_string(int value) { return std::to_string(value); }
+	string inline to_string(long long value) { return std::to_string(value); }
+	string inline to_string(unsigned int value) { return std::to_string(value); }
+	string inline to_string(unsigned long value) { return std::to_string(value); }
+	string inline to_string(unsigned long long value) { return std::to_string(value); }
+	string inline to_string(float value) { return std::to_string(value); }
+	string inline to_string(double value) { return std::to_string(value); }
+	string inline to_string(long double value) { return std::to_string(value); }
+
+	
+	
+	
+	
+	
+	
+	
+	
 
 	/*
 	template <typename T>
