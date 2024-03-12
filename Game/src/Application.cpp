@@ -10,13 +10,16 @@
 #include "Editor.h" // evt. temp
 #include "FrameBuffer.h"
 #include "Input.h" // temp
+#include "Initializable.h"
 
 void run()
 {
     //logger::print(UuidCreator::MakeID());
     Initializer::Setup();
+    Initializable::CallOnEngineStart();
     Renderer::ShowWindow(false); // if is_editor
     GameAssets::Setup(); // not a part of the engine
+    Initializable::CallOnGameStart();
 
     Scene::Activate<SecondScene>();
     //Scene::Activate<DemoScene>();
@@ -37,7 +40,10 @@ void run()
         Initializer::EndFrame();
     }
     Log("------- Shutdown --------");
-    Initializer::Shutdown();
+    Scene::GetActiveScene().ShutDown();
+    Initializable::CallOnGameEnd();
+    Initializable::CallOnEngineEnd();
+    Initializer::Shutdown(); 
     Log("------- Done --------");
 }
 

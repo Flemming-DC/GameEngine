@@ -162,5 +162,6 @@ void Scene::ShutDown()
     Entity::register_.Clear();
     Gizmo::register_.Clear();
     onEnd.Invoke(*activeScene);
+    //Initializable::CallOnSceneEnd(*activeScene);
 }
 

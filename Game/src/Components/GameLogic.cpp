@@ -62,7 +62,7 @@ void GameLogic::OnUpdate()
         Delay::ToFrameEnd([]()
         {
             Scene::Activate<DemoScene>();
-            CollisionLoop::OnSceneEnd();
+            //CollisionLoop::OnSceneEnd();
         });
     }
     if (Input::KeyHeldDown(Keyboard::N))
@@ -71,7 +71,7 @@ void GameLogic::OnUpdate()
         Delay::ToFrameEnd([]()
         {
             Scene::Activate<SecondScene>();
-            CollisionLoop::OnSceneEnd();
+            //CollisionLoop::OnSceneEnd();
         });
     }
 }

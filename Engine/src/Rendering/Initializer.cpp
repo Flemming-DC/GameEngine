@@ -11,6 +11,7 @@
 #include "EngineAssets.h"
 #include "Renderer.h"
 #include "Scene.h"
+#include "Initializable.h"
 
 bool Initializer::openGLInitialized = false;
 int Initializer::width = 960;
@@ -70,8 +71,8 @@ void Initializer::Setup()
 
 void Initializer::Shutdown()
 {
-    Scene::GetActiveScene().ShutDown();
     Renderer::ShutDown();
+    Initializable::Clear();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();

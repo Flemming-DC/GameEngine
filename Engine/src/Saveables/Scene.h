@@ -6,6 +6,7 @@
 #include "Register.h"
 #include "Event.h"
 #include "Renderer.h"
+//#include "Initializable.h"
 
 
 class Scene
@@ -49,4 +50,5 @@ template <typename SceneType> static void Scene::Activate()
 	activeScene->Load();
 	activeScene->ManualSetup();
 	onStart.Invoke(*activeScene);
+	//Initializable::CallOnSceneStart(*activeScene);
 }

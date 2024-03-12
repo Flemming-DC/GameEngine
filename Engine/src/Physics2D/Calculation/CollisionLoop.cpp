@@ -3,9 +3,16 @@
 #include "NarrowPhase.h"
 #include "Collider.h"
 #include "ListTools.h"
+#include "Scene.h"
 
 using Overlaps = std::vector<std::pair<Collider*, Collider*>>;
 Overlaps CollisionLoop::overlaps = {};
+auto _ = Initializable::Add<CollisionLoop>();
+
+void CollisionLoop::OnEngineStart()
+{
+	Scene::onEnd.Add([](const Scene& _) { overlaps.clear(); });
+}
 
 void CollisionLoop::Update()
 {
