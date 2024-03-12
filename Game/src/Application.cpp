@@ -14,7 +14,6 @@
 void run()
 {
     //logger::print(UuidCreator::MakeID());
-
     Initializer::Setup();
     Renderer::ShowWindow(false); // if is_editor
     GameAssets::Setup(); // not a part of the engine

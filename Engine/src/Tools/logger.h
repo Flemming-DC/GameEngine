@@ -4,7 +4,7 @@
 #include "StringTools.h"
 
 #ifdef _DEBUG
-#define p(...) logger::print(logger::file_name(__FILE__), ".", __func__, ": ", __VA_ARGS__)
+#define P(...) logger::print(logger::file_name(__FILE__), ".", __func__, ": ", __VA_ARGS__)
 #endif // _DEBUG
 
 
