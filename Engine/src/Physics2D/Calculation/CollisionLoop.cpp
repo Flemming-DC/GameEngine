@@ -7,7 +7,7 @@
 
 using Overlaps = std::vector<std::pair<Collider*, Collider*>>;
 Overlaps CollisionLoop::overlaps = {};
-auto& instance = Initializable::Add<CollisionLoop>();
+auto& _ = Initializable::Add<CollisionLoop>();
 
 void CollisionLoop::OnEngineStart()
 {

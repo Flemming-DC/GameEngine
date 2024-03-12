@@ -2,8 +2,6 @@
 #include <ListTools.h>
 
 std::vector<std::unique_ptr<Initializable>> Initializable::initializables;
-//std::unordered_map<unsigned int, std::unique_ptr<Initializable>> Initializable::initializables;
-unsigned int Initializable::maxId;
 
 
 bool Initializable::Remove(Initializable& initializable)
