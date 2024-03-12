@@ -34,7 +34,7 @@ void Shader::Setup(const std::string& filePath)
         idByFilePath[filePath] = openGLid;
     }
     glCall(glUseProgram(openGLid));
-    OpenGLidChecker::Add(Tools::type_as_string(*this), openGLid);
+    OpenGLidChecker::Add(Tools::TypeName(*this), openGLid);
 }
 
 void Shader::ShutDown()
@@ -44,7 +44,7 @@ void Shader::ShutDown()
     if (!UuidCreator::IsInitialized(id))
         return;
     glCall(glDeleteProgram(openGLid));
-    OpenGLidChecker::Remove(Tools::type_as_string(*this), openGLid);
+    OpenGLidChecker::Remove(Tools::TypeName(*this), openGLid);
 }
 
 void Shader::Bind() const

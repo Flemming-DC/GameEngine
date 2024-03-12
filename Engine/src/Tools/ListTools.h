@@ -4,7 +4,8 @@
 #include <map>
 #include <unordered_map>
 #include <sstream>
-#include <ErrorChecker.h>
+#include <functional>
+#include "ErrorChecker.h"
 #include "logger.h"
 
 namespace Tools
@@ -13,6 +14,19 @@ namespace Tools
 	bool Remove(std::vector<T>& vec, T t)
 	{
 		auto iterator = std::find(vec.begin(), vec.end(), t);
+		if (iterator != vec.end())
+		{
+			vec.erase(iterator);
+			return true;
+		}
+		return false;
+	}
+
+	//template<typename T>
+	template< class T, class UnaryPredicate >
+	bool Remove(std::vector<T>& vec, const UnaryPredicate& condition)
+	{
+		auto iterator = std::find_if(vec.begin(), vec.end(), condition);
 		if (iterator != vec.end())
 		{
 			vec.erase(iterator);

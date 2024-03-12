@@ -22,7 +22,7 @@ void IndexBuffer::Setup(const unsigned int* data, unsigned int count_)
     glCall(glGenBuffers(1, &openGLid));
     glCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, openGLid));
     glCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count_ * sizeof(unsigned int), data, GL_STATIC_DRAW));
-    OpenGLidChecker::Add(Tools::type_as_string(*this), openGLid);
+    OpenGLidChecker::Add(Tools::TypeName(*this), openGLid);
 }
 
 void IndexBuffer::ShutDown()
@@ -32,7 +32,7 @@ void IndexBuffer::ShutDown()
     if (!UuidCreator::IsInitialized(id))
         return;
     glCall(glDeleteBuffers(1, &openGLid));
-    OpenGLidChecker::Remove(Tools::type_as_string(*this), openGLid);
+    OpenGLidChecker::Remove(Tools::TypeName(*this), openGLid);
 }
 
 void IndexBuffer::Bind() const

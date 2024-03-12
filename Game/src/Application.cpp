@@ -28,7 +28,8 @@ void run()
     //Scene::GetActiveScene().PurelyManualSetup();
     //Scene::GetActiveScene().Save();
     
-
+    
+    
     Log("--------- starting loop --------- ");
     while (Initializer::NewFrame())
     {

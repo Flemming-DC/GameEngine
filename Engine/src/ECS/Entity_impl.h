@@ -11,7 +11,7 @@ ComponentType& Entity::GetComponent() const
 	if (comp)
 		return *comp;
 	else
-		RaiseError("Failed to find " + Tools::to_string<ComponentType>() + " on " + name);
+		RaiseError("Failed to find " + Tools::TypeName<ComponentType>() + " on " + name);
 }
 
 
@@ -41,7 +41,7 @@ ComponentType& Entity::AddComponent(YAML::Node* node)
 	Component* ptr = componentsByEntity[id].back().get();
 	ComponentType* afterCast = dynamic_cast<ComponentType*>(ptr);
 	if (afterCast == nullptr)
-		RaiseError("dynamic_cast failed for " + name + ".AddComponent<" + Tools::to_string<ComponentType>() + ">()");
+		RaiseError("dynamic_cast failed for " + name + ".AddComponent<" + Tools::TypeName<ComponentType>() + ">()");
 	afterCast->OnAddComponent(id, node);
 	componentsByID[afterCast->id] = ptr;
 	return *afterCast;
@@ -80,7 +80,7 @@ ComponentType& Entity::GetComponent(uuids::uuid id_)
 {
 	ComponentType* afterCast = dynamic_cast<ComponentType*>(componentsByID[id_]);
 	if (!afterCast)
-		RaiseError("Failed to find " + Tools::to_string<ComponentType>()
+		RaiseError("Failed to find " + Tools::TypeName<ComponentType>()
 			+ " with id " + logger::to_string(id_));
 	return *afterCast;
 }

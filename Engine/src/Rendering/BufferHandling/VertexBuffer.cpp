@@ -19,7 +19,7 @@ void VertexBuffer::Setup(const void* data, unsigned int size)
     glCall(glGenBuffers(1, &openGLid));
     glCall(glBindBuffer(GL_ARRAY_BUFFER, openGLid));
     glCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
-    OpenGLidChecker::Add(Tools::type_as_string(*this), openGLid);
+    OpenGLidChecker::Add(Tools::TypeName(*this), openGLid);
 }
 
 void VertexBuffer::ShutDown()
@@ -29,7 +29,7 @@ void VertexBuffer::ShutDown()
     if (!UuidCreator::IsInitialized(id))
         return;
     glCall(glDeleteBuffers(1, &openGLid));
-    OpenGLidChecker::Remove(Tools::type_as_string(*this), openGLid);
+    OpenGLidChecker::Remove(Tools::TypeName(*this), openGLid);
 }
 
 void VertexBuffer::Bind() const

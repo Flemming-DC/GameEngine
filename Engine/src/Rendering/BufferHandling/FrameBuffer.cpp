@@ -48,9 +48,9 @@ void FrameBuffer::Setup(int width_, int height_)
     UnBind();
     glCall(glBindTexture(GL_TEXTURE_2D, 0)); // unbind
     glCall(glBindRenderbuffer(GL_RENDERBUFFER, 0)); // unbind
-    OpenGLidChecker::Add(Tools::type_as_string(*this), openGLid);
-    OpenGLidChecker::Add(Tools::type_as_string(*this) + ".Texture", texture_openGLid);
-    OpenGLidChecker::Add(Tools::type_as_string(*this) + ".RenderBuffer", renderBuffer_openGLid);
+    OpenGLidChecker::Add(Tools::TypeName(*this), openGLid);
+    OpenGLidChecker::Add(Tools::TypeName(*this) + ".Texture", texture_openGLid);
+    OpenGLidChecker::Add(Tools::TypeName(*this) + ".RenderBuffer", renderBuffer_openGLid);
 }
 
 void FrameBuffer::ShutDown()
@@ -62,9 +62,9 @@ void FrameBuffer::ShutDown()
     glCall(glDeleteFramebuffers(1, &openGLid)); 
     glCall(glDeleteTextures(1, &texture_openGLid));
     glCall(glDeleteRenderbuffers(1, &renderBuffer_openGLid));
-    OpenGLidChecker::Remove(Tools::type_as_string(*this), openGLid);
-    OpenGLidChecker::Remove(Tools::type_as_string(*this) + ".Texture", texture_openGLid);
-    OpenGLidChecker::Remove(Tools::type_as_string(*this) + ".RenderBuffer", renderBuffer_openGLid);
+    OpenGLidChecker::Remove(Tools::TypeName(*this), openGLid);
+    OpenGLidChecker::Remove(Tools::TypeName(*this) + ".Texture", texture_openGLid);
+    OpenGLidChecker::Remove(Tools::TypeName(*this) + ".RenderBuffer", renderBuffer_openGLid);
 }
 
 void FrameBuffer::Bind() const

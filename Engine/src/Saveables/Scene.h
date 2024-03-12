@@ -33,7 +33,7 @@ private:
 	uuids::uuid id;
 
 	void Load(); // load from file
-	std::string Path() { return "res/Scenes/" + Tools::type_as_string(*this) + ".yml"; } // evt. store path rather than name
+	std::string Path() { return "res/Scenes/" + Tools::TypeName(*this) + ".yml"; } // evt. store path rather than name
 };
 
 

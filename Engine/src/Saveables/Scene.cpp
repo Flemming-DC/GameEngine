@@ -132,7 +132,7 @@ void Scene::Save()
             Node compYML;
             compYML["id"] = comp->GetID();
             comp->Save(compYML); // component-type dependent data
-            entityYML[Tools::type_as_string(*comp)] = compYML;
+            entityYML[Tools::TypeName(*comp)] = compYML;
         }
         entitiesYML[entity.name] = entityYML;
     }

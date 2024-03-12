@@ -17,36 +17,14 @@ namespace Tools
 
 
 	template<typename T>
-	std::string type_as_string(const T& obj)
+	std::string TypeName(const T& obj)
 	{
 		return RemovePrefix(typeid(obj).name(), "class ");
 	}
 	template<typename T>
-	std::string to_string()
+	std::string TypeName()
 	{
 		return RemovePrefix(typeid(T).name(), "class ");
-	}
-
-
-	template<typename T>
-	std::string to_string(std::vector<T>& vec)
-	{
-		std::string out = "";
-		for (T t : vec)
-			out += ", " + Tools::to_string(t);
-		RemovePrefix(out, ", ");
-		return "[" + out + "]";
-	}
-
-	// remove by index is simple myVector.erase(myVector.begin() + index);
-
-	template<typename Tkey, typename Tval>
-	std::string to_string(std::map<Tkey, Tval>& dict)
-	{
-		std::string out = "";
-		for (const auto& pair : dict)
-			out += "\n    " + Tools::to_string(pair.first) + ": " + Tools::to_string(pair.second);
-		return "{" + out + "\n    }";
 	}
 
 
