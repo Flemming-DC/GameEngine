@@ -10,7 +10,7 @@
 #include "EngineAssets.h"
 #include "Renderer.h"
 #include "Scene.h"
-#include "Initializable.h"
+#include "Dynamic.h"
 
 bool Initializer::openGLInitialized = false;
 int Initializer::width = 960;
@@ -71,7 +71,7 @@ void Initializer::Setup()
 void Initializer::Shutdown()
 {
     Renderer::ShutDown();
-    Initializable::Clear();
+    Dynamic::Clear();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();

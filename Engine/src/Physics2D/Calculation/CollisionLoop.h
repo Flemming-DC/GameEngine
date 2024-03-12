@@ -1,11 +1,11 @@
 #pragma once
 #include "Collider.h"
 #include "glm/glm.hpp"
-#include "Initializable.h"
+#include "Dynamic.h"
 #include <vector>
 
 // this in an internal engine class, in contrast to CollisionChecker, which is only used by the gameLogic.
-class CollisionLoop : public Initializable
+class CollisionLoop : public Dynamic
 {
 	using Overlaps = std::vector<std::pair<Collider*, Collider*>>;
 
