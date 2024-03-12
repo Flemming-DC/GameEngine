@@ -6,7 +6,7 @@
 #include "Register.h"
 #include "Event.h"
 #include "Renderer.h"
-//#include "Initializable.h"
+#include "Delay.h"
 
 
 class Scene
@@ -17,7 +17,7 @@ public:
 
 	static void MakeBlankSceneFile(std::string name);
 	template <typename SceneType> static void Activate();
-	void ShutDown(); // should probably not be exposed.
+	void ShutDown();
 	void Save(); // save to file
 	static Scene& GetActiveScene() { return *activeScene; }
 	virtual void PurelyManualSetup() = 0;
@@ -41,14 +41,18 @@ template <typename SceneType> static void Scene::Activate()
 {
 	static_assert(std::is_base_of<Scene, SceneType>::value,
 		"Scene::Make can only makes Scenes, not other types");
-	if (activeScene)
-		activeScene->ShutDown();
 	
-	activeScene = std::make_unique<SceneType>();
-	Renderer::SetupGrid2D(0.25f); // if is_editor
+	Delay::ToFrameEnd([]()
+	{
+		if (activeScene)
+			activeScene->ShutDown();
 
-	activeScene->Load();
-	activeScene->ManualSetup();
-	onStart.Invoke(*activeScene);
-	//Initializable::CallOnSceneStart(*activeScene);
+		activeScene = std::make_unique<SceneType>();
+		Renderer::SetupGrid2D(0.25f); // if is_editor
+
+		activeScene->Load();
+		activeScene->ManualSetup();
+		onStart.Invoke(*activeScene);
+	});
+	
 }

@@ -59,20 +59,12 @@ void GameLogic::OnUpdate()
     if (Input::KeyHeldDown(Keyboard::M))
     {
         Log("M");
-        Delay::ToFrameEnd([]()
-        {
-            Scene::Activate<DemoScene>();
-            //CollisionLoop::OnSceneEnd();
-        });
+        Scene::Activate<DemoScene>(); // this gets called multiple frames in a row, which you shouldn't do in a real game
     }
     if (Input::KeyHeldDown(Keyboard::N))
     {
         Log("N");
-        Delay::ToFrameEnd([]()
-        {
-            Scene::Activate<SecondScene>();
-            //CollisionLoop::OnSceneEnd();
-        });
+        Scene::Activate<SecondScene>(); // this gets called multiple frames in a row, which you shouldn't do in a real game
     }
 }
 

@@ -12,6 +12,7 @@ diverse
 	error handling ved uninitialized material / mesh (the !UuidCreator::IsInitialized(id) check didn't catch missing setup call) 
 	destruction and scene change at end of loop
 	creating a collider Gizmo before the grid Gizmo causes the former to show up incorrectly. Possibly due to fitting objects of different size into the same vector
+	input keyPressed and keyReleased bools and events.
 
 components & gameobjects
 	handle activation
