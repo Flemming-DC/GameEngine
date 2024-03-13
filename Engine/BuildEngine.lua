@@ -8,7 +8,7 @@ Engine = project "Engine"
     files { "**.h", "**.cpp", "**.hpp", "**.inl" } 
     
     includedirs {
-        "../Engine/src/**",
+        "../Engine/Source/**",
         "../Engine/Dependencies/SrcDependencies/stduuid",
         "../Engine/Dependencies/SrcDependencies",
         "../Engine/Dependencies/BinDependencies/OpenGL/include",

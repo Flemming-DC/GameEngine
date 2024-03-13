@@ -7,12 +7,12 @@ project "Game"
     staticruntime(Engine.staticruntime)
     
     -- dont use engine.files, since it creates a mess in Visual Studio
-    files { "src/**.h", "src/**.cpp", "src/**.hpp", "src/**.inl" } 
+    files { "Source/**.h", "Source/**.cpp", "Source/**.hpp", "Source/**.inl" } 
    
     includedirs {
-        "../Game/src",
-        "../Game/src/**",
-        "../Engine/src/", -- this provides access to includes Engine.h and Core.h, which is not inside Engine.includedirs
+        "../Game/Source",
+        "../Game/Source/**",
+        "../Engine/Source/", -- this provides access to includes Engine.h and Core.h, which is not inside Engine.includedirs
         Engine.includedirs
     }
     links {
