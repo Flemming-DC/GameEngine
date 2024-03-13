@@ -44,6 +44,7 @@ void Initializer::Setup()
 
     glCall(glEnable(GL_BLEND));
     glCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+    openGLInitialized = true;
 
     // ImGui setup
     ImGui::CreateContext();
@@ -60,7 +61,7 @@ void Initializer::Setup()
     ImGui::StyleColorsDark();
     io.FontGlobalScale = 1.2f; // font size
 
-    openGLInitialized = true;
+    // openGLInitialized = true; // this should be ImGuiInitilized and ExternalsInitilized 
 
     //custom setup
     Input::Setup();

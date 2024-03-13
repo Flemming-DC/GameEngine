@@ -8,22 +8,7 @@ Engine = project "Engine"
     files { "**.h", "**.cpp", "**.hpp", "**.inl" } 
    
     includedirs {
-        "../Engine/src",
-        "../Engine/src/Diverse",
-        "../Engine/src/Tools",
-        "../Engine/src/ECS",
-        "../Engine/src/Rendering",
-        "../Engine/src/Rendering/Surface",
-        "../Engine/src/Rendering/BufferHandling",
-        "../Engine/src/Physics2D",
-        "../Engine/src/Physics2D/Colliders",
-        "../Engine/src/Physics2D/Calculation",
-        "../Engine/src/Saveables",
-        "../Engine/Dependencies/SrcDependencies/stduuid",
-        "../Engine/Dependencies/SrcDependencies",
-        "../Engine/Dependencies/BinDependencies/OpenGL/include",
-        "../Engine/Dependencies/BinDependencies/yaml-cpp-master/include",
-        "../Engine/Dependencies/BinDependencies/GLEW/include"
+        "../Engine/**"
     }
 
     links {

@@ -25,7 +25,9 @@ components & gameobjects
 	scene activation and removing entities from register should be pushed until end of frame, otherwise you get and inconsistent update loop, which can destroy the things it is looping over.
 
 dynamics
-	enable, disable
+	enable, disable, OnEditorStart (evt. i stedet for OnEngineStart)
+	should OnGameStart be called every time you press "run game" in the editor? 
+	onRareUpdate, OnTimedStart/OnStart overload with int parameter
 
 Editor
 	ctrl input for saving

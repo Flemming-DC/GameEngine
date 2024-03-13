@@ -9,7 +9,6 @@ namespace Core
     void Run()
     {
         Log("--------- Setup --------- ");
-
         Initializer::Setup();
         Dynamic::CallOnEngineStart();
         Dynamic::CallOnGameStart();
@@ -25,11 +24,13 @@ namespace Core
             Delay::CallToFrameEnd();
             Initializer::EndFrame();
         }
+
         Log("------- Shutdown --------");
         Scene::GetActiveScene().ShutDown();
         Dynamic::CallOnGameEnd();
         Dynamic::CallOnEngineEnd();
         Initializer::Shutdown();
+
         Log("------- Done --------");
     }
 
