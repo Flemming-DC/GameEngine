@@ -11,7 +11,6 @@
 #include "FrameBuffer.h"
 #include "OpenGLidChecker.h"
 
-bool Renderer::showBlackScreenDebugInfo = true;
 uuids::uuid Renderer::horizontalGridID;
 uuids::uuid Renderer::verticalGridID;
 FrameBuffer Renderer::frameBuffer;
@@ -43,37 +42,6 @@ Renderer::RenderResult Renderer::DrawToFrameBuffer()
     return { frameBuffer.GetTextureOpenGLid(), Initializer::GetWidth(), Initializer::GetHeight() };
 }
 
-
-bool Renderer::ScreenIsBlack()
-{
-    float threshold = 0.001f; // Define a threshold for considering a pixel as "black"
-
-    // get data about screen color
-    GLint viewport[4];
-    glCall(glGetIntegerv(GL_VIEWPORT, viewport));
-    int width = viewport[2];
-    int height = viewport[3];
-    unsigned char* pixelData = new unsigned char[width * height * 4];
-    glCall(glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixelData));
-
-    // check if it's essentially black
-    bool isMostlyBlack = true;
-    for (int i = 0; i < width * height; ++i)
-    {
-        unsigned char r = pixelData[i * 4];
-        unsigned char g = pixelData[i * 4 + 1];
-        unsigned char b = pixelData[i * 4 + 2];
-
-        if (r > threshold || g > threshold || b > threshold)
-        {
-            isMostlyBlack = false;
-            break;
-        }
-    }
-    delete[] pixelData;
-    showBlackScreenDebugInfo = false;
-    return isMostlyBlack;
-}
 
 
 void Renderer::SetupGrid2D(float gridScale)

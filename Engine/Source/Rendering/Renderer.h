@@ -29,7 +29,6 @@ private:
 	static uuids::uuid verticalGridID;
 	static FrameBuffer frameBuffer;
 
-	static bool ScreenIsBlack();
 	
 };
 
