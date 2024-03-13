@@ -6,10 +6,16 @@ Engine = project "Engine"
     staticruntime "off"
 
     files { "**.h", "**.cpp", "**.hpp", "**.inl" } 
-   
+    
     includedirs {
-        "../Engine/**"
+        "../Engine/src/**",
+        "../Engine/Dependencies/SrcDependencies/stduuid",
+        "../Engine/Dependencies/SrcDependencies",
+        "../Engine/Dependencies/BinDependencies/OpenGL/include",
+        "../Engine/Dependencies/BinDependencies/yaml-cpp-master/include",
+        "../Engine/Dependencies/BinDependencies/GLEW/include"
     }
+
 
     links {
         -- "/NODEFAULTLIB:LIBCMT;" -- insert manually without .lib extension

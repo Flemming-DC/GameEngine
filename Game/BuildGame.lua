@@ -11,8 +11,8 @@ project "Game"
    
     includedirs {
         "../Game/src",
-        "../Game/src/Components",
-        "../Game/src/Scenes",
+        "../Game/src/**",
+        "../Engine/src/", -- this provides access to includes Engine.h and Core.h, which is not inside Engine.includedirs
         Engine.includedirs
     }
     links {
