@@ -11,6 +11,7 @@
 #include "Renderer.h"
 #include "Scene.h"
 #include "Dynamic.h"
+#include "CollisionLoop.h"
 
 bool Initializer::openGLInitialized = false;
 int Initializer::width = 960;
@@ -37,8 +38,9 @@ void Initializer::Setup()
     // glew setup
     if (glewInit() != GLEW_OK)
         RaiseError("glewInit failed");
-    std::cout << glGetString(GL_VERSION) << std::endl;
-    glfwSwapInterval(1);
+    glCall(auto glVersion = glGetString(GL_VERSION));
+    //Log(glVersion);
+    glCall(glfwSwapInterval(1));
 
     glCall(glEnable(GL_BLEND));
     glCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
@@ -63,6 +65,7 @@ void Initializer::Setup()
     //custom setup
     Input::Setup();
     Time::Setup();
+    CollisionLoop::Setup();
     EngineAssets::Setup();
 
 

@@ -1,12 +1,9 @@
 #pragma once
 #include "Register.h"
-#include "Shader.h"
-#include "Texture.h"
-#include "Material.h"
-//#include "Scene.h"
+#include "Engine.h"
 
 // this is a temp thing. In a real game, it would be split by asset type
-class GameAssets
+class GameAssets : public Dynamic
 {
 public:
 	static void Setup();
@@ -19,6 +16,7 @@ private:
 	static Texture& texture;
 	static Material& material;
 
+	void OnGameStart() { Setup(); }
 
 };
 

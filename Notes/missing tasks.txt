@@ -3,10 +3,8 @@ diverse
 	move openGL errorhandling into rendering folder thereby seperating it from general tools
 	buy old used mac, linux, xbox and playstation
 	update view-area on window resize
-	evt. create the initializable class and let assets and components inhirit from it. 
 	looping lacks in circle gizmo
 	evt. cleanup unsued get so and so functions for the texture
-	activate CollisionLoop::OnSceneEnd from a proper callback
 	color is input to gizmo, but it is not used
 	destroy gizmo if its associated transform goes nullptr
 	error handling ved uninitialized material / mesh (the !UuidCreator::IsInitialized(id) check didn't catch missing setup call) 
@@ -27,7 +25,7 @@ components & gameobjects
 	scene activation and removing entities from register should be pushed until end of frame, otherwise you get and inconsistent update loop, which can destroy the things it is looping over.
 
 dynamics
-	enable, disable, startScene, endScene, starGame, endGame
+	enable, disable
 
 Editor
 	ctrl input for saving

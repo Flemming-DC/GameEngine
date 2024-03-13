@@ -54,7 +54,7 @@ void Entity::Destroy() // Entity::~Entity()
 	// Entity::register_.Remove(id); // <------- take care of this
 }
 
-void Entity::UpdateAllEntities()
+void Entity::CallOnUpdate()
 {
 	for (const auto& pair : componentsByEntity)
 	{

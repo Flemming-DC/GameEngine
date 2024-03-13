@@ -4,26 +4,32 @@
 #include <memory>
 #include "ErrorChecker.h"
 #include "StringTools.h"
-
+#include "logger.h"
 
 class Dynamic
 {
 public:
-	template <typename initializableType>
-	static initializableType& Add()
+	template <typename... Args>
+	static void Setup()
 	{
-		static_assert(std::is_base_of<Dynamic, initializableType>::value,
+		(..., Add<Args>());
+	}
+
+	template <typename DynamicType>
+	static DynamicType& Add()
+	{
+		static_assert(std::is_base_of<Dynamic, DynamicType>::value,
 			"Dynamic::Add can only add Initializables, not other types");
 
-		initializables.emplace_back(std::make_unique<initializableType>());
-		Dynamic* ptr = initializables.back().get();
-		initializableType* afterCast = dynamic_cast<initializableType*>(ptr);
+		dynamics.push_back(std::make_unique<DynamicType>());
+		Dynamic* ptr = dynamics.back().get();
+		DynamicType* afterCast = dynamic_cast<DynamicType*>(ptr);
 		if (afterCast == nullptr)
-			RaiseError("dynamic_cast failed for Dynamic::Add<" + Tools::TypeName<initializableType>() + ">()");
+			RaiseError("dynamic_cast failed for Dynamic::Add<" + Tools::TypeName<DynamicType>() + ">()");
 		return *afterCast;
 	}
 	
-	static bool Remove(Dynamic& initializable);
+	static bool Remove(Dynamic& dynamic);
 	static void Clear();
 
 	static void CallOnEngineStart();
@@ -32,9 +38,8 @@ public:
 	static void CallOnGameEnd();
 	static void CallOnEngineEnd();
 
-
 private:
-	static std::vector<std::unique_ptr<Dynamic>> initializables;
+	static std::vector<std::unique_ptr<Dynamic>> dynamics;
 
 	inline virtual void OnEngineStart() {}
 	inline virtual void OnGameStart() {}

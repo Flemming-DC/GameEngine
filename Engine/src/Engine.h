@@ -10,6 +10,7 @@
 #include "Scene.h"
 #include "Register.h"
 #include "Delay.h"
+#include "Dynamic.h"
 
 #include "PolygonCollider.h"
 #include "RectangleCollider.h"
@@ -19,12 +20,6 @@
 #include "Renderable.h"
 #include "Material.h"
 #include "Mesh.h"
-
-
-
-
-
-
 
 
 

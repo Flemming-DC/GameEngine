@@ -9,6 +9,7 @@
 #include "StringTools.h"
 #include "Initializer.h"
 #include "OpenGLidChecker.h"
+#include "Dynamic.h"
 
 // ---------------- public ----------------
 Register<Shader> Shader::register_;

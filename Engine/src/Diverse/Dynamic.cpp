@@ -1,73 +1,73 @@
 #include "Dynamic.h"
 #include <ListTools.h>
 
-std::vector<std::unique_ptr<Dynamic>> Dynamic::initializables;
+std::vector<std::unique_ptr<Dynamic>> Dynamic::dynamics;
 
 
-bool Dynamic::Remove(Dynamic& initializable)
+bool Dynamic::Remove(Dynamic& dynamic)
 {
-    return Tools::Remove(initializables,
-        [&](const std::unique_ptr<Dynamic>& ptr) { return ptr.get() == &initializable; });
+    return Tools::Remove(dynamics,
+        [&](const std::unique_ptr<Dynamic>& ptr) { return ptr.get() == &dynamic; });
 }
 
 void Dynamic::Clear()
 {
-    initializables.clear();
+    dynamics.clear();
 }
 
 
 void Dynamic::CallOnEngineStart()
 {
-    for (const auto& initializable : initializables)
+    for (const auto& dynamic : dynamics)
     {
-        if (initializable)
-            initializable->OnEngineStart();
+        if (dynamic)
+            dynamic->OnEngineStart();
         else
-            RaiseError(Tools::TypeName(initializable) + " is nullptr");
+            RaiseError(Tools::TypeName(dynamic) + " is nullptr");
     }
 }
 
 void Dynamic::CallOnGameStart()
 {
-    for (const auto& initializable : initializables)
+    for (const auto& dynamic : dynamics)
     {
-        if (initializable)
-            initializable->OnGameStart();
+        if (dynamic)
+            dynamic->OnGameStart();
         else
-            RaiseError(Tools::TypeName(initializable) + " is nullptr");
+            RaiseError(Tools::TypeName(dynamic) + " is nullptr");
     }
 }
 
 void Dynamic::CallOnUpdate()
 {
-    for (const auto& initializable : initializables)
+    for (const auto& dynamic : dynamics)
     {
-        if (initializable)
-            initializable->OnUpdate();
+        if (dynamic)
+            dynamic->OnUpdate();
         else
-            RaiseError(Tools::TypeName(initializable) + " is nullptr");
+            RaiseError(Tools::TypeName(dynamic) + " is nullptr");
     }
 }
 
 void Dynamic::CallOnGameEnd()
 {
-    for (const auto& initializable : initializables)
+    for (const auto& dynamic : dynamics)
     {
-        if (initializable)
-            initializable->OnGameEnd();
+        if (dynamic)
+            dynamic->OnGameEnd();
         else
-            RaiseError(Tools::TypeName(initializable) + " is nullptr");
+            RaiseError(Tools::TypeName(dynamic) + " is nullptr");
     }
 }
 
 void Dynamic::CallOnEngineEnd()
 {
-    for (const auto& initializable : initializables)
+    for (const auto& dynamic : dynamics)
     {
-        if (initializable)
-            initializable->OnEngineEnd();
+        if (dynamic)
+            dynamic->OnEngineEnd();
         else
-            RaiseError(Tools::TypeName(initializable) + " is nullptr");
+            RaiseError(Tools::TypeName(dynamic) + " is nullptr");
     }
 }
 

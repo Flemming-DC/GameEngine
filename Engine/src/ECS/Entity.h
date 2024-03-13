@@ -19,7 +19,7 @@ public:
 	static uuids::uuid Make(std::string name = "Entity");
 	Entity(std::string name = "Entity", uuids::uuid* id = nullptr);
 	void Destroy();
-	static void UpdateAllEntities(); 
+	static void CallOnUpdate(); 
 	const std::vector<std::unique_ptr<Component>>& GetComponents() const { return componentsByEntity.at(id); }
 	bool RemoveComponent(const Component& comp);
 	

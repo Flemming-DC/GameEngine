@@ -2,12 +2,14 @@
 #include "Engine.h"
 
 
-namespace Editor
+class Editor : public Dynamic
 {
-	void OnSceneChanged();
-	// bool is_editor
+public:
+	//static void OnSceneChanged();
 
-	void Update();
 
+private:
+	void OnEngineStart() override { Renderer::ShowWindow(false); }
+	void OnUpdate() override;
 };
 

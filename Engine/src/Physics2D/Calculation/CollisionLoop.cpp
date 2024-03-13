@@ -7,9 +7,9 @@
 
 using Overlaps = std::vector<std::pair<Collider*, Collider*>>;
 Overlaps CollisionLoop::overlaps = {};
-auto& _ = Dynamic::Add<CollisionLoop>();
 
-void CollisionLoop::OnEngineStart()
+
+void CollisionLoop::Setup()
 {
 	Scene::onEnd.Add([](const Scene& _) { overlaps.clear(); });
 }
