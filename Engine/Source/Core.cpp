@@ -28,17 +28,16 @@ void Core::Setup()
 void Core::Update()
 {
     ImGuiSetup::EarlyUpdate();
-
     Time::Update();
+    
     CollisionLoop::Update();
     Dynamic::CallOnUpdate();
     Entity::CallOnUpdate();
     Renderer::DrawToScreen();
-    Delay::CallToFrameEnd(); // evt. put it all the way at end of frame
-    Input::Update(); // resetting input data, must happen before glfwPollEvents
 
+    Delay::CallToFrameEnd();
+    Input::Update(); // resetting input data, must happen before glfwPollEvents
     ImGuiSetup::LateUpdate();
-    OpenGlSetup::EndFrame();
 }
 
 void Core::Shutdown()

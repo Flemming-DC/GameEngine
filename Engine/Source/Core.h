@@ -9,22 +9,23 @@ public:
     template <typename SceneType>
     static void Run()
     {
-        logger::print("--------- Setup --------- ");
+        LogHeader("Setup");
         Setup();
         Scene::Activate<SceneType>();
 
-        logger::print("--------- Loop --------- ");
-        while (OpenGlSetup::NewFrame())
+        LogHeader("Loop");
+        while (OpenGlSetup::Update())
             Update();
 
-        logger::print("------- Shutdown --------");
+        LogHeader("Shutdown");
         Shutdown();
 
-        logger::print("------- Done --------");
+        LogHeader("Done");
     }
 
 private:
     static void Setup();
     static void Update();
     static void Shutdown();
+    static void LogHeader(std::string header) { logger::print("------- " + header + " --------"); }
 };

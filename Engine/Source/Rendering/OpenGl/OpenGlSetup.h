@@ -10,7 +10,7 @@ public:
 	static void Setup();
 	static void Shutdown();
 	static bool NewFrame();
-	static void EndFrame();
+	static bool Update();
 	static bool Initialized() { return openGLInitialized; }
 	inline static int GetWidth() { return width; }
 	inline static int GetHeight() { return height; }

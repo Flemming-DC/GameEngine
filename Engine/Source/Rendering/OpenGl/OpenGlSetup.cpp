@@ -48,10 +48,11 @@ bool OpenGlSetup::NewFrame()
     return !glfwWindowShouldClose(window);
 }
 
-void OpenGlSetup::EndFrame()
+bool OpenGlSetup::Update()
 {
     glCall(glfwSwapBuffers(window)); // Swap front and back buffers
     glCall(glfwPollEvents()); // Poll for and process events
+    return !glfwWindowShouldClose(window);
 }
 
 void OpenGlSetup::Exit()
