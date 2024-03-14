@@ -5,7 +5,6 @@
 class Core
 {
 public:
-
     template <typename SceneType>
     static void Run()
     {

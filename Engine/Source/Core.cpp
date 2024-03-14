@@ -27,16 +27,19 @@ void Core::Setup()
 
 void Core::Update()
 {
+    // setup frame
     ImGuiSetup::EarlyUpdate();
     Time::Update();
+    Input::Update();
     
+    // update world
     CollisionLoop::Update();
     Dynamic::CallOnUpdate();
     Entity::CallOnUpdate();
     Renderer::DrawToScreen();
-
     Delay::CallToFrameEnd();
-    Input::Update(); // resetting input data, must happen before glfwPollEvents
+
+    // shutdown frame
     ImGuiSetup::LateUpdate();
 }
 
