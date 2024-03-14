@@ -1,6 +1,6 @@
 #include "Renderable.h"
 #include "Camera.h"
-#include "ErrorChecker.h"
+#include "OpenGlError.h"
 #include "EngineAssets.h"
 #include "ListTools.h"
 #include "glm/glm.hpp"

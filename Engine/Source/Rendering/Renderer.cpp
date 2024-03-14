@@ -1,6 +1,6 @@
 #include "Renderer.h"
 #include <GL/glew.h>
-#include "ErrorChecker.h"
+#include "OpenGlError.h"
 #include "Renderable.h"
 #include "Gizmo.h"
 #include "Shader.h"
@@ -18,28 +18,25 @@ FrameBuffer Renderer::frameBuffer;
 
 void Renderer::DrawToScreen()
 {
+    glCall(glClear(GL_COLOR_BUFFER_BIT)); // same as renderer.Clear()
     Renderable::UnBind(); //  evt. add framebuffer unbind
     for (const uuids::uuid& renderableID : Renderable::allRenderables)
         Entity::GetComponent<Renderable>(renderableID).Draw();
     for (Gizmo& gizmo : Gizmo::register_.GetData())
         gizmo.Draw();
     
-    /*
-    if (showBlackScreenDebugInfo && ScreenIsBlack())
-        info
-    */
 }
 
 
 Renderer::RenderResult Renderer::DrawToFrameBuffer()
 {
     if (!UuidCreator::IsInitialized(frameBuffer.GetID()))
-        frameBuffer = FrameBuffer::register_.Add(Initializer::GetWidth(), Initializer::GetHeight());
+        frameBuffer = FrameBuffer::register_.Add(OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight());
     frameBuffer.Bind();
     glCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
     Renderer::DrawToScreen();
     frameBuffer.UnBind();
-    return { frameBuffer.GetTextureOpenGLid(), Initializer::GetWidth(), Initializer::GetHeight() };
+    return { frameBuffer.GetTextureOpenGLid(), OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight() };
 }
 
 
@@ -94,7 +91,7 @@ void Renderer::ShutDown()
 
 void Renderer::ShowWindow(bool show)
 {
-    auto window = Initializer::GetWindow();
+    auto window = OpenGlSetup::GetWindow();
     if (IsWindowVisible())
     {
         glCall(glfwHideWindow(window));
@@ -107,7 +104,7 @@ void Renderer::ShowWindow(bool show)
 
 bool Renderer::IsWindowVisible()
 {
-    auto window = Initializer::GetWindow();
+    auto window = OpenGlSetup::GetWindow();
     glCall(bool isVisible = glfwGetWindowAttrib(window, GLFW_VISIBLE));
     return isVisible;
 }

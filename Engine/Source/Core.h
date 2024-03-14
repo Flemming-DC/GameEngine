@@ -2,37 +2,29 @@
 #include "Engine.h"
 #include "CollisionLoop.h"
 
-namespace Core
+class Core
 {
+public:
 
     template <typename SceneType>
-    void Run()
+    static void Run()
     {
-        Log("--------- Setup --------- ");
-        Initializer::Setup();
-        Dynamic::CallOnEngineStart();
-        Dynamic::CallOnGameStart();
+        logger::print("--------- Setup --------- ");
+        Setup();
         Scene::Activate<SceneType>();
 
-        Log("--------- Loop --------- ");
-        while (Initializer::NewFrame())
-        {
-            CollisionLoop::Update();
-            Dynamic::CallOnUpdate();
-            Entity::CallOnUpdate();
-            Renderer::DrawToScreen();
-            Delay::CallToFrameEnd();
-            Initializer::EndFrame();
-        }
+        logger::print("--------- Loop --------- ");
+        while (OpenGlSetup::NewFrame())
+            Update();
 
-        Log("------- Shutdown --------");
-        Scene::GetActiveScene().ShutDown();
-        Dynamic::CallOnGameEnd();
-        Dynamic::CallOnEngineEnd();
-        Initializer::Shutdown();
+        logger::print("------- Shutdown --------");
+        Shutdown();
 
-        Log("------- Done --------");
+        logger::print("------- Done --------");
     }
 
-
-}
+private:
+    static void Setup();
+    static void Update();
+    static void Shutdown();
+};

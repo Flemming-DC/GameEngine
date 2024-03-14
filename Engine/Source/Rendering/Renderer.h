@@ -5,7 +5,7 @@
 #include "Mesh.h"
 #include "Gizmo.h"
 #include "FrameBuffer.h"
-#include "Initializer.h"
+#include "OpenGlSetup.h"
 #include <stduuid/uuid.h>
 
 
@@ -18,7 +18,7 @@ public:
 	static RenderResult DrawToFrameBuffer(); // returns the texture_openGLid that contains the render result.
 	static void SetupGrid2D(float gridScale);
 	static void ShutDown();
-	//static void ToggleGameWindow() { Initializer::ToggleGlfwWindow(); }
+	//static void ToggleGameWindow() { OpenGlSetup::ToggleGlfwWindow(); }
 	static void ShowWindow(bool show);
 	static bool IsWindowVisible();
 

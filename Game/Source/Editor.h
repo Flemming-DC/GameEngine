@@ -9,7 +9,7 @@ public:
 
 
 private:
-	void OnEngineStart() override { Renderer::ShowWindow(false); }
+	void OnEditorStart() override { Renderer::ShowWindow(false); }
 	void OnUpdate() override;
 };
 

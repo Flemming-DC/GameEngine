@@ -1,13 +1,13 @@
 #include "Mesh.h"
-#include "Initializer.h"
+#include "OpenGlSetup.h"
 #include "EngineAssets.h"
 
 Register<Mesh> Mesh::register_;
 
 void Mesh::Setup(const std::vector<float>& vertices_, const std::vector<unsigned int>& indices_, const VertexLayout& layout_)
 {
-    if (!Initializer::OpenGLInitialized())
-        RaiseError("Mesh cannot be setup before Initializer::Setup() is called.");
+    if (!OpenGlSetup::Initialized())
+        RaiseError("Mesh cannot be setup before OpenGlSetup::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("Mesh is already initialized");
     id = UuidCreator::MakeID();

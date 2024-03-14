@@ -1,16 +1,17 @@
 #pragma once
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "OpenGlError.h"
 
 
-class Initializer
+class OpenGlSetup
 {
 public:
 	static void Setup();
 	static void Shutdown();
 	static bool NewFrame();
 	static void EndFrame();
-	static bool OpenGLInitialized() { return openGLInitialized; }
+	static bool Initialized() { return openGLInitialized; }
 	inline static int GetWidth() { return width; }
 	inline static int GetHeight() { return height; }
 	inline static GLFWwindow* GetWindow() { return window; }

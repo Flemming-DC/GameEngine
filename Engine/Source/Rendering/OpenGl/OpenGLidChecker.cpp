@@ -1,5 +1,5 @@
 #include "OpenGLidChecker.h"
-#include "ErrorChecker.h"
+#include "OpenGlError.h"
 #include "ListTools.h"
 #include "StringTools.h"
 

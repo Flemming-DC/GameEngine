@@ -1,16 +1,16 @@
 #include "VertexArray.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "ErrorChecker.h"
-#include "Initializer.h"
+#include "OpenGlError.h"
+#include "OpenGlSetup.h"
 #include "OpenGLidChecker.h"
 
 Register<VertexArray> VertexArray::register_;
 
 void VertexArray::Setup()
 {
-    if (!Initializer::OpenGLInitialized())
-        RaiseError("VertexArray cannot be setup before Initializer::Setup() is called.");
+    if (!OpenGlSetup::Initialized())
+        RaiseError("VertexArray cannot be setup before OpenGlSetup::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("VertexArray is already initialized");
     id = UuidCreator::MakeID();

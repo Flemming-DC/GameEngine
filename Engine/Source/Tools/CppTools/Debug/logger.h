@@ -19,24 +19,6 @@ namespace logger
 
 
 
-	/*
-
-	template<typename T>
-	std::string to_string(const T& value)
-	{
-		// Forward to std::to_string
-		return std::to_string(value);
-	}
-
-	std::string to_string(const std::string& value)
-	{
-		return value;
-	}
-	std::string to_string(const char* value)
-	{
-		return std::string(value);
-	}
-	*/
 }
 
 #include "logger_impl.h"

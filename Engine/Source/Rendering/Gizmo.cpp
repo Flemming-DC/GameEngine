@@ -1,5 +1,5 @@
 #include "Gizmo.h"
-#include "ErrorChecker.h"
+#include "OpenGlError.h"
 #include "Camera.h"
 #include "ListTools.h"
 #include "UuidCreator.h"

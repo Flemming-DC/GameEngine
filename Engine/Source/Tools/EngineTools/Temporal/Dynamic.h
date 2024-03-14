@@ -32,20 +32,20 @@ public:
 	static bool Remove(Dynamic& dynamic);
 	static void Clear();
 
-	static void CallOnEngineStart();
+	static void CallOnEditorStart();
 	static void CallOnGameStart();
 	static void CallOnUpdate();
 	static void CallOnGameEnd();
-	static void CallOnEngineEnd();
+	static void CallOnEditorEnd();
 
 private:
 	static std::vector<std::unique_ptr<Dynamic>> dynamics;
 
-	inline virtual void OnEngineStart() {}
+	inline virtual void OnEditorStart() {}
 	inline virtual void OnGameStart() {}
 	inline virtual void OnUpdate() {}
 	inline virtual void OnGameEnd() {}
-	inline virtual void OnEngineEnd() {}
+	inline virtual void OnEditorEnd() {}
 
 };
 

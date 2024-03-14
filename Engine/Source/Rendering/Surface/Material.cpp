@@ -5,7 +5,7 @@
 #include "ErrorChecker.h"
 #include "StringTools.h"
 #include "ListTools.h"
-#include "Initializer.h"
+#include "OpenGlSetup.h"
 
 Register<Material> Material::register_;
 
@@ -13,8 +13,8 @@ void Material::Setup(
     const Shader& shader_,
     const std::map<std::string, std::any>& uniformValuesByName_)
 {
-    if (!Initializer::OpenGLInitialized())
-        RaiseError("Material cannot be setup before Initializer::Setup() is called.");
+    if (!OpenGlSetup::Initialized())
+        RaiseError("Material cannot be setup before OpenGlSetup::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("Material is already initialized");
     id = UuidCreator::MakeID();

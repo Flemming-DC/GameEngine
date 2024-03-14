@@ -19,7 +19,7 @@ void unused_TransformGUI(const Entity& entity, glm::vec3* eulerAngles)
     ImGui::Text(name.c_str());
     auto pointerToTranslation = &transform.localPosition.x;
     auto pointerToangles = &eulerAngles->x;
-    Log("unused_TransformGUI WARNING: the gui modifies the transform.localRotation");
+    logger::print("unused_TransformGUI WARNING: the gui modifies the transform.localRotation");
     auto pointerToScale = &transform.localScale.x;
     ImGui::SliderFloat3((name + ".translation").c_str(), pointerToTranslation, -2, 2); // imGUI requires unique widget-names
     ImGui::SliderFloat3((name + ".Rotaion").c_str(), pointerToangles, 0, 360);
@@ -183,7 +183,7 @@ void Editor::OnUpdate()
     //ImGui::ShowDemoWindow();
 
     if (Input::KeyHeldDown(Keyboard::exc))
-        Initializer::Exit(); // save first
+        OpenGlSetup::Exit(); // save first
 }
 
 

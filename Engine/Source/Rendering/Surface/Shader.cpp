@@ -5,9 +5,9 @@
 #include <sstream>
 #include <any>
 #include <filesystem>
-#include "ErrorChecker.h"
+#include "OpenGlError.h"
 #include "StringTools.h"
-#include "Initializer.h"
+#include "OpenGlSetup.h"
 #include "OpenGLidChecker.h"
 #include "Dynamic.h"
 
@@ -18,8 +18,8 @@ Register<Shader> Shader::register_;
 
 void Shader::Setup(const std::string& filePath)
 {
-    if (!Initializer::OpenGLInitialized())
-        RaiseError("Shader cannot be setup before Initializer::Setup() is called.");
+    if (!OpenGlSetup::Initialized())
+        RaiseError("Shader cannot be setup before OpenGlSetup::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("Shader is already initialized");
     id = UuidCreator::MakeID();

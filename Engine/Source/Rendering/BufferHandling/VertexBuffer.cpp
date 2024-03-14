@@ -1,16 +1,16 @@
 #include "VertexBuffer.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "ErrorChecker.h"
-#include "Initializer.h"
+#include "OpenGlError.h"
+#include "OpenGlSetup.h"
 #include "OpenGLidChecker.h"
 
 Register<VertexBuffer> VertexBuffer::register_;
 
 void VertexBuffer::Setup(const void* data, unsigned int size)
 {
-    if (!Initializer::OpenGLInitialized())
-        RaiseError("VertexBuffer cannot be setup before Initializer::Setup() is called.");
+    if (!OpenGlSetup::Initialized())
+        RaiseError("VertexBuffer cannot be setup before OpenGlSetup::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("VertexBuffer is already initialized");
     id = UuidCreator::MakeID();

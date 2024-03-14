@@ -2,16 +2,16 @@
 #include "Texture.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "ErrorChecker.h"
-#include "Initializer.h"
+#include "OpenGlError.h"
+#include "OpenGlSetup.h"
 #include "OpenGLidChecker.h"
 
 Register<FrameBuffer> FrameBuffer::register_;
 
 void FrameBuffer::Setup(int width_, int height_)
 {
-    if (!Initializer::OpenGLInitialized())
-        RaiseError("FrameBuffer cannot be setup before Initializer::Setup() is called.");
+    if (!OpenGlSetup::Initialized())
+        RaiseError("FrameBuffer cannot be setup before OpenGlSetup::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("FrameBuffer is already initialized");
     id = UuidCreator::MakeID();

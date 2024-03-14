@@ -12,9 +12,9 @@ void GameLogic::OnStart()
     color = material->GetUniform<glm::vec4>("u_color");
 
     Get<RectangleCollider>().onEnter.Add([this](Collider& other)
-        { Log("GameLogic.OnStart: Collider.Enter: " + other.GetEntity().name + " enters " + this->GetEntity().name); });
+        { logger::print("GameLogic.OnStart: Collider.Enter: " + other.GetEntity().name + " enters " + this->GetEntity().name); });
     Get<RectangleCollider>().onExit.Add([this](Collider& other)
-        { Log("GameLogic: Collider.Enter: " + other.GetEntity().name + " enters " + this->GetEntity().name); });
+        { logger::print("GameLogic: Collider.Enter: " + other.GetEntity().name + " enters " + this->GetEntity().name); });
 }
 
 void GameLogic::OnUpdate()
@@ -30,40 +30,40 @@ void GameLogic::OnUpdate()
 
     if (Input::KeyHeldDown(Keyboard::K))
     {
-        Log("K");
+        logger::print("K");
         for (const auto& overlap : CollisionChecker::GetOverlaps())
-            Log(overlap.first->GetEntity().name + " overlaps " + overlap.second->GetEntity().name);
+            logger::print(overlap.first->GetEntity().name + " overlaps " + overlap.second->GetEntity().name);
     }
     if (Input::KeyHeldDown(Keyboard::L))
     {
-        Log("L");
+        logger::print("L");
         auto colliders = CollisionChecker::RayOverlaps(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
         for (const auto& col : colliders)
-            Log(col->GetEntity().name + " was hit");
+            logger::print(col->GetEntity().name + " was hit");
     }
     if (Input::KeyHeldDown(Keyboard::P))
     {
-        Log("P");
+        logger::print("P");
         auto collider = CollisionChecker::RayCast(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
         if (collider != nullptr)
-            Log(collider->GetEntity().name + " was hit");
+            logger::print(collider->GetEntity().name + " was hit");
         else
-            Log("Hit nothing");
+            logger::print("Hit nothing");
     }
 
     if (Input::KeyHeldDown(Keyboard::O))
     {
-        Log("O");
+        logger::print("O");
         Renderer::ShowWindow(!Renderer::IsWindowVisible());
     }
     if (Input::KeyHeldDown(Keyboard::M))
     {
-        Log("M");
+        logger::print("M");
         Scene::Activate<DemoScene>(); // this gets called multiple frames in a row, which you shouldn't do in a real game
     }
     if (Input::KeyHeldDown(Keyboard::N))
     {
-        Log("N");
+        logger::print("N");
         Scene::Activate<SecondScene>(); // this gets called multiple frames in a row, which you shouldn't do in a real game
     }
 }

@@ -1,15 +1,15 @@
 #include "Texture.h"
-#include "ErrorChecker.h"
+#include "OpenGlError.h"
 #include "stb_image/stb_image.h"
-#include "Initializer.h"
+#include "OpenGlSetup.h"
 #include "OpenGLidChecker.h"
 
 Register<Texture> Texture::register_;
 
 void Texture::Setup(const std::string& filePath_)
 {
-	if (!Initializer::OpenGLInitialized())
-		RaiseError("Texture cannot be setup before Initializer::Setup() is called.");
+	if (!OpenGlSetup::Initialized())
+		RaiseError("Texture cannot be setup before OpenGlSetup::Setup() is called.");
 	if (UuidCreator::IsInitialized(id))
 		RaiseError("Texture is already initialized");
 	id = UuidCreator::MakeID();

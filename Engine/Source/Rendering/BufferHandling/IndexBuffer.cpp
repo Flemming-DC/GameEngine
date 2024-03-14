@@ -1,8 +1,8 @@
 #include "IndexBuffer.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "ErrorChecker.h"
-#include "Initializer.h"
+#include "OpenGlError.h"
+#include "OpenGlSetup.h"
 #include "OpenGLidChecker.h"
 
 
@@ -10,8 +10,8 @@ Register<IndexBuffer> IndexBuffer::register_;
 
 void IndexBuffer::Setup(const unsigned int* data, unsigned int count_)
 {
-    if (!Initializer::OpenGLInitialized())
-        RaiseError("IndexBuffer cannot be setup before Initializer::Setup() is called.");
+    if (!OpenGlSetup::Initialized())
+        RaiseError("IndexBuffer cannot be setup before OpenGlSetup::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("IndexBuffer is already initialized");
     id = UuidCreator::MakeID();

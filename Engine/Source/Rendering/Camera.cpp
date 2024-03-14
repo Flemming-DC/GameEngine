@@ -1,7 +1,7 @@
 #include "Camera.h"
 #include <GL/glew.h>
 #include <string>
-#include "ErrorChecker.h"
+#include "OpenGlError.h"
 #include "Time_.h"
 #include "Input.h"
 

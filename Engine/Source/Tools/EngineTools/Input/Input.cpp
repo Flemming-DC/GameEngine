@@ -1,6 +1,7 @@
 #include "Input.h"
 #include "ErrorChecker.h"
 #include "Initializer.h"
+#include "logger.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -9,7 +10,7 @@ int Input::glwfScrollDirection = 0;
 
 void Input::Setup()
 {
-    GLFWwindow* window = Initializer::GetWindow();
+    GLFWwindow* window = OpenGlSetup::GetWindow();
     glCall(glfwFocusWindow(window)); // this should be called by default
     glCall(glfwSetWindowFocusCallback(window, GlfwLogFocusChange));
     glCall(glfwSetKeyCallback(window, GlfwKeyboardCallback));
@@ -27,9 +28,9 @@ void Input::Update()
 void Input::GlfwLogFocusChange(GLFWwindow* window, int focused)
 {
     if (focused == GLFW_FALSE)
-        Log("glfw Lost focus");
+        logger::print("glfw Lost focus");
     else if (focused == GLFW_TRUE)
-        Log("glfw Gained focus");
+        logger::print("glfw Gained focus");
 }
 
 
@@ -51,13 +52,13 @@ bool Input::KeyHeldDown(Keyboard key)
         return ImGui::IsKeyDown(KeyMap::ToImGui(key));
     else if (key == Keyboard::ctrl)
     {
-        glCall(int leftCtrl = glfwGetKey(Initializer::GetWindow(), GLFW_KEY_LEFT_CONTROL));
-        glCall(int rightCtrl = glfwGetKey(Initializer::GetWindow(), GLFW_KEY_RIGHT_CONTROL));
+        glCall(int leftCtrl = glfwGetKey(OpenGlSetup::GetWindow(), GLFW_KEY_LEFT_CONTROL));
+        glCall(int rightCtrl = glfwGetKey(OpenGlSetup::GetWindow(), GLFW_KEY_RIGHT_CONTROL));
         return leftCtrl == GLFW_PRESS || rightCtrl == GLFW_PRESS;
     }
     else
     {
-        glCall(int state = glfwGetKey(Initializer::GetWindow(), KeyMap::ToGlfw(key)));
+        glCall(int state = glfwGetKey(OpenGlSetup::GetWindow(), KeyMap::ToGlfw(key)));
         return state == GLFW_PRESS;
     }
 }

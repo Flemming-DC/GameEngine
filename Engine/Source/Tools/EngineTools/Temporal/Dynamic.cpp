@@ -16,12 +16,12 @@ void Dynamic::Clear()
 }
 
 
-void Dynamic::CallOnEngineStart()
+void Dynamic::CallOnEditorStart()
 {
     for (const auto& dynamic : dynamics)
     {
         if (dynamic)
-            dynamic->OnEngineStart();
+            dynamic->OnEditorStart();
         else
             RaiseError(Tools::TypeName(dynamic) + " is nullptr");
     }
@@ -60,12 +60,12 @@ void Dynamic::CallOnGameEnd()
     }
 }
 
-void Dynamic::CallOnEngineEnd()
+void Dynamic::CallOnEditorEnd()
 {
     for (const auto& dynamic : dynamics)
     {
         if (dynamic)
-            dynamic->OnEngineEnd();
+            dynamic->OnEditorEnd();
         else
             RaiseError(Tools::TypeName(dynamic) + " is nullptr");
     }
