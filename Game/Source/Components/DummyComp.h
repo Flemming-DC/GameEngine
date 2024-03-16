@@ -9,6 +9,7 @@ private:
 	uuids::uuid gizmoID;
 
 	void OnStart() override;
+	void OnUpdate() override;
 
 
 };

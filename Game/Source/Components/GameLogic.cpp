@@ -17,6 +17,8 @@ void GameLogic::OnStart()
         { logger::print("GameLogic: Collider.Enter: " + other.GetEntity().name + " enters " + this->GetEntity().name); });
 }
 
+void GameLogic::OnDestroy() { logger::print("GameLogic::OnDestroy"); }
+
 void GameLogic::OnUpdate()
 {
     material->SetUniform("u_color", color);

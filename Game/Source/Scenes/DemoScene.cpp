@@ -1,8 +1,9 @@
 #include "DemoScene.h"
 #include "Engine.h"
-#include "GameLogic.h"
 #include "GameAssets.h"
 #include "EngineAssets.h"
+#include "DummyComp.h"
+#include "GameLogic.h"
 
 
 void DemoScene::PurelyManualSetup()
@@ -65,6 +66,7 @@ void DemoScene::ManualSetup()
     Entity::Get<Renderable>(picture1ID).Setup(material);
     Entity::Get<Renderable>(picture2ID).Setup(material);
     Entity::Add<GameLogic>(picture2ID);
+    Entity::Add<DummyComp>(picture2ID);
 
 }
 

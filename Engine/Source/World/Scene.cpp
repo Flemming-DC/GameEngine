@@ -134,7 +134,7 @@ void Scene::Save()
             comp->Save(compYML); // component-type dependent data
             entityYML[Tools::TypeName(*comp)] = compYML;
         }
-        entitiesYML[entity.name] = entityYML;
+        entitiesYML[entity.GetName()] = entityYML;
     }
     sceneYML["Entities"] = entitiesYML;
 
@@ -154,12 +154,7 @@ void Scene::Save()
 
 void Scene::ShutDown() 
 {
-    for (const auto& entityID : entityIDs)
-    {
-        Entity::register_.Get(entityID).Destroy();
-        //Entity::register_.Remove(entityID); //<--- this is missing
-    }
-    Entity::register_.Clear();
+    Entity::DestroyEverything();
     Gizmo::register_.Clear();
     onEnd.Invoke(*activeScene);
 }

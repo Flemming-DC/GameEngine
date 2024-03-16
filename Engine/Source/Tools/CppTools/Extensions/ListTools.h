@@ -129,7 +129,7 @@ namespace logger
 	};
 
 	template<typename Tkey, typename Tval>
-	inline std::string to_string_unordered(const std::unordered_map<Tkey, Tval>& dict)
+	inline std::string to_string(const std::unordered_map<Tkey, Tval>& dict)
 	{
 		std::string out = "\n";
 		for (const auto& pair : dict)

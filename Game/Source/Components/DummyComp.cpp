@@ -1,4 +1,7 @@
 #include "DummyComp.h"
+#include "Input.h"
+#include "GameLogic.h"
+#include "RectangleCollider.h"
 
 
 
@@ -14,5 +17,21 @@ void DummyComp::OnStart()
 	};
 
 	gizmoID = Gizmo::register_.Add(position2Ds, &GetTransform()).GetID();
+
+}
+
+void DummyComp::OnUpdate()
+{
+	if (Input::KeyHeldDown(Keyboard::J))
+	{
+		logger::print("J");
+		GetEntity().Destroy<GameLogic>();
+	}
+	if (Input::KeyHeldDown(Keyboard::H))
+	{
+		logger::print("H");
+		if (!TryGet<GameLogic>())
+			GetEntity().Add<GameLogic>();
+	}
 
 }

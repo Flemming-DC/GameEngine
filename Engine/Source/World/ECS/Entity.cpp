@@ -3,7 +3,7 @@
 #include <ListTools.h>
 #include "UuidCreator.h"
 #include "Transform.h"
-
+#include "Delay.h"
 
 std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> Entity::componentsByEntity;
 std::unordered_map<std::string, std::vector<uuids::uuid>> Entity::EntitiesByName;
@@ -19,51 +19,6 @@ Entity::Entity(std::string name, uuids::uuid* id_) : name(name)
 		EntitiesByName[name] = {};
 	EntitiesByName[name].push_back(id);
 }
-
-// currently, this just removes all data on the entity, turning it into a blank entity, but it leaves a blank entity behind
-void Entity::Destroy() // Entity::~Entity()
-{
-	if (isDestroyed)
-		return;
-
-	// destroy children too
-	Transform* transform = TryGetComponent<Transform>();
-	for (const auto& child : transform->GetChildren())
-		child->GetEntity().Destroy();
-
-	// remove and thereby destroy components on the entity
-	for (int i = componentsByEntity[id].size() - 1; i>=0; i--)
-		RemoveComponent(*componentsByEntity[id][i]);
-
-	// here we remove the entity from this dict. The functions in the toolbox do not help, due to some junk "features" about const
-	auto iterator1 = componentsByEntity.find(id);
-	if (iterator1 != componentsByEntity.end())
-		componentsByEntity.erase(iterator1);
-	
-	// next we remove this entity from the EntitiesByName.
-	auto iterator2 = EntitiesByName.find(name);
-	if (iterator2 != EntitiesByName.end())
-	{
-		if (EntitiesByName[name].size() == 1)
-			EntitiesByName.erase(iterator2); // remove name and thereby also id
-		else
-			Tools::Remove(EntitiesByName[name], id); // remove id, but keep name
-	}
-	
-	isDestroyed = true;
-	// Entity::register_.Remove(id); // <------- take care of this
-}
-
-void Entity::CallOnUpdate()
-{
-	for (const auto& pair : componentsByEntity)
-	{
-		for (const auto& c : pair.second)
-			c->OnUpdate();
-	}
-}
-
-
 
 uuids::uuid Entity::Make(std::string name)
 {
@@ -85,24 +40,6 @@ uuids::uuid Entity::GetID(std::string name_)
 	return id;
 }
 
-
-
-bool Entity::RemoveComponent(const Component& comp)
-{
-	for (const auto& compPtr : componentsByEntity[id])
-	{
-		if (compPtr->GetID() != comp.GetID())
-			continue;
-		compPtr->OnDestroy();
-		auto iterator = std::find(componentsByEntity[id].begin(), componentsByEntity[id].end(), compPtr);
-		if (iterator != componentsByEntity[id].end())
-			componentsByEntity[id].erase(iterator);
-		Tools::RemoveKey_unordered(componentsByID, comp.GetID());
-		return true;
-	}
-	return false;
-}
-
 std::string Entity::to_string() const
 {
 	Transform* transform = TryGetComponent<Transform>();
@@ -112,3 +49,143 @@ std::string Entity::to_string() const
 		return transform->GetPath();
 }
 
+
+// ---------------------------------- Destruction -------------------------------------
+
+
+// currently, this just removes all data on the entity, turning it into a blank entity, but it leaves a blank entity behind
+void Entity::Destroy() // Entity::~Entity()
+{
+	isDoomed = true;
+
+	// doom children
+	Transform* transform = TryGetComponent<Transform>();
+	for (const auto& child : transform->GetChildren())
+		child->GetEntity().Destroy();
+
+	// doom components
+	for (const auto& comp : GetComponents())
+		Destroy(comp.get());
+
+}
+
+void Entity::ClearData()
+{
+
+	// destroy components on the entity
+	for (int i = componentsByEntity[id].size() - 1; i >= 0; i--)
+		ClearData(componentsByEntity[id][i]);
+
+	// here we remove the entity from this dict. The functions in the toolbox do not help, due to some junk "features" about const
+	auto iterator1 = componentsByEntity.find(id);
+	if (iterator1 != componentsByEntity.end())
+		componentsByEntity.erase(iterator1);
+
+	// next we remove this entity from the EntitiesByName.
+	auto iterator2 = EntitiesByName.find(name);
+	if (iterator2 != EntitiesByName.end())
+	{
+		if (EntitiesByName[name].size() == 1)
+			EntitiesByName.erase(iterator2); // remove name and thereby also id
+		else
+			Tools::Remove(EntitiesByName[name], id); // remove id, but keep name
+	}
+
+}
+
+void Entity::Update()
+{
+	for (const auto& [e, components] : componentsByEntity)
+	{
+		for (const auto& c : components)
+			c->OnUpdate();
+	}
+	DestroyTheDoomed();
+
+}
+
+void Entity::DestroyTheDoomed()
+{
+	if (ErrorChecker::DebugFlag())
+	{
+		P("next frame ", componentsByID)
+	}
+
+	// callback
+	for (const auto& [id_, comp] : componentsByID)
+	{
+		if (comp->isDoomed)
+			comp->OnDestroy();
+	}
+	// get ids
+	std::vector<uuids::uuid> doomedEntityIDs;
+	for (Entity& entity : register_.GetData())
+	{
+		if (entity.isDoomed)
+			doomedEntityIDs.push_back(entity.GetID());
+	}
+	// destroy doomed entities
+	for (const auto& entityID : doomedEntityIDs)
+		Entity::register_.Get(entityID).ClearData();
+	for (const auto& entityID : doomedEntityIDs)
+		Entity::register_.Remove(entityID);
+	// destroy doomed components
+	for (const auto& [e, components] : componentsByEntity)
+	{
+		for (int i = components.size() - 1; i >= 0; i--)
+		{
+			if (components[i]->isDoomed)
+				ClearData(components[i]);
+		}
+		/*
+		for (const auto& comp : components)
+		{
+			if (comp->isDoomed)
+				ClearData(comp);
+		}
+		*/
+	}
+
+}
+
+void Entity::DestroyEverything()
+{
+	for (const auto& [id_, comp] : componentsByID)
+		comp->OnDestroy();
+	
+	EntitiesByName.clear();
+	componentsByID.clear();
+	componentsByEntity.clear();
+	register_.Clear();
+}
+
+
+
+bool Entity::Destroy(Component* comp)
+{
+	if (!comp)
+		return false;
+	for (const auto& compPtr : componentsByEntity[id])
+	{
+		if (compPtr->GetID() != comp->GetID())
+			continue;
+		comp->isDoomed = true;
+		return true;
+	}
+	return false;
+}
+
+void Entity::ClearData(const std::unique_ptr<Component>& compPtr)
+{
+	auto& entityID = compPtr->GetEntity().GetID();
+	///*
+	auto iterator = std::find(componentsByEntity[entityID].begin(), componentsByEntity[entityID].end(), compPtr);
+	if (iterator != componentsByEntity[entityID].end())
+		componentsByEntity[entityID].erase(iterator);
+	//*/
+	//Tools::Remove(componentsByEntity[entityID], compPtr);
+	P("before ", componentsByID);
+	Tools::RemoveKey_unordered(componentsByID, compPtr->GetID());
+	P("after ", componentsByID);
+	ErrorChecker::SetDebugFlag();
+}

@@ -18,7 +18,6 @@ public:
 
         LogHeader("Shutdown");
         Shutdown();
-
         LogHeader("Done");
     }
 

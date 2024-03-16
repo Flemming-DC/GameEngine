@@ -44,7 +44,7 @@ private:
 	Transform* transform = nullptr;
 	uuids::uuid id;
 	YAML::Node node; // This is the node from which the component was loaded, if it was loaded at all
-
+	bool isDoomed = false; // accessed from Entity
 
 	void OnAddComponent(uuids::uuid entityID_, YAML::Node* node = nullptr); // called by Entity
 

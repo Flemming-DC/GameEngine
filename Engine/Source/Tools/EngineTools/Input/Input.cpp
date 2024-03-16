@@ -1,6 +1,6 @@
 #include "Input.h"
 #include "ErrorChecker.h"
-#include "Initializer.h"
+#include "OpenGlSetup.h"
 #include "logger.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>

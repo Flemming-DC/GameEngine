@@ -35,7 +35,7 @@ void Core::Update()
     // update world
     CollisionLoop::Update();
     Dynamic::CallOnUpdate();
-    Entity::CallOnUpdate();
+    Entity::Update();
     Renderer::DrawToScreen();
     Delay::CallToFrameEnd();
 
