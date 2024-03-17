@@ -1,6 +1,8 @@
 #include "Transform.h"
 #include "ListTools.h"
 #include "GlmTools.h"
+#include "ErrorChecker.h"
+#include <windows.h>
 
 
 
@@ -23,43 +25,43 @@ glm::mat4 Transform::GetInverseLocalModel() const
 
 glm::vec3 Transform::GetPosition() const
 {
-	if (parent == nullptr)
+	if (GetParent() == nullptr)
 		return localPosition;
 	else
 		return parent->GetPosition() + parent->GetRotation() * localPosition; // this handling of rotation is inefficient
 }
 glm::quat Transform::GetRotation() const
 {
-	if (parent == nullptr)
+	if (GetParent() == nullptr)
 		return localRotation;
 	else
 		return parent->GetRotation() * localRotation;
 }
 glm::vec3 Transform::GetScale() const
 {
-	if (parent == nullptr)
+	if (GetParent() == nullptr)
 		return localScale;
 	else
 		return parent->GetScale() * localScale;
 }
 glm::mat4 Transform::GetModel() const
 {
-	if (parent == nullptr)
+	if (GetParent() == nullptr)
 		return GetLocalModel();
 	else
 		return parent->GetModel() * GetLocalModel(); // using this by the renderer is inefficient
 }
 glm::mat4 Transform::GetInverseModel() const
 {
-	if (parent == nullptr)
+	if (GetParent() == nullptr)
 		return GetInverseLocalModel();
 	else
 		return GetInverseLocalModel() * parent->GetInverseModel();
 }
 
+
 Transform* Transform::GetParent() const
 {
-	//return Entity::TryGetComponent<Transform>(parentID);
 	return parent;
 }
 void Transform::SetParent(Transform* newParent) 
@@ -67,7 +69,7 @@ void Transform::SetParent(Transform* newParent)
 	// the local data (which is stored explicitly) is relative to a given parent.
 	// therefore we must adjust for the effect that changing parent has on the world
 	// position, rotation and scale
-	glm::mat4 oldParentModel = parent ? parent->GetModel() : glm::mat4(1.0f);
+	glm::mat4 oldParentModel = GetParent() ? parent->GetModel() : glm::mat4(1.0f);
 	glm::mat4 newParentInverseModel = newParent ? newParent->GetInverseModel() : glm::mat4(1.0f);
 	SetLocalDataUsingTransform(newParentInverseModel * oldParentModel * GetModel());
 
@@ -83,7 +85,7 @@ std::vector<Transform*> Transform::GetChildren() const
 }
 std::string Transform::GetPath() const
 {
-	if (parent == nullptr)
+	if (GetParent() == nullptr)
 		return GetEntity().GetName();
 	else
 		return parent->GetPath() + "/" + GetEntity().GetName();

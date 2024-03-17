@@ -133,7 +133,9 @@ namespace logger
 	{
 		std::string out = "\n";
 		for (const auto& pair : dict)
+		{
 			out += "{ " + logger::to_string(pair.first) + ": " + logger::to_string(pair.second) + " },\n";
+		}
 		return "{ " + out + " }";
 	};
 

@@ -106,16 +106,14 @@ void Entity::Update()
 
 void Entity::DestroyTheDoomed()
 {
-	if (ErrorChecker::DebugFlag())
-	{
-		P("next frame ", componentsByID)
-	}
-
 	// callback
 	for (const auto& [id_, comp] : componentsByID)
 	{
 		if (comp->isDoomed)
+		{
+			P(comp);
 			comp->OnDestroy();
+		}
 	}
 	// get ids
 	std::vector<uuids::uuid> doomedEntityIDs;
@@ -135,7 +133,10 @@ void Entity::DestroyTheDoomed()
 		for (int i = components.size() - 1; i >= 0; i--)
 		{
 			if (components[i]->isDoomed)
+			{
+				P(*components[i]);
 				ClearData(components[i]);
+			}
 		}
 		/*
 		for (const auto& comp : components)
@@ -178,14 +179,11 @@ bool Entity::Destroy(Component* comp)
 void Entity::ClearData(const std::unique_ptr<Component>& compPtr)
 {
 	auto& entityID = compPtr->GetEntity().GetID();
-	///*
+
+	Tools::RemoveKey_unordered(componentsByID, compPtr->GetID());
+
 	auto iterator = std::find(componentsByEntity[entityID].begin(), componentsByEntity[entityID].end(), compPtr);
 	if (iterator != componentsByEntity[entityID].end())
 		componentsByEntity[entityID].erase(iterator);
-	//*/
-	//Tools::Remove(componentsByEntity[entityID], compPtr);
-	P("before ", componentsByID);
-	Tools::RemoveKey_unordered(componentsByID, compPtr->GetID());
-	P("after ", componentsByID);
-	ErrorChecker::SetDebugFlag();
+	
 }

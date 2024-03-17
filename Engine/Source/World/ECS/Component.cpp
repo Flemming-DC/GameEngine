@@ -31,9 +31,9 @@ void Component::OnSceneLoaded()
 std::string Component::to_string() const
 {
 	if (transform == nullptr)
-		return GetEntity().GetName();
+		return GetEntity().GetName() + "." + Tools::TypeName(*this);
 	else
-		return transform->GetPath();
+		return transform->GetPath() + "." + Tools::TypeName(*this);
 }
 
 

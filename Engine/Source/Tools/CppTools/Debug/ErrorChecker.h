@@ -1,14 +1,16 @@
 #pragma once
 #include <iostream>
 
-#define RaiseError(message) ErrorChecker::_RaiseError(message, __func__, __FILE__, __LINE__)  // using namespace std::string_literals;
-#define Warning(message) ErrorChecker::_Warning(message, __func__, __FILE__, __LINE__)  // using namespace std::string_literals;
+#define RaiseError(message) ErrorChecker::_RaiseError(message, __func__, __FILE__, __LINE__) 
+#define Warning(message) ErrorChecker::_Warning(message, __func__, __FILE__, __LINE__)  
+#define CheckPtr(ptr) ErrorChecker::_CheckPtr(ptr, __func__, __FILE__, __LINE__)
 
 namespace ErrorChecker
 {
     void PrintBacktrace();
     void SetDebugFlag();
     bool DebugFlag();
+    void _CheckPtr(void* ptr, const char* func, const char* file, int line);
 
     template<typename T> [[noreturn]]
     void _RaiseError(T message, const char* func, const char* file, int line)

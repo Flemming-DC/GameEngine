@@ -38,9 +38,9 @@ namespace logger
 	// --------------------- overloads of to_string ---------------------
 
 	template<typename T> string inline to_string(const T& value) { return value.to_string(); } // default to try and get a to_string method
-	template<typename T> string inline to_string(T* value) { return "raw_ptr " + to_string(*value); } // raw pointer
-	template<typename T> string inline to_string(std::unique_ptr<T> value) { return "unique_ptr " + to_string(*value); } // unique pointer
-	template<typename T> string inline to_string(std::shared_ptr<T> value) { return "shared_ptr " + to_string(*value); } // shared pointer
+	template<typename T> string inline to_string(T* value) { return "raw_ptr to " + to_string(*value); } // raw pointer
+	template<typename T> string inline to_string(std::unique_ptr<T> value) { return "unique_ptr to " + to_string(*value); } // unique pointer
+	template<typename T> string inline to_string(std::shared_ptr<T> value) { return "shared_ptr to " + to_string(*value); } // shared pointer
 	string inline to_string(const string& value) { return value; }
 	string inline to_string(const char* value) { return string(value); }
 	string inline to_string(bool value) { return value ? "true" : "false"; }
@@ -56,28 +56,6 @@ namespace logger
 
 	
 	
-	
-	
-	
-	
-	
-	
-
-	/*
-	template <typename T>
-	std::string to_string(const std::vector<T>& vec)
-	{
-		std::string out = "";
-		int count = vec.size();
-		for (int i = 0; i < count; i++)
-		{
-			out += logger::to_string(vec[i]);
-			if (i < count - 1)
-				out += ", ";
-		}
-		return "{ " + out + " }";
-	}
-	*/
 }
 
 
