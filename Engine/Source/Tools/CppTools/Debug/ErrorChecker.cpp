@@ -90,37 +90,4 @@ namespace ErrorChecker
     }
     bool DebugFlag() { return debugFlag; }
 
-    inline bool IsBadReadPtr(void* ptr)
-    {
-        std::cout << "IsBadReadPtr 0" << std::endl;
-        #ifdef _WIN32 
-        MEMORY_BASIC_INFORMATION mbi = { 0 };
-        if (::VirtualQuery(ptr, &mbi, sizeof(mbi)))
-        {
-            if (mbi.BaseAddress == nullptr)
-                return false; // dont catch nullptr. Catch invalid pointer.
-            DWORD mask = (PAGE_READONLY | PAGE_READWRITE | PAGE_WRITECOPY | PAGE_EXECUTE_READ | PAGE_EXECUTE_READWRITE | PAGE_EXECUTE_WRITECOPY);
-            bool isBad = !(mbi.Protect & mask);
-            if (isBad)
-                std::cout << "IsBadReadPtr 1" << std::endl;
-            // check the page is not a guard page
-            if (mbi.Protect & (PAGE_GUARD | PAGE_NOACCESS)) 
-                isBad = true;
-            if (isBad)
-                std::cout << "IsBadReadPtr 2" << std::endl;
-            return isBad;
-        }
-        std::cout << "IsBadReadPtr 3" << std::endl;
-        return true;
-        //ErrorChecker::_RaiseError("Invalid pointer", func, file, line);
-
-        #endif
-        return false;
-    }
-
-    void _CheckPtr(void* ptr, const char* func, const char* file, int line)
-    {
-        if (IsBadReadPtr(ptr))
-            ErrorChecker::_RaiseError("Invalid pointer", func, file, line);
-    }
 }

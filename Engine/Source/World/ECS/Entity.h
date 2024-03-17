@@ -44,7 +44,8 @@ public:
 	inline uuids::uuid GetID() const { return id; }
 	inline void SetID(uuids::uuid id_) { id = id_; }
 	std::string to_string() const;
-	std::string GetName() { return name; }
+	std::string GetName() const { return name; }
+	static Entity& GetEntity(std::string name) { return register_.Get(GetID(name)); }
 
 private:
 	static std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> componentsByEntity;

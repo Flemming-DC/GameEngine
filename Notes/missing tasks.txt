@@ -12,6 +12,7 @@ diverse
 	creating a collider Gizmo before the grid Gizmo causes the former to show up incorrectly. Possibly due to fitting objects of different size into the same vector
 	input keyPressed and keyReleased bools and events.
 	make collection of folder references
+	evt . replace entity by name with entity by path
 
 components & gameobjects
 	handle activation

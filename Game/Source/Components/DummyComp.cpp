@@ -20,6 +20,12 @@ void DummyComp::OnStart()
 
 }
 
+void DummyComp::OnDestroy()
+{
+
+	Gizmo::register_.Remove(gizmoID);
+}
+
 void DummyComp::OnUpdate()
 {
 	if (Input::KeyHeldDown(Keyboard::J))
@@ -32,6 +38,16 @@ void DummyComp::OnUpdate()
 		logger::print("H");
 		if (!TryGet<GameLogic>())
 			GetEntity().Add<GameLogic>();
+	}
+	
+	if (Input::KeyHeldDown(Keyboard::I))
+	{
+		logger::print("I");
+		Entity::GetEntity("picture 1").Destroy();
+	}
+	if (Input::KeyHeldDown(Keyboard::U))
+	{
+		logger::print("U");
 	}
 
 }

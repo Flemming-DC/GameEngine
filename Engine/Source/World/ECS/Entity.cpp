@@ -50,7 +50,65 @@ std::string Entity::to_string() const
 }
 
 
+void Entity::Update()
+{
+	for (const auto& [e, components] : componentsByEntity)
+	{
+		for (const auto& c : components)
+			c->OnUpdate();
+	}
+	DestroyTheDoomed();
+
+}
+
+
 // ---------------------------------- Destruction -------------------------------------
+
+
+void Entity::DestroyTheDoomed()
+{
+	// callback
+	for (const auto& [id_, comp] : componentsByID)
+	{
+		if (comp->isDoomed)
+		{
+			comp->OnDestroy();
+		}
+	}
+	// get ids
+	std::vector<uuids::uuid> doomedEntityIDs;
+	for (Entity& entity : register_.GetData())
+	{
+		if (entity.isDoomed)
+			doomedEntityIDs.push_back(entity.GetID());
+	}
+	// destroy doomed entities
+	for (const auto& entityID : doomedEntityIDs)
+		Entity::register_.Get(entityID).ClearData();
+	for (const auto& entityID : doomedEntityIDs)
+		Entity::register_.Remove(entityID);
+	// destroy doomed components, that aren't on doomed entities
+	for (const auto& [e, components] : componentsByEntity)
+	{
+		for (int i = components.size() - 1; i >= 0; i--)
+		{
+			if (components[i]->isDoomed)
+				ClearData(components[i]);
+		}
+	}
+
+}
+
+void Entity::DestroyEverything()
+{
+	for (const auto& [id_, comp] : componentsByID)
+		comp->OnDestroy();
+
+	EntitiesByName.clear();
+	componentsByID.clear();
+	componentsByEntity.clear();
+	register_.Clear();
+}
 
 
 // currently, this just removes all data on the entity, turning it into a blank entity, but it leaves a blank entity behind
@@ -71,7 +129,6 @@ void Entity::Destroy() // Entity::~Entity()
 
 void Entity::ClearData()
 {
-
 	// destroy components on the entity
 	for (int i = componentsByEntity[id].size() - 1; i >= 0; i--)
 		ClearData(componentsByEntity[id][i]);
@@ -92,74 +149,6 @@ void Entity::ClearData()
 	}
 
 }
-
-void Entity::Update()
-{
-	for (const auto& [e, components] : componentsByEntity)
-	{
-		for (const auto& c : components)
-			c->OnUpdate();
-	}
-	DestroyTheDoomed();
-
-}
-
-void Entity::DestroyTheDoomed()
-{
-	// callback
-	for (const auto& [id_, comp] : componentsByID)
-	{
-		if (comp->isDoomed)
-		{
-			P(comp);
-			comp->OnDestroy();
-		}
-	}
-	// get ids
-	std::vector<uuids::uuid> doomedEntityIDs;
-	for (Entity& entity : register_.GetData())
-	{
-		if (entity.isDoomed)
-			doomedEntityIDs.push_back(entity.GetID());
-	}
-	// destroy doomed entities
-	for (const auto& entityID : doomedEntityIDs)
-		Entity::register_.Get(entityID).ClearData();
-	for (const auto& entityID : doomedEntityIDs)
-		Entity::register_.Remove(entityID);
-	// destroy doomed components
-	for (const auto& [e, components] : componentsByEntity)
-	{
-		for (int i = components.size() - 1; i >= 0; i--)
-		{
-			if (components[i]->isDoomed)
-			{
-				P(*components[i]);
-				ClearData(components[i]);
-			}
-		}
-		/*
-		for (const auto& comp : components)
-		{
-			if (comp->isDoomed)
-				ClearData(comp);
-		}
-		*/
-	}
-
-}
-
-void Entity::DestroyEverything()
-{
-	for (const auto& [id_, comp] : componentsByID)
-		comp->OnDestroy();
-	
-	EntitiesByName.clear();
-	componentsByID.clear();
-	componentsByEntity.clear();
-	register_.Clear();
-}
-
 
 
 bool Entity::Destroy(Component* comp)

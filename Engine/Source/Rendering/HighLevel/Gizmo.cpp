@@ -33,7 +33,6 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
     mesh = Mesh::register_.Add(positionsRaw, std::vector<unsigned int>(), VertexLayout({ 2, 0, 0, 0 }));
     transform = transform_;
     positionCount = position2Ds.size();
-
 }
 
 
@@ -83,3 +82,7 @@ uuids::uuid Gizmo::MakeCircle(glm::vec2 center, float radius, Transform& transfo
 }
 
 
+std::string Gizmo::to_string() const
+{
+    return logger::make_string("Gizmo on ", transform ? transform->to_string() : "no transform");
+}
