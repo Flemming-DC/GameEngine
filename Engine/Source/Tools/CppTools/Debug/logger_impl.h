@@ -20,7 +20,7 @@ namespace logger
 	string inline make_string(T first, Args... args)
 	{
 		string out = to_string(first);
-		out += " " + make_string(args...);
+		out += make_string(args...);
 		return out;
 	}
 	string inline make_string() { return ""; } // handle end of recursion

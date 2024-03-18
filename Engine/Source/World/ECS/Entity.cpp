@@ -89,12 +89,12 @@ void Entity::CheckConsistency()
 		Entity& entity = register_.Get(entityID);
 		if (entity.GetID() != entityID)
 			RaiseError("inconsistent data");
-		EntitiesByName.at(entity.GetName()); // .at() fails if the key is not present. This constistutes a consistency check.
+		auto& _1 = EntitiesByName.at(entity.GetName()); // .at() fails if the key is not present. This constistutes a consistency check.
 		for (const auto& compPtr : components)
-			componentsByID.at(compPtr.get()->GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
+			auto& _2 = componentsByID.at(compPtr.get()->GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
 	}
 	for (const auto& entity : register_.GetData())
-		componentsByEntity.at(entity.GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
+		auto& _3 = componentsByEntity.at(entity.GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
 
 }
 

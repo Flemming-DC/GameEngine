@@ -57,7 +57,21 @@ void DemoScene::ManualSetup()
     // ------------ get assets ------------
     Mesh& mesh = EngineAssets::SquareMesh();
     Material& material = GameAssets::GetMaterial();
+    
+    // ------------ get entities ------------
+    Entity::GetID("circle 1");
+    Entity& picture1 = Entity::GetEntity("picture 1");
+    Entity& picture2 = Entity::GetEntity("picture 2");
 
+    // ------------ setup components ------------
+    picture1.Get<Renderable>().Setup(material);
+    picture2.Get<Renderable>().Setup(material);
+    //picture2.Add<GameLogic>();
+    //picture2.Add<DummyComp>();
+
+    picture2.AddMultiple<GameLogic, DummyComp>();
+
+    /*
     // ------------ get entities ------------
     Entity::GetID("circle 1");
     auto picture1ID = Entity::GetID("picture 1");
@@ -68,7 +82,7 @@ void DemoScene::ManualSetup()
     Entity::Get<Renderable>(picture2ID).Setup(material);
     Entity::Add<GameLogic>(picture2ID);
     Entity::Add<DummyComp>(picture2ID);
-
+    */
 }
 
 

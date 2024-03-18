@@ -16,7 +16,7 @@ public:
 	std::string name;
 	static Register<Entity> register_;
 
-	Entity(std::string name = "Entity", uuids::uuid* id = nullptr);
+	Entity(std::string name = "Entity", uuids::uuid* id = nullptr); // id bruges hvis entiteten loades fra disk
 	static void Update();
 	const std::vector<std::unique_ptr<Component>>& GetComponents() const { return componentsByEntity.at(id); }
 
@@ -30,6 +30,8 @@ public:
 	template <typename ComponentType> static ComponentType& GetComponent(uuids::uuid componentID);
 	template <typename ComponentType> static ComponentType* TryGetComponent(uuids::uuid componentID);
 
+	template <typename... Args> static Entity& Make(std::string name = "Entity");
+	template <typename... Args> void AddMultiple() { (..., AddComponent<Args>()); };
 	template <typename ComponentType> inline ComponentType* TryGet() { return TryGetComponent<ComponentType>(); };
 	template <typename ComponentType> inline ComponentType& Get() { return GetComponent<ComponentType>(); };
 	template <typename ComponentType> inline ComponentType& Add() { return AddComponent<ComponentType>(); };

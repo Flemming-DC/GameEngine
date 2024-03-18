@@ -36,7 +36,7 @@ Entities:
             size: [1, 1]
         Renderable:
             id: 8f2e1e26-e6d6-4917-ad9e-61e1e3c81791
-            material: cf562064-24e5-45f5-91d8-42093075a0b8
+            material: 753470d7-550a-42f2-895e-c065b7b635f1
         Transform:
             id: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
             localPosition: [-0.5, -0.5, 0]
@@ -49,7 +49,7 @@ Entities:
             size: [1, 1]
         Renderable:
             id: 7cb23b0c-f684-4b93-98bb-6ff3d2290336
-            material: cf562064-24e5-45f5-91d8-42093075a0b8
+            material: 753470d7-550a-42f2-895e-c065b7b635f1
         Transform:
             id: a5be3ef9-f754-42ca-af89-8842ab357ab7
             localPosition: [1.25, 0, 0]
@@ -57,6 +57,6 @@ Entities:
             localScale: [1, 1, 1]
             parent: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
         GameLogic:
-            id: 5ff56a65-a2a1-4fb0-8231-a4c455610039
+            id: bab74ad5-bf2d-4804-9551-486fd4a72e45
         DummyComp:
-            id: e484f394-adf4-4264-a04e-abe684bc696e
+            id: 4b8e5610-6b4c-44dc-90ff-9bee9f3edc54

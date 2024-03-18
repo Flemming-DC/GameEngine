@@ -138,10 +138,6 @@ void Transform::Save(YAML::Node& node) const
 
 void Transform::Load(const YAML::Node& node)
 {
-	if (GetEntity().GetName() == "picture 2")
-	{
-		P(1);
-	}
 	if (node["parent"])
 	{
 		auto parentID = node["parent"].as<uuids::uuid>();

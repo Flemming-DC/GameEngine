@@ -16,7 +16,9 @@ void Component::OnAddComponent(uuids::uuid entityID_, YAML::Node* node_)
 	{
 		id = UuidCreator::MakeID();
 		entityID = entityID_;
-		transform = &Get<Transform>();
+		transform = TryGet<Transform>();
+		if (!transform)
+			transform = &Entity::Add<Transform>(entityID);
 		OnStart();
 	}
 }

@@ -36,6 +36,7 @@ ComponentType& Entity::AddComponent(YAML::Node* node)
 {
 	static_assert(std::is_base_of<Component, ComponentType>::value,
 		"AddComponent can only add components, not other types");
+	bool hasComponent = (TryGet<ComponentType>() != nullptr);
 	
 	componentsByEntity[id].push_back(std::make_unique<ComponentType>());
 	Component* ptr = componentsByEntity[id].back().get();
@@ -44,6 +45,8 @@ ComponentType& Entity::AddComponent(YAML::Node* node)
 		RaiseError("dynamic_cast failed for " + name + ".AddComponent<" + Tools::TypeName<ComponentType>() + ">()");
 	afterCast->OnAddComponent(id, node);
 	componentsByID[afterCast->id] = ptr;
+	if (afterCast->unique && hasComponent)
+		RaiseError(Tools::TypeName<ComponentType>(), " is marked as unique, but there is already a ", Tools::TypeName<ComponentType>(), " at ", *this);
 	return *afterCast;
 
 }
@@ -93,4 +96,11 @@ ComponentType* Entity::TryGetComponent(uuids::uuid id_)
 }
 
 
+template <typename... Args> 
+Entity& Entity::Make(std::string name)
+{
+	Entity& entity = register_.Add(name);
+	(..., entity.AddComponent<Args>());
+	return entity;
+}
 
