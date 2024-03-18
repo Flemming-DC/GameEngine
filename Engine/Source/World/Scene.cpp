@@ -126,7 +126,7 @@ void Scene::Save()
     {
         Node entityYML;
         entityYML["id"] = entityID;
-        auto& entity = Entity::register_.Get(entityID);
+        auto& entity = Entity::GetEntity(entityID);
         for (auto& comp : entity.GetComponents())
         {
             Node compYML;

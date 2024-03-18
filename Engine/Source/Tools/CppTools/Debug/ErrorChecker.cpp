@@ -90,4 +90,18 @@ namespace ErrorChecker
     }
     bool _GetDebugFlag() { return debugFlag; }
 
+    void _RaiseError(std::string message, const char* func, const char* file, int line)
+    {
+        std::cout << "\nBackTrace: " << std::endl;
+        PrintBacktrace();
+        std::cout << "----------" << std::endl;
+        std::cout << "ERROR MESSAGE: " << message << "\nERROR in " << func << " at " << file << ":" << line << std::endl;
+        std::cout << "----------\n" << std::endl;
+        std::exit(1);
+    }
+
+    void _Warning(std::string message, const char* func, const char* file, int line)
+    {
+        std::cout << "WARNING MESSAGE: " << message << "\nWARNING in " << func << " at " << file << ":" << line << std::endl;
+    }
 }

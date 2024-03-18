@@ -9,7 +9,7 @@ public:
 
 	void PurelyManualSetup() override;
 	void ManualSetup() override;
-	Entity& GetEntity(int index) { return Entity::register_.Get(entityIDs[index]); } // temp tool for GUI
+	Entity& GetEntity(int index) { return Entity::GetEntity(entityIDs[index]); } // temp tool for GUI
 
 };
 

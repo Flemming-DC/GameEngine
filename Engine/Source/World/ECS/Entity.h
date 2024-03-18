@@ -13,10 +13,9 @@ class Component; // forward declaration
 class Entity
 {
 public:
-	static Register<Entity> register_;
 	std::string name;
+	static Register<Entity> register_;
 
-	static uuids::uuid Make(std::string name = "Entity");
 	Entity(std::string name = "Entity", uuids::uuid* id = nullptr);
 	static void Update();
 	const std::vector<std::unique_ptr<Component>>& GetComponents() const { return componentsByEntity.at(id); }
@@ -47,6 +46,7 @@ public:
 	std::string to_string() const;
 	std::string GetName() const { return name; }
 	static Entity& GetEntity(std::string name) { return register_.Get(GetID(name)); }
+	static Entity& GetEntity(uuids::uuid id_) { return register_.Get(id_); }
 
 private:
 	static std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> componentsByEntity;
@@ -62,6 +62,7 @@ private:
 	static void ClearData(const std::unique_ptr<Component>& compPtr); // Engine-only
 	static void DestroyTheDoomed();
 	bool Destroy(Component* comp); // destroys the entity at the end of the component update calls
+	static void CheckConsistency();
 
 };
 

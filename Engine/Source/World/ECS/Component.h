@@ -24,7 +24,7 @@ public:
 		ComponentType* TryGet() const { return Entity::TryGet<ComponentType>(entityID); }
 	template <typename ComponentType> inline 
 		ComponentType& Get() const { return Entity::Get<ComponentType>(entityID); }
-	inline Entity& GetEntity() const { return Entity::register_.Get(entityID); } //{ return entity; }
+	inline Entity& GetEntity() const { return Entity::GetEntity(entityID); } //{ return entity; }
 	inline Transform& GetTransform() const { return *transform; };
 
 	bool operator==(const Component& other) { return this->has_equal_id(other); }

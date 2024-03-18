@@ -18,10 +18,6 @@ Entity::Entity(std::string name, uuids::uuid* id_) : name(name)
 	EntitiesByName[name].push_back(id); // [] initializes if the key is not present
 }
 
-uuids::uuid Entity::Make(std::string name)
-{
-	return Entity::register_.Add(name).GetID();
-}
 
 
 
@@ -68,19 +64,37 @@ std::string Entity::to_string() const
 
 void Entity::Update()
 {
-	/*
+	#ifdef _DEBUG
+	CheckConsistency();
+	#endif // _DEBUG
+
+	for (const auto& [e, components] : componentsByEntity)
+	{
+		for (const auto& compPtr : components)
+			compPtr->OnUpdate();
+	}
+	DestroyTheDoomed();
+
+}
+
+void Entity::CheckConsistency()
+{
 	for (const auto& [name, entitiesWithName] : EntitiesByName)
 	{
 		if (entitiesWithName.size() != 1)
-			RaiseError("oev");
+			Warning("entitiesWithName[", name, "] = ", entitiesWithName.size());
 	}
-	*/
-	for (const auto& [e, components] : componentsByEntity)
+	for (const auto& [entityID, components] : componentsByEntity)
 	{
-		for (const auto& c : components)
-			c->OnUpdate();
+		Entity& entity = register_.Get(entityID);
+		if (entity.GetID() != entityID)
+			RaiseError("inconsistent data");
+		EntitiesByName.at(entity.GetName()); // .at() fails if the key is not present. This constistutes a consistency check.
+		for (const auto& compPtr : components)
+			componentsByID.at(compPtr.get()->GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
 	}
-	DestroyTheDoomed();
+	for (const auto& entity : register_.GetData())
+		componentsByEntity.at(entity.GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
 
 }
 

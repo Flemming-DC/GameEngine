@@ -92,26 +92,5 @@ ComponentType* Entity::TryGetComponent(uuids::uuid id_)
 	return afterCast;
 }
 
-/*
-template <typename ComponentType>
-bool Entity::RemoveComponent(ComponentType comp)
-{
-	auto compPtr = TryGet<ComponentType>();
-	if (compPtr == nullptr)
-		return false;
-	Tools::RemoveKey_unordered(componentsByID, compPtr->GetID());
-
-	for (const auto& _compPtr : componentsByEntity[id])
-	{
-		if (_compPtr->GetID() == compPtr->GetID())
-		{
-			Tools::Remove(componentsByEntity[id], _compPtr); // loop cannot continue after remove
-			return true;
-		}
-	}
-	
-}
-*/
-
 
 

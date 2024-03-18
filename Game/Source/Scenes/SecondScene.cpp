@@ -3,6 +3,7 @@
 #include "GameLogic.h"
 #include "GameAssets.h"
 #include "EngineAssets.h"
+#include "DummyComp.h"
 #include "logger.h"
 
 
@@ -19,17 +20,18 @@ void SecondScene::PurelyManualSetup()
     //Entity::Add<Transform>(cameraID);
     //Entity::Add<Camera>(cameraID).SetToOrthographic();
 
-    auto picture1ID = Entity::Make("picture 1");
+    auto picture1ID = Entity::register_.Add("picture 1").GetID();
     Entity::Add<Transform>(picture1ID);
     Entity::Add<Renderable>(picture1ID).Setup(material);
     Entity::Add<RectangleCollider>(picture1ID).SetSize({ 1, 1 });
 
 
-    auto picture2ID = Entity::Make("picture 2");
+    auto picture2ID = Entity::register_.Add("picture 2").GetID();
     Entity::Add<Transform>(picture2ID).SetParent(&Entity::Get<Transform>(picture1ID));
     Entity::Add<Renderable>(picture2ID).Setup(material);
     Entity::Add<RectangleCollider>(picture2ID).SetSize({ 1, 1 });
     Entity::Add<GameLogic>(picture2ID);
+    Entity::Add<DummyComp>(picture2ID);
 
 
 
