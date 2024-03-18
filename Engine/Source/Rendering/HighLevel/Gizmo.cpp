@@ -84,5 +84,5 @@ uuids::uuid Gizmo::MakeCircle(glm::vec2 center, float radius, Transform& transfo
 
 std::string Gizmo::to_string() const
 {
-    return logger::make_string("Gizmo on", transform ? transform->to_string() : "no transform");
+    return logger::make_string("Gizmo on ", transform ? transform->to_string() : "no transform");
 }

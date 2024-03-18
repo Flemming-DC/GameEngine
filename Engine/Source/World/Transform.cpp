@@ -138,13 +138,17 @@ void Transform::Save(YAML::Node& node) const
 
 void Transform::Load(const YAML::Node& node)
 {
-	localPosition = node["localPosition"].as<glm::vec3>();
-	localRotation = node["localRotation"].as<glm::quat>();
-	localScale = node["localScale"].as<glm::vec3>();
+	if (GetEntity().GetName() == "picture 2")
+	{
+		P(1);
+	}
 	if (node["parent"])
 	{
 		auto parentID = node["parent"].as<uuids::uuid>();
 		SetParent(&Entity::GetComponent<Transform>(parentID));
 	}
+	localPosition = node["localPosition"].as<glm::vec3>();
+	localRotation = node["localRotation"].as<glm::quat>();
+	localScale = node["localScale"].as<glm::vec3>();
 }
 
