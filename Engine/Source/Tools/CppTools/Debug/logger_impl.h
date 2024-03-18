@@ -3,7 +3,7 @@
 #include <memory>
 #include "StringTools.h"
 #include "GlmTools.h" // this contains some overloads of to_string that might be counterintuitively absent without this include
-#include "ErrorChecker.h"
+//#include "ErrorChecker.h"
 
 namespace logger
 {

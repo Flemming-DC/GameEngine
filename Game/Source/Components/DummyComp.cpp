@@ -28,6 +28,7 @@ void DummyComp::OnDestroy()
 
 void DummyComp::OnUpdate()
 {
+
 	if (Input::KeyHeldDown(Keyboard::J))
 	{
 		logger::print("J");
@@ -48,6 +49,22 @@ void DummyComp::OnUpdate()
 	if (Input::KeyHeldDown(Keyboard::U))
 	{
 		logger::print("U");
+		if (Entity::TryGetID("circle 1"))
+			Entity::GetEntity("circle 1").Destroy();
+	}
+	if (Input::KeyHeldDown(Keyboard::Y))
+	{
+		logger::print("Y");
+		if (!Entity::TryGetID("circle 1"))
+		{
+			Delay::ToFrameEnd([]()
+			{
+				Entity& circle1 = Entity::register_.Add("circle 1");
+				circle1.Add<Transform>();
+				circle1.Add<CircleCollider>().SetLocalRadius(0.5f);
+				SetDebug
+			});
+		}
 	}
 
 }

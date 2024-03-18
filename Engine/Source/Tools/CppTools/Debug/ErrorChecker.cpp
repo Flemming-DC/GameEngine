@@ -83,11 +83,11 @@ namespace ErrorChecker
         #endif
     }
 
-    void SetDebugFlag() 
-    { 
-        std::cout << "SetDebugFlag" << std::endl;
+    void _SetDebugFlag(const char* func, const char* file, int line)
+    {
+        std::cout << "SetDebugFlag in " << func << " at " << file << ":" << line << std::endl;
         debugFlag = true; 
     }
-    bool DebugFlag() { return debugFlag; }
+    bool _GetDebugFlag() { return debugFlag; }
 
 }

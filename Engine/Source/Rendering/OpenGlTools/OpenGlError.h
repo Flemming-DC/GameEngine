@@ -1,9 +1,9 @@
 #pragma once
 #include "ErrorChecker.h"
 
-#define glCall(x) OpenGlError::_glClearError();\
-    x;\
-    OpenGlError::_glCall(#x, __FILE__, __LINE__)
+#define glCall(codeLine) OpenGlError::_glClearError();\
+    codeLine;\
+    OpenGlError::_glCall(#codeLine, __FILE__, __LINE__)
 
 
 namespace OpenGlError

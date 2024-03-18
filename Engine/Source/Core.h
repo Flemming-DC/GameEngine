@@ -10,7 +10,7 @@ public:
     {
         LogHeader("Setup");
         Setup();
-        Scene::Activate<SceneType>();
+        Scene::ActivateImmediately<SceneType>();
 
         LogHeader("Loop");
         while (OpenGlSetup::Update())

@@ -15,9 +15,7 @@ Register<Entity> Entity::register_;
 Entity::Entity(std::string name, uuids::uuid* id_) : name(name)
 {
 	id = id_ == nullptr ? UuidCreator::MakeID() : *id_; // you get an input id_ iff it is loaded as an asset.
-	if (!Tools::ContainsKey_unordered(EntitiesByName, name))
-		EntitiesByName[name] = {};
-	EntitiesByName[name].push_back(id);
+	EntitiesByName[name].push_back(id); // [] initializes if the key is not present
 }
 
 uuids::uuid Entity::Make(std::string name)
@@ -29,15 +27,33 @@ uuids::uuid Entity::Make(std::string name)
 
 uuids::uuid Entity::GetID(std::string name_)
 {
-	int count = EntitiesByName[name_].size();
+	int count = Tools::ContainsKey_unordered(EntitiesByName, name_) ? EntitiesByName.at(name_).size() : 0;
 	if (count != 1)
-		RaiseError("There are " + std::to_string(count) + " entities named " + name_
-			+ ", so you cannot get an entity unambigously from this name.");
-	auto id = EntitiesByName[name_][0];
+		RaiseError("There are " + std::to_string(count) + " entities named '" + name_
+			+ "', so you cannot get an entity unambigously from this name."
+			+ "\nEntitiesByName = \n" + logger::to_string(EntitiesByName));
+	auto id = EntitiesByName.at(name_)[0];
 	if (register_.Get(id).name != name_)
-		RaiseError("Search for an entity named " + name_ + " found one named " + register_.Get(id).name);
+		RaiseError("Searched for an entity named " + name_ + " found one named " + register_.Get(id).name);
 
 	return id;
+}
+
+uuids::uuid* Entity::TryGetID(std::string name_)
+{
+	int count = Tools::ContainsKey_unordered(EntitiesByName, name_) ? EntitiesByName.at(name_).size() : 0;
+	if (count == 0)
+		return nullptr;
+	if (count > 1)
+		RaiseError("There are " + std::to_string(count) + " entities named '" + name_
+			+ "', so you cannot get an entity unambigously from this name."
+			+ "\nEntitiesByName = \n" + logger::to_string(EntitiesByName));
+	
+	auto& id = EntitiesByName.at(name_)[0];
+	if (register_.Get(id).name != name_)
+		RaiseError("Searched for an entity named " + name_ + " found one named " + register_.Get(id).name);
+
+	return &EntitiesByName.at(name_)[0]; // using id yields the warning "returning address of local variable or temporary"
 }
 
 std::string Entity::to_string() const
@@ -52,6 +68,13 @@ std::string Entity::to_string() const
 
 void Entity::Update()
 {
+	/*
+	for (const auto& [name, entitiesWithName] : EntitiesByName)
+	{
+		if (entitiesWithName.size() != 1)
+			RaiseError("oev");
+	}
+	*/
 	for (const auto& [e, components] : componentsByEntity)
 	{
 		for (const auto& c : components)
@@ -138,15 +161,18 @@ void Entity::ClearData()
 	if (iterator1 != componentsByEntity.end())
 		componentsByEntity.erase(iterator1);
 
+
 	// next we remove this entity from the EntitiesByName.
 	auto iterator2 = EntitiesByName.find(name);
 	if (iterator2 != EntitiesByName.end())
 	{
-		if (EntitiesByName[name].size() == 1)
+		if (EntitiesByName.at(name).size() == 1)
 			EntitiesByName.erase(iterator2); // remove name and thereby also id
 		else
-			Tools::Remove(EntitiesByName[name], id); // remove id, but keep name
+			Tools::Remove(EntitiesByName.at(name), id); // remove id, but keep name
 	}
+
+
 
 }
 

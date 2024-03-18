@@ -4,11 +4,16 @@
 #define RaiseError(message) ErrorChecker::_RaiseError(message, __func__, __FILE__, __LINE__) 
 #define Warning(message) ErrorChecker::_Warning(message, __func__, __FILE__, __LINE__)  
 
+#ifdef _DEBUG
+#define SetDebug ErrorChecker::_SetDebugFlag(__func__, __FILE__, __LINE__);
+#define IfDebug(codeLine) if (ErrorChecker::_GetDebugFlag()) codeLine;
+#endif // _DEBUG
+
 namespace ErrorChecker
 {
     void PrintBacktrace();
-    void SetDebugFlag();
-    bool DebugFlag();
+    void _SetDebugFlag(const char* func, const char* file, int line);
+    bool _GetDebugFlag();
 
     template<typename T> [[noreturn]]
     void _RaiseError(T message, const char* func, const char* file, int line)

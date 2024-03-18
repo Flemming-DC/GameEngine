@@ -92,6 +92,12 @@ bool NarrowPhase::IsOverLapping_CP(CircleCollider* circle, PolygonCollider* poly
 		}
 	}
 	glm::vec2 circleNormal = glm::normalize(closestCorner - circlePosition);
+	if (Tools::HasNAN(circleNormal) && minSqrDistance < 0.001f)
+	{
+		// this blockblock activates if closestCorner = circlePosition, in which case we will replace closestCorner with polyPosition
+		glm::vec2 polyPosition = polygon->GetTransform().GetPosition();
+		circleNormal = glm::normalize(polyPosition - circlePosition); 
+	}
 	if (Tools::HasNAN(circleNormal))
 		RaiseError("NAN encountered");
 

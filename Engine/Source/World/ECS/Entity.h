@@ -42,6 +42,7 @@ public:
 	bool has_equal_id(const Entity& other) { return this->id == other.id; }
 	static uuids::uuid GetID(std::string name);
 	inline uuids::uuid GetID() const { return id; }
+	static uuids::uuid* Entity::TryGetID(std::string name_);
 	inline void SetID(uuids::uuid id_) { id = id_; }
 	std::string to_string() const;
 	std::string GetName() const { return name; }

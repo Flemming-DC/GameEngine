@@ -13,6 +13,7 @@ diverse
 	input keyPressed and keyReleased bools and events.
 	make collection of folder references
 	evt . replace entity by name with entity by path
+	add builtin cleanup to gizmo. e.g. via an OnEntityDestroyed event.
 
 components & gameobjects
 	handle activation
@@ -35,6 +36,7 @@ Editor
 	ctrl input for saving
 	save changes automatically and/or on ctrl+s
 	seperate core loop into editor vs game and evt. also seperate game-in-editor from game-in-build
+	turn Renderer::SetupGrid2D(0.25f); off in gameView (nb: this line is inside Scene::ActivateImmediately)
 
 	Inspector
 	SceneEditor / Viewport
