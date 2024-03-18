@@ -34,6 +34,7 @@ void Scene::MakeBlankSceneFile(string name)
     if (filesystem::exists(path))
         RaiseError("Cannot create Scene at " + path + ", since there is already a Scene there.");
 
+    // building a scene with a single entity with a transform and a camera
     Node transformYML;
     transformYML["id"] = UuidCreator::MakeID();
     transformYML["localPosition"] = glm::vec3(0, 0, 0);
@@ -103,7 +104,6 @@ void Scene::Load()
                 entity.LoadComponent<CircleCollider>(compYML);
 
         }
-        entityIDs.push_back(entityID);
     }
     for (const auto& entity : Entity::register_.GetData())
     {
@@ -116,17 +116,18 @@ void Scene::Load()
 
 void Scene::Save()
 {
-    if (!UuidCreator::IsInitialized(id))
-        id = UuidCreator::MakeID();
+    Scene& scene = *activeScene;
+    if (!UuidCreator::IsInitialized(scene.id))
+        RaiseError("You are trying to save a scene with an uninitialized id");
+        //scene.id = UuidCreator::MakeID();
 
     Node sceneYML;
-    sceneYML["id"] = id;
+    sceneYML["id"] = scene.id;
     Node entitiesYML;
-    for (auto& entityID : entityIDs)
+    for (const auto& entity : Entity::register_.GetData())
     {
         Node entityYML;
-        entityYML["id"] = entityID;
-        auto& entity = Entity::GetEntity(entityID);
+        entityYML["id"] = entity.GetID();
         for (auto& comp : entity.GetComponents())
         {
             Node compYML;
@@ -145,7 +146,7 @@ void Scene::Save()
     emitter << sceneYML; 
 
     // write yaml data to output stream
-    ofstream outStream(Path());
+    ofstream outStream(scene.Path());
     outStream << emitter.c_str();
     outStream.close();
 

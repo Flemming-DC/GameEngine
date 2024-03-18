@@ -66,4 +66,10 @@ void DummyComp::OnUpdate()
 		}
 	}
 
+	if (Input::KeyHeldDown(Keyboard::T))
+	{
+		logger::print("T");
+		Scene::Save();
+	}
+
 }

@@ -16,17 +16,15 @@ public:
 	static Event<Scene&> onStart;
 	static Event<Scene&> onEnd; 
 
-	static void MakeBlankSceneFile(std::string name);
+	static void MakeBlankSceneFile(std::string name); // evt. temp
 	template <typename SceneType> static void Activate();
 	template <typename SceneType> static void ActivateImmediately(); // only used by the engine and only for the starting scene
 	void ShutDown();
-	void Save(); // save to file
+	static void Save(); // save activeScene to file
 	static Scene& GetActiveScene() { return *activeScene; }
 	virtual void PurelyManualSetup() = 0;
 
 protected:
-	std::vector<uuids::uuid> entityIDs; // is this dublicate info? They are also in the register. 
-
 	virtual void ManualSetup() = 0;
 
 private:

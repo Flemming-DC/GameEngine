@@ -47,7 +47,7 @@ void DemoScene::PurelyManualSetup()
     Entity::Get<Transform>(circle2ID ).localPosition = { 0.7f,  0.5f, 0 };
 
     
-    entityIDs = { cameraID, picture1ID, picture2ID, circle1ID, circle2ID };
+    //entityIDs = { cameraID, picture1ID, picture2ID, circle1ID, circle2ID };
     onStart.Invoke(*this);
 }
 

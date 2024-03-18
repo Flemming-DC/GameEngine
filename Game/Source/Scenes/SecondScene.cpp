@@ -41,7 +41,7 @@ void SecondScene::PurelyManualSetup()
     Entity::Get<Transform>(picture2ID).localPosition = { 1.5f, -0.5f, 0 };
 
 
-    entityIDs = { cameraID, picture1ID, picture2ID };
+    //entityIDs = { cameraID, picture1ID, picture2ID };
     onStart.Invoke(*this);
 }
 
