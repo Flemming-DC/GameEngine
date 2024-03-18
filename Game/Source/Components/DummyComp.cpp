@@ -62,7 +62,6 @@ void DummyComp::OnUpdate()
 				Entity& circle1 = Entity::register_.Add("circle 1");
 				circle1.Add<Transform>();
 				circle1.Add<CircleCollider>().SetLocalRadius(0.5f);
-				SetDebug
 			});
 		}
 	}

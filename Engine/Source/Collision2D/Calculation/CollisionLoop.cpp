@@ -16,6 +16,7 @@ void CollisionLoop::Setup()
 
 void CollisionLoop::Update()
 {
+	PruneDeadColliders();
 	// potentialCollisions are stored as collider pairs, rather than collision objects
 	auto potentialNewOverlaps = BroadPhase::GetPotentialOverlaps();
 	auto newOverlaps = NarrowPhase::GetOverlaps(potentialNewOverlaps);
@@ -49,4 +50,21 @@ void CollisionLoop::HandleCollisionInfo(Overlaps newOverlaps)
 	}
 	overlaps = newOverlaps;
 }
+
+
+void CollisionLoop::PruneDeadColliders()
+{
+	Overlaps toBeRemoved;
+	for (const auto& [col1, col2] : overlaps)
+	{
+		if (!Tools::Contains(Collider::GetAllColliders(), col1->GetID()))
+			toBeRemoved.push_back({ col1, col2 });
+		else if (!Tools::Contains(Collider::GetAllColliders(), col2->GetID()))
+			toBeRemoved.push_back({ col1, col2 });
+	}
+	for (const auto& pair : toBeRemoved)
+		Tools::Remove(overlaps, pair);
+
+}
+
 
