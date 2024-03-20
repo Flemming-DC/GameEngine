@@ -16,15 +16,12 @@ Engine = project "Engine"
         "../Engine/Dependencies/BinDependencies/GLEW/include"
     }
 
-
     links {
-        -- "/NODEFAULTLIB:LIBCMT;" -- insert manually without .lib extension
         "glew32s",
         "glfw3", 
         "Opengl32",
-        "Glu32", 
     }
-    ignoredefaultlibraries { "/NODEFAULTLIB:LIBCMT" }
+    ignoredefaultlibraries { "LIBCMT", "MSVCRT" }
 
     libdirs { -- evt. copy all libs to one folder and grab them from there
         "../Engine/Dependencies/BinDependencies/OpenGL/lib-vc2022",
@@ -41,7 +38,7 @@ Engine = project "Engine"
         systemversion "latest"
         defines { }
     filter { "action:vs*" }
-        buildoptions "/wd26812" -- Disable warning C26812 (unscoped enum) in Visual Studio
+        buildoptions { "/wd26812" } -- Disable warning C26812 (unscoped enum) in Visual Studio
 
     filter "configurations:Debug"
         defines { "GLEW_STATIC", "WIN32", "_DEBUG", "_CONSOLE" } 

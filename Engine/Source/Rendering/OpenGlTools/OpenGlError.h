@@ -12,7 +12,7 @@ namespace OpenGlError
     void _glClearError();
     void _glCall(const char* function, const char* file, int line);
     bool _LastGlCallHadError();
-
+    std::string _ErrorString(unsigned int errorCode);
 }
 
 

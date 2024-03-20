@@ -1,6 +1,5 @@
 #include "VertexArray.h"
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "OpenGlExternal.h"
 #include "OpenGlError.h"
 #include "OpenGlSetup.h"
 #include "OpenGLidChecker.h"

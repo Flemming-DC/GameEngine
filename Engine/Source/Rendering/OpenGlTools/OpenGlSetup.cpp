@@ -1,7 +1,6 @@
 #include "OpenGlSetup.h"
 #include "OpenGlError.h"
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "OpenGlExternal.h"
 
 bool OpenGlSetup::openGLInitialized = false;
 int OpenGlSetup::width = 960;

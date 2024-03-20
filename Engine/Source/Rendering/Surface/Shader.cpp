@@ -1,14 +1,14 @@
 #include "Shader.h"
-#include <GL/glew.h>
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <any>
 #include <filesystem>
+#include "OpenGlExternal.h"
 #include "OpenGlError.h"
-#include "StringTools.h"
 #include "OpenGlSetup.h"
 #include "OpenGLidChecker.h"
+#include "StringTools.h"
 #include "Dynamic.h"
 
 // ---------------- public ----------------
