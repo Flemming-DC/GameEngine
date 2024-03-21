@@ -13,12 +13,11 @@ public:
 	static bool Initialized() { return openGLInitialized; }
 	inline static int GetWidth() { return width; }
 	inline static int GetHeight() { return height; }
-	inline static GLFWwindow* GetWindow() { return window; }
+	inline static GLFWwindow* GetWindow() { if (window) return window; else RaiseError("GLFWwindow is nullptr"); } // returns ptr for convenience
 	static void Exit();
 
 private:
 	static bool openGLInitialized;
-	//static ImGuiIO io;
 	static int width;
 	static int height;
 	static GLFWwindow* window;

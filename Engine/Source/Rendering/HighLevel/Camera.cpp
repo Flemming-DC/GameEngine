@@ -87,9 +87,9 @@ void Camera::OnUpdate()
 
 
 
-Camera* Camera::GetCurrent()
+Camera& Camera::GetCurrent()
 {
     if (currentCamera == nullptr)
         RaiseError("currentCamera is null. If you destroy the current camera, then you must set a new camera as the current one.");
-    return currentCamera;
+    return *currentCamera;
 }

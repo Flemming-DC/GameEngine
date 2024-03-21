@@ -81,6 +81,12 @@ void Transform::SetParent(Transform* newParent)
 }
 std::vector<Transform*> Transform::GetChildren() const
 {
+	#ifdef _DEBUG
+	for (const auto& child : children)
+		if (!child)
+			RaiseError("child is null: ", to_string());
+	#endif // _DEBUG
+
 	return children;
 }
 std::string Transform::GetPath() const

@@ -35,7 +35,7 @@ public:
 	template <typename ComponentType> inline ComponentType* TryGet() { return TryGetComponent<ComponentType>(); };
 	template <typename ComponentType> inline ComponentType& Get() { return GetComponent<ComponentType>(); };
 	template <typename ComponentType> inline ComponentType& Add() { return AddComponent<ComponentType>(); };
-	template <typename ComponentType> bool Destroy() { return Destroy(TryGetComponent<ComponentType>()); }
+	template <typename ComponentType> bool Destroy() { return Destroy(GetComponent<ComponentType>()); }
 
 	// evt. get component in children, parent, siblings etc.
 
@@ -63,7 +63,7 @@ private:
 	void ClearData(); // Engine-only
 	static void ClearData(const std::unique_ptr<Component>& compPtr); // Engine-only
 	static void DestroyTheDoomed();
-	bool Destroy(Component* comp); // destroys the entity at the end of the component update calls
+	bool Destroy(Component& comp); // destroys the entity at the end of the component update calls
 	static void CheckConsistency();
 
 };

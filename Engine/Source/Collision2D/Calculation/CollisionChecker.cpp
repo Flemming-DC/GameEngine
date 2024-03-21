@@ -50,7 +50,7 @@ std::vector<Collider*> CollisionChecker::RayOverlaps(
 	auto normal = glm::vec2(-direction.y, direction.x);
 	float startPosAlongNormal = glm::dot(startPosition, normal);
 
-	for (const auto colID : Collider::GetAllColliders())
+	for (const auto& colID : Collider::GetAllColliders())
 	{
 		auto& col = Entity::GetComponent<Collider>(colID);
 		// checking for overlap

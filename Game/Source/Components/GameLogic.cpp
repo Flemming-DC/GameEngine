@@ -47,7 +47,7 @@ void GameLogic::OnUpdate()
     {
         logger::print("P");
         auto collider = CollisionChecker::RayCast(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
-        if (collider != nullptr)
+        if (collider)
             logger::print(collider->GetEntity().name + " was hit");
         else
             logger::print("Hit nothing");

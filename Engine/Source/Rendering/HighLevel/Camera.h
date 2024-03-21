@@ -13,7 +13,7 @@ public:
 	//glm::mat4 GetProjectionView() const; // returns projectionMatrix times viewMatrix
 	glm::mat4 GetProjection() const;
 	glm::mat4 GetView(); //const
-	static Camera* GetCurrent();
+	static Camera& GetCurrent();
 	void SetCameraAsCurrent() { currentCamera = this; }
 
 private:

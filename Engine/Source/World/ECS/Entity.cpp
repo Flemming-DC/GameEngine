@@ -160,7 +160,7 @@ void Entity::Destroy() // Entity::~Entity()
 
 	// doom components
 	for (const auto& comp : GetComponents())
-		Destroy(comp.get());
+		Destroy(*comp);
 
 }
 
@@ -191,15 +191,13 @@ void Entity::ClearData()
 }
 
 
-bool Entity::Destroy(Component* comp)
+bool Entity::Destroy(Component& comp)
 {
-	if (!comp)
-		return false;
 	for (const auto& compPtr : componentsByEntity[id])
 	{
-		if (compPtr->GetID() != comp->GetID())
+		if (compPtr->GetID() != comp.GetID())
 			continue;
-		comp->isDoomed = true;
+		comp.isDoomed = true;
 		return true;
 	}
 	return false;

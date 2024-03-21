@@ -44,7 +44,8 @@ void DummyComp::OnUpdate()
 	if (Input::KeyHeldDown(Keyboard::I))
 	{
 		logger::print("I");
-		Entity::GetEntity("picture 1").Destroy();
+		if (Entity::GetEntity("picture 1").TryGet<RectangleCollider>())
+			Entity::GetEntity("picture 1").Destroy<RectangleCollider>();
 	}
 	if (Input::KeyHeldDown(Keyboard::U))
 	{
