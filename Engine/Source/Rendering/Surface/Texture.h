@@ -16,8 +16,8 @@ public:
 	void Bind(unsigned int slot = 0) const;
 	static void UnBind();
 
-	inline int GetWidth() const { return width; }
-	inline int GetHeight() const { return height; }
+	//inline int GetWidth() const { return width; }
+	//inline int GetHeight() const { return height; }
 	inline uuids::uuid GetID() const { return id; }
 	inline unsigned int GetOpenGLid() const { return openGLid; }
 	std::string to_string() const;

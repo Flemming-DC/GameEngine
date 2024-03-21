@@ -20,11 +20,12 @@ void Renderer::DrawToScreen()
 {
     glCall(glClear(GL_COLOR_BUFFER_BIT)); // same as renderer.Clear()
     Renderable::UnBind(); //  evt. add framebuffer unbind
+    Gizmo::CleanupDeadGizmos();
+
     for (const uuids::uuid& renderableID : Renderable::allRenderables)
         Entity::GetComponent<Renderable>(renderableID).Draw();
     for (Gizmo& gizmo : Gizmo::register_.GetData())
         gizmo.Draw();
-    
 }
 
 

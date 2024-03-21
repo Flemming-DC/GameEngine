@@ -17,6 +17,5 @@ void Collider::OnDestroy()
 	bool wasThere = Tools::Remove(allColliders, GetID());
 	if (!wasThere)
 		RaiseError("ColliderID has been removed from allColliders prematurely");
-	Gizmo::register_.Remove(gizmoID);
 }
 

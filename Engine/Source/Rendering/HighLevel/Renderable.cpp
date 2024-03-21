@@ -69,8 +69,8 @@ void Renderable::Save(YAML::Node& node) const
 
 void Renderable::Load(const YAML::Node& node)
 {
-    auto materialID = node["material"].as<uuids::uuid>();
-    material = Material::register_.Get(materialID); // copy, not ref
+    //auto materialID = node["material"].as<uuids::uuid>(); // material cannot yet be loaded, since it aren't saved (in the current version)
+    //material = Material::register_.Get(materialID); // copy, not ref
 
     if (node["mesh"])
     {

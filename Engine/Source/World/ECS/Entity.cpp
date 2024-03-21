@@ -9,6 +9,8 @@ std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> Entity:
 std::unordered_map<std::string, std::vector<uuids::uuid>> Entity::EntitiesByName;
 std::unordered_map<uuids::uuid, Component*> Entity::componentsByID;
 Register<Entity> Entity::register_;
+Event<Entity&> Entity::OnCreated;
+Event<Entity&> Entity::OnDestroy;
 
 
 
@@ -16,6 +18,7 @@ Entity::Entity(std::string name, uuids::uuid* id_) : name(name)
 {
 	id = id_ == nullptr ? UuidCreator::MakeID() : *id_; // you get an input id_ iff it is loaded as an asset.
 	EntitiesByName[name].push_back(id); // [] initializes if the key is not present
+	OnCreated.Invoke(*this);
 }
 
 
@@ -108,9 +111,12 @@ void Entity::DestroyTheDoomed()
 	for (const auto& [id_, comp] : componentsByID)
 	{
 		if (comp->isDoomed)
-		{
 			comp->OnDestroy();
-		}
+	}
+	for (Entity& entity : register_.GetData())
+	{
+		if (entity.isDoomed)
+			OnDestroy.Invoke(entity);
 	}
 	// get ids
 	std::vector<uuids::uuid> doomedEntityIDs;
@@ -140,6 +146,8 @@ void Entity::DestroyEverything()
 {
 	for (const auto& [id_, comp] : componentsByID)
 		comp->OnDestroy();
+	for (Entity& entity : register_.GetData())
+			OnDestroy.Invoke(entity);
 
 	EntitiesByName.clear();
 	componentsByID.clear();
@@ -148,8 +156,7 @@ void Entity::DestroyEverything()
 }
 
 
-// currently, this just removes all data on the entity, turning it into a blank entity, but it leaves a blank entity behind
-void Entity::Destroy() // Entity::~Entity()
+void Entity::Destroy() 
 {
 	isDoomed = true;
 

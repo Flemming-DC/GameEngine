@@ -19,5 +19,6 @@ void GameAssets::Setup()
     shader = Shader::register_.Add("res/shaders/Image.shader");
     texture = Texture::register_.Add("res/textures/blizzard attacking fans.png");
     material = Material::register_.Add(shader, uniformsByName);
+
 }
 

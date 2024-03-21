@@ -21,7 +21,9 @@ ComponentType* Entity::TryGetComponent() const
 	static_assert(std::is_base_of<Component, ComponentType>::value,
 		"GetComponent can only get components, not other types");
 
-	for (const auto& comp : componentsByEntity[id])
+	if (!Tools::ContainsKey_unordered(componentsByEntity, id))
+		return nullptr;
+	for (const auto& comp : componentsByEntity.at(id))
 	{
 		ComponentType* afterCast = dynamic_cast<ComponentType*>(comp.get());
 		if (afterCast == nullptr)
@@ -81,7 +83,7 @@ ComponentType& Entity::Add(uuids::uuid entityID)
 template <typename ComponentType>
 ComponentType& Entity::GetComponent(uuids::uuid id_)
 {
-	ComponentType* afterCast = dynamic_cast<ComponentType*>(componentsByID[id_]);
+	ComponentType* afterCast = dynamic_cast<ComponentType*>(componentsByID.at(id_));
 	if (!afterCast)
 		RaiseError("Failed to find " + Tools::TypeName<ComponentType>()
 			+ " with id " + logger::to_string(id_));
@@ -91,7 +93,9 @@ ComponentType& Entity::GetComponent(uuids::uuid id_)
 template <typename ComponentType>
 ComponentType* Entity::TryGetComponent(uuids::uuid id_)
 {
-	ComponentType* afterCast = dynamic_cast<ComponentType*>(componentsByID[id_]);
+	if (!Tools::ContainsKey_unordered(componentsByID, id_))
+		return nullptr;
+	ComponentType* afterCast = dynamic_cast<ComponentType*>(componentsByID.at(id_));
 	return afterCast;
 }
 

@@ -34,6 +34,7 @@ public:
 		glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 	inline uuids::uuid GetID() const { return id; }
 	std::string to_string() const;
+	static void CleanupDeadGizmos(); // removes gizmos from destroyed transforms
 
 private:
 	Mesh mesh;
@@ -42,4 +43,6 @@ private:
 	Transform* transform = nullptr;
 	int positionCount = 0;
 	uuids::uuid id;
+	bool attachedToTransform = false; // equal to transform != nullptr at construction
+	std::optional<uuids::uuid> transformID = std::nullopt;
 };

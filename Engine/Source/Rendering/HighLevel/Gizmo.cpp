@@ -18,6 +18,9 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
     color = color_;
     showPoints = showPoints_;
     loop = loop_;
+    attachedToTransform = (transform_ != nullptr);
+    if (transform_)
+        transformID = transform_->GetID();
 
     std::vector<float> positionsRaw;
     for (glm::vec2 position2D : position2Ds)
@@ -29,10 +32,20 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
     float point_size = 5;
     glCall(glPointSize(point_size));
 
-    material = EngineAssets::GreenGizmoMaterial(); // color unspecified
+    material = EngineAssets::GizmoMaterial(); // color is specified in draw call
     mesh = Mesh::register_.Add(positionsRaw, std::vector<unsigned int>(), VertexLayout({ 2, 0, 0, 0 }));
     transform = transform_;
     positionCount = position2Ds.size();
+
+    /*
+    // cleanup Gizmo, if its transform dies
+    if (transform)
+        Entity::OnDestroy.Add([this](Entity& entity) 
+            {
+                if (transform->GetEntity() == entity)
+                    Gizmo::register_.Remove(GetID());
+            });
+    */
 }
 
 
@@ -41,6 +54,9 @@ void Gizmo::Draw()
 {
     if (!UuidCreator::IsInitialized(id))
         RaiseError("Cannot draw uninitialized gizmo");
+    //if (transformID)
+    //if (attachedToTransform && !transform)
+    //    RaiseError("transform of Gizmo has become null"); // doesn't catch scrambled transform, only null-transform
     glm::mat4 projection = Camera::GetCurrent().GetProjection(); // evt. save the projectionView. at least within each frame
     glm::mat4 view = Camera::GetCurrent().GetView();
     glm::mat4 model = transform != nullptr ? transform->GetModel() : glm::mat4(1.0f); // this is inefficient
@@ -63,7 +79,18 @@ void Gizmo::UnBind()
     Material::UnBind();
 }
 
+void Gizmo::CleanupDeadGizmos()
+{
+    std::vector<uuids::uuid> tobeRemoved;
+    for (Gizmo& gizmo : Gizmo::register_.GetData())
+    {
+        if (gizmo.transformID && !Entity::TryGetComponent<Transform>(*gizmo.transformID))
+            tobeRemoved.push_back(gizmo.GetID());
+    }
+    for (uuids::uuid& gizmoID : tobeRemoved)
+        Gizmo::register_.Remove(gizmoID);
 
+}
 
 uuids::uuid Gizmo::MakeCircle(glm::vec2 center, float radius, Transform& transform_, glm::vec4 color)
 {

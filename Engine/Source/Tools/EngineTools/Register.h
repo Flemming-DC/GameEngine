@@ -26,25 +26,19 @@ public:
     {
         if (!Tools::ContainsKey_unordered(indexByID, id))
             RaiseError("Trying to remove an object, which isn't in the register.");
-        unsigned int index = indexByID[id];
+        unsigned int index = indexByID.at(id);
         for (const auto& [id_, index_] : indexByID)
         {
             if (index_ > index)
-                indexByID[id_] = index_ - 1;
+                indexByID.at(id_) = index_ - 1;
         }
         Tools::RemoveKey_unordered(indexByID, id);
         dataChunks.erase(dataChunks.begin() + index);
     }
 
-    DataChunk& Get(const uuids::uuid& id)
-    {
-        return dataChunks[indexByID[id]];
-    }
-
-    std::vector<DataChunk>& GetData()
-    {
-        return dataChunks;
-    }
+    DataChunk& Get(const uuids::uuid& id) { return dataChunks[indexByID.at(id)]; }
+    std::vector<DataChunk>& GetData() { return dataChunks; }
+    bool Contains(const uuids::uuid& id) const { return Tools::ContainsKey_unordered(indexByID, id); }
 
     void Clear()
     {

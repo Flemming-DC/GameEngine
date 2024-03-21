@@ -139,4 +139,10 @@ namespace logger
 		return "{ " + out + " }";
 	};
 
+	template<typename Tkey, typename Tval>
+	inline std::string to_string(const std::pair<Tkey, Tval>& pair)
+	{
+		return "{ " + logger::to_string(pair.first) + ": " + logger::to_string(pair.second) + " }";
+	};
+
 }

@@ -1,18 +1,9 @@
 
 diverse
-	move openGL errorhandling into rendering folder thereby seperating it from general tools
 	buy old used mac, linux, xbox and playstation
 	update view-area on window resize
-	looping lacks in circle gizmo
-	evt. cleanup unsued get so and so functions for the texture
-	color is input to gizmo, but it is not used
-	destroy gizmo if its associated transform goes nullptr
 	error handling ved uninitialized material / mesh (the !UuidCreator::IsInitialized(id) check didn't catch missing setup call) 
-	destruction and scene change at end of loop
-	creating a collider Gizmo before the grid Gizmo causes the former to show up incorrectly. Possibly due to fitting objects of different size into the same vector
 	input keyPressed and keyReleased bools and events.
-	make collection of folder references
-	evt . replace entity by name with entity by path
 	add builtin cleanup to gizmo. e.g. via an OnEntityDestroyed event.
 
 components & gameobjects
@@ -21,14 +12,10 @@ components & gameobjects
 	uninitialized components for the sake of the gameLogic
 	introduce ordering of start function. call it first on builtin components, then on others
 	remove entity from register upon destruction.
-	data dublication and leak in Entity::register_, scene.EntityIDs
 	
-	handle ids pointing to dead components
-	remove entity from register on destroy
-	scene activation and removing entities from register should be pushed until end of frame, otherwise you get and inconsistent update loop, which can destroy the things it is looping over.
 
 dynamics
-	enable, disable, OnEditorStart (evt. i stedet for OnEngineStart)
+	enable, disable
 	should OnGameStart be called every time you press "run game" in the editor? 
 	onRareUpdate, OnTimedStart/OnStart overload with int parameter
 
@@ -50,20 +37,15 @@ Editor
 		bring default window up in front of ImGUI and put in focus 
 		run game on play and reload scene on stop
 	AssetFolder
-	Hierarchy
-	
+	Hierarchy	
 	viewport
 
 collision
-	use constrained proportions for circleCollider. this proporty is set on transform and used
-	by circleCollider and Gizmo renderer
+	use constrained proportions for circleCollider. this proporty is set on transform and used by circleCollider and Gizmo renderer
 	edit colliders
-
-	collision detection
-		broad phase: boundingbox trees
+	broad phase: boundingbox trees
 	collision solving (aka. interaction)
 	evt. drag & friction
-	
 	easy spawning for testing
 
 	components
@@ -71,16 +53,10 @@ collision
 	generate collision data
 		normals, velocity, collisionPoint
 
-run function / master loop
 read/save files from/to disk
-	Load function might make SetByInspector functions unnecessary
-	comments in yml files for uuids
-	component ordering
-	load mesh and parent from id
-	get entity by name
-	hardcode custom gamelogic
-	multiple scenes
-	dont expose onconstructed, exppose a seperate function that is called after loading
+	comments in yml files for uuids (e.g. path as comment)
+	load mesh and material from id
+	
 
 headers
 	common, tools, rendering
@@ -89,7 +65,8 @@ profiler
 make 2d game
 
 
-
+flaws (wont fix)
+	creating a collider Gizmo before the grid Gizmo causes the former to show up incorrectly. 
 
 
 

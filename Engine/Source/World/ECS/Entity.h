@@ -6,6 +6,7 @@
 #include <stduuid/uuid.h>
 #include "Register.h"
 #include "YAML.h"
+#include "Event.h"
 
 class Component; // forward declaration
 	
@@ -15,6 +16,8 @@ class Entity
 public:
 	std::string name;
 	static Register<Entity> register_;
+	static Event<Entity&> OnCreated;
+	static Event<Entity&> OnDestroy;
 
 	Entity(std::string name = "Entity", uuids::uuid* id = nullptr); // id bruges hvis entiteten loades fra disk
 	static void Update();

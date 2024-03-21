@@ -20,42 +20,38 @@ void DummyComp::OnStart()
 
 }
 
-void DummyComp::OnDestroy()
-{
-
-	Gizmo::register_.Remove(gizmoID);
-}
 
 void DummyComp::OnUpdate()
 {
 
 	if (Input::KeyHeldDown(Keyboard::J))
 	{
-		logger::print("J");
-		GetEntity().Destroy<GameLogic>();
+		logger::print("J: try destroy gamelogic from ", this->GetEntity());
+		if (TryGet<GameLogic>())
+			GetEntity().Destroy<GameLogic>();
 	}
 	if (Input::KeyHeldDown(Keyboard::H))
 	{
-		logger::print("H");
-		if (!TryGet<GameLogic>())
+		logger::print("H: try add gamelogic to ", this->GetEntity());
+		if (!TryGet<GameLogic>() && TryGet<Renderable>() && TryGet<RectangleCollider>())
 			GetEntity().Add<GameLogic>();
 	}
 	
 	if (Input::KeyHeldDown(Keyboard::I))
 	{
-		logger::print("I");
+		logger::print("I: try destroy picture 1 RectangleCollider");
 		if (Entity::GetEntity("picture 1").TryGet<RectangleCollider>())
 			Entity::GetEntity("picture 1").Destroy<RectangleCollider>();
 	}
 	if (Input::KeyHeldDown(Keyboard::U))
 	{
-		logger::print("U");
+		logger::print("U: try destroy circle 1");
 		if (Entity::TryGetID("circle 1"))
 			Entity::GetEntity("circle 1").Destroy();
 	}
 	if (Input::KeyHeldDown(Keyboard::Y))
 	{
-		logger::print("Y");
+		logger::print("Y: try make circle 1 and X");
 		if (!Entity::TryGetID("circle 1"))
 		{
 			/*
@@ -74,15 +70,15 @@ void DummyComp::OnUpdate()
 			*/
 			Entity::Make<Transform, CircleCollider>("circle 1")
 				.Get<CircleCollider>().SetLocalRadius(0.5);
-
-
-			Entity::Make<DummyComp, DummyComp>("X");
 		}
+		P("about to make XX");
+		if (!Entity::TryGetID("XX"))
+			Entity::Make<DummyComp, DummyComp>("XX");
 	}
 
 	if (Input::KeyHeldDown(Keyboard::T))
 	{
-		logger::print("T");
+		logger::print("T: Save");
 		Scene::Save();
 	}
 

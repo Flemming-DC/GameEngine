@@ -9,7 +9,7 @@ class EngineAssets
 public:
 	static void Setup();
 	static Shader& SolidColorShader() { return solidColorShader; }
-	static Material& GreenGizmoMaterial() { return gizmoMaterial; }
+	static Material& GizmoMaterial() { return gizmoMaterial; }
 	static Mesh& SquareMesh() { return squareMesh; }
 
 private:
