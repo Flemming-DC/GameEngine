@@ -40,9 +40,7 @@ private:
 	Mesh mesh;
 	glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
 	Material material;
-	Transform* transform = nullptr;
 	int positionCount = 0;
 	uuids::uuid id;
-	bool attachedToTransform = false; // equal to transform != nullptr at construction
 	std::optional<uuids::uuid> transformID = std::nullopt;
 };

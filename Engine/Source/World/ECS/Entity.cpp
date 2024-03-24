@@ -5,16 +5,17 @@
 #include "Transform.h"
 #include "Delay.h"
 
-std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> Entity::componentsByEntity;
-std::unordered_map<std::string, std::vector<uuids::uuid>> Entity::EntitiesByName;
-std::unordered_map<uuids::uuid, Component*> Entity::componentByID;
+UsingShorts;
+map_uo<uuid, vector<unique_ptr<Component>>> Entity::componentsByEntity;
+map_uo<string, vector<uuid>> Entity::EntitiesByName;
+map_uo<uuid, Component*> Entity::componentByID;
 Register<Entity> Entity::register_;
 Event<Entity&> Entity::OnCreated;
 Event<Entity&> Entity::OnDestroy;
 
 
 
-Entity::Entity(std::string name, uuids::uuid* id_) : name(name)
+Entity::Entity(string name, uuid* id_) : name(name)
 {
 	id = id_ == nullptr ? UuidCreator::MakeID() : *id_; // you get an input id_ iff it is loaded as an asset.
 	EntitiesByName[name].push_back(id); // [] initializes if the key is not present
@@ -24,7 +25,7 @@ Entity::Entity(std::string name, uuids::uuid* id_) : name(name)
 
 
 
-uuids::uuid Entity::GetID(std::string name_)
+uuid Entity::GetID(string name_)
 {
 	int count = Tools::ContainsKey(EntitiesByName, name_) ? EntitiesByName.at(name_).size() : 0;
 	if (count != 1)
@@ -38,7 +39,7 @@ uuids::uuid Entity::GetID(std::string name_)
 	return id;
 }
 
-uuids::uuid* Entity::TryGetID(std::string name_)
+uuid* Entity::TryGetID(string name_)
 {
 	int count = Tools::ContainsKey(EntitiesByName, name_) ? EntitiesByName.at(name_).size() : 0;
 	if (count == 0)
@@ -55,7 +56,7 @@ uuids::uuid* Entity::TryGetID(std::string name_)
 	return &EntitiesByName.at(name_)[0]; // using id yields the warning "returning address of local variable or temporary"
 }
 
-std::string Entity::to_string() const
+string Entity::to_string() const
 {
 	Transform* transform = TryGetComponent<Transform>();
 	if (transform == nullptr)
@@ -119,7 +120,7 @@ void Entity::DestroyTheDoomed()
 			OnDestroy.Invoke(entity);
 	}
 	// get ids
-	std::vector<uuids::uuid> doomedEntityIDs;
+	vector<uuid> doomedEntityIDs;
 	for (Entity& entity : register_.GetData())
 	{
 		if (entity.isDoomed)
@@ -210,7 +211,7 @@ bool Entity::Destroy(Component& comp)
 	return false;
 }
 
-void Entity::ClearData(const std::unique_ptr<Component>& compPtr)
+void Entity::ClearData(const unique_ptr<Component>& compPtr)
 {
 	auto& entityID = compPtr->GetEntity().GetID();
 

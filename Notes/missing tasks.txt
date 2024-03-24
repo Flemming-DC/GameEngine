@@ -4,8 +4,9 @@ diverse
 	update view-area on window resize
 	error handling ved uninitialized material / mesh (the !UuidCreator::IsInitialized(id) check didn't catch missing setup call) (probably due to trying to read material from disk)
 	input keyPressed and keyReleased bools and events.
-	add builtin cleanup to gizmo. e.g. via an OnEntityDestroyed event.
 	copy res automatically to build folder, and provide a better error messages if res is missing. 
+	cleanup Get prefixes
+	store any special folders in const
 
 
 components & gameobjects

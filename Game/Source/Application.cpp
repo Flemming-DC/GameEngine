@@ -5,6 +5,7 @@
 #include "DemoScene.h"
 #include "SecondScene.h"
 #include "MiniScene.h"
+#include "ShortHands.h"
 
 
 //Scene::MakeBlankSceneFile("SecondScene");
@@ -15,7 +16,6 @@
 
 int main()
 {
-
     //logger::print(UuidCreator::MakeID());
     Dynamic::Setup<Editor, GameAssets>();
     Core::Run<DemoScene>();

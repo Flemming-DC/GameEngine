@@ -19,11 +19,10 @@
 // den og en warning logges. Hvis den er ugyldig så rejses en fejl.
 // raise callbacks or events onSceneStart and onSceneEnd
 
-using namespace std; 
-using namespace uuids; 
-using namespace YAML;
+UsingShorts;
+using YAML::Node;
 
-std::unique_ptr<Scene> Scene::activeScene = nullptr;
+unique_ptr<Scene> Scene::activeScene = nullptr;
 Event<Scene&> Scene::onStart;
 Event<Scene&> Scene::onEnd;
 
@@ -31,7 +30,7 @@ Event<Scene&> Scene::onEnd;
 void Scene::MakeBlankSceneFile(string name)
 {
     string path = "res/Scenes/" + name + ".yml";
-    if (filesystem::exists(path))
+    if (std::filesystem::exists(path))
         RaiseError("Cannot create Scene at " + path + ", since there is already a Scene there.");
 
     // building a scene with a single entity with a transform and a camera
@@ -58,23 +57,23 @@ void Scene::MakeBlankSceneFile(string name)
 
 
     // configure yaml file using emitter
-    Emitter emitter;
+    YAML::Emitter emitter;
     emitter.SetIndent(4);
     emitter.SetSeqFormat(YAML::Flow); // write lists horizontally, not vertically
     emitter << sceneYML;
 
     // write yaml data to output stream
-    ofstream outStream(path);
+    std::ofstream outStream(path);
     outStream << emitter.c_str();
     outStream.close();
 }
 
 void Scene::Load()
 {
-    if (!filesystem::exists(Path()))
+    if (!std::filesystem::exists(Path()))
         RaiseError("Cannot load Scene at " + Path() + ", since there is no Scene there.");
 
-    Node sceneYML = LoadFile(Path());
+    Node sceneYML = YAML::LoadFile(Path());
     id = sceneYML["id"].as<uuid>();
 
     auto entitiesMap = sceneYML["Entities"].as<map<string, Node>>();
@@ -140,13 +139,13 @@ void Scene::Save()
     sceneYML["Entities"] = entitiesYML;
 
     // configure yaml file using emitter
-    Emitter emitter;
+    YAML::Emitter emitter;
     emitter.SetIndent(4);
     emitter.SetSeqFormat(YAML::Flow); // write lists horizontally, not vertically
     emitter << sceneYML; 
 
     // write yaml data to output stream
-    ofstream outStream(scene.Path());
+    std::ofstream outStream(scene.Path());
     outStream << emitter.c_str();
     outStream.close();
 
