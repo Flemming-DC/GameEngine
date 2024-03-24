@@ -6,7 +6,6 @@ namespace OpenGlError
 {
     static bool _lastGlCallHadError = false;
 
-
     void _glClearError()
     {
         while (glGetError() != GL_NO_ERROR);

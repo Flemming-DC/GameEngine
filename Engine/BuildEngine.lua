@@ -21,7 +21,7 @@ Engine = project "Engine"
         "glfw3", 
         "Opengl32",
     }
-    ignoredefaultlibraries { "LIBCMT", "MSVCRT" }
+    ignoredefaultlibraries { "LIBCMT" }
 
     libdirs { -- evt. copy all libs to one folder and grab them from there
         "../Engine/Dependencies/BinDependencies/OpenGL/lib-vc2022",
@@ -49,6 +49,6 @@ Engine = project "Engine"
     filter "configurations:Release"
         defines { "GLEW_STATIC", "WIN32", "NDEBUG", "_CONSOLE" } 
         runtime "Release"
-        --optimize "On" -- this breaks openGL
+        optimize "On" 
         symbols "On"
         links { "yaml-cpp" } -- append yaml-cpp library for Windows

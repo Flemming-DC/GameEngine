@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "DemoScene.h"
 #include "SecondScene.h"
+#include "Time_.h"
 
 
 void GameLogic::OnStart()
@@ -35,9 +36,9 @@ void GameLogic::OnUpdate()
     material->SetUniform("u_color", color);
     
     if (color.r > 1)
-        increment = -0.1f;
+        increment = -6.0f * Time::GetDelta();
     if (color.r < 0)
-        increment = 0.1f;
+        increment = 6.0f * Time::GetDelta();
     color.r += increment;
 
 

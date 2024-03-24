@@ -22,10 +22,10 @@ public:
 	void ShutDown();
 	static void Save(); // save activeScene to file
 	static Scene& GetActiveScene() { return *activeScene; }
-	virtual void PurelyManualSetup() = 0;
+	virtual void PurelyManualSetup() {}// = 0;
 
 protected:
-	virtual void ManualSetup() = 0;
+	virtual void ManualSetup() {}//= 0;
 
 private:
 	static uuids::uuid activeSceneID;

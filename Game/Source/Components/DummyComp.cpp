@@ -71,7 +71,6 @@ void DummyComp::OnUpdate()
 			Entity::Make<Transform, CircleCollider>("circle 1")
 				.Get<CircleCollider>().SetLocalRadius(0.5);
 		}
-		P("about to make XX");
 		if (!Entity::TryGetID("XX"))
 			Entity::Make<DummyComp, DummyComp>("XX");
 	}
