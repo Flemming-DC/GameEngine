@@ -84,7 +84,7 @@ void Material::CheckUniforms()
     for (const auto& pair : uniformValuesByName)
     {
         std::string name = pair.first;
-        if (!Tools::ContainsKey_unordered(shader.GetUniformTypesByName(), name))
+        if (!Tools::ContainsKey(shader.GetUniformTypesByName(), name))
             Warning(
                 "Material contains a uniform named " + name + ", even though this uniform doesn't exist in the shader.");
     }

@@ -18,7 +18,7 @@ public:
     bool Remove(unsigned int id)
     {
         // we do not need to do maxId--, since its not an index, but a key in a map
-        return Tools::RemoveKey_unordered(functionsById, id);
+        return Tools::RemoveKey(functionsById, id);
     }
 
     void Clear()

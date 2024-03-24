@@ -12,11 +12,16 @@
 //Scene::GetActiveScene().Save();
 
 
+
 int main()
 {
+
     //logger::print(UuidCreator::MakeID());
     Dynamic::Setup<Editor, GameAssets>();
     Core::Run<DemoScene>();
     return 0;
 }
+// findstr /S /M "_Debug" "Engine\Source\*.*"
+// 
 // git add . && git commit -m "m" && git push
+

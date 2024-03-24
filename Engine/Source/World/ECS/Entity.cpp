@@ -7,7 +7,7 @@
 
 std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> Entity::componentsByEntity;
 std::unordered_map<std::string, std::vector<uuids::uuid>> Entity::EntitiesByName;
-std::unordered_map<uuids::uuid, Component*> Entity::componentsByID;
+std::unordered_map<uuids::uuid, Component*> Entity::componentByID;
 Register<Entity> Entity::register_;
 Event<Entity&> Entity::OnCreated;
 Event<Entity&> Entity::OnDestroy;
@@ -26,7 +26,7 @@ Entity::Entity(std::string name, uuids::uuid* id_) : name(name)
 
 uuids::uuid Entity::GetID(std::string name_)
 {
-	int count = Tools::ContainsKey_unordered(EntitiesByName, name_) ? EntitiesByName.at(name_).size() : 0;
+	int count = Tools::ContainsKey(EntitiesByName, name_) ? EntitiesByName.at(name_).size() : 0;
 	if (count != 1)
 		RaiseError("There are " + std::to_string(count) + " entities named '" + name_
 			+ "', so you cannot get an entity unambigously from this name."
@@ -40,7 +40,7 @@ uuids::uuid Entity::GetID(std::string name_)
 
 uuids::uuid* Entity::TryGetID(std::string name_)
 {
-	int count = Tools::ContainsKey_unordered(EntitiesByName, name_) ? EntitiesByName.at(name_).size() : 0;
+	int count = Tools::ContainsKey(EntitiesByName, name_) ? EntitiesByName.at(name_).size() : 0;
 	if (count == 0)
 		return nullptr;
 	if (count > 1)
@@ -94,7 +94,7 @@ void Entity::CheckConsistency()
 			RaiseError("inconsistent data");
 		auto& _1 = EntitiesByName.at(entity.GetName()); // .at() fails if the key is not present. This constistutes a consistency check.
 		for (const auto& compPtr : components)
-			auto& _2 = componentsByID.at(compPtr.get()->GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
+			auto& _2 = componentByID.at(compPtr.get()->GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
 	}
 	for (const auto& entity : register_.GetData())
 		auto& _3 = componentsByEntity.at(entity.GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
@@ -108,7 +108,7 @@ void Entity::CheckConsistency()
 void Entity::DestroyTheDoomed()
 {
 	// callback
-	for (const auto& [id_, comp] : componentsByID)
+	for (const auto& [id_, comp] : componentByID)
 	{
 		if (comp->isDoomed)
 			comp->OnDestroy();
@@ -144,13 +144,13 @@ void Entity::DestroyTheDoomed()
 
 void Entity::DestroyEverything()
 {
-	for (const auto& [id_, comp] : componentsByID)
+	for (const auto& [id_, comp] : componentByID)
 		comp->OnDestroy();
 	for (Entity& entity : register_.GetData())
 			OnDestroy.Invoke(entity);
 
 	EntitiesByName.clear();
-	componentsByID.clear();
+	componentByID.clear();
 	componentsByEntity.clear();
 	register_.Clear();
 }
@@ -214,7 +214,7 @@ void Entity::ClearData(const std::unique_ptr<Component>& compPtr)
 {
 	auto& entityID = compPtr->GetEntity().GetID();
 
-	Tools::RemoveKey_unordered(componentsByID, compPtr->GetID());
+	Tools::RemoveKey(componentByID, compPtr->GetID());
 
 	auto iterator = std::find(componentsByEntity[entityID].begin(), componentsByEntity[entityID].end(), compPtr);
 	if (iterator != componentsByEntity[entityID].end())

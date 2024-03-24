@@ -21,7 +21,7 @@ ComponentType* Entity::TryGetComponent() const
 	static_assert(std::is_base_of<Component, ComponentType>::value,
 		"GetComponent can only get components, not other types");
 
-	if (!Tools::ContainsKey_unordered(componentsByEntity, id))
+	if (!Tools::ContainsKey(componentsByEntity, id))
 		return nullptr;
 	for (const auto& comp : componentsByEntity.at(id))
 	{
@@ -46,7 +46,7 @@ ComponentType& Entity::AddComponent(YAML::Node* node)
 	if (afterCast == nullptr)
 		RaiseError("dynamic_cast failed for " + name + ".AddComponent<" + Tools::TypeName<ComponentType>() + ">()");
 	afterCast->OnAddComponent(id, node);
-	componentsByID[afterCast->id] = ptr;
+	componentByID[afterCast->id] = ptr;
 	if (afterCast->unique && hasComponent)
 		RaiseError(Tools::TypeName<ComponentType>(), " is marked as unique, but there is already a ", Tools::TypeName<ComponentType>(), " at ", *this);
 	return *afterCast;
@@ -83,7 +83,7 @@ ComponentType& Entity::Add(uuids::uuid entityID)
 template <typename ComponentType>
 ComponentType& Entity::GetComponent(uuids::uuid id_)
 {
-	ComponentType* afterCast = dynamic_cast<ComponentType*>(componentsByID.at(id_));
+	ComponentType* afterCast = dynamic_cast<ComponentType*>(componentByID.at(id_));
 	if (!afterCast)
 		RaiseError("Failed to find " + Tools::TypeName<ComponentType>()
 			+ " with id " + logger::to_string(id_));
@@ -93,9 +93,9 @@ ComponentType& Entity::GetComponent(uuids::uuid id_)
 template <typename ComponentType>
 ComponentType* Entity::TryGetComponent(uuids::uuid id_)
 {
-	if (!Tools::ContainsKey_unordered(componentsByID, id_))
+	if (!Tools::ContainsKey(componentByID, id_))
 		return nullptr;
-	ComponentType* afterCast = dynamic_cast<ComponentType*>(componentsByID.at(id_));
+	ComponentType* afterCast = dynamic_cast<ComponentType*>(componentByID.at(id_));
 	return afterCast;
 }
 

@@ -56,7 +56,7 @@ public:
 private:
 	static std::unordered_map<uuids::uuid, std::vector<std::unique_ptr<Component>>> componentsByEntity;
 	static std::unordered_map<std::string, std::vector<uuids::uuid>> EntitiesByName;
-	static std::unordered_map<uuids::uuid, Component*> componentsByID;
+	static std::unordered_map<uuids::uuid, Component*> componentByID;
 	uuids::uuid id;
 	bool isDoomed = false; // this is destined to be destroyed at the end of the component update calls
 

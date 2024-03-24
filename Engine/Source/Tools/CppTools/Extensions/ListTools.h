@@ -10,8 +10,12 @@
 
 namespace Tools
 {
+	//using namespace std;
+	using std::cref; using std::ref;
+	// vector find find_if map unordered_map
+
 	template<typename T>
-	bool Remove(std::vector<T>& vec, T t)
+	bool Remove(std::vector<T>& vec, const T& t)
 	{
 		auto iterator = std::find(vec.begin(), vec.end(), t);
 		if (iterator != vec.end())
@@ -22,8 +26,19 @@ namespace Tools
 		return false;
 	}
 
-	//template<typename T>
-	template< class T, class UnaryPredicate >
+	template<typename T> 
+	bool Remove(std::vector<T>& vec, std::reference_wrapper<T> t) 
+	{
+		auto iterator = std::find(vec.begin(), vec.end(), t);
+		if (iterator != vec.end())
+		{
+			vec.erase(iterator);
+			return true;
+		}
+		return false;
+	}
+
+	template< class T, class UnaryPredicate > 
 	bool Remove(std::vector<T>& vec, const UnaryPredicate& condition)
 	{
 		auto iterator = std::find_if(vec.begin(), vec.end(), condition);
@@ -37,8 +52,8 @@ namespace Tools
 
 	// remove by index is simple myVector.erase(myVector.begin() + index);
 
-	template<typename Tkey, typename Tval>
-	bool RemoveKey(std::map<Tkey, Tval>& dict, Tkey key)
+	template<typename Tkey, typename Tval> 
+	bool RemoveKey(std::map<Tkey, Tval>& dict, const Tkey& key)
 	{
 		auto iterator = dict.find(key);
 		if (iterator != dict.end())
@@ -49,8 +64,8 @@ namespace Tools
 		return false;
 	}
 
-	template<typename Tkey, typename Tval>
-	bool RemoveKey_unordered(std::unordered_map<Tkey, Tval>& dict, Tkey key)
+	template<typename Tkey, typename Tval> 
+	bool RemoveKey(std::unordered_map<Tkey, Tval>& dict, const Tkey& key)
 	{
 		auto iterator = dict.find(key);
 		if (iterator != dict.end())
@@ -62,27 +77,27 @@ namespace Tools
 	}
 
 
-	template<typename T>
-	inline bool Contains(const std::vector<T>& vec, T t)
+	template<typename T> 
+	inline bool Contains(const std::vector<T>& vec, const T& t)
 	{
 		return std::find(std::begin(vec), std::end(vec), t) != std::end(vec);
 	};
 
 	
-	template<typename Tkey, typename Tval>
-	bool ContainsKey(const std::map<Tkey, Tval>& dict, Tkey key)
+	template<typename Tkey, typename Tval> 
+	bool ContainsKey(const std::map<Tkey, Tval>& dict, const Tkey& key)
 	{
 		return dict.find(key) != dict.end();
 	};
 	
-	template<typename Tkey, typename Tval>
-	bool ContainsKey_unordered(const std::unordered_map<Tkey, Tval>& dict, Tkey key)
+	template<typename Tkey, typename Tval> 
+	bool ContainsKey(const std::unordered_map<Tkey, Tval>& dict, const Tkey& key)
 	{
 		return dict.find(key) != dict.end();
 	};
 	
 
-	template<typename Tkey, typename Tval>
+	template<typename Tkey, typename Tval> 
 	std::vector<Tkey> GetKeys(const std::map<Tkey, Tval>& dict)
 	{
 		std::vector<Tkey> keys;
@@ -91,14 +106,23 @@ namespace Tools
 		return keys;
 	};
 
-	template<typename Tkey, typename Tval>
-	std::vector<Tkey> GetKeys_unordered(const std::unordered_map<Tkey, Tval>& dict)
+	template<typename Tkey, typename Tval> 
+	std::vector<Tkey> GetKeys(const std::unordered_map<Tkey, Tval>& dict)
 	{
 		std::vector<Tkey> keys;
 		for (const auto& pair : dict)
 			keys.push_back(pair.first);
 		return keys;
 	};
+	/*
+	template<typename Tkey, typename Tval>
+	Tval at_default(const std::map<Tkey, Tval>& dict, const Tkey& key, const Tval& default_)
+	{
+		if (!Tools::ContainsKey(dict, key))
+			return default_;
+		return dict.at(key);
+	};
+	*/
 
 }
 
