@@ -5,7 +5,7 @@
 #include "Transform.h"
 #include "Delay.h"
 
-UsingShorts;
+Shorts;
 map_uo<uuid, vector<unique_ptr<Component>>> Entity::componentsByEntity;
 map_uo<string, vector<uuid>> Entity::EntitiesByName;
 map_uo<uuid, Component*> Entity::componentByID;

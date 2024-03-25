@@ -11,7 +11,7 @@
 
 namespace Tools
 {
-	UsingShorts;
+	Shorts;
 	// using vector find find_if map unordered_map
 	//uint i = 0;
 
@@ -136,7 +136,7 @@ namespace Tools
 
 namespace logger
 {
-	UsingShorts;
+	Shorts;
 
 	template <typename T>
 	inline string to_string(const vector<T>& vec)

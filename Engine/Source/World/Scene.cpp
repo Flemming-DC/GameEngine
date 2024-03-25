@@ -15,11 +15,8 @@
 #include <filesystem>
 #include <sstream>
 
-// decode(const Node& node, uuid& out) skal udvides sådan at vis en id mangler så oprettes
-// den og en warning logges. Hvis den er ugyldig så rejses en fejl.
-// raise callbacks or events onSceneStart and onSceneEnd
 
-UsingShorts;
+Shorts;
 using YAML::Node;
 
 unique_ptr<Scene> Scene::activeScene = nullptr;

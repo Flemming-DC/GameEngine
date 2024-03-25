@@ -11,6 +11,8 @@ public:
 	static void Setup();
 	static void Update();
 
+	static bool KeyPressed(Keyboard key);
+	static bool KeyReleased(Keyboard key);
 	static bool KeyHeldDown(Keyboard key);
 	static bool GetScrollHeldDown();
 	static int GetScrollDirection();

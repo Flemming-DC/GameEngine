@@ -4,6 +4,7 @@
 #include "StringTools.h"
 #include "GlmTools.h" // this contains some overloads of to_string that might otherwise be counterintuitively absent
 
+
 namespace logger
 {
 	using std::string;
@@ -34,9 +35,36 @@ namespace logger
 	}
 
 
-	// --------------------- overloads of to_string ---------------------
 
-	template<typename T> string inline to_string(const T& value) { return value.to_string(); } // default to try and get a to_string method
+	// ---------------- check if object has to_string method ---------------
+
+	// SFINAE test
+	template <typename T>
+	class HasToString
+	{
+	private:
+		typedef char YesType[1];
+		typedef char NoType[2];
+
+		template <typename T2> static YesType& test(decltype(&T2::to_string)) {}
+		template <typename T2> static NoType& test(...) {}
+	public: // public must come after private, since YesType must be declared first
+		enum { answer = sizeof(test<T>(0)) == sizeof(YesType) };
+	};
+
+	template<typename T>
+	typename std::enable_if<HasToString<T>::answer, std::string>::type
+		TryCallToString(const std::type_info& type_, const T& t)
+	{
+		return t.to_string();
+	}
+
+	[[noreturn]] std::string TryCallToString(const std::type_info& type_, ...); // implemented in cpp
+
+
+	// ---------------- overloads of to_string ---------------
+	
+	template<typename T> string inline to_string(const T& value) { return TryCallToString(typeid(T), value); } // default to try and get a to_string method
 	template<typename T> string inline to_string(T* value) { return "raw_ptr to " + (value ? to_string(*value) : "null"); } // raw pointer
 	template<typename T> string inline to_string(std::unique_ptr<T> value) { return "unique_ptr to " + (value ? to_string(*value) : "null"); } // unique pointer
 	template<typename T> string inline to_string(std::shared_ptr<T> value) { return "shared_ptr to " + (value ? to_string(*value) : "null"); } // shared pointer

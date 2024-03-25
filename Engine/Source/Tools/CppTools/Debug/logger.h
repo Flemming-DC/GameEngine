@@ -17,6 +17,8 @@ namespace logger
 	inline std::string file_name(std::string path);
 
 
+	// ---------------- check if object has to_string method ---------------
+
 
 
 }

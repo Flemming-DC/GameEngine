@@ -3,7 +3,6 @@
 #include "UuidCreator.h"
 
 
-
 void Component::OnAddComponent(uuids::uuid entityID_, YAML::Node* node_)
 {
 	if (node_)
@@ -21,6 +20,7 @@ void Component::OnAddComponent(uuids::uuid entityID_, YAML::Node* node_)
 			transform = &Entity::Add<Transform>(entityID);
 		OnStart();
 	}
+
 }
 
 void Component::OnSceneLoaded()
@@ -32,10 +32,12 @@ void Component::OnSceneLoaded()
 
 std::string Component::to_string() const
 {
-	if (transform == nullptr)
-		return GetEntity().GetName() + "." + Tools::TypeName(*this);
-	else
+	if (transform && UuidCreator::IsInitialized(entityID))
 		return transform->GetPath() + "." + Tools::TypeName(*this);
+	else if (UuidCreator::IsInitialized(entityID))
+		return "uninitialized " + GetEntity().GetName() + "." + Tools::TypeName(*this);
+	else
+		return "uninitialized " + Tools::TypeName(*this);
 }
 
 

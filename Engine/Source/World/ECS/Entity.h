@@ -14,7 +14,7 @@ class Component; // forward declaration
 class Entity
 { 
 public: 
-	UsingShorts;
+	Shorts;
 	string name;
 	static Register<Entity> register_;
 	static Event<Entity&> OnCreated;
