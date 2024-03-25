@@ -24,32 +24,32 @@ void DummyComp::OnStart()
 void DummyComp::OnUpdate()
 {
 
-	if (Input::KeyPressed(Keyboard::J))
+	if (Input::IsPressed(Keyboard::J))
 	{
 		logger::print("J: try destroy gamelogic from ", this->GetEntity());
 		if (TryGet<GameLogic>())
 			GetEntity().Destroy<GameLogic>();
 	}
-	if (Input::KeyPressed(Keyboard::H))
+	if (Input::IsPressed(Keyboard::H))
 	{
 		logger::print("H: try add gamelogic to ", this->GetEntity());
 		if (!TryGet<GameLogic>() && TryGet<Renderable>() && TryGet<RectangleCollider>())
 			GetEntity().Add<GameLogic>();
 	}
 	
-	if (Input::KeyPressed(Keyboard::I))
+	if (Input::IsPressed(Keyboard::I))
 	{
 		logger::print("I: try destroy picture 1 RectangleCollider");
 		if (Entity::GetEntity("picture 1").TryGet<RectangleCollider>())
 			Entity::GetEntity("picture 1").Destroy<RectangleCollider>();
 	}
-	if (Input::KeyPressed(Keyboard::U))
+	if (Input::IsPressed(Keyboard::U))
 	{
 		logger::print("U: try destroy circle 1");
 		if (Entity::TryGetID("circle 1"))
 			Entity::GetEntity("circle 1").Destroy();
 	}
-	if (Input::KeyPressed(Keyboard::Y))
+	if (Input::IsPressed(Keyboard::Y))
 	{
 		logger::print("Y: try make circle 1 and X");
 		if (!Entity::TryGetID("circle 1"))
@@ -81,17 +81,34 @@ void DummyComp::OnUpdate()
 		Scene::Save();
 	}
 	*/
-	if (Input::KeyPressed(Keyboard::R))
+	if (Input::IsPressed(Keyboard::R))
 		logger::print("R: pressed");
-	if (Input::KeyHeldDown(Keyboard::R))
+	if (Input::IsHeldDown(Keyboard::R))
 		logger::print("R: held down");
-	if (Input::KeyReleased(Keyboard::R))
+	if (Input::IsReleased(Keyboard::R))
 		logger::print("R: released");
 
-	if (Input::KeyPressed(Keyboard::ctrl))
+	if (Input::IsPressed(Keyboard::ctrl))
 		logger::print("ctrl: pressed");
-	if (Input::KeyHeldDown(Keyboard::ctrl))
+	if (Input::IsHeldDown(Keyboard::ctrl))
 		logger::print("ctrl: held down");
-	if (Input::KeyReleased(Keyboard::ctrl))
+	if (Input::IsReleased(Keyboard::ctrl))
 		logger::print("ctrl: released");
+
+
+
+	if (Input::IsPressed(Mouse::middle))
+		logger::print("Mouse::middle: pressed");
+	if (Input::IsHeldDown(Mouse::middle))
+		logger::print("Mouse::middle: held down");
+	if (Input::IsReleased(Mouse::middle))
+		logger::print("Mouse::middle: released");
+
+	if (Input::IsPressed(Keyboard::G))
+		logger::print("G: ", Input::MouseScreenPosition());
+	if (Input::IsPressed(Keyboard::F))
+		logger::print("F: ", Input::MouseWorldPosition());
+
+	
+
 }

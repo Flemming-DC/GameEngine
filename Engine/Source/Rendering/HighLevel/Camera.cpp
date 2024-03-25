@@ -70,13 +70,13 @@ void Camera::OnUpdate()
 
 
     glm::vec3 moveDirection = glm::vec3(0.0f);
-    if (Input::KeyHeldDown(Keyboard::A))
+    if (Input::IsHeldDown(Keyboard::A))
         moveDirection.x -= 1;
-    if (Input::KeyHeldDown(Keyboard::D))
+    if (Input::IsHeldDown(Keyboard::D))
         moveDirection.x += 1;
-    if (Input::KeyHeldDown(Keyboard::S))
+    if (Input::IsHeldDown(Keyboard::S))
         moveDirection.y -= 1;
-    if (Input::KeyHeldDown(Keyboard::W))
+    if (Input::IsHeldDown(Keyboard::W))
         moveDirection.y += 1;
     if (moveDirection.x != 0 && moveDirection.y != 0)
         moveDirection = glm::normalize(moveDirection);

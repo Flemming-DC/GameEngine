@@ -7,6 +7,7 @@ diverse
 	copy res automatically to build folder, and provide a better error messages if res is missing. 
 	cleanup Get prefixes
 	store any special folders in const
+	closing game by X in right cornr, shouldn't also close editor
 
 
 components & gameobjects
