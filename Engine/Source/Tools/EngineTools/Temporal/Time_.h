@@ -6,8 +6,8 @@ class Time
 public:
 	static void Setup();
 	static void Update();
-	static float GetDelta();
-	static float GetCurrent();
+	static float Delta();
+	static float Current();
 
 };
 

@@ -59,7 +59,13 @@ collision
 read/save files from/to disk
 	comments in yml files for uuids (e.g. path as comment)
 	load mesh and material from id
-	
+
+input:
+	gamepad
+	events
+	input actions that abstract from input devices
+	distinguish between editor, runtime and perhaps additional control schemes
+
 
 headers
 	common, tools, rendering

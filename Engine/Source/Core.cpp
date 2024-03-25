@@ -30,7 +30,6 @@ void Core::Update()
     // setup frame
     ImGuiSetup::EarlyUpdate();
     Time::Update();
-    Input::Update();
     
     // update world
     CollisionLoop::Update();
@@ -40,6 +39,7 @@ void Core::Update()
     Delay::CallToFrameEnd();
 
     // shutdown frame
+    Input::LateUpdate();
     ImGuiSetup::LateUpdate();
 }
 

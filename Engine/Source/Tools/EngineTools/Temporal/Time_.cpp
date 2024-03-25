@@ -18,12 +18,12 @@ void Time::Update()
 	current = std::chrono::high_resolution_clock::now();
 }
 
-float Time::GetDelta()
+float Time::Delta()
 {
 	return std::chrono::duration<float>(current - previous).count();
 }
 
-float Time::GetCurrent()
+float Time::Current()
 {
 	return std::chrono::duration<float>(current - start).count();
 }

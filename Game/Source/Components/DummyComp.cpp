@@ -24,32 +24,32 @@ void DummyComp::OnStart()
 void DummyComp::OnUpdate()
 {
 
-	if (Input::KeyHeldDown(Keyboard::J))
+	if (Input::KeyPressed(Keyboard::J))
 	{
 		logger::print("J: try destroy gamelogic from ", this->GetEntity());
 		if (TryGet<GameLogic>())
 			GetEntity().Destroy<GameLogic>();
 	}
-	if (Input::KeyHeldDown(Keyboard::H))
+	if (Input::KeyPressed(Keyboard::H))
 	{
 		logger::print("H: try add gamelogic to ", this->GetEntity());
 		if (!TryGet<GameLogic>() && TryGet<Renderable>() && TryGet<RectangleCollider>())
 			GetEntity().Add<GameLogic>();
 	}
 	
-	if (Input::KeyHeldDown(Keyboard::I))
+	if (Input::KeyPressed(Keyboard::I))
 	{
 		logger::print("I: try destroy picture 1 RectangleCollider");
 		if (Entity::GetEntity("picture 1").TryGet<RectangleCollider>())
 			Entity::GetEntity("picture 1").Destroy<RectangleCollider>();
 	}
-	if (Input::KeyHeldDown(Keyboard::U))
+	if (Input::KeyPressed(Keyboard::U))
 	{
 		logger::print("U: try destroy circle 1");
 		if (Entity::TryGetID("circle 1"))
 			Entity::GetEntity("circle 1").Destroy();
 	}
-	if (Input::KeyHeldDown(Keyboard::Y))
+	if (Input::KeyPressed(Keyboard::Y))
 	{
 		logger::print("Y: try make circle 1 and X");
 		if (!Entity::TryGetID("circle 1"))
@@ -74,11 +74,24 @@ void DummyComp::OnUpdate()
 		if (!Entity::TryGetID("XX"))
 			Entity::Make<DummyComp, DummyComp>("XX");
 	}
-
+	/*
 	if (Input::KeyHeldDown(Keyboard::T))
 	{
 		logger::print("T: Save");
 		Scene::Save();
 	}
+	*/
+	if (Input::KeyPressed(Keyboard::R))
+		logger::print("R: pressed");
+	if (Input::KeyHeldDown(Keyboard::R))
+		logger::print("R: held down");
+	if (Input::KeyReleased(Keyboard::R))
+		logger::print("R: released");
 
+	if (Input::KeyPressed(Keyboard::ctrl))
+		logger::print("ctrl: pressed");
+	if (Input::KeyHeldDown(Keyboard::ctrl))
+		logger::print("ctrl: held down");
+	if (Input::KeyReleased(Keyboard::ctrl))
+		logger::print("ctrl: released");
 }

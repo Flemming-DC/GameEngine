@@ -85,7 +85,7 @@ int KeyMap::ToGlfw(Keyboard key)
     case Keyboard::numpad_0: return GLFW_KEY_KP_0;
     //case Keyboard::numpad_del: return GLFW_KEY_KP_DECIMAL;
     case Keyboard::ctrl: 
-        Warning("KeyMap::ToGlfw() returns GLFW_KEY_LEFT_CONTROL, which ignores GLFW_KEY_RIGHT_CONTROL");
+        // RaiseError("KeyMap::ToGlfw() returns GLFW_KEY_LEFT_CONTROL, which ignores GLFW_KEY_RIGHT_CONTROL");
         return GLFW_KEY_LEFT_CONTROL; //GLFW_KEY_LEFT_CONTROL || GLFW_KEY_RIGHT_CONTROL;
     default:
         RaiseError("KeyMap::ToGlfw(Keyboard key): Missing key");
