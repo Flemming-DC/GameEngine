@@ -145,31 +145,25 @@ void DummyComp::OnUpdate()
 	if (Input::IsPressed(Keyboard::_5))
 	{
 		logger::print("5: ");
-		logger::print(GlfwInput::HasGamepad());
+		logger::print(Input::HasGamepad(GLFW_JOYSTICK_2));
 	}
 	if (Input::IsPressed(Keyboard::_6))
 	{
 		logger::print("6: ");
-		logger::print(GlfwInput::GamepadAxis(GLFW_GAMEPAD_AXIS_LEFT_X));
-	}
-	if (GlfwInput::GamepadButtonHeldDown(GLFW_GAMEPAD_BUTTON_A))
-	{
-		logger::print("A: GamepadButtonHeldDown");
+		logger::print(Input::GamepadAxis(Gamepad::axis_left_x, GLFW_JOYSTICK_2));
 	}
 
-	if (Input::IsPressed(Keyboard::_7))
-	{
-		logger::print("7: ");
-		logger::print(GlfwInput::HasGamepad(GLFW_JOYSTICK_2));
-	}
-	if (Input::IsPressed(Keyboard::_8))
-	{
-		logger::print("8: ");
-		logger::print(GlfwInput::GamepadAxis(GLFW_GAMEPAD_AXIS_LEFT_X, GLFW_JOYSTICK_2));
-	}
-	if (GlfwInput::GamepadButtonHeldDown(GLFW_GAMEPAD_BUTTON_A, GLFW_JOYSTICK_2))
-	{
-		logger::print("A: GamepadButtonHeldDown on GLFW_JOYSTICK_2");
-	}
 
+	if (Input::IsPressed(Gamepad::A, GLFW_JOYSTICK_2))
+	{
+		logger::print("Gamepad::A: IsPressed", GLFW_JOYSTICK_2);
+	}
+	if (Input::IsHeldDown(Gamepad::A, GLFW_JOYSTICK_2))
+	{
+		logger::print("Gamepad::A: IsHeldDown", GLFW_JOYSTICK_2);
+	}
+	if (Input::IsReleased(Gamepad::A, GLFW_JOYSTICK_2))
+	{
+		logger::print("Gamepad::A: IsReleased ", GLFW_JOYSTICK_2);
+	}
 }

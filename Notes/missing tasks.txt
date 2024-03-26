@@ -66,6 +66,7 @@ input:
 	events
 	input actions that abstract from input devices
 	distinguish between editor, runtime and perhaps additional control schemes
+	icons
 
 
 headers

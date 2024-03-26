@@ -15,6 +15,7 @@ void Input::LateUpdate()
 }
 
 
+// -------------- Mouse special input --------------
 
 int Input::GetScrollDirection()
 {
@@ -45,15 +46,19 @@ glm::vec2 Input::NormalizedMouseScreenPosition()
     return Screen::NormalizeScreenPosition({ mousePos.first, mousePos.second });
 }
 
+glm::vec3 Input::MouseWorldPosition() { return Screen::ToWorldPosition(NormalizedMouseScreenPosition()); }
+glm::vec2 Input::MouseWorldPosition2D() { return Screen::ToWorldPosition(NormalizedMouseScreenPosition()); }
 
-glm::vec3 Input::MouseWorldPosition()
+
+// -------------- Gamepad special input --------------
+
+
+float Input::GamepadAxis(Gamepad axis, int glfw_joystick_id)
 {
-    return Screen::ToWorldPosition(NormalizedMouseScreenPosition());
+    return GlfwInput::GamepadAxis(KeyMap::ToGlfw(axis), glfw_joystick_id); // turn into vector ?
 }
-glm::vec2 Input::MouseWorldPosition2D()
-{
-    return Screen::ToWorldPosition(NormalizedMouseScreenPosition());
-}
+
+bool Input::HasGamepad(int glfw_joystick_id) { return GlfwInput::HasGamepad(glfw_joystick_id); }
 
 
 // -------------- Keyboard: IsHeldDown, IsPressed, IsReleased --------------
@@ -112,5 +117,27 @@ bool Input::IsReleased(Mouse key)
         return Tools::at_default(GlfwInput::actionByMouseButton, KeyMap::ToGlfw(key), -1) == GLFW_RELEASE;
 }
 
+// -------------- Gamepad: IsHeldDown, IsPressed, IsReleased --------------
+
+bool Input::IsHeldDown(Gamepad key, unsigned int joystick_id)
+{
+    return GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), joystick_id);
+}
+
+
+bool Input::IsPressed(Gamepad key, unsigned int joystick_id)
+{
+    bool wasDown = GlfwInput::GamepadButtonWasHeldDown(KeyMap::ToGlfw(key), joystick_id);
+    bool isDown = GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), joystick_id);
+    return isDown && !wasDown;
+}
+
+
+bool Input::IsReleased(Gamepad key, unsigned int joystick_id)
+{
+    bool wasDown = GlfwInput::GamepadButtonWasHeldDown(KeyMap::ToGlfw(key), joystick_id);
+    bool isDown = GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), joystick_id);
+    return !isDown && wasDown;
+}
 
 

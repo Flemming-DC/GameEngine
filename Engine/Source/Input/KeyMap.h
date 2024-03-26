@@ -23,13 +23,23 @@ enum class CursorMode
 	normal, hidden, locked,
 };
 
-// enum class Gamepad
+enum class Gamepad 
+{
+	// buttons
+	A, B, X, Y, left_bumper, right_bumper, back, start, guide, left_thumb, right_thumb, dpad_up, dpad_right, dpad_down, dpad_left,
+	// axes
+	axis_left_x, axis_left_y, axis_right_x, axis_right_y, axis_left_trigger, axis_right_trigger,
+
+	// evt. make aliases (cross, circle, square, triangle) for (A, B, X, Y)
+	// evt. combine joystick-axis and dpad into vectors
+};
 
 class KeyMap
 {
 public:
 	static int ToGlfw(Keyboard key);
 	static int ToGlfw(Mouse key);
+	static int ToGlfw(Gamepad key);
 
 	static ImGuiKey ToImGui(Keyboard key);
 	static ImGuiKey ToImGui(Mouse key);
