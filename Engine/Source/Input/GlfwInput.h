@@ -18,7 +18,7 @@ private:
 
 	static bool KeyHeldDown(int key);
 	static bool MouseButtonHeldDown(int button);
-	static std::pair<double, double> MouseScreenPosition();
+	static std::pair<float, float> MouseScreenPosition();
 
 // private even to friend class:
 	static void _FocusChangeCallBack(GLFWwindow* window, int focused);

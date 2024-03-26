@@ -9,9 +9,13 @@ public:
 	static void Setup();
 	static void LateUpdate();
 
-	static int GetScrollDirection();
-	static std::pair<double, double> MouseScreenPosition();
+	// Screen coordinates relative to the upper-left corner.
+	// nb: that screen position coordinates are not comparable between ImGui / editor and glfw / game
+	static glm::vec2 MouseScreenPosition();
+	static glm::vec2 NormalizedMouseScreenPosition();
 	static glm::vec3 MouseWorldPosition();
+	static glm::vec2 MouseWorldPosition2D();
+	static int GetScrollDirection();
 
 	static bool IsPressed(Keyboard key);
 	static bool IsReleased(Keyboard key);

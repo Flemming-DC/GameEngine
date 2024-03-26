@@ -51,7 +51,7 @@ bool GlfwInput::MouseButtonHeldDown(int button)
     return state == GLFW_PRESS;
 }
 
-std::pair<double, double> GlfwInput::MouseScreenPosition()
+std::pair<float, float> GlfwInput::MouseScreenPosition()
 {
     double xpos, ypos; // screen coordinates relative to the upper-left corner.
     auto window = OpenGlSetup::GetWindow();

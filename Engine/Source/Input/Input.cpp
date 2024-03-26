@@ -20,22 +20,35 @@ int Input::GetScrollDirection()
         return GlfwInput::scrollDirection;
 }
 
-// note that screen position numbers are not comparable between ImGui / editor and glfw / game
-std::pair<double, double> Input::MouseScreenPosition()
+
+glm::vec2 Input::MouseScreenPosition()
 {
     if (ImGui::GetIO().WantCaptureMouse)
     {
-        auto mousePosVector = ImGui::GetMousePos();
-        return { mousePosVector.x, mousePosVector.y};
+        auto mousePos = ImGui::GetMousePos();
+        return Screen::NormalizeScreenPosition({ mousePos.x, mousePos.y});
     }
     else
-        return GlfwInput::MouseScreenPosition();
+    {
+        auto mousePos = GlfwInput::MouseScreenPosition();
+        return Screen::NormalizeScreenPosition({ mousePos.first, mousePos.second });
+    }
+}
+glm::vec2 Input::NormalizedMouseScreenPosition()
+{
+    // normalized screen position only uses the game screen, not the editor and therefore not imGUI
+    auto mousePos = GlfwInput::MouseScreenPosition();
+    return Screen::NormalizeScreenPosition({ mousePos.first, mousePos.second });
 }
 
 
 glm::vec3 Input::MouseWorldPosition()
 {
-    return Screen::ToWorldPosition(MouseScreenPosition());
+    return Screen::ToWorldPosition(NormalizedMouseScreenPosition());
+}
+glm::vec2 Input::MouseWorldPosition2D()
+{
+    return Screen::ToWorldPosition(NormalizedMouseScreenPosition());
 }
 
 // -------------- Keyboard: IsHeldDown, IsPressed, IsReleased --------------

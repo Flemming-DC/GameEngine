@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "GameLogic.h"
 #include "RectangleCollider.h"
+#include "Screen.h"
 
 
 
@@ -107,8 +108,21 @@ void DummyComp::OnUpdate()
 	if (Input::IsPressed(Keyboard::G))
 		logger::print("G: ", Input::MouseScreenPosition());
 	if (Input::IsPressed(Keyboard::F))
-		logger::print("F: ", Input::MouseWorldPosition());
+		logger::print("F: ", Input::MouseWorldPosition2D());
 
-	
+	if (Input::IsPressed(Keyboard::B))
+	{
+		bool foundDepth;
+		auto pos = Screen::ToWorldPosition(Input::MouseScreenPosition(), &foundDepth);
+		logger::print("B: ", foundDepth, " ", pos);
+	}
+
+	if (Input::IsPressed(Keyboard::_1))
+	{
+		auto before = Input::MouseScreenPosition();
+		auto world = Screen::ToWorldPosition(before);
+		auto after = Screen::FromWorldPosition(world);
+		logger::print("1: ", before, " == ", after);
+	}
 
 }

@@ -112,6 +112,16 @@ ImGuiKey KeyMap::ToImGui(Keyboard key)
     switch (key)
     {
     case Keyboard::exc: return ImGuiKey_Escape;
+    case Keyboard::_1: return ImGuiKey_1;
+    case Keyboard::_2: return ImGuiKey_2;
+    case Keyboard::_3: return ImGuiKey_3;
+    case Keyboard::_4: return ImGuiKey_4;
+    case Keyboard::_5: return ImGuiKey_5;
+    case Keyboard::_6: return ImGuiKey_6;
+    case Keyboard::_7: return ImGuiKey_7;
+    case Keyboard::_8: return ImGuiKey_8;
+    case Keyboard::_9: return ImGuiKey_9;
+    case Keyboard::_0: return ImGuiKey_0;
     case Keyboard::F1: return ImGuiKey_F1;
     case Keyboard::F2: return ImGuiKey_F2;
     case Keyboard::F3: return ImGuiKey_F3;
