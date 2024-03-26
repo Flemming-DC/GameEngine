@@ -1,6 +1,7 @@
 #include "Time_.h"
 #include <chrono>
 
+// if chrono is bugging, then you can use glfwGetTime instead
 static std::chrono::steady_clock::time_point start;
 static std::chrono::steady_clock::time_point previous;
 static std::chrono::steady_clock::time_point current;

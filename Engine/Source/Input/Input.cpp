@@ -8,7 +8,11 @@
 
 
 void Input::Setup() { GlfwInput::Setup(); }
-void Input::LateUpdate() { GlfwInput::LateUpdate(); }
+void Input::LateUpdate() 
+{ 
+    GlfwInput::LateUpdate();
+    Screen::LateUpdate();
+}
 
 
 
@@ -50,6 +54,7 @@ glm::vec2 Input::MouseWorldPosition2D()
 {
     return Screen::ToWorldPosition(NormalizedMouseScreenPosition());
 }
+
 
 // -------------- Keyboard: IsHeldDown, IsPressed, IsReleased --------------
 

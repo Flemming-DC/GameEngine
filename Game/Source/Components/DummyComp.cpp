@@ -3,6 +3,7 @@
 #include "GameLogic.h"
 #include "RectangleCollider.h"
 #include "Screen.h"
+#include "GlfwInput.h"
 
 
 
@@ -123,6 +124,52 @@ void DummyComp::OnUpdate()
 		auto world = Screen::ToWorldPosition(before);
 		auto after = Screen::FromWorldPosition(world);
 		logger::print("1: ", before, " == ", after);
+	}
+
+	if (Input::IsPressed(Keyboard::_2))
+	{
+		logger::print("2: ");
+		Screen::SetCursorMode(CursorMode::normal);
+	}
+	if (Input::IsHeldDown(Keyboard::_3))
+	{
+		logger::print("3: ");
+		Screen::SetCursorMode(CursorMode::hidden);
+	}
+	if (Input::IsPressed(Keyboard::_4))
+	{
+		logger::print("4: ");
+		Screen::SetCursorMode(CursorMode::locked);
+	}
+
+	if (Input::IsPressed(Keyboard::_5))
+	{
+		logger::print("5: ");
+		logger::print(GlfwInput::HasGamepad());
+	}
+	if (Input::IsPressed(Keyboard::_6))
+	{
+		logger::print("6: ");
+		logger::print(GlfwInput::GamepadAxis(GLFW_GAMEPAD_AXIS_LEFT_X));
+	}
+	if (GlfwInput::GamepadButtonHeldDown(GLFW_GAMEPAD_BUTTON_A))
+	{
+		logger::print("A: GamepadButtonHeldDown");
+	}
+
+	if (Input::IsPressed(Keyboard::_7))
+	{
+		logger::print("7: ");
+		logger::print(GlfwInput::HasGamepad(GLFW_JOYSTICK_2));
+	}
+	if (Input::IsPressed(Keyboard::_8))
+	{
+		logger::print("8: ");
+		logger::print(GlfwInput::GamepadAxis(GLFW_GAMEPAD_AXIS_LEFT_X, GLFW_JOYSTICK_2));
+	}
+	if (GlfwInput::GamepadButtonHeldDown(GLFW_GAMEPAD_BUTTON_A, GLFW_JOYSTICK_2))
+	{
+		logger::print("A: GamepadButtonHeldDown on GLFW_JOYSTICK_2");
 	}
 
 }

@@ -2,8 +2,18 @@
 #include "Camera.h"
 #include "OpenGlSetup.h"
 
-
 Shorts;
+CursorMode Screen::cursorMode = CursorMode::normal;
+
+
+void Screen::LateUpdate()
+{
+    if (cursorMode == CursorMode::hidden)
+    {
+        // glfw unhides the cursor unless, we keep hiding it.
+        glCall(glfwSetInputMode(OpenGlSetup::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN)); 
+    }
+}
 
 vec3 Screen::ToWorldPosition(vec2 screenPos, bool* foundDepth)
 {
@@ -44,4 +54,18 @@ vec2 Screen::NormalizeScreenPosition(vec2 screenPos)
         glm::clamp(screenPos.y, 0.0f, height) };
     screenPos.y = height - screenPos.y; // Invert Y coordinate
     return screenPos;
+}
+
+void Screen::SetCursorMode(CursorMode cursorMode_)
+{
+    cursorMode = cursorMode_;
+    switch (cursorMode_)
+    {
+    case CursorMode::normal: glCall(glfwSetInputMode(OpenGlSetup::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL)); break;
+    case CursorMode::hidden: glCall(glfwSetInputMode(OpenGlSetup::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN)); break;
+    case CursorMode::locked: glCall(glfwSetInputMode(OpenGlSetup::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED)); break;
+    default:
+        RaiseError("unrecognized cursorMode ", cursorMode_);
+    }
+
 }

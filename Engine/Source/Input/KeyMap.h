@@ -15,7 +15,12 @@ enum class Keyboard
 
 enum class Mouse
 {
-	left, middle, right, //scroll
+	left, middle, right,
+};
+
+enum class CursorMode
+{
+	normal, hidden, locked,
 };
 
 // enum class Gamepad
