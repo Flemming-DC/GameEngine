@@ -3,7 +3,7 @@
 #include "GameLogic.h"
 #include "RectangleCollider.h"
 #include "Screen.h"
-#include "GlfwInput.h"
+#include "InputVectorizer.h"
 
 
 
@@ -175,5 +175,21 @@ void DummyComp::OnUpdate()
 	if (Input::IsReleased(Gamepad::A, GLFW_JOYSTICK_2))
 	{
 		logger::print("Gamepad::A: IsReleased ", GLFW_JOYSTICK_2);
+	}
+
+	if (Input::IsPressed(Keyboard::_7))
+	{
+		glm::vec2 vec = InputVectorizer::GetVectorInput(InputVector::joystickRight, GLFW_JOYSTICK_2);
+		logger::print("7: joystickRight ", vec);
+	}
+	if (Input::IsPressed(Keyboard::_8))
+	{
+		logger::print("8: ");
+		logger::print(Input::GamepadAxis(Gamepad::axis_left_y));
+	}
+	if (Input::IsPressed(Keyboard::_9))
+	{
+		logger::print("9: ");
+		logger::print(Input::GamepadAxis(Gamepad::axis_left_trigger));
 	}
 }

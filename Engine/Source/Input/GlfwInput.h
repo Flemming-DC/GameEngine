@@ -6,9 +6,9 @@
 class GlfwInput
 {
 	friend class Input;
-
-private:
+public:
 	inline const static float noiseThreshold = 0.1f; // the activation level of gamepad axis that seperates background noise from genuine input.
+private:
 	inline const static int findSinglePlayerGamepad = -1; // nb: this alias must match the corrosponding one in Input
 	static int scrollDirection; // 1 = forward, -1 = backwards, 0 = no scroll
 	static std::unordered_map<int, int> actionByKey; // glwfAction: 0 = GLFW_RELEASE, 1 = GLFW_PRESS, 2 = GLFW_REPEAT

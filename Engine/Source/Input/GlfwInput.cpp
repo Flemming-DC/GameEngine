@@ -130,6 +130,10 @@ float GlfwInput::GamepadAxis(int axis, int gamepadID)
     if (!found)
         return 0;
     float rawActivation = state.axes[axis]; // the axis state is a number wintin [-1, 1]
+    if (axis == GLFW_GAMEPAD_AXIS_LEFT_Y || axis == GLFW_GAMEPAD_AXIS_RIGHT_Y)
+        rawActivation = -rawActivation; // y coordinates is upside down, ergo we flip it. 
+    else if (axis == GLFW_GAMEPAD_AXIS_LEFT_TRIGGER || axis == GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER)
+        rawActivation = 0.5f * rawActivation + 0.5f; // convert [-1, 1] into [0, 1]
     return std::abs(rawActivation) > noiseThreshold ? rawActivation : 0;
 }
 
