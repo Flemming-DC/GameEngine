@@ -31,7 +31,6 @@ void DummyComp::OnStart()
 void DummyComp::OnDestroy()
 {
 	Input::onGamepadConnectionChanged.Remove(onConnectedChangedIndex);
-
 }
 
 void DummyComp::OnUpdate()

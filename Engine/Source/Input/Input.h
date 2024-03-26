@@ -38,9 +38,9 @@ public:
 	static bool IsReleased(Mouse key);
 	static bool IsHeldDown(Mouse key);
 	
-	static bool IsPressed(Gamepad key, unsigned int gamepadID = findSinglePlayerGamepad);
-	static bool IsReleased(Gamepad key, unsigned int gamepadID = findSinglePlayerGamepad);
-	static bool IsHeldDown(Gamepad key, unsigned int gamepadID = findSinglePlayerGamepad);
+	static bool IsPressed(Gamepad key, int gamepadID = findSinglePlayerGamepad);
+	static bool IsReleased(Gamepad key, int gamepadID = findSinglePlayerGamepad);
+	static bool IsHeldDown(Gamepad key, int gamepadID = findSinglePlayerGamepad);
 	
 private:
 	inline static const unsigned int findSinglePlayerGamepad = -1; // nb: this alias must match the corrosponding one in GlfwInput

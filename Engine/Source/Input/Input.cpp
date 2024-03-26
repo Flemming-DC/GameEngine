@@ -54,10 +54,7 @@ glm::vec2 Input::MouseWorldPosition2D() { return Screen::ToWorldPosition(Normali
 // -------------- Gamepad special input --------------
 
 
-float Input::GamepadAxis(Gamepad axis, int gamepadID)
-{
-    return GlfwInput::GamepadAxis(KeyMap::ToGlfw(axis), gamepadID); // turn into vector ?
-}
+float Input::GamepadAxis(Gamepad axis, int gamepadID) { return GlfwInput::GamepadAxis(KeyMap::ToGlfw(axis), gamepadID); }
 
 bool Input::HasGamepad(int gamepadID) { return GlfwInput::HasGamepad(gamepadID); }
 std::vector<unsigned int> Input::GamepadIDs() { return GlfwInput::gamepadIDs; }
@@ -120,13 +117,13 @@ bool Input::IsReleased(Mouse key)
 
 // -------------- Gamepad: IsHeldDown, IsPressed, IsReleased --------------
 
-bool Input::IsHeldDown(Gamepad key, unsigned int gamepadID)
+bool Input::IsHeldDown(Gamepad key, int gamepadID)
 {
     return GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), gamepadID);
 }
 
 
-bool Input::IsPressed(Gamepad key, unsigned int gamepadID)
+bool Input::IsPressed(Gamepad key, int gamepadID)
 {
     bool wasDown = GlfwInput::GamepadButtonWasHeldDown(KeyMap::ToGlfw(key), gamepadID);
     bool isDown = GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), gamepadID);
@@ -134,7 +131,7 @@ bool Input::IsPressed(Gamepad key, unsigned int gamepadID)
 }
 
 
-bool Input::IsReleased(Gamepad key, unsigned int gamepadID)
+bool Input::IsReleased(Gamepad key, int gamepadID)
 {
     bool wasDown = GlfwInput::GamepadButtonWasHeldDown(KeyMap::ToGlfw(key), gamepadID);
     bool isDown = GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), gamepadID);

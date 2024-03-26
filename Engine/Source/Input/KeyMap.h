@@ -34,6 +34,13 @@ enum class Gamepad
 	// evt. combine joystick-axis and dpad into vectors
 };
 
+enum class VectorInput
+{
+	joystickLeft, joystickRight, dpad, WASD, Arrows,
+};
+
+
+
 class KeyMap
 {
 public:
