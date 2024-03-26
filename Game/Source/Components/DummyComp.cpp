@@ -20,8 +20,19 @@ void DummyComp::OnStart()
 
 	gizmoID = Gizmo::register_.Add(position2Ds, &GetTransform()).GetID();
 
+	for (const auto& g : Input::GamepadIDs())
+		logger::print("DummyComp.OnStart: connected at startup ", g);
+	onConnectedChangedIndex = Input::onGamepadConnectionChanged.Add([](bool hasBecomeConnected, unsigned int gamepadID)
+		{
+			logger::print("DummyComp.OnStart.onGamepadConnectionChanged: ", hasBecomeConnected, " ", gamepadID);
+		});
 }
 
+void DummyComp::OnDestroy()
+{
+	Input::onGamepadConnectionChanged.Remove(onConnectedChangedIndex);
+
+}
 
 void DummyComp::OnUpdate()
 {

@@ -15,7 +15,7 @@ private:
 
 	void OnStart() override;
 	void OnUpdate() override;
-	void OnDestroy();
+	void OnDestroy() override;
 
 };
 

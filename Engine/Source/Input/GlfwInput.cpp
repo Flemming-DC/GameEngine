@@ -3,12 +3,13 @@
 #include "OpenGlSetup.h" 
 #include "ListTools.h"
 #include "logger.h"
+#include "Input.h" // letting GlfwInput refer to Input is dirty, but neessary in order to forward events
 
 
 int GlfwInput::scrollDirection = 0;
 std::unordered_map<int, int> GlfwInput::actionByKey;
 std::unordered_map<int, int> GlfwInput::actionByMouseButton;
-std::vector<unsigned int> GlfwInput::joystick_ids;
+std::vector<unsigned int> GlfwInput::gamepadIDs;
 std::unordered_map<unsigned, GLFWgamepadstate> GlfwInput::lastGamepadStateByJoystick;
 
 void GlfwInput::Setup()
@@ -21,10 +22,13 @@ void GlfwInput::Setup()
     glCall(glfwSetScrollCallback(window, _ScrollCallback));
     glCall(glfwSetJoystickCallback(_JoystickCallback));
 
-    for (int jid = 0; jid < GLFW_JOYSTICK_LAST; jid++)
+    for (int g = 0; g < GLFW_JOYSTICK_LAST; g++)
     {
-        if (HasGamepad(jid))
-            joystick_ids.push_back((unsigned int)jid);
+        if (HasGamepad(g))
+        {
+            gamepadIDs.push_back((unsigned int)g);
+            Input::onGamepadConnectionChanged.Invoke(true, g);
+        }
     }
 }
 
@@ -32,12 +36,12 @@ void GlfwInput::LateUpdate()
 {
     // calculate lastGamepadStateByJoystick to be used in the next frame.
     lastGamepadStateByJoystick.clear();
-    for (const auto& jid : joystick_ids)
+    for (const auto& g : gamepadIDs)
     {
         GLFWgamepadstate state;
-        glCall(bool found = glfwGetGamepadState(jid, &state));
+        glCall(bool found = glfwGetGamepadState(g, &state));
         if (found)
-            lastGamepadStateByJoystick[jid] = state;
+            lastGamepadStateByJoystick[g] = state;
     }
     
 
@@ -47,14 +51,14 @@ void GlfwInput::LateUpdate()
     actionByMouseButton.clear();
 }
 
-bool GlfwInput::HasGamepad(int glfw_joystick_id)
+bool GlfwInput::HasGamepad(int gamepadID)
 {
-    if (glfw_joystick_id == singlePlayerJoystick)
-        return !joystick_ids.empty();
+    if (gamepadID == findSinglePlayerGamepad)
+        return !gamepadIDs.empty();
 
     // checks whether joystick is present and is gamepad. 
     // If we only use gamepads, then this in effect checks whether you have a gamepad or not.
-    glCall(bool isGamePad = glfwJoystickIsGamepad(glfw_joystick_id));
+    glCall(bool isGamePad = glfwJoystickIsGamepad(gamepadID));
     return isGamePad;
 }
 
@@ -83,27 +87,27 @@ bool GlfwInput::MouseButtonHeldDown(int button)
 }
 
 
-bool GlfwInput::GamepadButtonHeldDown(int button, int glfw_joystick_id)
+bool GlfwInput::GamepadButtonHeldDown(int button, int gamepadID)
 {
-    if (glfw_joystick_id == singlePlayerJoystick)
-        return !joystick_ids.empty() ? GamepadButtonHeldDown(button, joystick_ids[0]) : 0;
+    if (gamepadID == findSinglePlayerGamepad)
+        return !gamepadIDs.empty() ? GamepadButtonHeldDown(button, gamepadIDs[0]) : 0;
     
     GLFWgamepadstate state;
-    glCall(bool found = glfwGetGamepadState(glfw_joystick_id, &state));
+    glCall(bool found = glfwGetGamepadState(gamepadID, &state));
     if (!found)
         return false;
     return state.buttons[button]; // GLFW_PRESS converts to true and GLFW_RELEASE converts to false. There are no other button states.
 }
 
-bool GlfwInput::GamepadButtonWasHeldDown(int button, int glfw_joystick_id)
+bool GlfwInput::GamepadButtonWasHeldDown(int button, int gamepadID)
 {
-    if (glfw_joystick_id == singlePlayerJoystick)
-        return !joystick_ids.empty() ? GamepadButtonWasHeldDown(button, joystick_ids[0]) : 0;
+    if (gamepadID == findSinglePlayerGamepad)
+        return !gamepadIDs.empty() ? GamepadButtonWasHeldDown(button, gamepadIDs[0]) : 0;
     
-    if (!Tools::ContainsKey(lastGamepadStateByJoystick, (unsigned int)glfw_joystick_id))
+    if (!Tools::ContainsKey(lastGamepadStateByJoystick, (unsigned int)gamepadID))
         return false;
 
-    return lastGamepadStateByJoystick.at(glfw_joystick_id).buttons[button];
+    return lastGamepadStateByJoystick.at(gamepadID).buttons[button];
 }
 
 // ------------------ get input (floats) -------------------
@@ -116,13 +120,13 @@ std::pair<float, float> GlfwInput::MouseScreenPosition()
     return { xpos, ypos };
 }
 
-float GlfwInput::GamepadAxis(int axis, int glfw_joystick_id)
+float GlfwInput::GamepadAxis(int axis, int gamepadID)
 {
-    if (glfw_joystick_id == singlePlayerJoystick)
-        return !joystick_ids.empty() ? GamepadAxis(axis, joystick_ids[0]) : 0;
+    if (gamepadID == findSinglePlayerGamepad)
+        return !gamepadIDs.empty() ? GamepadAxis(axis, gamepadIDs[0]) : 0;
 
     GLFWgamepadstate state;
-    glCall(bool found = glfwGetGamepadState(glfw_joystick_id, &state));
+    glCall(bool found = glfwGetGamepadState(gamepadID, &state));
     if (!found)
         return 0;
     float rawActivation = state.axes[axis]; // the axis state is a number wintin [-1, 1]
@@ -164,18 +168,24 @@ void GlfwInput::_ScrollCallback(GLFWwindow* window, double pressed, double direc
     scrollDirection = (int)direction;
 }
 
-void GlfwInput::_JoystickCallback(int joystick_id, int event) // jid = glfw_joystick_id ?
+void GlfwInput::_JoystickCallback(int gamepadID_, int event) 
 {
-    glCall(bool isGamePad = glfwJoystickIsGamepad(joystick_id));
-    if (!isGamePad)
-        return;
+    unsigned int gamepadID = (unsigned int)gamepadID_;
+
+    // don't add non-gamepad joysticks. They are not supported.
+    if (event == GLFW_CONNECTED)
+    {
+        glCall(bool isGamePad = glfwJoystickIsGamepad(gamepadID));
+        if (!isGamePad)
+            return;
+    }
 
     if (event == GLFW_CONNECTED)
-        joystick_ids.push_back((unsigned int)joystick_id);
+        gamepadIDs.push_back(gamepadID);
     else if (event == GLFW_DISCONNECTED)
-    {
+        Tools::Remove(gamepadIDs, gamepadID);
+    else
+        Warning("Unrecognized eventType: ", event);
 
-        bool found = Tools::Remove(joystick_ids, (unsigned int)joystick_id);
-        P("joystick_id, found: ", joystick_id, found);
-    }
+    Input::onGamepadConnectionChanged.Invoke(event == GLFW_CONNECTED, gamepadID);
 }

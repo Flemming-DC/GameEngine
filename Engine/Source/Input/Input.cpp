@@ -6,6 +6,7 @@
 #include "GlfwInput.h"
 #include "Screen.h"
 
+Event<bool, unsigned int> Input::onGamepadConnectionChanged;
 
 void Input::Setup() { GlfwInput::Setup(); }
 void Input::LateUpdate() 
@@ -53,13 +54,13 @@ glm::vec2 Input::MouseWorldPosition2D() { return Screen::ToWorldPosition(Normali
 // -------------- Gamepad special input --------------
 
 
-float Input::GamepadAxis(Gamepad axis, int glfw_joystick_id)
+float Input::GamepadAxis(Gamepad axis, int gamepadID)
 {
-    return GlfwInput::GamepadAxis(KeyMap::ToGlfw(axis), glfw_joystick_id); // turn into vector ?
+    return GlfwInput::GamepadAxis(KeyMap::ToGlfw(axis), gamepadID); // turn into vector ?
 }
 
-bool Input::HasGamepad(int glfw_joystick_id) { return GlfwInput::HasGamepad(glfw_joystick_id); }
-
+bool Input::HasGamepad(int gamepadID) { return GlfwInput::HasGamepad(gamepadID); }
+std::vector<unsigned int> Input::GamepadIDs() { return GlfwInput::gamepadIDs; }
 
 // -------------- Keyboard: IsHeldDown, IsPressed, IsReleased --------------
 
@@ -119,24 +120,24 @@ bool Input::IsReleased(Mouse key)
 
 // -------------- Gamepad: IsHeldDown, IsPressed, IsReleased --------------
 
-bool Input::IsHeldDown(Gamepad key, unsigned int joystick_id)
+bool Input::IsHeldDown(Gamepad key, unsigned int gamepadID)
 {
-    return GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), joystick_id);
+    return GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), gamepadID);
 }
 
 
-bool Input::IsPressed(Gamepad key, unsigned int joystick_id)
+bool Input::IsPressed(Gamepad key, unsigned int gamepadID)
 {
-    bool wasDown = GlfwInput::GamepadButtonWasHeldDown(KeyMap::ToGlfw(key), joystick_id);
-    bool isDown = GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), joystick_id);
+    bool wasDown = GlfwInput::GamepadButtonWasHeldDown(KeyMap::ToGlfw(key), gamepadID);
+    bool isDown = GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), gamepadID);
     return isDown && !wasDown;
 }
 
 
-bool Input::IsReleased(Gamepad key, unsigned int joystick_id)
+bool Input::IsReleased(Gamepad key, unsigned int gamepadID)
 {
-    bool wasDown = GlfwInput::GamepadButtonWasHeldDown(KeyMap::ToGlfw(key), joystick_id);
-    bool isDown = GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), joystick_id);
+    bool wasDown = GlfwInput::GamepadButtonWasHeldDown(KeyMap::ToGlfw(key), gamepadID);
+    bool isDown = GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), gamepadID);
     return !isDown && wasDown;
 }
 

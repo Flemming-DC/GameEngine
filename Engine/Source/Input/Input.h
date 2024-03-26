@@ -2,10 +2,14 @@
 #include <utility>
 #include "KeyMap.h"
 #include "GlmTools.h"
+#include "Event.h"
 
 class Input
 {
 public:
+	// Event<bool hasBecomeConnected, unsigned int gamepadID>
+	static Event<bool, unsigned int> onGamepadConnectionChanged; 
+
 	static void Setup();
 	static void LateUpdate();
 
@@ -19,8 +23,10 @@ public:
 	static glm::vec2 MouseWorldPosition2D();
 	static int GetScrollDirection();
 
-	static float GamepadAxis(Gamepad axis, int glfw_joystick_id = singlePlayerJoystick);
-	static bool HasGamepad(int glfw_joystick_id = singlePlayerJoystick);
+	static float GamepadAxis(Gamepad axis, int gamepadID = findSinglePlayerGamepad);
+	static bool HasGamepad(int gamepadID = findSinglePlayerGamepad);
+	static std::vector<unsigned int> GamepadIDs();
+	
 
 	// -------------- IsHeldDown, IsPressed, IsReleased --------------
 	
@@ -32,11 +38,11 @@ public:
 	static bool IsReleased(Mouse key);
 	static bool IsHeldDown(Mouse key);
 	
-	static bool IsPressed(Gamepad key, unsigned int joystick_id = singlePlayerJoystick);
-	static bool IsReleased(Gamepad key, unsigned int joystick_id = singlePlayerJoystick);
-	static bool IsHeldDown(Gamepad key, unsigned int joystick_id = singlePlayerJoystick);
+	static bool IsPressed(Gamepad key, unsigned int gamepadID = findSinglePlayerGamepad);
+	static bool IsReleased(Gamepad key, unsigned int gamepadID = findSinglePlayerGamepad);
+	static bool IsHeldDown(Gamepad key, unsigned int gamepadID = findSinglePlayerGamepad);
 	
 private:
-	inline static const unsigned int singlePlayerJoystick = -1; // nb: this alias must match the corrosponding one in GlfwInput
+	inline static const unsigned int findSinglePlayerGamepad = -1; // nb: this alias must match the corrosponding one in GlfwInput
 };
 
