@@ -47,11 +47,12 @@ private:
 	float timeOfLastPress; // actually we only need timeOfLastChange, but that name is ambigous so we use timeOfLastPress and timeOfLastRelease instead
 	float timeOfLastRelease;
 	inline static const float noiseThreshold = 0.0001f; // this should be smaller than noiseThreshold from glfwInput
-	vector<Keyboard> KeyboardKeys;
-	vector<Mouse> MouseKeys;
-	vector<Gamepad> GamepadKeys; // evt. combine these three into boolKeys
-	// missing floatKeys
-	vector<VectorKey> InputVectors; // rename to vectorKeys
+	vector<Keyboard> keyboardKeys;
+	vector<Mouse> mouseKeys;
+	vector<Gamepad> gamepadKeys; // evt. combine these three into boolKeys
+	vector<FloatKeys> floatKeys;
+	vector<VectorKey> vectorKeys; // rename to vectorKeys
+	vector<uint> keys; // alternative to seperate list for each key type
 	static map_uo<uint, unique_ptr<InputAction>> actions;
 	uint id;
 	static inline uint maxID = 0;
@@ -62,7 +63,7 @@ private:
 	// use IsHeldDown / GetFloat / GetVectorInput under the hood and pick the maximal state across the keys.
 	// store current and last state and time of change obtained from GetStateInternal<bool, float, vec2>
 	
-	float Magnitude(T state); // could e.g. be public. This function is implemented seperately for each type
+	inline float Magnitude(T state); // could e.g. be public. This function is implemented seperately for each type
 
 
 };
