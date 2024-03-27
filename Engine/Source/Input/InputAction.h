@@ -3,6 +3,7 @@
 // evt. template bool, float, vec2
 class InputAction
 {
+	// gamepadID as member variable
 	// list of inputKeys i.e. particular elements of Keyboard, Mouse, Gamepad, InputVector according to the cuttent setup.
 	// evt. replace this with InputBool, InputFloat, InputVector
 
