@@ -5,15 +5,15 @@
 
 static float const noiseNormThreshold = 2 * GlfwInput::noiseThreshold * GlfwInput::noiseThreshold;
 
-glm::vec2 InputVectorizer::GetVectorInput(InputVector key, int gamepadID)
+glm::vec2 InputVectorizer::GetVectorInput(VectorKey key, int gamepadID)
 {
     switch (key)
     {
-	case InputVector::joystickLeft: return VectorFromFloats(Gamepad::axis_left_x, Gamepad::axis_left_y, gamepadID);
-	case InputVector::joystickRight: return VectorFromFloats(Gamepad::axis_right_x, Gamepad::axis_right_y, gamepadID);
-	case InputVector::dpad: return VectorFromBools(Gamepad::dpad_left, Gamepad::dpad_right, Gamepad::dpad_up, Gamepad::dpad_down, gamepadID);
-	case InputVector::WASD: return VectorFromBools(Keyboard::A, Keyboard::D, Keyboard::W, Keyboard::S);
-	case InputVector::Arrows: return VectorFromBools(Keyboard::leftArrow, Keyboard::rightArrow, Keyboard::upArrow, Keyboard::downArrow);
+	case VectorKey::leftStick: return VectorFromFloats(FloatKey::leftStick_x, FloatKey::leftStick_y, gamepadID);
+	case VectorKey::rightStick: return VectorFromFloats(FloatKey::rightStick_x, FloatKey::rightStick_y, gamepadID);
+	case VectorKey::dpad: return VectorFromBools(Gamepad::dpad_left, Gamepad::dpad_right, Gamepad::dpad_up, Gamepad::dpad_down, gamepadID);
+	case VectorKey::WASD: return VectorFromBools(Keyboard::A, Keyboard::D, Keyboard::W, Keyboard::S);
+	case VectorKey::Arrows: return VectorFromBools(Keyboard::leftArrow, Keyboard::rightArrow, Keyboard::upArrow, Keyboard::downArrow);
 	default:
         RaiseError("Missing key", key);
 		return {0, 0}; // dummy return value
@@ -26,10 +26,10 @@ glm::vec2 InputVectorizer::GetVectorInput(InputVector key, int gamepadID)
 // -------------------- private helper functions --------------------
 
 
-glm::vec2 InputVectorizer::VectorFromFloats(Gamepad xKey, Gamepad yKey, int gamepadID)
+glm::vec2 InputVectorizer::VectorFromFloats(FloatKey xKey, FloatKey yKey, int gamepadID)
 {
-	float x = Input::GamepadFloat(xKey, gamepadID);
-	float y = Input::GamepadFloat(yKey, gamepadID);
+	float x = Input::GetFloat(xKey, gamepadID);
+	float y = Input::GetFloat(yKey, gamepadID);
 	glm::vec2 vec = { x, y };
 	if (glm::dot(vec, vec) < noiseNormThreshold)
 		return { 0, 0 }; // return early to avoid division by zero

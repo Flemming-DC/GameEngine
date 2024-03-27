@@ -10,7 +10,12 @@
 const unsigned int Input::findSinglePlayerGamepad = GlfwInput::findSinglePlayerGamepad;
 Event<bool, unsigned int> Input::onGamepadConnectionChanged;
 
-void Input::Setup() { GlfwInput::Setup(); }
+
+void Input::Setup() 
+{ 
+    GlfwInput::Setup(); 
+}
+
 void Input::LateUpdate() 
 { 
     GlfwInput::LateUpdate();
@@ -56,7 +61,12 @@ glm::vec2 Input::MouseWorldPosition2D() { return Screen::ToWorldPosition(Normali
 // -------------- Gamepad special input --------------
 
 
-float Input::GamepadFloat(Gamepad axis, int gamepadID) { return GlfwInput::GamepadFloat(KeyMap::ToGlfw(axis), gamepadID); }
+float Input::GetFloat(FloatKey key, int gamepadID)
+{
+    if (key == FloatKey::mouseScrollDirection)
+        return GetScrollDirection();
+    return GlfwInput::GamepadFloat(KeyMap::ToGlfw(key), gamepadID);
+}
 
 bool Input::HasGamepad(int gamepadID) { return GlfwInput::HasGamepad(gamepadID); }
 std::vector<unsigned int> Input::GamepadIDs() { return GlfwInput::gamepadIDs; }

@@ -115,29 +115,37 @@ int KeyMap::ToGlfw(Gamepad key)
     case Gamepad::B: return GLFW_GAMEPAD_BUTTON_B;
     case Gamepad::X: return GLFW_GAMEPAD_BUTTON_X;
     case Gamepad::Y: return GLFW_GAMEPAD_BUTTON_Y;
-    case Gamepad::left_bumper: return GLFW_GAMEPAD_BUTTON_LEFT_BUMPER;
-    case Gamepad::right_bumper: return GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER;
+    case Gamepad::leftBumper: return GLFW_GAMEPAD_BUTTON_LEFT_BUMPER;
+    case Gamepad::rightBumper: return GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER;
     case Gamepad::back: return GLFW_GAMEPAD_BUTTON_BACK;
     case Gamepad::start: return GLFW_GAMEPAD_BUTTON_START;
     case Gamepad::guide: return GLFW_GAMEPAD_BUTTON_GUIDE;
-    case Gamepad::left_thumb: return GLFW_GAMEPAD_BUTTON_LEFT_THUMB;
-    case Gamepad::right_thumb: return GLFW_GAMEPAD_BUTTON_RIGHT_THUMB;
+    case Gamepad::leftStickPress: return GLFW_GAMEPAD_BUTTON_LEFT_THUMB;
+    case Gamepad::rightStickPress: return GLFW_GAMEPAD_BUTTON_RIGHT_THUMB;
     case Gamepad::dpad_up: return GLFW_GAMEPAD_BUTTON_DPAD_UP;
     case Gamepad::dpad_right: return GLFW_GAMEPAD_BUTTON_DPAD_RIGHT;
     case Gamepad::dpad_down: return GLFW_GAMEPAD_BUTTON_DPAD_DOWN;
     case Gamepad::dpad_left: return GLFW_GAMEPAD_BUTTON_DPAD_LEFT;
-    case Gamepad::axis_left_x: return GLFW_GAMEPAD_AXIS_LEFT_X;
-    case Gamepad::axis_left_y: return GLFW_GAMEPAD_AXIS_LEFT_Y;
-    case Gamepad::axis_right_x: return GLFW_GAMEPAD_AXIS_RIGHT_X;
-    case Gamepad::axis_right_y: return GLFW_GAMEPAD_AXIS_RIGHT_Y;
-    case Gamepad::axis_left_trigger: return GLFW_GAMEPAD_AXIS_LEFT_TRIGGER;
-    case Gamepad::axis_right_trigger: return GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER;
     default:
         RaiseError("Missing key ", key);
         return -1; // dummy return value
     }
 }
-
+int KeyMap::ToGlfw(FloatKey key)
+{
+    switch (key)
+    {
+    case FloatKey::leftStick_x: return GLFW_GAMEPAD_AXIS_LEFT_X;
+    case FloatKey::leftStick_y: return GLFW_GAMEPAD_AXIS_LEFT_Y;
+    case FloatKey::rightStick_x: return GLFW_GAMEPAD_AXIS_RIGHT_X;
+    case FloatKey::rightStick_y: return GLFW_GAMEPAD_AXIS_RIGHT_Y;
+    case FloatKey::leftTrigger: return GLFW_GAMEPAD_AXIS_LEFT_TRIGGER;
+    case FloatKey::rightTrigger: return GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER;
+    default:
+        RaiseError("Missing key ", key);
+        return -1; // dummy return value
+    }
+}
 
 
 // --------------- ImGUI --------------- //

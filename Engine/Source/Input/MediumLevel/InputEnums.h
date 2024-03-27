@@ -10,35 +10,39 @@ enum class Keyboard
 	ctrl, alt, space, altgr, leftArrow, downArrow, rightArrow, numpad_0, numpad_del,
 };
 
+// by starting with a number over max value in previous device, then the enums are unique betweens devices
 enum class Mouse
 {
-	left, middle, right,
+	left = 1000, middle, right, 
 };
 
 enum class CursorMode
 {
-	normal, hidden, locked,
+	normal = 2000, hidden, locked,
 };
 
 enum class Gamepad
 {
 	// buttons
-	A, B, X, Y, left_bumper, right_bumper, back, start, guide, left_thumb, right_thumb, dpad_up, dpad_right, dpad_down, dpad_left,
+	A = 3000, B, X, Y, leftBumper, rightBumper, back, start, guide, leftStickPress, rightStickPress, dpad_up, dpad_right, dpad_down, dpad_left,
+	// left_thumb, right_thumb has been renamed to left_stick_press, right_stick_press
+
 	// axes
-	axis_left_x, axis_left_y, axis_right_x, axis_right_y, axis_left_trigger, axis_right_trigger,
+	//axis_left_x, axis_left_y, axis_right_x, axis_right_y, axis_left_trigger, axis_right_trigger,
 
 	// evt. make aliases (cross, circle, square, triangle) for (A, B, X, Y)
 	// evt. combine joystick-axis and dpad into vectors
 };
-/*
-enum class InputFloat
+
+enum class FloatKey
 {
-	axis_left_x, axis_left_y, axis_right_x, axis_right_y, axis_left_trigger, axis_right_trigger, mouse_scroll_direction
+	leftStick_x = 4000, leftStick_y, rightStick_x, rightStick_y, leftTrigger, rightTrigger, mouseScrollDirection
 };
-*/
-enum class InputVector
+
+// 
+enum class VectorKey
 {
-	joystickLeft, joystickRight, dpad, WASD, Arrows,
-	// MouseScreenPosition, NormalizedMouseScreenPosition, MouseWorldPosition2D, MouseDelta, // not MouseWorldPosition since. its 3d
+	leftStick = 5000, rightStick, dpad, WASD, Arrows,
+	mouseScreenPosition, normalizedMouseScreenPosition, mouseWorldPosition2D, 
 };
 

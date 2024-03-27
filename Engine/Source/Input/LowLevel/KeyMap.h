@@ -13,6 +13,7 @@ public:
 	static int ToGlfw(Keyboard key);
 	static int ToGlfw(Mouse key);
 	static int ToGlfw(Gamepad key);
+	static int ToGlfw(FloatKey key);
 
 	static ImGuiKey ToImGui(Keyboard key);
 	static ImGuiKey ToImGui(Mouse key);

@@ -166,7 +166,7 @@ void DummyComp::OldTests()
 	if (Input::IsPressed(Keyboard::_6))
 	{
 		logger::print("6: ");
-		logger::print(Input::GamepadFloat(Gamepad::axis_left_x, GLFW_JOYSTICK_2));
+		logger::print(Input::GetFloat(FloatKey::leftStick_x, GLFW_JOYSTICK_2));
 	}
 
 
@@ -185,17 +185,17 @@ void DummyComp::OldTests()
 
 	if (Input::IsPressed(Keyboard::_7))
 	{
-		glm::vec2 vec = InputVectorizer::GetVectorInput(InputVector::joystickRight, GLFW_JOYSTICK_2);
+		glm::vec2 vec = InputVectorizer::GetVectorInput(VectorKey::rightStick, GLFW_JOYSTICK_2);
 		logger::print("7: joystickRight ", vec);
 	}
 	if (Input::IsPressed(Keyboard::_8))
 	{
 		logger::print("8: ");
-		logger::print(Input::GamepadFloat(Gamepad::axis_left_y));
+		logger::print(Input::GetFloat(FloatKey::leftStick_y));
 	}
 	if (Input::IsPressed(Keyboard::_9))
 	{
 		logger::print("9: ");
-		logger::print(Input::GamepadFloat(Gamepad::axis_left_trigger));
+		logger::print(Input::GetFloat(FloatKey::leftTrigger));
 	}
 }

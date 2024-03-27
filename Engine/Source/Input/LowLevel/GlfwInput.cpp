@@ -12,6 +12,7 @@ std::unordered_map<int, int> GlfwInput::actionByMouseButton;
 std::vector<unsigned int> GlfwInput::gamepadIDs;
 std::unordered_map<unsigned, GLFWgamepadstate> GlfwInput::lastGamepadStateByJoystick;
 
+
 void GlfwInput::Setup()
 {
     GLFWwindow* window = OpenGlSetup::GetWindow();
