@@ -36,6 +36,12 @@ void DummyComp::OnDestroy()
 void DummyComp::OnUpdate()
 {
 
+}
+
+
+void DummyComp::OldTests()
+{
+
 	if (Input::IsPressed(Keyboard::J))
 	{
 		logger::print("J: try destroy gamelogic from ", this->GetEntity());
@@ -48,7 +54,7 @@ void DummyComp::OnUpdate()
 		if (!TryGet<GameLogic>() && TryGet<Renderable>() && TryGet<RectangleCollider>())
 			GetEntity().Add<GameLogic>();
 	}
-	
+
 	if (Input::IsPressed(Keyboard::I))
 	{
 		logger::print("I: try destroy picture 1 RectangleCollider");
@@ -160,7 +166,7 @@ void DummyComp::OnUpdate()
 	if (Input::IsPressed(Keyboard::_6))
 	{
 		logger::print("6: ");
-		logger::print(Input::GamepadAxis(Gamepad::axis_left_x, GLFW_JOYSTICK_2));
+		logger::print(Input::GamepadFloat(Gamepad::axis_left_x, GLFW_JOYSTICK_2));
 	}
 
 
@@ -185,11 +191,11 @@ void DummyComp::OnUpdate()
 	if (Input::IsPressed(Keyboard::_8))
 	{
 		logger::print("8: ");
-		logger::print(Input::GamepadAxis(Gamepad::axis_left_y));
+		logger::print(Input::GamepadFloat(Gamepad::axis_left_y));
 	}
 	if (Input::IsPressed(Keyboard::_9))
 	{
 		logger::print("9: ");
-		logger::print(Input::GamepadAxis(Gamepad::axis_left_trigger));
+		logger::print(Input::GamepadFloat(Gamepad::axis_left_trigger));
 	}
 }

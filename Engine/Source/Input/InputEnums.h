@@ -1,9 +1,6 @@
 #pragma once
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include "imgui/imgui.h"
 
-enum class Keyboard 
+enum class Keyboard
 {
 	exc, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, printScreen, keyboradScroll, pause,
 	half, _1, _2, _3, _4, _5, _6, _7, _8, _9, _0, plus, apostrophe, back, insert, home, pageup, num, numpad_div, numpad_mul, numpad_minus,
@@ -23,7 +20,7 @@ enum class CursorMode
 	normal, hidden, locked,
 };
 
-enum class Gamepad 
+enum class Gamepad
 {
 	// buttons
 	A, B, X, Y, left_bumper, right_bumper, back, start, guide, left_thumb, right_thumb, dpad_up, dpad_right, dpad_down, dpad_left,
@@ -33,27 +30,15 @@ enum class Gamepad
 	// evt. make aliases (cross, circle, square, triangle) for (A, B, X, Y)
 	// evt. combine joystick-axis and dpad into vectors
 };
-
+/*
+enum class InputFloat
+{
+	axis_left_x, axis_left_y, axis_right_x, axis_right_y, axis_left_trigger, axis_right_trigger, mouse_scroll_direction
+};
+*/
 enum class InputVector
 {
 	joystickLeft, joystickRight, dpad, WASD, Arrows,
+	// MouseScreenPosition, NormalizedMouseScreenPosition, MouseWorldPosition2D, MouseDelta, // not MouseWorldPosition since. its 3d
 };
-
-
-
-class KeyMap
-{
-public:
-	static int ToGlfw(Keyboard key);
-	static int ToGlfw(Mouse key);
-	static int ToGlfw(Gamepad key);
-
-	static ImGuiKey ToImGui(Keyboard key);
-	static ImGuiKey ToImGui(Mouse key);
-};
-
-
-
-
-
 

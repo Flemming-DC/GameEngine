@@ -4,8 +4,10 @@
 #include "ListTools.h"
 #include "logger.h"
 #include "GlfwInput.h"
+#include "KeyMap.h"
 #include "Screen.h"
 
+const unsigned int Input::findSinglePlayerGamepad = GlfwInput::findSinglePlayerGamepad;
 Event<bool, unsigned int> Input::onGamepadConnectionChanged;
 
 void Input::Setup() { GlfwInput::Setup(); }
@@ -54,7 +56,7 @@ glm::vec2 Input::MouseWorldPosition2D() { return Screen::ToWorldPosition(Normali
 // -------------- Gamepad special input --------------
 
 
-float Input::GamepadAxis(Gamepad axis, int gamepadID) { return GlfwInput::GamepadAxis(KeyMap::ToGlfw(axis), gamepadID); }
+float Input::GamepadFloat(Gamepad axis, int gamepadID) { return GlfwInput::GamepadFloat(KeyMap::ToGlfw(axis), gamepadID); }
 
 bool Input::HasGamepad(int gamepadID) { return GlfwInput::HasGamepad(gamepadID); }
 std::vector<unsigned int> Input::GamepadIDs() { return GlfwInput::gamepadIDs; }

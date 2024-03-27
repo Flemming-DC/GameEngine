@@ -1,6 +1,6 @@
 #pragma once
 #include <utility>
-#include "KeyMap.h"
+#include "InputEnums.h"
 #include "GlmTools.h"
 #include "Event.h"
 
@@ -8,7 +8,7 @@ class Input
 {
 public:
 	// Event<bool hasBecomeConnected, unsigned int gamepadID>
-	static Event<bool, unsigned int> onGamepadConnectionChanged; 
+	static Event<bool, unsigned int> onGamepadConnectionChanged;
 
 	static void Setup();
 	static void LateUpdate();
@@ -23,7 +23,7 @@ public:
 	static glm::vec2 MouseWorldPosition2D();
 	static int GetScrollDirection();
 
-	static float GamepadAxis(Gamepad axis, int gamepadID = findSinglePlayerGamepad);
+	static float GamepadFloat(Gamepad axis, int gamepadID = findSinglePlayerGamepad);
 	static bool HasGamepad(int gamepadID = findSinglePlayerGamepad);
 	static std::vector<unsigned int> GamepadIDs();
 	
@@ -41,8 +41,7 @@ public:
 	static bool IsPressed(Gamepad key, int gamepadID = findSinglePlayerGamepad);
 	static bool IsReleased(Gamepad key, int gamepadID = findSinglePlayerGamepad);
 	static bool IsHeldDown(Gamepad key, int gamepadID = findSinglePlayerGamepad);
-	
 private:
-	inline static const unsigned int findSinglePlayerGamepad = -1; // nb: this alias must match the corrosponding one in GlfwInput
+	static const unsigned int findSinglePlayerGamepad; // nb: this alias must match the corrosponding one in GlfwInput
 };
 

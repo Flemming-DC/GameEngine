@@ -1,6 +1,6 @@
 #pragma once
 #include "GlmTools.h"
-#include "KeyMap.h"
+#include "InputEnums.h"
 
 
 class InputVectorizer

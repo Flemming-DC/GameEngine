@@ -1,7 +1,7 @@
 #pragma once
 #include <utility>
 #include "GlmTools.h"
-#include "KeyMap.h"
+#include "InputEnums.h"
 
 class Screen
 {

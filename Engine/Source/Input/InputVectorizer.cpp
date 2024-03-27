@@ -1,6 +1,6 @@
 #include "InputVectorizer.h"
 #include "Input.h"
-#include "KeyMap.h"
+#include "InputEnums.h"
 #include "GlfwInput.h" // just to get the noise threshold
 
 static float const noiseNormThreshold = 2 * GlfwInput::noiseThreshold * GlfwInput::noiseThreshold;
@@ -28,8 +28,8 @@ glm::vec2 InputVectorizer::GetVectorInput(InputVector key, int gamepadID)
 
 glm::vec2 InputVectorizer::VectorFromFloats(Gamepad xKey, Gamepad yKey, int gamepadID)
 {
-	float x = Input::GamepadAxis(xKey, gamepadID);
-	float y = Input::GamepadAxis(yKey, gamepadID);
+	float x = Input::GamepadFloat(xKey, gamepadID);
+	float y = Input::GamepadFloat(yKey, gamepadID);
 	glm::vec2 vec = { x, y };
 	if (glm::dot(vec, vec) < noiseNormThreshold)
 		return { 0, 0 }; // return early to avoid division by zero

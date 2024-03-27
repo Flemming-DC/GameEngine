@@ -25,7 +25,7 @@ private:
 	static bool GamepadButtonWasHeldDown(int button, int gamepadID = findSinglePlayerGamepad); // fx GLFW_JOYSTICK_1
 
 	static std::pair<float, float> MouseScreenPosition();
-	static float GamepadAxis(int axis, int gamepadID = findSinglePlayerGamepad);
+	static float GamepadFloat(int axis, int gamepadID = findSinglePlayerGamepad);
 	static bool HasGamepad(int gamepadID = findSinglePlayerGamepad);
 
 // private even to friend class:

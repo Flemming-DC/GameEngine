@@ -120,10 +120,10 @@ std::pair<float, float> GlfwInput::MouseScreenPosition()
     return { xpos, ypos };
 }
 
-float GlfwInput::GamepadAxis(int axis, int gamepadID)
+float GlfwInput::GamepadFloat(int axis, int gamepadID)
 {
     if (gamepadID == findSinglePlayerGamepad)
-        return !gamepadIDs.empty() ? GamepadAxis(axis, gamepadIDs[0]) : 0;
+        return !gamepadIDs.empty() ? GamepadFloat(axis, gamepadIDs[0]) : 0;
 
     GLFWgamepadstate state;
     glCall(bool found = glfwGetGamepadState(gamepadID, &state));

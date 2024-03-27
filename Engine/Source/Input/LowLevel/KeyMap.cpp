@@ -89,7 +89,7 @@ int KeyMap::ToGlfw(Keyboard key)
         // RaiseError("KeyMap::ToGlfw() returns GLFW_KEY_LEFT_CONTROL, which ignores GLFW_KEY_RIGHT_CONTROL");
         return GLFW_KEY_LEFT_CONTROL; //GLFW_KEY_LEFT_CONTROL || GLFW_KEY_RIGHT_CONTROL;
     default:
-        RaiseError("KeyMap::ToGlfw(Keyboard key): Missing key");
+        RaiseError("Missing key ", key);
         return -1; // dummy return value
     }
 }
@@ -102,7 +102,7 @@ int KeyMap::ToGlfw(Mouse key)
     case Mouse::middle: return GLFW_MOUSE_BUTTON_MIDDLE;
     case Mouse::right: return GLFW_MOUSE_BUTTON_RIGHT;
     default:
-        RaiseError("KeyMap::ToGlfw(Mouse key): Missing key");
+        RaiseError("Missing key ", key);
         return -1; // dummy return value
     }
 }
@@ -133,7 +133,7 @@ int KeyMap::ToGlfw(Gamepad key)
     case Gamepad::axis_left_trigger: return GLFW_GAMEPAD_AXIS_LEFT_TRIGGER;
     case Gamepad::axis_right_trigger: return GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER;
     default:
-        RaiseError("KeyMap::ToGlfw(Gamepad key): Missing key");
+        RaiseError("Missing key ", key);
         return -1; // dummy return value
     }
 }
@@ -249,7 +249,7 @@ ImGuiKey KeyMap::ToImGui(Keyboard key)
     case Keyboard::numpad_del: return ImGuiKey_KeypadDecimal;
 
     default:
-        RaiseError("KeyMap::ToImGui(Keyboard key): Missing key");
+        RaiseError("Missing key ", key);
         return ImGuiKey_COUNT; // dummy return value
     }               
 }
@@ -262,7 +262,7 @@ ImGuiKey KeyMap::ToImGui(Mouse key)
     case Mouse::middle: return ImGuiKey_MouseMiddle;
     case Mouse::right: return ImGuiKey_MouseRight;
     default:
-        RaiseError("KeyMap::ToImGui(Mouse key): Missing key");
+        RaiseError("Missing key ", key);
         return ImGuiKey_COUNT; // dummy return value
     }
 }
