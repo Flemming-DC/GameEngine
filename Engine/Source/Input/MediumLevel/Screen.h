@@ -3,6 +3,11 @@
 #include "GlmTools.h"
 #include "Key.h"
 
+enum class CursorMode
+{
+	normal, hidden, locked,
+};
+
 class Screen
 {
 public:

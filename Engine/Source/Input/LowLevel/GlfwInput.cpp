@@ -54,7 +54,7 @@ void GlfwInput::LateUpdate()
 
 bool GlfwInput::HasGamepad(int gamepadID)
 {
-    if (gamepadID == findSinglePlayerGamepad)
+    if (gamepadID == _singlePlayerGamepadID)
         return !gamepadIDs.empty();
 
     // checks whether joystick is present and is gamepad. 
@@ -90,7 +90,7 @@ bool GlfwInput::MouseButtonHeldDown(int button)
 
 bool GlfwInput::GamepadButtonHeldDown(int button, int gamepadID)
 {
-    if (gamepadID == findSinglePlayerGamepad)
+    if (gamepadID == _singlePlayerGamepadID)
         return !gamepadIDs.empty() ? GamepadButtonHeldDown(button, gamepadIDs[0]) : 0;
     
     GLFWgamepadstate state;
@@ -102,7 +102,7 @@ bool GlfwInput::GamepadButtonHeldDown(int button, int gamepadID)
 
 bool GlfwInput::GamepadButtonWasHeldDown(int button, int gamepadID)
 {
-    if (gamepadID == findSinglePlayerGamepad)
+    if (gamepadID == _singlePlayerGamepadID)
         return !gamepadIDs.empty() ? GamepadButtonWasHeldDown(button, gamepadIDs[0]) : 0;
     
     if (!Tools::ContainsKey(lastGamepadStateByJoystick, (unsigned int)gamepadID))
@@ -123,7 +123,7 @@ std::pair<float, float> GlfwInput::MouseScreenPosition()
 
 float GlfwInput::GamepadFloat(int axis, int gamepadID)
 {
-    if (gamepadID == findSinglePlayerGamepad)
+    if (gamepadID == _singlePlayerGamepadID)
         return !gamepadIDs.empty() ? GamepadFloat(axis, gamepadIDs[0]) : 0;
 
     GLFWgamepadstate state;

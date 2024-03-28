@@ -1,10 +1,6 @@
 #pragma once
 
 
-enum class CursorMode
-{
-	normal, hidden, locked,
-};
 
 const unsigned int _singlePlayerGamepadID = -1; // private to the input system
 

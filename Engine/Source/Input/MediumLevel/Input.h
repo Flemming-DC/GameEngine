@@ -22,8 +22,8 @@ public:
 	static glm::vec3 MouseWorldPosition();
 	static glm::vec2 MouseWorldPosition2D();
 
-	static float GetFloat(Key::FloatKey axis, int gamepadID = findSinglePlayerGamepad);
-	static bool HasGamepad(int gamepadID = findSinglePlayerGamepad);
+	static float GetFloat(Key::FloatKey axis, int gamepadID = _singlePlayerGamepadID);
+	static bool HasGamepad(int gamepadID = _singlePlayerGamepadID);
 	static std::vector<unsigned int> GamepadIDs();
 	
 
@@ -37,11 +37,10 @@ public:
 	static bool IsReleased(Key::Mouse key);
 	static bool IsHeldDown(Key::Mouse key);
 	
-	static bool IsPressed(Key::Gamepad key, int gamepadID = findSinglePlayerGamepad);
-	static bool IsReleased(Key::Gamepad key, int gamepadID = findSinglePlayerGamepad);
-	static bool IsHeldDown(Key::Gamepad key, int gamepadID = findSinglePlayerGamepad);
+	static bool IsPressed(Key::Gamepad key, int gamepadID = _singlePlayerGamepadID);
+	static bool IsReleased(Key::Gamepad key, int gamepadID = _singlePlayerGamepadID);
+	static bool IsHeldDown(Key::Gamepad key, int gamepadID = _singlePlayerGamepadID);
 private:
-	static const unsigned int findSinglePlayerGamepad;
 
 	static int GetScrollDirection();
 };

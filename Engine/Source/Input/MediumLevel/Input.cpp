@@ -9,7 +9,6 @@
 #include "InputAction.h" // its a bit messy that input imports this, since InputAction is a higher level objects than Input
 
 using namespace Key;
-const unsigned int Input::findSinglePlayerGamepad = GlfwInput::findSinglePlayerGamepad;
 Event<bool, unsigned int> Input::onGamepadConnectionChanged;
 
 

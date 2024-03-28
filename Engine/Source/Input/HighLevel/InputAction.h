@@ -15,12 +15,11 @@ class InputAction
 public:
 	Event<> OnPressed;
 	Event<> OnReleased;
-	int gamepadID = -1; // singleplayerID appears again 
+	int gamepadID = _singlePlayerGamepadID; // singleplayerID appears again 
 	// enabled (wait with this until you start working on the inputMode)
 	
 	static InputAction<T>& Create() 
 	{ 
-		P(1);
 		if (typeid(T) != typeid(bool) && typeid(T) != typeid(float) && typeid(T) != typeid(glm::vec2))
 			RaiseError("Unrecognized type. Expected bool, float or glm::vec2. Received ", Tools::TypeName<T>());
 		maxID++;
