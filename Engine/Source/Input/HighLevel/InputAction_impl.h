@@ -51,13 +51,13 @@ template<typename T> void InputAction<T>::IndividualUpdate()
 		RaiseError("This else clause should be impossible to reach.");
 	timeOfLastPressOrRelease = Time::Now();
 }
-/*
-template<typename T> std::string InputAction<T>::to_string()
+
+template<typename T> std::string InputAction<T>::to_string() const
 {
 	return logger::make_string(
 		"InputAction<", Tools::TypeName<T>(), "> with \n", keyboardKeys, mouseKeys, gamepadKeys, floatKeys, vectorKeys);
 }
-*/
+
 
 // ------------------------- specialized impl -------------------------
 
