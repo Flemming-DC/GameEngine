@@ -77,6 +77,11 @@ void DummyComp::OnUpdate()
 		logger::print("walk BecomesReleased");
 
 
+	if (Input::BecomesPressed(Keyboard::H))
+	{
+		logger::print("H");
+		GameInputs::walk.enabled = !GameInputs::walk.enabled;
+	}
 }
 
 

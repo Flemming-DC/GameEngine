@@ -61,6 +61,64 @@ template<typename T> std::string InputAction<T>::to_string() const
 // ------------------------- specialized impl -------------------------
 
 
+template<> bool InputAction<bool>::FindState()
+{
+	if (!enabled)
+		return false;
+	for (const auto& k : keyboardKeys)
+		if (Input::IsPressed(k))
+			return true;
+	for (const auto& k : mouseKeys)
+		if (Input::IsPressed(k))
+			return true;
+	for (const auto& k : gamepadKeys)
+		if (Input::IsPressed(k, gamepadID))
+			return true;
+	return false;
+}
+
+
+template<> float InputAction<float>::FindState()
+{
+	if (!enabled)
+		return 0;
+	float maxMagnitude = 0; // without sign
+	float maxFloat = 0; // with sign
+	for (const auto& k : floatKeys)
+	{
+		if (Magnitude(Input::GetFloat(k, gamepadID)) > maxMagnitude)
+		{
+			maxFloat = Input::GetFloat(k, gamepadID);
+			maxMagnitude = Magnitude(maxFloat);
+		}
+	}
+	return maxFloat;
+}
+
+template<> glm::vec2 InputAction<glm::vec2>::FindState()
+{
+	if (!enabled)
+		return glm::vec2(0);
+	float maxMagnitude = 0;
+	glm::vec2 maxVector(0);
+	for (const auto& k : vectorKeys)
+	{
+		if (Magnitude(InputVectorizer::GetVectorInput(k, gamepadID)) > maxMagnitude)
+		{
+			maxVector = InputVectorizer::GetVectorInput(k, gamepadID);
+			maxMagnitude = Magnitude(maxVector);
+		}
+	}
+	return maxVector;
+}
+
+
+template<> float InputAction<bool>::Magnitude(bool state) const { return state; }
+template<> float InputAction<float>::Magnitude(float state) const { return std::abs(state); }
+template<> float InputAction<glm::vec2>::Magnitude(glm::vec2 state) const { return glm::length(state); }
+
+
+
 template<> InputAction<bool>& InputAction<bool>::AddKey(Key::Keyboard key) 
 {
 	if (id < 1)
@@ -103,58 +161,6 @@ template<> void InputAction<bool>::RemoveKey(Key::Gamepad key) { Tools::Remove(g
 template<> void InputAction<float>::RemoveKey(Key::FloatKey key) { Tools::Remove(floatKeys, key); }
 template<> void InputAction<glm::vec2>::RemoveKey(Key::VectorKey key) { Tools::Remove(vectorKeys, key); }
 
-
-
-
-template<> bool InputAction<bool>::FindState()
-{
-	for (const auto& k : keyboardKeys)
-		if (Input::IsPressed(k))
-			return true;
-	for (const auto& k : mouseKeys)
-		if (Input::IsPressed(k))
-			return true;
-	for (const auto& k : gamepadKeys)
-		if (Input::IsPressed(k, gamepadID))
-			return true;
-	return false;
-}
-
-
-template<> float InputAction<float>::FindState()
-{
-	float maxMagnitude = 0; // without sign
-	float maxFloat = 0; // with sign
-	for (const auto& k : floatKeys)
-	{
-		if (Magnitude(Input::GetFloat(k, gamepadID)) > maxMagnitude)
-		{
-			maxFloat = Input::GetFloat(k, gamepadID);
-			maxMagnitude = Magnitude(maxFloat);
-		}
-	}
-	return maxFloat;
-}
-
-template<> glm::vec2 InputAction<glm::vec2>::FindState()
-{
-	float maxMagnitude = 0;
-	glm::vec2 maxVector(0);
-	for (const auto& k : vectorKeys)
-	{
-		if (Magnitude(InputVectorizer::GetVectorInput(k, gamepadID)) > maxMagnitude)
-		{
-			maxVector = InputVectorizer::GetVectorInput(k, gamepadID);
-			maxMagnitude = Magnitude(maxVector);
-		}
-	}
-	return maxVector;
-}
-
-
-template<> float InputAction<bool>::Magnitude(bool state) const { return state; }
-template<> float InputAction<float>::Magnitude(float state) const { return std::abs(state); }
-template<> float InputAction<glm::vec2>::Magnitude(glm::vec2 state) const { return glm::length(state); }
 
 
 

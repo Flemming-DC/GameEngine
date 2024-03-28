@@ -16,7 +16,7 @@ public:
 	Event<> OnPressed;
 	Event<> OnReleased;
 	int gamepadID = _singlePlayerGamepadID; // singleplayerID appears again 
-	// enabled (wait with this until you start working on the inputMode)
+	bool enabled = true;
 	
 	static InputAction<T>& Create() 
 	{ 
