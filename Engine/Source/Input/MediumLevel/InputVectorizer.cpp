@@ -43,10 +43,10 @@ glm::vec2 InputVectorizer::VectorFromFloats(FloatKey xKey, FloatKey yKey, int ga
 
 glm::vec2 InputVectorizer::VectorFromBools(Gamepad leftKey, Gamepad rightKey, Gamepad upKey, Gamepad downKey, int gamepadID)
 {
-	float left  = Input::IsHeldDown(leftKey,  gamepadID);
-	float right = Input::IsHeldDown(rightKey, gamepadID);
-	float up	  = Input::IsHeldDown(upKey,	gamepadID);
-	float down  = Input::IsHeldDown(downKey,  gamepadID);
+	float left  = Input::IsPressed(leftKey,  gamepadID);
+	float right = Input::IsPressed(rightKey, gamepadID);
+	float up	  = Input::IsPressed(upKey,	gamepadID);
+	float down  = Input::IsPressed(downKey,  gamepadID);
 	glm::vec2 vec = { right - left, up - down };
 	if (glm::dot(vec, vec) > 1)
 		vec = glm::normalize(vec); // normalize diagonal vectors
@@ -55,10 +55,10 @@ glm::vec2 InputVectorizer::VectorFromBools(Gamepad leftKey, Gamepad rightKey, Ga
 
 glm::vec2 InputVectorizer::VectorFromBools(Keyboard leftKey, Keyboard rightKey, Keyboard upKey, Keyboard downKey)
 {
-	float left = Input::IsHeldDown(leftKey);
-	float right = Input::IsHeldDown(rightKey);
-	float up = Input::IsHeldDown(upKey);
-	float down = Input::IsHeldDown(downKey);
+	float left = Input::IsPressed(leftKey);
+	float right = Input::IsPressed(rightKey);
+	float up = Input::IsPressed(upKey);
+	float down = Input::IsPressed(downKey);
 	glm::vec2 vec = { right - left, up - down };
 	if (glm::dot(vec, vec) > 1)
 		vec = glm::normalize(vec); // normalize diagonal vectors

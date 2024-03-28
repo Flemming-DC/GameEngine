@@ -27,19 +27,19 @@ public:
 	static std::vector<unsigned int> GamepadIDs();
 	
 
-	// -------------- IsHeldDown, IsPressed, IsReleased --------------
+	// -------------- IsPressed, BecomesPressed, BecomesReleased --------------
 	
+	static bool BecomesPressed(Key::Keyboard key);
+	static bool BecomesReleased(Key::Keyboard key);
 	static bool IsPressed(Key::Keyboard key);
-	static bool IsReleased(Key::Keyboard key);
-	static bool IsHeldDown(Key::Keyboard key);
 
+	static bool BecomesPressed(Key::Mouse key);
+	static bool BecomesReleased(Key::Mouse key);
 	static bool IsPressed(Key::Mouse key);
-	static bool IsReleased(Key::Mouse key);
-	static bool IsHeldDown(Key::Mouse key);
 	
+	static bool BecomesPressed(Key::Gamepad key, int gamepadID = _singlePlayerGamepadID);
+	static bool BecomesReleased(Key::Gamepad key, int gamepadID = _singlePlayerGamepadID);
 	static bool IsPressed(Key::Gamepad key, int gamepadID = _singlePlayerGamepadID);
-	static bool IsReleased(Key::Gamepad key, int gamepadID = _singlePlayerGamepadID);
-	static bool IsHeldDown(Key::Gamepad key, int gamepadID = _singlePlayerGamepadID);
 private:
 
 	static int GetScrollDirection();

@@ -75,9 +75,9 @@ float Input::GetFloat(FloatKey key, int gamepadID)
 bool Input::HasGamepad(int gamepadID) { return GlfwInput::HasGamepad(gamepadID); }
 std::vector<unsigned int> Input::GamepadIDs() { return GlfwInput::gamepadIDs; }
 
-// -------------- Keyboard: IsHeldDown, IsPressed, IsReleased --------------
+// -------------- Keyboard: IsPressed, BecomesPressed, BecomesReleased --------------
 
-bool Input::IsHeldDown(Keyboard key)
+bool Input::IsPressed(Keyboard key)
 {
     if (ImGui::GetIO().WantCaptureKeyboard)
         return ImGui::IsKeyDown(KeyMap::ToImGui(key));
@@ -86,7 +86,7 @@ bool Input::IsHeldDown(Keyboard key)
 }
 
 
-bool Input::IsPressed(Keyboard key)
+bool Input::BecomesPressed(Keyboard key)
 {
     if (ImGui::GetIO().WantCaptureKeyboard)
         return ImGui::IsKeyPressed(KeyMap::ToImGui(key), false);
@@ -95,7 +95,7 @@ bool Input::IsPressed(Keyboard key)
 }
 
 
-bool Input::IsReleased(Keyboard key)
+bool Input::BecomesReleased(Keyboard key)
 {
     if (ImGui::GetIO().WantCaptureKeyboard)
         return ImGui::IsKeyReleased(KeyMap::ToImGui(key));
@@ -103,9 +103,9 @@ bool Input::IsReleased(Keyboard key)
         return Tools::at_default(GlfwInput::actionByKey, KeyMap::ToGlfw(key), -1) == GLFW_RELEASE;
 }
 
-// -------------- Mouse: IsHeldDown, IsPressed, IsReleased --------------
+// -------------- Mouse: IsPressed, BecomesPressed, BecomesReleased --------------
 
-bool Input::IsHeldDown(Mouse key)
+bool Input::IsPressed(Mouse key)
 {
     if (ImGui::GetIO().WantCaptureMouse)
         return ImGui::IsKeyDown(KeyMap::ToImGui(key));
@@ -114,7 +114,7 @@ bool Input::IsHeldDown(Mouse key)
 }
 
 
-bool Input::IsPressed(Mouse key)
+bool Input::BecomesPressed(Mouse key)
 {
     if (ImGui::GetIO().WantCaptureMouse)
         return ImGui::IsKeyPressed(KeyMap::ToImGui(key), false);
@@ -123,7 +123,7 @@ bool Input::IsPressed(Mouse key)
 }
 
 
-bool Input::IsReleased(Mouse key)
+bool Input::BecomesReleased(Mouse key)
 {
     if (ImGui::GetIO().WantCaptureMouse)
         return ImGui::IsKeyReleased(KeyMap::ToImGui(key));
@@ -131,15 +131,15 @@ bool Input::IsReleased(Mouse key)
         return Tools::at_default(GlfwInput::actionByMouseButton, KeyMap::ToGlfw(key), -1) == GLFW_RELEASE;
 }
 
-// -------------- Gamepad: IsHeldDown, IsPressed, IsReleased --------------
+// -------------- Gamepad: IsPressed, BecomesPressed, BecomesReleased --------------
 
-bool Input::IsHeldDown(Gamepad key, int gamepadID)
+bool Input::IsPressed(Gamepad key, int gamepadID)
 {
     return GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), gamepadID);
 }
 
 
-bool Input::IsPressed(Gamepad key, int gamepadID)
+bool Input::BecomesPressed(Gamepad key, int gamepadID)
 {
     bool wasDown = GlfwInput::GamepadButtonWasHeldDown(KeyMap::ToGlfw(key), gamepadID);
     bool isDown = GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), gamepadID);
@@ -147,7 +147,7 @@ bool Input::IsPressed(Gamepad key, int gamepadID)
 }
 
 
-bool Input::IsReleased(Gamepad key, int gamepadID)
+bool Input::BecomesReleased(Gamepad key, int gamepadID)
 {
     bool wasDown = GlfwInput::GamepadButtonWasHeldDown(KeyMap::ToGlfw(key), gamepadID);
     bool isDown = GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), gamepadID);

@@ -43,17 +43,17 @@ void GameLogic::OnUpdate()
     color.r += increment;
 
 
-    if (Input::IsPressed(Keyboard::P))
+    if (Input::BecomesPressed(Keyboard::P))
     {
         logger::print("P");
         Renderer::ShowWindow(!Renderer::IsWindowVisible());
     }
-    if (Input::IsPressed(Keyboard::M))
+    if (Input::BecomesPressed(Keyboard::M))
     {
         logger::print("M");
         Scene::Activate<DemoScene>(); // this gets called multiple frames in a row, which you shouldn't do in a real game
     }
-    if (Input::IsPressed(Keyboard::N))
+    if (Input::BecomesPressed(Keyboard::N))
     {
         logger::print("N");
         Scene::Activate<SecondScene>(); // this gets called multiple frames in a row, which you shouldn't do in a real game
@@ -72,20 +72,20 @@ void GameLogic::OldTests()
     color.r += increment;
 
 
-    if (Input::IsPressed(Keyboard::K))
+    if (Input::BecomesPressed(Keyboard::K))
     {
         logger::print("K");
         for (const auto& overlap : CollisionChecker::GetOverlaps())
             logger::print(overlap.first->GetEntity().name + " overlaps " + overlap.second->GetEntity().name);
     }
-    if (Input::IsPressed(Keyboard::L))
+    if (Input::BecomesPressed(Keyboard::L))
     {
         logger::print("L");
         auto colliders = CollisionChecker::RayOverlaps(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
         for (const auto& col : colliders)
             logger::print(col->GetEntity().name + " was hit");
     }
-    if (Input::IsPressed(Keyboard::P))
+    if (Input::BecomesPressed(Keyboard::P))
     {
         logger::print("P");
         auto collider = CollisionChecker::RayCast(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
@@ -95,17 +95,17 @@ void GameLogic::OldTests()
             logger::print("Hit nothing");
     }
 
-    if (Input::IsPressed(Keyboard::O))
+    if (Input::BecomesPressed(Keyboard::O))
     {
         logger::print("O");
         Renderer::ShowWindow(!Renderer::IsWindowVisible());
     }
-    if (Input::IsPressed(Keyboard::M))
+    if (Input::BecomesPressed(Keyboard::M))
     {
         logger::print("M");
         Scene::Activate<DemoScene>(); // this gets called multiple frames in a row, which you shouldn't do in a real game
     }
-    if (Input::IsPressed(Keyboard::N))
+    if (Input::BecomesPressed(Keyboard::N))
     {
         logger::print("N");
         Scene::Activate<SecondScene>(); // this gets called multiple frames in a row, which you shouldn't do in a real game

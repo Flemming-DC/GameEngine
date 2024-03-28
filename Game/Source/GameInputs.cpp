@@ -1,8 +1,8 @@
 #include "GameInputs.h"
 
-InputAction<bool>& GameInputs::jump = InputAction<bool>(0);
-InputAction<float>& GameInputs::fire = InputAction<float>(0);
-InputAction<glm::vec2>& GameInputs::walk = InputAction<glm::vec2>(0);
+InputAction<bool>& GameInputs::jump = InputAction<bool>();
+InputAction<float>& GameInputs::fire = InputAction<float>();
+InputAction<glm::vec2>& GameInputs::walk = InputAction<glm::vec2>();
 
 
 void GameInputs::OnGameStart()

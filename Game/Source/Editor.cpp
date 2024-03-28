@@ -182,7 +182,7 @@ void Editor::OnUpdate()
 
     //ImGui::ShowDemoWindow();
 
-    if (Input::IsHeldDown(Key::Keyboard::exc))
+    if (Input::IsPressed(Key::Keyboard::exc))
         OpenGlSetup::Exit(); // save first
 }
 

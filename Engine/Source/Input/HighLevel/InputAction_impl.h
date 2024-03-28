@@ -35,28 +35,38 @@ template<typename T> void InputAction<T>::LateUpdate()
 // store current and last state and the time of change obtained from FindState<bool, float, vec2>
 template<typename T> void InputAction<T>::IndividualUpdate()
 {
-	bool wasActive = IsActive();
+	if (id == -1)
+		RaiseError("This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
+	bool wasActive = IsPressed();
 	lastState = state;
 	state = FindState();
-	if (IsActive() == wasActive)
+	if (IsPressed() == wasActive)
 		return;
 
-	if (IsPressed())
+	if (BecomesPressed())
 		OnPressed.Invoke();
-	else if (IsReleased())
+	else if (BecomesReleased())
 		OnReleased.Invoke();
 	else
 		RaiseError("This else clause should be impossible to reach.");
-	timeOfLastActivationChange = Time::Now();
+	timeOfLastPressOrRelease = Time::Now();
 }
-
-
-
+/*
+template<typename T> std::string InputAction<T>::to_string()
+{
+	return logger::make_string(
+		"InputAction<", Tools::TypeName<T>(), "> with \n", keyboardKeys, mouseKeys, gamepadKeys, floatKeys, vectorKeys);
+}
+*/
 
 // ------------------------- specialized impl -------------------------
 
 
-template<> InputAction<bool>& InputAction<bool>::AddKey(Key::Keyboard key) { keyboardKeys.push_back(key); return *this; }
+template<> InputAction<bool>& InputAction<bool>::AddKey(Key::Keyboard key) 
+{ 
+	keyboardKeys.push_back(key); 
+	return *this; 
+}
 template<> InputAction<bool>& InputAction<bool>::AddKey(Key::Mouse key) { mouseKeys.push_back(key); return *this; }
 template<> InputAction<bool>& InputAction<bool>::AddKey(Key::Gamepad key) { gamepadKeys.push_back(key); return *this; }
 template<> InputAction<float>& InputAction<float>::AddKey(Key::FloatKey key) { floatKeys.push_back(key); return *this; }
@@ -74,13 +84,13 @@ template<> void InputAction<glm::vec2>::RemoveKey(Key::VectorKey key) { Tools::R
 template<> bool InputAction<bool>::FindState()
 {
 	for (const auto& k : keyboardKeys)
-		if (Input::IsHeldDown(k))
+		if (Input::IsPressed(k))
 			return true;
 	for (const auto& k : mouseKeys)
-		if (Input::IsHeldDown(k))
+		if (Input::IsPressed(k))
 			return true;
 	for (const auto& k : gamepadKeys)
-		if (Input::IsHeldDown(k, gamepadID))
+		if (Input::IsPressed(k, gamepadID))
 			return true;
 	return false;
 }
