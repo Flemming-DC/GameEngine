@@ -6,7 +6,7 @@
 class GameAssets : public Dynamic
 {
 public:
-	static void Setup();
+	static void Setup(); // static OnGameStart
 	static Shader& GetShader() { return shader; }
 	static Texture& GetTexture() { return texture; }
 	static Material& GetMaterial() { return material; }

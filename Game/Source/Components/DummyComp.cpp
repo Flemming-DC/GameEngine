@@ -4,11 +4,12 @@
 #include "RectangleCollider.h"
 #include "Screen.h"
 #include "InputVectorizer.h"
-
+#include "GameInputs.h"
 
 
 void DummyComp::OnStart()
 {
+
 	glm::vec2 halfSize = glm::vec2(0.5f, 0.5f);
 	std::vector<glm::vec2> position2Ds =
 	{
@@ -19,13 +20,14 @@ void DummyComp::OnStart()
 	};
 
 	gizmoID = Gizmo::register_.Add(position2Ds, &GetTransform()).GetID();
-
+	/*
 	for (const auto& g : Input::GamepadIDs())
 		logger::print("DummyComp.OnStart: connected at startup ", g);
 	onConnectedChangedIndex = Input::onGamepadConnectionChanged.Add([](bool hasBecomeConnected, unsigned int gamepadID)
 		{
 			logger::print("DummyComp.OnStart.onGamepadConnectionChanged: ", hasBecomeConnected, " ", gamepadID);
 		});
+	*/
 }
 
 void DummyComp::OnDestroy()
@@ -35,6 +37,43 @@ void DummyComp::OnDestroy()
 
 void DummyComp::OnUpdate()
 {
+	if (Input::IsPressed(Keyboard::L))
+	{
+		logger::print("L");
+		logger::print(GameInputs::jump.State());
+		logger::print(GameInputs::jump.Delta());
+		logger::print(GameInputs::jump.ActivationDuration());
+	}
+	if (GameInputs::jump.IsPressed())
+		logger::print("jump IsPressed");
+	if (GameInputs::jump.IsReleased())
+		logger::print("jump IsReleased");
+
+
+	if (Input::IsPressed(Keyboard::K))
+	{
+		logger::print("K");
+		logger::print(GameInputs::fire.State());
+		logger::print(GameInputs::fire.Delta());
+		logger::print(GameInputs::fire.ActivationDuration());
+	}
+	if (GameInputs::fire.IsPressed())
+		logger::print("fire IsPressed");
+	if (GameInputs::fire.IsReleased())
+		logger::print("fire IsReleased");
+
+	if (Input::IsPressed(Keyboard::J))
+	{
+		logger::print("J");
+		logger::print(GameInputs::walk.State());
+		logger::print(GameInputs::walk.Delta());
+		logger::print(GameInputs::walk.ActivationDuration());
+	}
+	if (GameInputs::walk.IsPressed())
+		logger::print("walk IsPressed");
+	if (GameInputs::walk.IsReleased())
+		logger::print("walk IsReleased");
+
 
 }
 

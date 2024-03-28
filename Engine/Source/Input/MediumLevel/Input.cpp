@@ -68,7 +68,7 @@ glm::vec2 Input::MouseWorldPosition2D() { return Screen::ToWorldPosition(Normali
 float Input::GetFloat(FloatKey key, int gamepadID)
 {
     if (key == FloatKey::mouseScrollDirection)
-        return GetScrollDirection();
+        return (float)GetScrollDirection();
     return GlfwInput::GamepadFloat(KeyMap::ToGlfw(key), gamepadID);
 }
 

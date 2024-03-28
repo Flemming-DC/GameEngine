@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine.h"
+#include "InputAction.h"
 
 class DummyComp : public Component
 {

@@ -34,6 +34,35 @@ void GameLogic::OnDestroy()
 void GameLogic::OnUpdate()
 {
     material->SetUniform("u_color", color);
+
+    if (color.r > 1)
+        increment = -6.0f * Time::Delta();
+    if (color.r < 0)
+        increment = 6.0f * Time::Delta();
+    color.r += increment;
+
+
+    if (Input::IsPressed(Keyboard::P))
+    {
+        logger::print("P");
+        Renderer::ShowWindow(!Renderer::IsWindowVisible());
+    }
+    if (Input::IsPressed(Keyboard::M))
+    {
+        logger::print("M");
+        Scene::Activate<DemoScene>(); // this gets called multiple frames in a row, which you shouldn't do in a real game
+    }
+    if (Input::IsPressed(Keyboard::N))
+    {
+        logger::print("N");
+        Scene::Activate<SecondScene>(); // this gets called multiple frames in a row, which you shouldn't do in a real game
+    }
+
+}
+
+void GameLogic::OldTests()
+{
+    material->SetUniform("u_color", color);
     
     if (color.r > 1)
         increment = -6.0f * Time::Delta();

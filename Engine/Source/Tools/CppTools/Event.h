@@ -34,5 +34,5 @@ public:
 
 private:
     std::unordered_map<unsigned int, std::function<void(Args...)>> functionsById;
-    std::atomic<unsigned int> maxId;
+    unsigned int maxId;
 };

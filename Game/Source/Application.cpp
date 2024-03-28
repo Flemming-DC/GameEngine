@@ -5,6 +5,7 @@
 #include "DemoScene.h"
 #include "SecondScene.h"
 #include "MiniScene.h"
+#include "GameInputs.h"
 
 //Scene::MakeBlankSceneFile("SecondScene");
 //Scene::GetActiveScene().PurelyManualSetup();
@@ -14,7 +15,7 @@
 int main()
 {
     //logger::print(UuidCreator::MakeID());
-    Dynamic::Setup<Editor, GameAssets>();
+    Dynamic::Setup<Editor, GameAssets, GameInputs>();
     Core::Run<DemoScene>();
     return 0;
 }

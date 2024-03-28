@@ -41,7 +41,7 @@ public:
 	static bool IsReleased(Gamepad key, int gamepadID = findSinglePlayerGamepad);
 	static bool IsHeldDown(Gamepad key, int gamepadID = findSinglePlayerGamepad);
 private:
-	static const unsigned int findSinglePlayerGamepad; // nb: this alias must match the corrosponding one in GlfwInput
+	static const unsigned int findSinglePlayerGamepad;
 
 	static int GetScrollDirection();
 };
