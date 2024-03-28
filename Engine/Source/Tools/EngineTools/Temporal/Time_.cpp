@@ -24,7 +24,7 @@ float Time::Delta()
 	return std::chrono::duration<float>(current - previous).count();
 }
 
-float Time::Current()
+float Time::Now()
 {
 	return std::chrono::duration<float>(current - start).count();
 }

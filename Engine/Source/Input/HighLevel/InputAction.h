@@ -1,9 +1,11 @@
 #pragma once
 #include "GlmTools.h"
+//#include "stringTools.h"
 #include "Event.h"
 #include "InputVectorizer.h"
 #include "Input.h"
 #include "InputEnums.h" // move some headers into impl file
+#include "Time_.h"
 
 // get to know template classes with header, cpp, impl.h files and with explicit bool, float, vec2 instantiations
 
@@ -13,8 +15,8 @@ template <typename T>
 class InputAction
 {
 public:
-	Event<T> OnPressed;
-	Event<T> OnReleased;
+	Event<> OnPressed;
+	Event<> OnReleased;
 	int gamepadID = -1; // singleplayerID appears again 
 	// enabled (wait with this until you start working on the inputMode)
 
@@ -25,10 +27,21 @@ public:
 		return *actions.back();
 	}
 	static void Destroy(const InputAction<T>& action) { Tools::RemoveKey(actions, action.id); } 
-	static void Update(); // loop over all inputActions: (1) call FindState on them (2) update state, lastState, timeOfLastChange and (3) fire events.
+	static void LateUpdate(); // loop over all inputActions: (1) call FindState on them (2) update state, lastState, timeOfLastChange and (3) fire events.
 
-	InputAction<T> AddKey(Keyboard key); // repeat this for each key type. The instantiations will raise an error, if you pick the wrong type.
-	InputAction<T> RemoveKey(Keyboard key); // return self for repeated function call
+	// returns itself to enable elegant repeated calling
+	// defaults to raising an error. the valid input are overridden in the specializations
+	InputAction<T>& AddKey(Keyboard key) { RaiseError("Key ", key, " doesn't yield input of type ", T, " as required by this inputAction"); }
+	InputAction<T>& AddKey(Mouse key) { RaiseError("Key ", key, " doesn't yield input of type ", T, " as required by this inputAction"); }
+	InputAction<T>& AddKey(Gamepad key) { RaiseError("Key ", key, " doesn't yield input of type ", T, " as required by this inputAction"); }
+	InputAction<T>& AddKey(FloatKey key) { RaiseError("Key ", key, " doesn't yield input of type ", T, " as required by this inputAction"); }
+	InputAction<T>& AddKey(VectorKey key) { RaiseError("Key ", key, " doesn't yield input of type ", T, " as required by this inputAction"); }
+
+	void RemoveKey(Keyboard key) { RaiseError("Key ", key, " doesn't yield input of type ", T, " as required by this inputAction"); }
+	void RemoveKey(Mouse key) { RaiseError("Key ", key, " doesn't yield input of type ", T, " as required by this inputAction"); }
+	void RemoveKey(Gamepad key) { RaiseError("Key ", key, " doesn't yield input of type ", T, " as required by this inputAction"); }
+	void RemoveKey(FloatKey key) { RaiseError("Key ", key, " doesn't yield input of type ", T, " as required by this inputAction"); }
+	void RemoveKey(VectorKey key) { RaiseError("Key ", key, " doesn't yield input of type ", T, " as required by this inputAction"); }
 
 
 	inline T State() const { return state; } // these functions are based of current and last state
@@ -36,21 +49,20 @@ public:
 	inline bool IsActive() const { return Magnitude(state) > noiseThreshold; }
 	inline bool IsPressed() const { return Magnitude(state) > noiseThreshold && Magnitude(lastState) <= noiseThreshold; };
 	inline bool IsReleased() const { return Magnitude(state) <= noiseThreshold && Magnitude(lastState) > noiseThreshold; };
-	inline float TimeOfLastPress() const { return timeOfLastPress; }
-	inline float TimeOfLastRelease() const { return timeOfLastPress; }
+	inline float ActivationDuration() const { return Time::Now() - timeOfLastActivationChange; } // time since IsActive changed
 
 
+	~InputAction() { P("destroyed"); } // this destructor is only for testing
 private:
 	Shorts;
 	T state;
 	T lastState; // state at last frame
-	float timeOfLastPress; // actually we only need timeOfLastChange, but that name is ambigous so we use timeOfLastPress and timeOfLastRelease instead
-	float timeOfLastRelease;
+	float timeOfLastActivationChange;
 	inline static const float noiseThreshold = 0.0001f; // this should be smaller than noiseThreshold from glfwInput
 	vector<Keyboard> keyboardKeys;
 	vector<Mouse> mouseKeys;
 	vector<Gamepad> gamepadKeys; // evt. combine these three into boolKeys
-	vector<FloatKeys> floatKeys;
+	vector<FloatKey> floatKeys;
 	vector<VectorKey> vectorKeys; // rename to vectorKeys
 	vector<uint> keys; // alternative to seperate list for each key type
 	static map_uo<uint, unique_ptr<InputAction>> actions;
@@ -58,13 +70,12 @@ private:
 	static inline uint maxID = 0;
 
 	InputAction(uint id_) : id(id_) {} // only the factory method can instantiate this class
-	~InputAction() { P("destroyed"); } // this destructor is only for testing
+	void IndividualUpdate(); // update an individual action
 	T FindState(); // evt. rename to Update.
 	// use IsHeldDown / GetFloat / GetVectorInput under the hood and pick the maximal state across the keys.
 	// store current and last state and time of change obtained from GetStateInternal<bool, float, vec2>
 	
-	inline float Magnitude(T state); // could e.g. be public. This function is implemented seperately for each type
-
+	inline float Magnitude(T state) const; // could e.g. be public. This function is implemented seperately for each type
 
 };
 

@@ -6,6 +6,7 @@
 #include "GlfwInput.h"
 #include "KeyMap.h"
 #include "Screen.h"
+#include "InputAction.h" // its a bit messy that input imports this, since InputAction is a higher level objects than Input
 
 const unsigned int Input::findSinglePlayerGamepad = GlfwInput::findSinglePlayerGamepad;
 Event<bool, unsigned int> Input::onGamepadConnectionChanged;
@@ -20,6 +21,9 @@ void Input::LateUpdate()
 { 
     GlfwInput::LateUpdate();
     Screen::LateUpdate();
+    InputAction<bool>::LateUpdate();
+    InputAction<float>::LateUpdate();
+    InputAction<glm::vec2>::LateUpdate();
 }
 
 

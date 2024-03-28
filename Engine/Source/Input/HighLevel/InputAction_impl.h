@@ -3,43 +3,43 @@
 
 
 
-//void InputAction<T>::Update(); // loop over all inputActions: (1) call FindState on them (2) update state, lastState, timeOfLastChange and (3) fire events.
+template<> InputAction<bool>& InputAction<bool>::AddKey(Keyboard key) { keyboardKeys.push_back(key); return *this; }
+template<> InputAction<bool>& InputAction<bool>::AddKey(Mouse key) { mouseKeys.push_back(key); return *this; }
+template<> InputAction<bool>& InputAction<bool>::AddKey(Gamepad key) { gamepadKeys.push_back(key); return *this; }
+template<> InputAction<float>& InputAction<float>::AddKey(FloatKey key) { floatKeys.push_back(key); return *this; }
+template<> InputAction<glm::vec2>& InputAction<glm::vec2>::AddKey(VectorKey key) { vectorKeys.push_back(key); return *this; }
 
-//InputAction<T> InputAction<T>::AddKey(Keyboard key); // repeat this for each key type. The instantiations will raise an error, if you pick the wrong type.
-//InputAction<T> InputAction<T>::RemoveKey(Keyboard key); // return self for repeated function call
+template<> void InputAction<bool>::RemoveKey(Keyboard key) { Tools::Remove(keyboardKeys, key); }
+template<> void InputAction<bool>::RemoveKey(Mouse key) { Tools::Remove(mouseKeys, key); }
+template<> void InputAction<bool>::RemoveKey(Gamepad key) { Tools::Remove(gamepadKeys, key); }
+template<> void InputAction<float>::RemoveKey(FloatKey key) { Tools::Remove(floatKeys, key); }
+template<> void InputAction<glm::vec2>::RemoveKey(VectorKey key) { Tools::Remove(vectorKeys, key); }
 
 
-
-
-template<> glm::vec2 InputAction<glm::vec2>::FindState()
+// loop over all inputActions: (1) call FindState on them (2) update state, lastState, timeOfLastChange and (3) fire events.
+template<typename T> void InputAction<T>::LateUpdate()
 {
-	float maxMagnitude = 0; 
-	glm::vec2 maxVector; 
-	for (const auto& k : vectorKeys)
-	{
-		if (Magnitude(InputVectorizer::GetVectorInput(k)) > maxMagnitude)
-		{
-			maxVector = InputVectorizer::GetVectorInput(k);
-			maxMagnitude = Magnitude(maxVector);
-		}
-	}
-	return maxVector;
+	for (const auto& [id, actionPtr] : actions)
+		actionPtr->IndividualUpdate();
 }
 
-template<> float InputAction<float>::FindState()
+template<typename T> void InputAction<T>::IndividualUpdate()
 {
-	float maxMagnitude = 0; // without sign
-	float maxFloat = 0; // with sign
-	for (const auto& k : floatKeys)
-	{
-		if (Magnitude(Input::GetFloat(k)) > maxMagnitude)
-		{
-			maxFloat = Input::GetFloat(k);
-			maxMagnitude = Magnitude(maxFloat);
-		}
-	}
-	return maxFloat;
+	bool wasActive = IsActive();
+	lastState = state;
+	state = FindState();
+	if (IsActive() == wasActive)
+		return;
+	
+	if (IsPressed())
+		OnPressed.Invoke();
+	else if (IsReleased())
+		OnReleased.Invoke();
+	else
+		RaiseError("This else clause should be impossible to reach.");
+	timeOfLastActivationChange = Time::Now();
 }
+
 
 template<> bool InputAction<bool>::FindState()
 {
@@ -56,9 +56,40 @@ template<> bool InputAction<bool>::FindState()
 }
 
 
-template<> inline float InputAction<bool>::Magnitude(bool state) { return state; }
-template<> inline float InputAction<float>::Magnitude(float state) { return std::abs(state); }
-template<> inline float InputAction<glm::vec2>::Magnitude(glm::vec2 state) { return glm::length(state); }
+template<> float InputAction<float>::FindState()
+{
+	float maxMagnitude = 0; // without sign
+	float maxFloat = 0; // with sign
+	for (const auto& k : floatKeys)
+	{
+		if (Magnitude(Input::GetFloat(k)) > maxMagnitude)
+		{
+			maxFloat = Input::GetFloat(k);
+			maxMagnitude = Magnitude(maxFloat);
+		}
+	}
+	return maxFloat;
+}
+
+template<> glm::vec2 InputAction<glm::vec2>::FindState()
+{
+	float maxMagnitude = 0;
+	glm::vec2 maxVector;
+	for (const auto& k : vectorKeys)
+	{
+		if (Magnitude(InputVectorizer::GetVectorInput(k)) > maxMagnitude)
+		{
+			maxVector = InputVectorizer::GetVectorInput(k);
+			maxMagnitude = Magnitude(maxVector);
+		}
+	}
+	return maxVector;
+}
+
+
+template<> inline float InputAction<bool>::Magnitude(bool state) const { return state; }
+template<> inline float InputAction<float>::Magnitude(float state) const { return std::abs(state); }
+template<> inline float InputAction<glm::vec2>::Magnitude(glm::vec2 state) const { return glm::length(state); }
 
 
 

@@ -7,7 +7,7 @@ public:
 	static void Setup();
 	static void Update();
 	static float Delta();
-	static float Current();
+	static float Now();
 
 };
 
