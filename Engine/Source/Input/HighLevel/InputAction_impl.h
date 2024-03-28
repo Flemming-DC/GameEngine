@@ -55,7 +55,8 @@ template<typename T> void InputAction<T>::IndividualUpdate()
 template<typename T> std::string InputAction<T>::to_string() const
 {
 	return logger::make_string(
-		"InputAction<", Tools::TypeName<T>(), "> with \n", keyboardKeys, mouseKeys, gamepadKeys, floatKeys, vectorKeys);
+		"InputAction<", Tools::TypeName<T>(), "> with \n", 
+		keyboardKeys, "\n", mouseKeys, "\n", gamepadKeys, "\n", floatKeys, "\n", vectorKeys);
 }
 
 

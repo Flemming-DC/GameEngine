@@ -19,7 +19,9 @@ vec3 Screen::ToWorldPosition(vec2 screenPos, bool* foundDepth)
 {
     // find depth
     float depth;
-    glCall(glReadPixels(screenPos.x, screenPos.y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth)); // obtain the Z component. It should be in the interval [0, 1] 
+    int pixel_x = (int)std::round(screenPos.x);
+    int pixel_y = (int)std::round(screenPos.y);
+    glCall(glReadPixels(pixel_x, pixel_y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth)); // obtain the Z component. It should be in the interval [0, 1] 
     if (foundDepth != nullptr)
         *foundDepth = (depth > -0.0001f && depth < 1.0001f);
     depth = glm::clamp(depth, 0.0f, 1.0f);
@@ -47,8 +49,8 @@ vec2 Screen::FromWorldPosition(vec3 worldPosition)
 
 vec2 Screen::NormalizeScreenPosition(vec2 screenPos)
 {
-    float width = OpenGlSetup::GetWidth();
-    float height = OpenGlSetup::GetHeight();
+    float width = (float)OpenGlSetup::GetWidth();
+    float height = (float)OpenGlSetup::GetHeight();
     screenPos = {
         glm::clamp(screenPos.x, 0.0f, width),
         glm::clamp(screenPos.y, 0.0f, height) };

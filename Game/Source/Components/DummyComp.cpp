@@ -10,7 +10,6 @@ using namespace Key;
 
 void DummyComp::OnStart()
 {
-	P(GameInputs::jump);
 
 	glm::vec2 halfSize = glm::vec2(0.5f, 0.5f);
 	std::vector<glm::vec2> position2Ds =

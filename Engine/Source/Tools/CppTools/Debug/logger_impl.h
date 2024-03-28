@@ -39,40 +39,32 @@ namespace logger
 	// ---------------- check if object has to_string method ---------------
 
 	// SFINAE test
-	template <typename T>
-	class HasToString
-	{
-	private:
-		typedef char YesType[1];
-		typedef char NoType[2];
+	template <typename... > using 
+	void_t = void;
 
-		template <typename T2> static YesType& test(decltype(&T2::to_string)) {}
-		template <typename T2> static NoType& test(...) {}
-	public: // public must come after private, since YesType must be declared first
-		enum { answer = sizeof(test<T>(0)) == sizeof(YesType) };
-	};
+	template <typename T, typename = void>
+	struct has_to_string_const_method : std::false_type {};
+
+	template <typename T>
+	struct has_to_string_const_method<T, void_t<
+		decltype(std::declval<const T&>().to_string())
+		>> : std::true_type {};
+
 
 	template<typename T>
-	typename std::enable_if<HasToString<T>::answer, std::string>::type
+	typename std::enable_if<has_to_string_const_method<T>::value, std::string>::type
 		TryCallToString(const std::type_info& type_, const T& t)
 	{
 		return t.to_string();
 	}
-	template<typename EnumType>
-	typename std::enable_if<std::is_enum<EnumType>::value, string>::type
-		TryCallToString(const std::type_info& type_, const EnumType& e)
-	{
-		string out = "";
-		//  RemovePrefix(type_.name(), "class ") 
-		out += Tools::TypeName<EnumType>() + " value " + std::to_string((int)e);
-		return out;
-	}
 
-	[[noreturn]] std::string TryCallToString(const std::type_info& type_, ...); // implemented in cpp
+	std::string TryCallToString(const std::type_info& type_, ...); // implemented in cpp
 
 
 	// ---------------- overloads of to_string ---------------
-	
+
+
+
 	template<typename T> string inline to_string(const T& value) { return TryCallToString(typeid(T), value); } // default to try and get a to_string method
 	template<typename T> string inline to_string(T* value) { return "raw_ptr to " + (value ? to_string(*value) : "null"); } // raw pointer
 	template<typename T> string inline to_string(std::unique_ptr<T> value) { return "unique_ptr to " + (value ? to_string(*value) : "null"); } // unique pointer
@@ -92,6 +84,15 @@ namespace logger
 	string inline to_string(long double value) { return std::to_string(value); }
 
 
+	template<typename EnumType>
+	typename std::enable_if<std::is_enum<EnumType>::value, string>::type
+		TryCallToString(const std::type_info& type_, const EnumType& e)
+	{
+		string out = "";
+		//  RemovePrefix(type_.name(), "class ") 
+		out += Tools::TypeName<EnumType>() + " value " + std::to_string((int)e);
+		return out;
+	}
 	
 }
 
