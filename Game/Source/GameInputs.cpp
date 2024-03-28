@@ -9,17 +9,27 @@ void GameInputs::OnGameStart()
 {
 
 	jump = InputAction<bool>::Create()
-		.AddKey(Keyboard::space)
-		.AddKey(Mouse::right)
-		.AddKey(Gamepad::A);
+		.AddKey(Key::Keyboard::space)
+		.AddKey(Key::Mouse::right)
+		.AddKey(Key::Gamepad::A);
 
 	fire = InputAction<float>::Create()
-		.AddKey(FloatKey::mouseScrollDirection)
-		.AddKey(FloatKey::leftTrigger);
+		.AddKey(Key::FloatKey::mouseScrollDirection)
+		.AddKey(Key::FloatKey::leftTrigger);
 
 	walk = InputAction<glm::vec2>::Create()
-		.AddKey(VectorKey::WASD)
-		.AddKey(VectorKey::leftStick);
+		.AddKey(Key::VectorKey::WASD)
+		.AddKey(Key::VectorKey::leftStick);
 
+	auto& dum = InputAction<glm::vec2>::Create()
+		.AddKey(Key::VectorKey::Arrows)
+		.AddKey(Key::VectorKey::rightStick);
+	dum.Destroy();
+}
 
+void GameInputs::OnGameEnd()
+{
+	jump.Destroy();
+	fire.Destroy();
+	walk.Destroy();
 }

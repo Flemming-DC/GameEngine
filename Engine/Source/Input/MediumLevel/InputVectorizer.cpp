@@ -1,8 +1,8 @@
 #include "InputVectorizer.h"
 #include "Input.h"
-#include "InputEnums.h"
 #include "GlfwInput.h" // just to get the noise threshold
 
+using namespace Key;
 static float const noiseNormThreshold = 2 * GlfwInput::noiseThreshold * GlfwInput::noiseThreshold;
 
 glm::vec2 InputVectorizer::GetVectorInput(VectorKey key, int gamepadID)

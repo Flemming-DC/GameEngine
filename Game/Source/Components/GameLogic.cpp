@@ -6,6 +6,7 @@
 #include "SecondScene.h"
 #include "Time_.h"
 
+using namespace Key;
 
 void GameLogic::OnStart()
 {

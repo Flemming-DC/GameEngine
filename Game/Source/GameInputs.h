@@ -11,5 +11,6 @@ public:
 
 private:
 	void OnGameStart() override;
+	void OnGameEnd() override;
 
 };

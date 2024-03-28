@@ -1,6 +1,7 @@
 #include "KeyMap.h"
 #include "ErrorChecker.h"
 
+using namespace Key;
 
 // --------------- Glfw --------------- //
 
