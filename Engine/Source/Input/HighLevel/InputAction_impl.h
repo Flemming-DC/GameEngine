@@ -35,8 +35,6 @@ template<typename T> void InputAction<T>::LateUpdate()
 // store current and last state and the time of change obtained from FindState<bool, float, vec2>
 template<typename T> void InputAction<T>::IndividualUpdate()
 {
-	if (id == -1)
-		RaiseError("This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
 	bool wasActive = IsPressed();
 	lastState = state;
 	state = FindState();
@@ -64,14 +62,40 @@ template<typename T> std::string InputAction<T>::to_string() const
 
 
 template<> InputAction<bool>& InputAction<bool>::AddKey(Key::Keyboard key) 
-{ 
-	keyboardKeys.push_back(key); 
+{
+	if (id < 1)
+		RaiseError("This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
+	keyboardKeys.push_back(key);
+	return *this;
+} 
+template<> InputAction<bool>& InputAction<bool>::AddKey(Key::Mouse key)
+{
+	if (id < 1)
+		RaiseError("This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
+	mouseKeys.push_back(key);
+	return *this;
+}
+template<> InputAction<bool>& InputAction<bool>::AddKey(Key::Gamepad key)
+{
+	if (id < 1)
+		RaiseError("This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
+	gamepadKeys.push_back(key);
+	return *this;
+}
+template<> InputAction<float>& InputAction<float>::AddKey(Key::FloatKey key)
+{
+	if (id < 1)
+		RaiseError("This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
+	floatKeys.push_back(key);
+	return *this;
+}
+template<> InputAction<glm::vec2>& InputAction<glm::vec2>::AddKey(Key::VectorKey key) 
+{
+	if (id < 1)
+		RaiseError("This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
+	vectorKeys.push_back(key); 
 	return *this; 
 }
-template<> InputAction<bool>& InputAction<bool>::AddKey(Key::Mouse key) { mouseKeys.push_back(key); return *this; }
-template<> InputAction<bool>& InputAction<bool>::AddKey(Key::Gamepad key) { gamepadKeys.push_back(key); return *this; }
-template<> InputAction<float>& InputAction<float>::AddKey(Key::FloatKey key) { floatKeys.push_back(key); return *this; }
-template<> InputAction<glm::vec2>& InputAction<glm::vec2>::AddKey(Key::VectorKey key) { vectorKeys.push_back(key); return *this; }
 
 template<> void InputAction<bool>::RemoveKey(Key::Keyboard key) { Tools::Remove(keyboardKeys, key); }
 template<> void InputAction<bool>::RemoveKey(Key::Mouse key) { Tools::Remove(mouseKeys, key); }

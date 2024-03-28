@@ -38,6 +38,7 @@ void DummyComp::OnDestroy()
 
 void DummyComp::OnUpdate()
 {
+
 	if (Input::BecomesPressed(Keyboard::L))
 	{
 		logger::print("L");

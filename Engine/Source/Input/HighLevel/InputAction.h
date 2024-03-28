@@ -26,7 +26,8 @@ public:
 		actions.emplace(maxID, std::make_unique<InputAction<T>>(maxID));
 		return *(actions[maxID]);
 	}
-	InputAction(unsigned int id_ = 0) : id(id_), state(0), lastState(0) { } // use defualt input to provide an uninitialiized instance
+	// use defualt input to provide an uninitialiized instance. Nb: you can use this for pointers, but not references.
+	InputAction(unsigned int id_) : id(id_), state(0), lastState(0) { } 
 	void Destroy() { Tools::RemoveKey(actions, this->id); }
 	static void LateUpdate(); // loop over all inputActions: (1) call FindState on them (2) update state, lastState, timeOfLastChange and (3) fire events.
 	std::string to_string() const;
@@ -55,11 +56,10 @@ public:
 
 private:
 	Shorts;
-
 	T state;
 	T lastState; // state at last frame
 	float timeOfLastPressOrRelease = 0;
-	vector<Key::Keyboard> keyboardKeys = {};
+	vector<Key::Keyboard> keyboardKeys;
 	vector<Key::Mouse> mouseKeys;
 	vector<Key::Gamepad> gamepadKeys; // evt. combine these three into boolKeys
 	vector<Key::FloatKey> floatKeys;

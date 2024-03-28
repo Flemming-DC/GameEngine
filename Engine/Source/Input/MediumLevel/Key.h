@@ -2,7 +2,7 @@
 
 
 
-const unsigned int _singlePlayerGamepadID = -1; // private to the input system
+const int _singlePlayerGamepadID = -1; // private to the input system
 
 namespace Key
 {
