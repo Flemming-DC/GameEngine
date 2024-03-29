@@ -3,7 +3,7 @@
 #include <string>
 #include "OpenGlError.h"
 #include "Time_.h"
-#include "Input.h"
+#include "InputKey.h"
 
 // static variables must be initialized in the cpp file not the header file
 Camera* Camera::currentCamera = nullptr;
@@ -64,19 +64,19 @@ glm::mat4 Camera::GetView() //const
 
 void Camera::OnUpdate()
 {
-    float scaling = 1 + Input::GetFloat(Key::FloatKey::mouseScrollDirection) * scrollSpeed * Time::Delta(); // exp(x) = 1 + x + O(x^2) is used
+    float scaling = 1 + InputKey::GetFloat(Key::FloatKey::mouseScrollDirection) * scrollSpeed * Time::Delta(); // exp(x) = 1 + x + O(x^2) is used
     projection = glm::scale(projection, glm::vec3(scaling));
 
 
 
     glm::vec3 moveDirection = glm::vec3(0.0f);
-    if (Input::IsPressed(Key::Keyboard::A))
+    if (InputKey::IsPressed(Key::Keyboard::A))
         moveDirection.x -= 1;
-    if (Input::IsPressed(Key::Keyboard::D))
+    if (InputKey::IsPressed(Key::Keyboard::D))
         moveDirection.x += 1;
-    if (Input::IsPressed(Key::Keyboard::S))
+    if (InputKey::IsPressed(Key::Keyboard::S))
         moveDirection.y -= 1;
-    if (Input::IsPressed(Key::Keyboard::W))
+    if (InputKey::IsPressed(Key::Keyboard::W))
         moveDirection.y += 1;
     if (moveDirection.x != 0 && moveDirection.y != 0)
         moveDirection = glm::normalize(moveDirection);

@@ -1,4 +1,4 @@
-#include "Input.h"
+#include "InputKey.h"
 #include "imgui/imgui.h"
 #include "ErrorChecker.h"
 #include "ListTools.h"
@@ -9,27 +9,12 @@
 #include "InputAction.h" // its a bit messy that input imports this, since InputAction is a higher level objects than Input
 
 using namespace Key;
-Event<bool, unsigned int> Input::onGamepadConnectionChanged;
-
-
-void Input::Setup() 
-{ 
-    GlfwInput::Setup(); 
-}
-
-void Input::LateUpdate() 
-{ 
-    GlfwInput::LateUpdate();
-    Screen::LateUpdate();
-    InputAction<bool>::LateUpdate();
-    InputAction<float>::LateUpdate();
-    InputAction<glm::vec2>::LateUpdate();
-}
+Event<bool, unsigned int> InputKey::onGamepadConnectionChanged;
 
 
 // -------------- Mouse special input --------------
 
-int Input::GetScrollDirection()
+int InputKey::GetScrollDirection()
 {
     if (ImGui::GetIO().WantCaptureMouse)
         return (int)ImGui::GetIO().MouseWheel;
@@ -38,7 +23,7 @@ int Input::GetScrollDirection()
 }
 
 
-glm::vec2 Input::MouseScreenPosition()
+glm::vec2 InputKey::MouseScreenPosition()
 {
     if (ImGui::GetIO().WantCaptureMouse)
     {
@@ -51,33 +36,33 @@ glm::vec2 Input::MouseScreenPosition()
         return Screen::NormalizeScreenPosition({ mousePos.first, mousePos.second });
     }
 }
-glm::vec2 Input::NormalizedMouseScreenPosition()
+glm::vec2 InputKey::NormalizedMouseScreenPosition()
 {
     // normalized screen position only uses the game screen, not the editor and therefore not imGUI
     auto mousePos = GlfwInput::MouseScreenPosition();
     return Screen::NormalizeScreenPosition({ mousePos.first, mousePos.second });
 }
 
-glm::vec3 Input::MouseWorldPosition() { return Screen::ToWorldPosition(NormalizedMouseScreenPosition()); }
-glm::vec2 Input::MouseWorldPosition2D() { return Screen::ToWorldPosition(NormalizedMouseScreenPosition()); }
+glm::vec3 InputKey::MouseWorldPosition() { return Screen::ToWorldPosition(NormalizedMouseScreenPosition()); }
+glm::vec2 InputKey::MouseWorldPosition2D() { return Screen::ToWorldPosition(NormalizedMouseScreenPosition()); }
 
 
 // -------------- Gamepad special input --------------
 
 
-float Input::GetFloat(FloatKey key, int gamepadID)
+float InputKey::GetFloat(FloatKey key, int gamepadID)
 {
     if (key == FloatKey::mouseScrollDirection)
         return (float)GetScrollDirection();
     return GlfwInput::GamepadFloat(KeyMap::ToGlfw(key), gamepadID);
 }
 
-bool Input::HasGamepad(int gamepadID) { return GlfwInput::HasGamepad(gamepadID); }
-std::vector<unsigned int> Input::GamepadIDs() { return GlfwInput::gamepadIDs; }
+bool InputKey::HasGamepad(int gamepadID) { return GlfwInput::HasGamepad(gamepadID); }
+std::vector<unsigned int> InputKey::GamepadIDs() { return GlfwInput::gamepadIDs; }
 
 // -------------- Keyboard: IsPressed, BecomesPressed, BecomesReleased --------------
 
-bool Input::IsPressed(Keyboard key)
+bool InputKey::IsPressed(Keyboard key)
 {
     if (ImGui::GetIO().WantCaptureKeyboard)
         return ImGui::IsKeyDown(KeyMap::ToImGui(key));
@@ -86,7 +71,7 @@ bool Input::IsPressed(Keyboard key)
 }
 
 
-bool Input::BecomesPressed(Keyboard key)
+bool InputKey::BecomesPressed(Keyboard key)
 {
     if (ImGui::GetIO().WantCaptureKeyboard)
         return ImGui::IsKeyPressed(KeyMap::ToImGui(key), false);
@@ -95,7 +80,7 @@ bool Input::BecomesPressed(Keyboard key)
 }
 
 
-bool Input::BecomesReleased(Keyboard key)
+bool InputKey::BecomesReleased(Keyboard key)
 {
     if (ImGui::GetIO().WantCaptureKeyboard)
         return ImGui::IsKeyReleased(KeyMap::ToImGui(key));
@@ -105,7 +90,7 @@ bool Input::BecomesReleased(Keyboard key)
 
 // -------------- Mouse: IsPressed, BecomesPressed, BecomesReleased --------------
 
-bool Input::IsPressed(Mouse key)
+bool InputKey::IsPressed(Mouse key)
 {
     if (ImGui::GetIO().WantCaptureMouse)
         return ImGui::IsKeyDown(KeyMap::ToImGui(key));
@@ -114,7 +99,7 @@ bool Input::IsPressed(Mouse key)
 }
 
 
-bool Input::BecomesPressed(Mouse key)
+bool InputKey::BecomesPressed(Mouse key)
 {
     if (ImGui::GetIO().WantCaptureMouse)
         return ImGui::IsKeyPressed(KeyMap::ToImGui(key), false);
@@ -123,7 +108,7 @@ bool Input::BecomesPressed(Mouse key)
 }
 
 
-bool Input::BecomesReleased(Mouse key)
+bool InputKey::BecomesReleased(Mouse key)
 {
     if (ImGui::GetIO().WantCaptureMouse)
         return ImGui::IsKeyReleased(KeyMap::ToImGui(key));
@@ -133,13 +118,13 @@ bool Input::BecomesReleased(Mouse key)
 
 // -------------- Gamepad: IsPressed, BecomesPressed, BecomesReleased --------------
 
-bool Input::IsPressed(Gamepad key, int gamepadID)
+bool InputKey::IsPressed(Gamepad key, int gamepadID)
 {
     return GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), gamepadID);
 }
 
 
-bool Input::BecomesPressed(Gamepad key, int gamepadID)
+bool InputKey::BecomesPressed(Gamepad key, int gamepadID)
 {
     bool wasDown = GlfwInput::GamepadButtonWasHeldDown(KeyMap::ToGlfw(key), gamepadID);
     bool isDown = GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), gamepadID);
@@ -147,7 +132,7 @@ bool Input::BecomesPressed(Gamepad key, int gamepadID)
 }
 
 
-bool Input::BecomesReleased(Gamepad key, int gamepadID)
+bool InputKey::BecomesReleased(Gamepad key, int gamepadID)
 {
     bool wasDown = GlfwInput::GamepadButtonWasHeldDown(KeyMap::ToGlfw(key), gamepadID);
     bool isDown = GlfwInput::GamepadButtonHeldDown(KeyMap::ToGlfw(key), gamepadID);

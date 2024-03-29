@@ -1,12 +1,10 @@
 #pragma once
 #include <memory>
+#include "Event.h"
 #include "GlmTools.h"
 #include "stringTools.h"
-#include "Event.h"
 #include "InputVectorizer.h"
-#include "Input.h"
 #include "Key.h" // move some headers into impl file
-#include "Time_.h"
 
 
 template <typename T>

@@ -1,5 +1,5 @@
 #include "Core.h"
-#include "Input.h"
+#include "InputLoop.h"
 #include "Time_.h"
 #include "EngineAssets.h"
 #include "Renderer.h"
@@ -15,7 +15,7 @@ void Core::Setup()
     OpenGlSetup::Setup();
     ImGuiSetup::Setup();
     // engine setup
-    Input::Setup();
+    InputLoop::Setup();
     Time::Setup();
     CollisionLoop::Setup();
     EngineAssets::Setup();
@@ -39,7 +39,7 @@ void Core::Update()
     Delay::CallToFrameEnd();
 
     // shutdown frame
-    Input::LateUpdate();
+    InputLoop::LateUpdate();
     ImGuiSetup::LateUpdate();
 }
 

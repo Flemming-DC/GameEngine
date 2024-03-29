@@ -62,11 +62,8 @@ read/save files from/to disk
 	load mesh and material from id
 
 input:
-	gamepad
-	events
-	input actions that abstract from input devices
-	distinguish between editor, runtime and perhaps additional control schemes
-	icons
+	evt. icons
+	evt. pass float input trough a function that makes them more linear
 
 
 headers

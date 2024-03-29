@@ -3,7 +3,7 @@
 #include "OpenGlSetup.h" 
 #include "ListTools.h"
 #include "logger.h"
-#include "Input.h" // letting GlfwInput refer to Input is dirty, but neessary in order to forward events
+#include "InputKey.h" // letting GlfwInput refer to InputKey is dirty, but neessary in order to forward events
 
 
 int GlfwInput::scrollDirection = 0;
@@ -28,7 +28,7 @@ void GlfwInput::Setup()
         if (HasGamepad(g))
         {
             gamepadIDs.push_back((unsigned int)g);
-            Input::onGamepadConnectionChanged.Invoke(true, g);
+            InputKey::onGamepadConnectionChanged.Invoke(true, g);
         }
     }
 }
@@ -118,7 +118,7 @@ std::pair<float, float> GlfwInput::MouseScreenPosition()
     double xpos, ypos; // screen coordinates relative to the upper-left corner.
     auto window = OpenGlSetup::GetWindow();
     glCall(glfwGetCursorPos(window, &xpos, &ypos));
-    return { xpos, ypos };
+    return { (float)xpos, (float)ypos };
 }
 
 float GlfwInput::GamepadFloat(int axis, int gamepadID)
@@ -192,5 +192,5 @@ void GlfwInput::_JoystickCallback(int gamepadID_, int event)
     else
         Warning("Unrecognized eventType: ", event);
 
-    Input::onGamepadConnectionChanged.Invoke(event == GLFW_CONNECTED, gamepadID);
+    InputKey::onGamepadConnectionChanged.Invoke(event == GLFW_CONNECTED, gamepadID);
 }

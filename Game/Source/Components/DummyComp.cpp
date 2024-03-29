@@ -1,5 +1,5 @@
 #include "DummyComp.h"
-#include "Input.h"
+#include "InputKey.h"
 #include "GameLogic.h"
 #include "RectangleCollider.h"
 #include "Screen.h"
@@ -22,9 +22,9 @@ void DummyComp::OnStart()
 
 	gizmoID = Gizmo::register_.Add(position2Ds, &GetTransform()).GetID();
 	/*
-	for (const auto& g : Input::GamepadIDs())
+	for (const auto& g : InputKey::GamepadIDs())
 		logger::print("DummyComp.OnStart: connected at startup ", g);
-	onConnectedChangedIndex = Input::onGamepadConnectionChanged.Add([](bool hasBecomeConnected, unsigned int gamepadID)
+	onConnectedChangedIndex = InputKey::onGamepadConnectionChanged.Add([](bool hasBecomeConnected, unsigned int gamepadID)
 		{
 			logger::print("DummyComp.OnStart.onGamepadConnectionChanged: ", hasBecomeConnected, " ", gamepadID);
 		});
@@ -33,13 +33,13 @@ void DummyComp::OnStart()
 
 void DummyComp::OnDestroy()
 {
-	Input::onGamepadConnectionChanged.Remove(onConnectedChangedIndex);
+	InputKey::onGamepadConnectionChanged.Remove(onConnectedChangedIndex);
 }
 
 void DummyComp::OnUpdate()
 {
 
-	if (Input::BecomesPressed(Keyboard::L))
+	if (InputKey::BecomesPressed(Keyboard::L))
 	{
 		logger::print("L");
 		logger::print(GameInputs::jump.State());
@@ -52,7 +52,7 @@ void DummyComp::OnUpdate()
 		logger::print("jump BecomesReleased");
 
 
-	if (Input::BecomesPressed(Keyboard::K))
+	if (InputKey::BecomesPressed(Keyboard::K))
 	{
 		logger::print("K");
 		logger::print(GameInputs::fire.State());
@@ -64,7 +64,7 @@ void DummyComp::OnUpdate()
 	if (GameInputs::fire.BecomesReleased())
 		logger::print("fire BecomesReleased");
 
-	if (Input::BecomesPressed(Keyboard::J))
+	if (InputKey::BecomesPressed(Keyboard::J))
 	{
 		logger::print("J");
 		logger::print(GameInputs::walk.State());
@@ -77,7 +77,7 @@ void DummyComp::OnUpdate()
 		logger::print("walk BecomesReleased");
 
 
-	if (Input::BecomesPressed(Keyboard::H))
+	if (InputKey::BecomesPressed(Keyboard::H))
 	{
 		logger::print("H");
 		GameInputs::walk.enabled = !GameInputs::walk.enabled;
@@ -88,32 +88,32 @@ void DummyComp::OnUpdate()
 void DummyComp::OldTests()
 {
 
-	if (Input::BecomesPressed(Keyboard::J))
+	if (InputKey::BecomesPressed(Keyboard::J))
 	{
 		logger::print("J: try destroy gamelogic from ", this->GetEntity());
 		if (TryGet<GameLogic>())
 			GetEntity().Destroy<GameLogic>();
 	}
-	if (Input::BecomesPressed(Keyboard::H))
+	if (InputKey::BecomesPressed(Keyboard::H))
 	{
 		logger::print("H: try add gamelogic to ", this->GetEntity());
 		if (!TryGet<GameLogic>() && TryGet<Renderable>() && TryGet<RectangleCollider>())
 			GetEntity().Add<GameLogic>();
 	}
 
-	if (Input::BecomesPressed(Keyboard::I))
+	if (InputKey::BecomesPressed(Keyboard::I))
 	{
 		logger::print("I: try destroy picture 1 RectangleCollider");
 		if (Entity::GetEntity("picture 1").TryGet<RectangleCollider>())
 			Entity::GetEntity("picture 1").Destroy<RectangleCollider>();
 	}
-	if (Input::BecomesPressed(Keyboard::U))
+	if (InputKey::BecomesPressed(Keyboard::U))
 	{
 		logger::print("U: try destroy circle 1");
 		if (Entity::TryGetID("circle 1"))
 			Entity::GetEntity("circle 1").Destroy();
 	}
-	if (Input::BecomesPressed(Keyboard::Y))
+	if (InputKey::BecomesPressed(Keyboard::Y))
 	{
 		logger::print("Y: try make circle 1 and X");
 		if (!Entity::TryGetID("circle 1"))
@@ -139,109 +139,109 @@ void DummyComp::OldTests()
 			Entity::Make<DummyComp, DummyComp>("XX");
 	}
 	/*
-	if (Input::KeyHeldDown(Keyboard::T))
+	if (InputKey::KeyHeldDown(Keyboard::T))
 	{
 		logger::print("T: Save");
 		Scene::Save();
 	}
 	*/
-	if (Input::BecomesPressed(Keyboard::R))
+	if (InputKey::BecomesPressed(Keyboard::R))
 		logger::print("R: pressed");
-	if (Input::IsPressed(Keyboard::R))
+	if (InputKey::IsPressed(Keyboard::R))
 		logger::print("R: held down");
-	if (Input::BecomesReleased(Keyboard::R))
+	if (InputKey::BecomesReleased(Keyboard::R))
 		logger::print("R: released");
 
-	if (Input::BecomesPressed(Keyboard::ctrl))
+	if (InputKey::BecomesPressed(Keyboard::ctrl))
 		logger::print("ctrl: pressed");
-	if (Input::IsPressed(Keyboard::ctrl))
+	if (InputKey::IsPressed(Keyboard::ctrl))
 		logger::print("ctrl: held down");
-	if (Input::BecomesReleased(Keyboard::ctrl))
+	if (InputKey::BecomesReleased(Keyboard::ctrl))
 		logger::print("ctrl: released");
 
 
 
-	if (Input::BecomesPressed(Mouse::middle))
+	if (InputKey::BecomesPressed(Mouse::middle))
 		logger::print("Mouse::middle: pressed");
-	if (Input::IsPressed(Mouse::middle))
+	if (InputKey::IsPressed(Mouse::middle))
 		logger::print("Mouse::middle: held down");
-	if (Input::BecomesReleased(Mouse::middle))
+	if (InputKey::BecomesReleased(Mouse::middle))
 		logger::print("Mouse::middle: released");
 
-	if (Input::BecomesPressed(Keyboard::G))
-		logger::print("G: ", Input::MouseScreenPosition());
-	if (Input::BecomesPressed(Keyboard::F))
-		logger::print("F: ", Input::MouseWorldPosition2D());
+	if (InputKey::BecomesPressed(Keyboard::G))
+		logger::print("G: ", InputKey::MouseScreenPosition());
+	if (InputKey::BecomesPressed(Keyboard::F))
+		logger::print("F: ", InputKey::MouseWorldPosition2D());
 
-	if (Input::BecomesPressed(Keyboard::B))
+	if (InputKey::BecomesPressed(Keyboard::B))
 	{
 		bool foundDepth;
-		auto pos = Screen::ToWorldPosition(Input::MouseScreenPosition(), &foundDepth);
+		auto pos = Screen::ToWorldPosition(InputKey::MouseScreenPosition(), &foundDepth);
 		logger::print("B: ", foundDepth, " ", pos);
 	}
 
-	if (Input::BecomesPressed(Keyboard::_1))
+	if (InputKey::BecomesPressed(Keyboard::_1))
 	{
-		auto before = Input::MouseScreenPosition();
+		auto before = InputKey::MouseScreenPosition();
 		auto world = Screen::ToWorldPosition(before);
 		auto after = Screen::FromWorldPosition(world);
 		logger::print("1: ", before, " == ", after);
 	}
 
-	if (Input::BecomesPressed(Keyboard::_2))
+	if (InputKey::BecomesPressed(Keyboard::_2))
 	{
 		logger::print("2: ");
 		Screen::SetCursorMode(CursorMode::normal);
 	}
-	if (Input::IsPressed(Keyboard::_3))
+	if (InputKey::IsPressed(Keyboard::_3))
 	{
 		logger::print("3: ");
 		Screen::SetCursorMode(CursorMode::hidden);
 	}
-	if (Input::BecomesPressed(Keyboard::_4))
+	if (InputKey::BecomesPressed(Keyboard::_4))
 	{
 		logger::print("4: ");
 		Screen::SetCursorMode(CursorMode::locked);
 	}
 
-	if (Input::BecomesPressed(Keyboard::_5))
+	if (InputKey::BecomesPressed(Keyboard::_5))
 	{
 		logger::print("5: ");
-		logger::print(Input::HasGamepad(GLFW_JOYSTICK_2));
+		logger::print(InputKey::HasGamepad(GLFW_JOYSTICK_2));
 	}
-	if (Input::BecomesPressed(Keyboard::_6))
+	if (InputKey::BecomesPressed(Keyboard::_6))
 	{
 		logger::print("6: ");
-		logger::print(Input::GetFloat(FloatKey::leftStick_x, GLFW_JOYSTICK_2));
+		logger::print(InputKey::GetFloat(FloatKey::leftStick_x, GLFW_JOYSTICK_2));
 	}
 
 
-	if (Input::BecomesPressed(Gamepad::A, GLFW_JOYSTICK_2))
+	if (InputKey::BecomesPressed(Gamepad::A, GLFW_JOYSTICK_2))
 	{
 		logger::print("Gamepad::A: BecomesPressed", GLFW_JOYSTICK_2);
 	}
-	if (Input::IsPressed(Gamepad::A, GLFW_JOYSTICK_2))
+	if (InputKey::IsPressed(Gamepad::A, GLFW_JOYSTICK_2))
 	{
 		logger::print("Gamepad::A: IsPressed", GLFW_JOYSTICK_2);
 	}
-	if (Input::BecomesReleased(Gamepad::A, GLFW_JOYSTICK_2))
+	if (InputKey::BecomesReleased(Gamepad::A, GLFW_JOYSTICK_2))
 	{
 		logger::print("Gamepad::A: BecomesReleased ", GLFW_JOYSTICK_2);
 	}
 
-	if (Input::BecomesPressed(Keyboard::_7))
+	if (InputKey::BecomesPressed(Keyboard::_7))
 	{
 		glm::vec2 vec = InputVectorizer::GetVectorInput(VectorKey::rightStick, GLFW_JOYSTICK_2);
 		logger::print("7: joystickRight ", vec);
 	}
-	if (Input::BecomesPressed(Keyboard::_8))
+	if (InputKey::BecomesPressed(Keyboard::_8))
 	{
 		logger::print("8: ");
-		logger::print(Input::GetFloat(FloatKey::leftStick_y));
+		logger::print(InputKey::GetFloat(FloatKey::leftStick_y));
 	}
-	if (Input::BecomesPressed(Keyboard::_9))
+	if (InputKey::BecomesPressed(Keyboard::_9))
 	{
 		logger::print("9: ");
-		logger::print(Input::GetFloat(FloatKey::leftTrigger));
+		logger::print(InputKey::GetFloat(FloatKey::leftTrigger));
 	}
 }

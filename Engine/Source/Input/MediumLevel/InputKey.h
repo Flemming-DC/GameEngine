@@ -4,14 +4,12 @@
 #include "GlmTools.h"
 #include "Event.h"
 
-class Input
+class InputKey
 {
 public:
 	// Event<bool hasBecomeConnected, unsigned int gamepadID>
 	static Event<bool, unsigned int> onGamepadConnectionChanged;
 
-	static void Setup();
-	static void LateUpdate();
 
 	// -------------- special input --------------
 	

@@ -6,7 +6,7 @@
 #include "GameAssets.h"
 #include "FrameBuffer.h"
 #include "Renderer.h"
-#include "Input.h"
+#include "InputKey.h"
 
 // make viewport framebuffer size sensitive to my viewport vindow size.
 
@@ -182,7 +182,7 @@ void Editor::OnUpdate()
 
     //ImGui::ShowDemoWindow();
 
-    if (Input::IsPressed(Key::Keyboard::exc))
+    if (InputKey::IsPressed(Key::Keyboard::exc))
         OpenGlSetup::Exit(); // save first
 }
 

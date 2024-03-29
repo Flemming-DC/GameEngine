@@ -1,5 +1,7 @@
 #pragma once
 #include "InputAction.h"
+#include "InputKey.h"
+#include "Time_.h"
 
 
 // ------------------------- specialized declarations -------------------------
@@ -66,13 +68,13 @@ template<> bool InputAction<bool>::FindState()
 	if (!enabled)
 		return false;
 	for (const auto& k : keyboardKeys)
-		if (Input::IsPressed(k))
+		if (InputKey::IsPressed(k))
 			return true;
 	for (const auto& k : mouseKeys)
-		if (Input::IsPressed(k))
+		if (InputKey::IsPressed(k))
 			return true;
 	for (const auto& k : gamepadKeys)
-		if (Input::IsPressed(k, gamepadID))
+		if (InputKey::IsPressed(k, gamepadID))
 			return true;
 	return false;
 }
@@ -86,9 +88,9 @@ template<> float InputAction<float>::FindState()
 	float maxFloat = 0; // with sign
 	for (const auto& k : floatKeys)
 	{
-		if (Magnitude(Input::GetFloat(k, gamepadID)) > maxMagnitude)
+		if (Magnitude(InputKey::GetFloat(k, gamepadID)) > maxMagnitude)
 		{
-			maxFloat = Input::GetFloat(k, gamepadID);
+			maxFloat = InputKey::GetFloat(k, gamepadID);
 			maxMagnitude = Magnitude(maxFloat);
 		}
 	}
