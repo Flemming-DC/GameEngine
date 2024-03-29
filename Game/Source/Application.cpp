@@ -15,8 +15,9 @@
 int main()
 {
     //logger::print(UuidCreator::MakeID());
+    Core::MarkAsEditor();
     Dynamic::Setup<Editor, GameAssets, GameInputs>();
-    Core::Run<DemoScene>();
+    Core::Run(std::make_unique<DemoScene>());
     return 0;
 }
 // findstr /S /M "_Debug" "Engine\Source\*.*"

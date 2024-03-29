@@ -9,6 +9,7 @@
 class Dynamic
 {
 public:
+
 	template <typename... Args>
 	static void Setup()
 	{
@@ -35,6 +36,7 @@ public:
 	static void CallOnEditorStart();
 	static void CallOnGameStart();
 	static void CallOnUpdate();
+	static void CallOnEditorUpdate();
 	static void CallOnGameEnd();
 	static void CallOnEditorEnd();
 
@@ -44,6 +46,7 @@ private:
 	inline virtual void OnEditorStart() {}
 	inline virtual void OnGameStart() {}
 	inline virtual void OnUpdate() {}
+	inline virtual void OnEditorUpdate() {}
 	inline virtual void OnGameEnd() {}
 	inline virtual void OnEditorEnd() {}
 

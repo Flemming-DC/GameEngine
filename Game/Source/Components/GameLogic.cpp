@@ -25,7 +25,6 @@ void GameLogic::OnStart()
 
 void GameLogic::OnDestroy() 
 { 
-    logger::print("GameLogic::OnDestroy");
     Get<RectangleCollider>().onEnter.Remove(onEnterIndex);
     Get<RectangleCollider>().onExit.Remove(onExitIndex);
 
@@ -48,15 +47,18 @@ void GameLogic::OnUpdate()
         logger::print("P");
         Renderer::ShowWindow(!Renderer::IsWindowVisible());
     }
+
     if (InputKey::BecomesPressed(Keyboard::M))
     {
         logger::print("M");
-        Scene::Activate<DemoScene>(); // this gets called multiple frames in a row, which you shouldn't do in a real game
+        Scene::Activate<DemoScene>();
+        //Scene::Activate(new DemoScene());
     }
     if (InputKey::BecomesPressed(Keyboard::N))
     {
         logger::print("N");
-        Scene::Activate<SecondScene>(); // this gets called multiple frames in a row, which you shouldn't do in a real game
+        Scene::Activate<SecondScene>();
+        //Scene::Activate(new SecondScene());
     }
 
 }

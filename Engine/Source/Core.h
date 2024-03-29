@@ -5,23 +5,15 @@
 class Core
 {
 public:
-    template <typename SceneType>
-    static void Run()
-    {
-        LogHeader("Setup");
-        Setup();
-        Scene::ActivateImmediately<SceneType>();
-
-        LogHeader("Loop");
-        while (OpenGlSetup::Update())
-            Update();
-
-        LogHeader("Shutdown");
-        Shutdown();
-        LogHeader("Done");
-    }
+    static void Run(std::unique_ptr<Scene> firstScene);
+    static void StartRunningGame(); // used by engine and editor, not the game itself
+    static void StopRunningGame();
+    static void MarkAsEditor() { inEditor = true; }
 
 private:
+    static bool gameIsRunning;
+    static bool inEditor;
+
     static void Setup();
     static void Update();
     static void Shutdown();

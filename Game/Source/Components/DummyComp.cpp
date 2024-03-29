@@ -41,6 +41,19 @@ void DummyComp::OnUpdate()
 
 	if (InputKey::BecomesPressed(Keyboard::L))
 	{
+		demoScenes.emplace_back(DemoScene());
+		secondScene.emplace_back(SecondScene());
+		P(demoScenes.size());
+		P(secondScene.size());
+	}
+}
+
+
+void DummyComp::TestInputActions()
+{
+
+	if (InputKey::BecomesPressed(Keyboard::L))
+	{
 		logger::print("L");
 		logger::print(GameInputs::jump.State());
 		logger::print(GameInputs::jump.Delta());
@@ -83,7 +96,6 @@ void DummyComp::OnUpdate()
 		GameInputs::walk.enabled = !GameInputs::walk.enabled;
 	}
 }
-
 
 void DummyComp::OldTests()
 {

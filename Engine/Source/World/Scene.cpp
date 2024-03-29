@@ -23,6 +23,47 @@ unique_ptr<Scene> Scene::activeScene = nullptr;
 Event<Scene&> Scene::onStart;
 Event<Scene&> Scene::onEnd;
 
+/*
+void Scene::Activate(Scene* scenePtr)
+{
+    Delay::ToFrameEnd([scenePtr]() { ActivateImmediately(scenePtr); });
+}
+*/
+
+
+void Scene::SetFirstScene(std::unique_ptr<Scene> firstScene)
+{ 
+    if (activeScene)
+        RaiseError("activeScene is already initialized");
+    activeScene = std::move(firstScene);
+}
+
+void Scene::ActivateImmediately(Scene* scenePtr)
+{
+    if (activeScene)
+        activeScene->ShutDown();
+
+    activeScene.reset(scenePtr);
+    Renderer::SetupGrid2D(0.25f); // if is_editor
+
+    activeScene->Load();
+    activeScene->ManualSetup();
+    onStart.Invoke(*activeScene);
+}
+
+void Scene::ReloadImmediately()
+{
+    if (activeScene)
+        activeScene->ShutDown();
+
+    //activeScene = std::move(activeScene);
+    Renderer::SetupGrid2D(0.25f); // if is_editor
+
+    activeScene->Load();
+    activeScene->ManualSetup();
+    onStart.Invoke(*activeScene);
+}
+
 
 void Scene::MakeBlankSceneFile(string name)
 {

@@ -169,7 +169,7 @@ void Hierarchy()
 
 
 
-void Editor::OnUpdate()
+void Editor::OnEditorUpdate()
 {
     for (const auto& entity : Entity::register_.GetData())
         TransformGUI2D(entity);

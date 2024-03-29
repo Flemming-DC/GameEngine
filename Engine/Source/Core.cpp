@@ -8,21 +8,48 @@
 #include "CollisionLoop.h"
 #include "ImGuiSetup.h"
 
+bool Core::gameIsRunning = true;
+bool Core::inEditor = false;
+
+
+void Core::Run(std::unique_ptr<Scene> firstScene)
+{
+    LogHeader("Setup");
+    Scene::SetFirstScene(std::move(firstScene));
+    Setup();
+
+    LogHeader("Loop");
+    while (OpenGlSetup::Update())
+        Update();
+
+    LogHeader("Shutdown");
+    Shutdown();
+    LogHeader("Done");
+}
 
 void Core::Setup()
 {
     // externals setup
     OpenGlSetup::Setup();
-    ImGuiSetup::Setup();
+    ImGuiSetup::Setup(inEditor);
     // engine setup
     InputLoop::Setup();
     Time::Setup();
     CollisionLoop::Setup();
     EngineAssets::Setup();
     // editor / game setup
-    Dynamic::CallOnEditorStart();
+    if (inEditor)
+        Dynamic::CallOnEditorStart();
+    if (gameIsRunning)
+        StartRunningGame();
+    Scene::ReloadImmediately();
+}
+
+void Core::StartRunningGame()
+{
+    gameIsRunning = true;
+    Time::GameSetup();
     Dynamic::CallOnGameStart();
-    // Scene::Activate<SceneType>();
 }
 
 void Core::Update()
@@ -32,23 +59,39 @@ void Core::Update()
     Time::Update();
     
     // update world
-    CollisionLoop::Update();
-    Dynamic::CallOnUpdate();
-    Entity::Update();
-    Renderer::DrawToScreen();
-    Delay::CallToFrameEnd();
+    if (gameIsRunning)
+    {
+        CollisionLoop::Update();
+        Dynamic::CallOnUpdate();
+        Entity::Update();
+        Renderer::DrawToScreen();
+    }
+    if (inEditor)
+        Dynamic::CallOnEditorUpdate();
+    Delay::CallToFrameEnd(); 
 
     // shutdown frame
     InputLoop::LateUpdate();
     ImGuiSetup::LateUpdate();
 }
 
+void Core::StopRunningGame()
+{
+    Delay::ToFrameEnd([]() {
+        Scene::ReloadImmediately();
+        Dynamic::CallOnGameEnd();
+        gameIsRunning = false;
+        });
+}
+
 void Core::Shutdown()
 {
     // editor / game shutdown
-    Scene::GetActiveScene().ShutDown();
-    Dynamic::CallOnGameEnd();
-    Dynamic::CallOnEditorEnd();
+    Scene::GetActiveScene().ShutDown(); // inEditor on end game reload scene
+    if (gameIsRunning)
+        Dynamic::CallOnGameEnd(); // evt. call EndGame
+    if (inEditor)
+        Dynamic::CallOnEditorEnd();
     // engine shutdown
     Renderer::ShutDown();
     Dynamic::Clear();
@@ -56,3 +99,4 @@ void Core::Shutdown()
     ImGuiSetup::Shutdown();
     OpenGlSetup::Shutdown();
 }
+

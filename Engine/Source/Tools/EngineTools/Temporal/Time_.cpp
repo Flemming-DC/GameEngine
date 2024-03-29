@@ -2,15 +2,24 @@
 #include <chrono>
 
 // if chrono is bugging, then you can use glfwGetTime instead
-static std::chrono::steady_clock::time_point start;
+static std::chrono::steady_clock::time_point editorStart;
+static std::chrono::steady_clock::time_point gameStart;
 static std::chrono::steady_clock::time_point previous;
 static std::chrono::steady_clock::time_point current;
 
 void Time::Setup()
 {
-	start = std::chrono::high_resolution_clock::now();
-	previous = start;
-	current = start;
+	editorStart = std::chrono::high_resolution_clock::now();
+	gameStart = std::chrono::high_resolution_clock::now();
+	previous = gameStart;
+	current = gameStart;
+}
+
+void Time::GameSetup()
+{
+	gameStart = std::chrono::high_resolution_clock::now();
+	previous = gameStart;
+	current = gameStart;
 }
 
 void Time::Update()
@@ -26,7 +35,11 @@ float Time::Delta()
 
 float Time::Now()
 {
-	return std::chrono::duration<float>(current - start).count();
+	return std::chrono::duration<float>(current - gameStart).count();
 }
 
+float Time::EditorNow()
+{
+	return std::chrono::duration<float>(current - editorStart).count();
+}
 

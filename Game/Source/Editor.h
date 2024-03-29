@@ -10,6 +10,6 @@ public:
 
 private:
 	void OnEditorStart() override { Renderer::ShowWindow(false); }
-	void OnUpdate() override;
+	void OnEditorUpdate() override;
 };
 
