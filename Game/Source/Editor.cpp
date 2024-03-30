@@ -192,8 +192,6 @@ void Editor::OnEditorUpdate()
             Core::StopRunningGame();
         else
             Core::StartRunningGame();
-
-        //Renderer::ShowWindow(!Renderer::IsWindowVisible());
     }
 
     if (InputKey::BecomesPressed(Key::Keyboard::exc))

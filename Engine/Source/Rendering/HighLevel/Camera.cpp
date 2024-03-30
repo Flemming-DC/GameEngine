@@ -64,10 +64,8 @@ glm::mat4 Camera::GetView() //const
 
 void Camera::OnUpdate()
 {
-    float scaling = 1;// +InputKey::GetFloat(Key::FloatKey::mouseScrollDirection) * scrollSpeed * Time::Delta(); // exp(x) = 1 + x + O(x^2) is used
+    float scaling = 1 + InputKey::GetFloat(Key::FloatKey::mouseScrollDirection) * scrollSpeed * Time::Delta(); // exp(x) = 1 + x + O(x^2) is used
     projection = glm::scale(projection, glm::vec3(scaling));
-
-
 
     glm::vec3 moveDirection = glm::vec3(0.0f);
     if (InputKey::IsPressed(Key::Keyboard::A))
