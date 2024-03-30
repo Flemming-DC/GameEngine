@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Camera.h"
 #include <GL/glew.h>
 #include "OpenGlError.h"
 #include "Renderable.h"
@@ -11,21 +12,27 @@
 #include "FrameBuffer.h"
 #include "OpenGLidChecker.h"
 
-uuids::uuid Renderer::horizontalGridID;
-uuids::uuid Renderer::verticalGridID;
+Shorts
+uuid Renderer::horizontalGridID;
+uuid Renderer::verticalGridID;
 FrameBuffer Renderer::frameBuffer;
 
 
 void Renderer::DrawToScreen()
 {
+    DrawToScreen(Camera::GetCurrent().ProjectionView());
+    /*
     glCall(glClear(GL_COLOR_BUFFER_BIT)); // same as renderer.Clear()
     Renderable::UnBind(); //  evt. add framebuffer unbind
     Gizmo::CleanupDeadGizmos();
 
+    glm::mat4 projectionView = Camera::GetCurrent().ProjectionView();
+
     for (const uuids::uuid& renderableID : Renderable::allRenderables)
-        Entity::GetComponent<Renderable>(renderableID).Draw();
+        Entity::GetComponent<Renderable>(renderableID).Draw(projectionView);
     for (Gizmo& gizmo : Gizmo::register_.GetData())
-        gizmo.Draw();
+        gizmo.Draw(projectionView);
+    */
 }
 
 
@@ -41,6 +48,22 @@ Renderer::RenderResult Renderer::DrawToFrameBuffer()
 }
 
 
+void Renderer::DrawToScreen(mat4 projectionView, bool useGizmos)
+{
+    glCall(glClear(GL_COLOR_BUFFER_BIT)); // same as renderer.Clear()
+    Renderable::UnBind(); //  evt. add framebuffer unbind
+    Gizmo::CleanupDeadGizmos();
+
+    for (const uuids::uuid& renderableID : Renderable::allRenderables)
+        Entity::GetComponent<Renderable>(renderableID).Draw(projectionView);
+    for (Gizmo& gizmo : Gizmo::register_.GetData())
+        gizmo.Draw(projectionView);
+}
+
+Renderer::RenderResult Renderer::DrawToFrameBuffer(vec3 cameraPos, quat cameraRot, vec3 cameraScale, bool useGizmos)
+{
+    return { 0, 0, 0 }; // dummy
+}
 
 void Renderer::SetupGrid2D(float gridScale)
 {

@@ -15,7 +15,7 @@ public:
 
 	void Setup(const Material& material, const Mesh& mesh);
 	void Setup(const Material& material);
-	void Draw();
+	void Draw(const glm::mat4& projectionView);
 	static void UnBind();
 	inline Material& GetMaterial() { return material; } // not used in engine
 	void Save(YAML::Node& node) const override;

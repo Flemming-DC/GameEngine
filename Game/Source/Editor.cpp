@@ -185,9 +185,9 @@ void Editor::OnEditorUpdate()
 
     //ImGui::ShowDemoWindow();
 
-    if (InputKey::BecomesPressed(Key::Keyboard::P))
+    if (InputKey::BecomesPressed(Key::Keyboard::R))
     {
-        logger::print("P");
+        logger::print("R");
         if (Core::GameIsRunning())
             Core::StopRunningGame();
         else

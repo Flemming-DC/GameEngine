@@ -1,5 +1,4 @@
 #include "Renderable.h"
-#include "Camera.h"
 #include "OpenGlError.h"
 #include "EngineAssets.h"
 #include "ListTools.h"
@@ -36,13 +35,13 @@ void Renderable::Setup(const Material& material_)
 
 
 
-void Renderable::Draw()
+void Renderable::Draw(const glm::mat4& projectionView)
 {
 
-    glm::mat4 projection = Camera::GetCurrent().GetProjection(); // evt. save the projectionView. at least within each frame
-    glm::mat4 view = Camera::GetCurrent().GetView();
+    //glm::mat4 projection = Camera::GetCurrent().GetProjection(); // evt. save the projectionView. at least within each frame
+    //glm::mat4 view = Camera::GetCurrent().GetView();
     glm::mat4 model = GetTransform().GetModel(); // this is inefficient
-    material.SetUniform("u_MVP", projection * view * model);
+    material.SetUniform("u_MVP", projectionView * model);
 
     material.Bind();
     mesh.Bind();

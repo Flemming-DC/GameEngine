@@ -7,9 +7,6 @@
 #include "MiniScene.h"
 #include "GameInputs.h"
 
-//Scene::MakeBlankSceneFile("SecondScene");
-//Scene::GetActiveScene().PurelyManualSetup();
-//Scene::GetActiveScene().Save();
 
 
 int main()

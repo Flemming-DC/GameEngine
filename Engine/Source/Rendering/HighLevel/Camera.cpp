@@ -5,7 +5,7 @@
 #include "Time_.h"
 #include "InputKey.h"
 
-// static variables must be initialized in the cpp file not the header file
+Shorts
 Camera* Camera::currentCamera = nullptr;
 
 void Camera::OnStart()
@@ -61,6 +61,10 @@ glm::mat4 Camera::GetView() //const
     return GetTransform().GetInverseModel();
 }
 
+mat4 Camera::ProjectionView(vec3 cameraPos, quat cameraRot, vec3 cameraScale)
+{
+    return mat4(1.0f);
+}
 
 void Camera::OnUpdate()
 {
