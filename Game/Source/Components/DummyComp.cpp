@@ -5,6 +5,7 @@
 #include "Screen.h"
 #include "InputVectorizer.h"
 #include "GameInputs.h"
+#include "OpenGlExternal.h"
 
 using namespace Key;
 
@@ -38,14 +39,7 @@ void DummyComp::OnDestroy()
 
 void DummyComp::OnUpdate()
 {
-
-	if (InputKey::BecomesPressed(Keyboard::L))
-	{
-		demoScenes.emplace_back(DemoScene());
-		secondScene.emplace_back(SecondScene());
-		P(demoScenes.size());
-		P(secondScene.size());
-	}
+	TestInputActions();
 }
 
 
@@ -55,45 +49,45 @@ void DummyComp::TestInputActions()
 	if (InputKey::BecomesPressed(Keyboard::L))
 	{
 		logger::print("L");
-		logger::print(GameInputs::jump.State());
-		logger::print(GameInputs::jump.Delta());
-		logger::print(GameInputs::jump.StateDuration());
+		logger::print(GameInputs::Jump().State());
+		logger::print(GameInputs::Jump().Delta());
+		logger::print(GameInputs::Jump().StateDuration());
 	}
-	if (GameInputs::jump.BecomesPressed())
+	if (GameInputs::Jump().BecomesPressed())
 		logger::print("jump BecomesPressed");
-	if (GameInputs::jump.BecomesReleased())
+	if (GameInputs::Jump().BecomesReleased())
 		logger::print("jump BecomesReleased");
 
 
 	if (InputKey::BecomesPressed(Keyboard::K))
 	{
 		logger::print("K");
-		logger::print(GameInputs::fire.State());
-		logger::print(GameInputs::fire.Delta());
-		logger::print(GameInputs::fire.StateDuration());
+		logger::print(GameInputs::Fire().State());
+		logger::print(GameInputs::Fire().Delta());
+		logger::print(GameInputs::Fire().StateDuration());
 	}
-	if (GameInputs::fire.BecomesPressed())
+	if (GameInputs::Fire().BecomesPressed())
 		logger::print("fire BecomesPressed");
-	if (GameInputs::fire.BecomesReleased())
+	if (GameInputs::Fire().BecomesReleased())
 		logger::print("fire BecomesReleased");
 
 	if (InputKey::BecomesPressed(Keyboard::J))
 	{
 		logger::print("J");
-		logger::print(GameInputs::walk.State());
-		logger::print(GameInputs::walk.Delta());
-		logger::print(GameInputs::walk.StateDuration());
+		logger::print(GameInputs::Walk().State());
+		logger::print(GameInputs::Walk().Delta());
+		logger::print(GameInputs::Walk().StateDuration());
 	}
-	if (GameInputs::walk.BecomesPressed())
+	if (GameInputs::Walk().BecomesPressed())
 		logger::print("walk BecomesPressed");
-	if (GameInputs::walk.BecomesReleased())
+	if (GameInputs::Walk().BecomesReleased())
 		logger::print("walk BecomesReleased");
 
 
 	if (InputKey::BecomesPressed(Keyboard::H))
 	{
 		logger::print("H");
-		GameInputs::walk.enabled = !GameInputs::walk.enabled;
+		GameInputs::Walk().enabled = !GameInputs::Walk().enabled;
 	}
 }
 

@@ -1,7 +1,6 @@
 #pragma once
 #include "Engine.h"
 
-
 class Editor : public Dynamic
 {
 public:
@@ -9,7 +8,7 @@ public:
 
 
 private:
-	void OnEditorStart() override { Renderer::ShowWindow(false); }
+	void OnEditorStart() override;
 	void OnEditorUpdate() override;
 };
 

@@ -40,17 +40,10 @@ void Core::Setup()
     // editor / game setup
     if (inEditor)
         Dynamic::CallOnEditorStart();
-    if (gameIsRunning)
-        StartRunningGame();
+    Dynamic::CallOnGameStart(); // this must be called even if (gameIsRunning == false). Thats a bit messy.
     Scene::ReloadImmediately();
 }
 
-void Core::StartRunningGame()
-{
-    gameIsRunning = true;
-    Time::GameSetup();
-    Dynamic::CallOnGameStart();
-}
 
 void Core::Update()
 {
@@ -75,14 +68,6 @@ void Core::Update()
     ImGuiSetup::LateUpdate();
 }
 
-void Core::StopRunningGame()
-{
-    Delay::ToFrameEnd([]() {
-        Scene::ReloadImmediately();
-        Dynamic::CallOnGameEnd();
-        gameIsRunning = false;
-        });
-}
 
 void Core::Shutdown()
 {
@@ -100,3 +85,29 @@ void Core::Shutdown()
     OpenGlSetup::Shutdown();
 }
 
+
+void Core::StartRunningGame()
+{
+    gameIsRunning = true;
+    Time::GameSetup();
+    Dynamic::CallOnGameStart();
+    Renderer::ShowWindow(true);
+}
+
+
+void Core::StopRunningGame()
+{
+    Delay::ToFrameEnd([]()
+        {
+            Renderer::ShowWindow(false);
+            Scene::ReloadImmediately();
+            Dynamic::CallOnGameEnd();
+            gameIsRunning = false;
+        });
+}
+
+void Core::MarkAsEditor()
+{
+    inEditor = true;
+    gameIsRunning = false;
+}

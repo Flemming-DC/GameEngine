@@ -3,9 +3,7 @@
 #include <vector>
 #include <stduuid/uuid.h>
 #include <memory>
-#include "Register.h"
 #include "Event.h"
-#include "Renderer.h"
 #include "Delay.h"
 #include "StringTools.h"
 

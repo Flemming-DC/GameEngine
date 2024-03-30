@@ -14,6 +14,8 @@
 #include <fstream>
 #include <filesystem>
 #include <sstream>
+#include "Register.h"
+#include "Renderer.h"
 
 
 Shorts;

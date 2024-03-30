@@ -42,11 +42,6 @@ void GameLogic::OnUpdate()
     color.r += increment;
 
 
-    if (InputKey::BecomesPressed(Keyboard::P))
-    {
-        logger::print("P");
-        Renderer::ShowWindow(!Renderer::IsWindowVisible());
-    }
 
     if (InputKey::BecomesPressed(Keyboard::M))
     {

@@ -14,10 +14,10 @@ Event<bool, unsigned int> InputKey::onGamepadConnectionChanged;
 
 // -------------- Mouse special input --------------
 
-int InputKey::GetScrollDirection()
+float InputKey::GetScrollDirection()
 {
     if (ImGui::GetIO().WantCaptureMouse)
-        return (int)ImGui::GetIO().MouseWheel;
+        return ImGui::GetIO().MouseWheel;
     else
         return GlfwInput::scrollDirection;
 }
@@ -53,7 +53,7 @@ glm::vec2 InputKey::MouseWorldPosition2D() { return Screen::ToWorldPosition(Norm
 float InputKey::GetFloat(FloatKey key, int gamepadID)
 {
     if (key == FloatKey::mouseScrollDirection)
-        return (float)GetScrollDirection();
+        return GetScrollDirection();
     return GlfwInput::GamepadFloat(KeyMap::ToGlfw(key), gamepadID);
 }
 

@@ -94,6 +94,8 @@ template<> float InputAction<float>::FindState()
 			maxMagnitude = Magnitude(maxFloat);
 		}
 	}
+	if (maxFloat < -1.001f || maxFloat > 1.001f)
+		RaiseError("Impossible state encountered. FindState() = ", maxFloat);
 	return maxFloat;
 }
 
@@ -111,6 +113,8 @@ template<> glm::vec2 InputAction<glm::vec2>::FindState()
 			maxMagnitude = Magnitude(maxVector);
 		}
 	}
+	if (maxMagnitude > 1.001f)
+		RaiseError("Impossible state encountered. FindState() = ", maxVector);
 	return maxVector;
 }
 

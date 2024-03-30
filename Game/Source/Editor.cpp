@@ -7,6 +7,8 @@
 #include "FrameBuffer.h"
 #include "Renderer.h"
 #include "InputKey.h"
+#include "Core.h"
+
 
 // make viewport framebuffer size sensitive to my viewport vindow size.
 
@@ -168,6 +170,7 @@ void Hierarchy()
 }
 
 
+void Editor::OnEditorStart() { Renderer::ShowWindow(false); }
 
 void Editor::OnEditorUpdate()
 {
@@ -182,7 +185,18 @@ void Editor::OnEditorUpdate()
 
     //ImGui::ShowDemoWindow();
 
-    if (InputKey::IsPressed(Key::Keyboard::exc))
+    if (InputKey::BecomesPressed(Key::Keyboard::P))
+    {
+        logger::print("P");
+        if (Core::GameIsRunning())
+            Core::StopRunningGame();
+        else
+            Core::StartRunningGame();
+
+        //Renderer::ShowWindow(!Renderer::IsWindowVisible());
+    }
+
+    if (InputKey::BecomesPressed(Key::Keyboard::exc))
         OpenGlSetup::Exit(); // save first
 }
 

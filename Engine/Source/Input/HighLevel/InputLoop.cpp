@@ -13,11 +13,11 @@ void InputLoop::Setup()
 
 void InputLoop::LateUpdate()
 {
-    GlfwInput::LateUpdate();
-    Screen::LateUpdate();
     InputAction<bool>::LateUpdate();
     InputAction<float>::LateUpdate();
     InputAction<glm::vec2>::LateUpdate();
+    Screen::LateUpdate();
+    GlfwInput::LateUpdate(); // this update call must happen in the end
 }
 
 

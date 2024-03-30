@@ -40,6 +40,6 @@ public:
 	static bool IsPressed(Key::Gamepad key, int gamepadID = _singlePlayerGamepadID);
 private:
 
-	static int GetScrollDirection();
+	static float GetScrollDirection();
 };
 
