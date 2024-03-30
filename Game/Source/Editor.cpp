@@ -53,11 +53,9 @@ void Inspector() {}
 void Editor::SceneEditor()
 {
     UpdateCamera();
-    //auto pos = Camera::Current().GetTransform().GetPosition();
-    //auto rot = Camera::Current().GetTransform().GetRotation();
-    //auto scale = Camera::Current().GetTransform().GetScale();
-    auto projectionView = Camera::ProjectionView(cameraPos, cameraRot, cameraScale);
-    auto renderResult = Renderer::DrawToFrameBuffer(projectionView, true);
+    
+    //auto projectionView = Camera::ProjectionView(cameraPos, cameraRot, cameraScale);
+    auto renderResult = Renderer::DrawToFrameBuffer(cameraPos, cameraRot, cameraScale);
         
     ImVec2 uvBottumLeft = { 0, 1 };
     ImVec2 uvTopRight = { 1, 0 };

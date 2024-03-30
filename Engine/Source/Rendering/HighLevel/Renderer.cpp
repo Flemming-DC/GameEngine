@@ -19,18 +19,15 @@ uuid Renderer::verticalGridID;
 FrameBuffer Renderer::frameBuffer;
 
 
-Renderer::RenderResult Renderer::DrawToFrameBuffer()
-{
-    return DrawToFrameBuffer(Camera::Current().ProjectionView());
-}
-
-void Renderer::DrawToScreen()
-{
-    DrawToScreen(Camera::Current().ProjectionView());
-}
+Renderer::RenderResult Renderer::DrawToFrameBuffer(vec3 cameraPos, quat cameraRot, vec3 cameraScale)
+    { return DrawToFrameBuffer(Camera::ProjectionView(cameraPos, cameraRot, cameraScale)); }
+Renderer::RenderResult Renderer::DrawToFrameBuffer() 
+    { return DrawToFrameBuffer(Camera::Current().ProjectionView()); }
+void Renderer::DrawToScreen() 
+    { DrawToScreen(Camera::Current().ProjectionView()); }
 
 
-Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView, bool useGizmos)
+Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView)
 {
     if (!UuidCreator::IsInitialized(frameBuffer.GetID()))
         frameBuffer = FrameBuffer::register_.Add(OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight());
@@ -42,7 +39,7 @@ Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView, bool use
 }
 
 
-void Renderer::DrawToScreen(mat4 projectionView, bool useGizmos)
+void Renderer::DrawToScreen(mat4 projectionView, bool drawGizmos)
 {
     glCall(glClear(GL_COLOR_BUFFER_BIT)); // same as renderer.Clear()
     Renderable::UnBind(); //  evt. add framebuffer unbind
@@ -50,9 +47,9 @@ void Renderer::DrawToScreen(mat4 projectionView, bool useGizmos)
 
     for (const uuids::uuid& renderableID : Renderable::allRenderables)
         Entity::GetComponent<Renderable>(renderableID).Draw(projectionView);
-    if (useGizmos)
+    if (drawGizmos)
     {
-        for (Gizmo& gizmo : Gizmo::register_.GetData())
+        for (Gizmo& gizmo : Gizmo::GetData())
             gizmo.Draw(projectionView);
     }
 }
@@ -79,9 +76,9 @@ void Renderer::SetupGrid2D(float gridScale)
     }
 
 
-    horizontalGridID = Gizmo::Add(
+    horizontalGridID = Gizmo::Make(
         horizontallyOrganizedPosition2Ds, nullptr, color, false, false);
-    verticalGridID = Gizmo::Add(
+    verticalGridID = Gizmo::Make(
         verticallyOrganizedPosition2Ds, nullptr, color, false, false);
 
 }

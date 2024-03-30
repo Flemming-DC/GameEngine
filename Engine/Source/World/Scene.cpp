@@ -195,7 +195,7 @@ void Scene::Save()
 void Scene::ShutDown() 
 {
     Entity::DestroyEverything();
-    Gizmo::register_.Clear();
+    Gizmo::Clear();
     onEnd.Invoke(*activeScene);
 }
 

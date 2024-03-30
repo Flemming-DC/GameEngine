@@ -80,7 +80,7 @@ void Gizmo::CleanupDeadGizmos()
 }
 
 
-uuid Gizmo::Add(vector<vec2> position2Ds, Transform* transform, vec4 color, bool showPoints, bool loop)
+uuid Gizmo::Make(vector<vec2> position2Ds, Transform* transform, vec4 color, bool showPoints, bool loop)
 {
     uuid nullID;
     if (!EngineMode::InEditor())
@@ -101,7 +101,7 @@ uuid Gizmo::MakeCircle(vec2 center, float radius, Transform& transform_, vec4 co
             center.y + radius * std::sin(angle) });
     }
 
-    return Gizmo::Add(position2Ds, &transform_, color, false);
+    return Gizmo::Make(position2Ds, &transform_, color, false);
 }
 
 
