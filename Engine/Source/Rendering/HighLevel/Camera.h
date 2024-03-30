@@ -27,7 +27,6 @@ private:
 	bool isProjectionInitialized = false;
 
 	void OnStart() override;
-	void OnUpdate() override;
 	void OnDestroy() override;
 
 	static mat4 MakeOrthoProjection(float scale = 1.0f, float nearClipping = 0.0f, float farClipping = 1000.0f);

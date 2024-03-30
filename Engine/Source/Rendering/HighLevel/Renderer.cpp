@@ -11,6 +11,7 @@
 #include "VertexArray.h"
 #include "FrameBuffer.h"
 #include "OpenGLidChecker.h"
+#include "EngineMode.h"
 
 Shorts
 uuid Renderer::horizontalGridID;
@@ -35,7 +36,7 @@ Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView, bool use
         frameBuffer = FrameBuffer::register_.Add(OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight());
     frameBuffer.Bind();
     glCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-    Renderer::DrawToScreen(projectionView);
+    Renderer::DrawToScreen(projectionView, !EngineMode::GameIsRunning());
     frameBuffer.UnBind();
     return { frameBuffer.GetTextureOpenGLid(), OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight() };
 }
@@ -49,8 +50,11 @@ void Renderer::DrawToScreen(mat4 projectionView, bool useGizmos)
 
     for (const uuids::uuid& renderableID : Renderable::allRenderables)
         Entity::GetComponent<Renderable>(renderableID).Draw(projectionView);
-    for (Gizmo& gizmo : Gizmo::register_.GetData())
-        gizmo.Draw(projectionView);
+    if (useGizmos)
+    {
+        for (Gizmo& gizmo : Gizmo::register_.GetData())
+            gizmo.Draw(projectionView);
+    }
 }
 
 
@@ -75,10 +79,10 @@ void Renderer::SetupGrid2D(float gridScale)
     }
 
 
-    horizontalGridID = Gizmo::register_.Add(
-        horizontallyOrganizedPosition2Ds, nullptr, color, false, false).GetID();
-    verticalGridID = Gizmo::register_.Add(
-        verticallyOrganizedPosition2Ds, nullptr, color, false, false).GetID();
+    horizontalGridID = Gizmo::Add(
+        horizontallyOrganizedPosition2Ds, nullptr, color, false, false);
+    verticalGridID = Gizmo::Add(
+        verticallyOrganizedPosition2Ds, nullptr, color, false, false);
 
 }
 

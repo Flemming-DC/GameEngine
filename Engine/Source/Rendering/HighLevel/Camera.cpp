@@ -74,28 +74,6 @@ mat4 Camera::ProjectionView(vec3 cameraPos, quat cameraRot, vec3 cameraScale)
     return MakeOrthoProjection() * view;
 }
 
-void Camera::OnUpdate()
-{
-    /*
-    float scaling = 1 + InputKey::GetFloat(Key::FloatKey::mouseScrollDelta) * scrollSpeed * Time::Delta(); // exp(x) = 1 + x + O(x^2) is used
-    projection = glm::scale(projection, glm::vec3(scaling));
-
-    glm::vec3 moveDirection = glm::vec3(0.0f);
-    if (InputKey::IsPressed(Key::Keyboard::A))
-        moveDirection.x -= 1;
-    if (InputKey::IsPressed(Key::Keyboard::D))
-        moveDirection.x += 1;
-    if (InputKey::IsPressed(Key::Keyboard::S))
-        moveDirection.y -= 1;
-    if (InputKey::IsPressed(Key::Keyboard::W))
-        moveDirection.y += 1;
-    if (moveDirection.x != 0 && moveDirection.y != 0)
-        moveDirection = glm::normalize(moveDirection);
-
-    moveSpeed /= scaling; // large scaling means stuff looks bigger, which means zooming in.
-    GetTransform().localPosition += moveDirection * moveSpeed * Time::Delta();
-    */
-}
 
 
 

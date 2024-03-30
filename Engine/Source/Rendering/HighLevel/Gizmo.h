@@ -17,30 +17,29 @@
 class Gizmo
 {
 public:
+	Shorts;
 	static Register<Gizmo> register_;
 	bool showPoints = true;
 	bool loop = true;
 
 	// transform is allowed to be null
-	Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform, 
-		glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), bool showPoints = true, bool loop = true);
+	Gizmo(vector<vec2> position2Ds, Transform* transform, vec4 color = defaultColor, bool showPoints = true, bool loop = true);
 	void Draw(const glm::mat4& projectionView);
 	void UnBind();
 
-	static uuids::uuid MakeCircle(
-		glm::vec2 center, 
-		float radius, 
-		Transform& transform_, 
-		glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-	inline uuids::uuid GetID() const { return id; }
-	std::string to_string() const;
+	static uuid Add(vector<vec2> position2Ds, Transform* transform, vec4 color = defaultColor, bool showPoints = true, bool loop = true);
+	static vector<Gizmo>& GetData() { return register_.GetData(); }
+	static uuid MakeCircle(vec2 center, float radius, Transform& transform_, vec4 color = defaultColor);
+	inline uuid GetID() const { return id; }
+	string to_string() const;
 	static void CleanupDeadGizmos(); // removes gizmos from destroyed transforms
 
 private:
 	Mesh mesh;
-	glm::vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+	vec4 color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
 	Material material;
 	int positionCount = 0;
-	uuids::uuid id;
-	std::optional<uuids::uuid> transformID = std::nullopt;
+	uuid id;
+	optional<uuid> transformID = std::nullopt;
+	inline static const vec4 defaultColor = vec4(0.0f, 1.0f, 0.0f, 1.0f);
 };

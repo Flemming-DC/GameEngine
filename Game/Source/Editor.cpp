@@ -9,6 +9,7 @@
 #include "InputKey.h"
 #include "Core.h"
 #include "Time_.h"
+#include "EngineMode.h"
 
 
 // make viewport framebuffer size sensitive to my viewport vindow size.
@@ -194,7 +195,7 @@ void Editor::OnEditorUpdate()
     if (InputKey::BecomesPressed(Key::Keyboard::R))
     {
         logger::print("R");
-        if (Core::GameIsRunning())
+        if (EngineMode::GameIsRunning())
             Core::StopRunningGame();
         else
             Core::StartRunningGame();

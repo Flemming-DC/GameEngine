@@ -7,7 +7,7 @@ public:
 	//static void OnSceneChanged();
 
 private:
-	glm::vec3 cameraPos = glm::vec3(1.0f);
+	glm::vec3 cameraPos = glm::vec3(0.0f);
 	const glm::quat cameraRot = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 	glm::vec3 cameraScale = glm::vec3(1.0f);
 	float moveSpeed = 1.0f; // camera

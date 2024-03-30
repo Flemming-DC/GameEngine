@@ -3,12 +3,14 @@
 #include "ListTools.h"
 #include "UuidCreator.h"
 #include "EngineAssets.h"
+#include "EngineMode.h"
 
+Shorts;
 Register<Gizmo> Gizmo::register_;
 
 
 
-Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec4 color_, bool showPoints_, bool loop_)
+Gizmo::Gizmo(vector<vec2> position2Ds, Transform* transform_, vec4 color_, bool showPoints_, bool loop_)
 {
     if (UuidCreator::IsInitialized(id))
         RaiseError("Gizmo is already initialized");
@@ -20,8 +22,8 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
     if (transform_)
         transformID = transform_->GetID();
 
-    std::vector<float> positionsRaw;
-    for (glm::vec2 position2D : position2Ds)
+    vector<float> positionsRaw;
+    for (vec2 position2D : position2Ds)
     {
         positionsRaw.push_back(position2D.x);
         positionsRaw.push_back(position2D.y);
@@ -38,13 +40,13 @@ Gizmo::Gizmo(std::vector<glm::vec2> position2Ds, Transform* transform_, glm::vec
 
 
 
-void Gizmo::Draw(const glm::mat4& projectionView)
+void Gizmo::Draw(const mat4& projectionView)
 {
     if (!UuidCreator::IsInitialized(id))
         RaiseError("Cannot draw uninitialized gizmo");
     //glm::mat4 projection = Camera::Current().Projection(); // evt. save the projectionView. at least within each frame
     //glm::mat4 view = Camera::Current().View();
-    glm::mat4 model = transformID ? Entity::GetComponent<Transform>(*transformID).GetModel() : glm::mat4(1.0f);
+    mat4 model = transformID ? Entity::GetComponent<Transform>(*transformID).GetModel() : mat4(1.0f);
     material.SetUniform("u_MVP", projectionView * model);
     material.SetUniform("u_color", color);
 
@@ -66,20 +68,29 @@ void Gizmo::UnBind()
 
 void Gizmo::CleanupDeadGizmos()
 {
-    std::vector<uuids::uuid> tobeRemoved;
+    vector<uuid> tobeRemoved;
     for (Gizmo& gizmo : Gizmo::register_.GetData())
     {
         if (gizmo.transformID && !Entity::TryGetComponent<Transform>(*gizmo.transformID))
             tobeRemoved.push_back(gizmo.GetID());
     }
-    for (uuids::uuid& gizmoID : tobeRemoved)
+    for (uuid& gizmoID : tobeRemoved)
         Gizmo::register_.Remove(gizmoID);
 
 }
 
-uuids::uuid Gizmo::MakeCircle(glm::vec2 center, float radius, Transform& transform_, glm::vec4 color)
+
+uuid Gizmo::Add(vector<vec2> position2Ds, Transform* transform, vec4 color, bool showPoints, bool loop)
 {
-    std::vector<glm::vec2> position2Ds;
+    uuid nullID;
+    if (!EngineMode::InEditor())
+        return nullID; // no Gizmos outsize editor
+    return register_.Add(position2Ds, transform, color, showPoints, loop).GetID();
+}
+
+uuid Gizmo::MakeCircle(vec2 center, float radius, Transform& transform_, vec4 color)
+{
+    vector<vec2> position2Ds;
     int segmentCount = 40;
     float pi = 3.14159265358979323846f;
     for (int i = 0; i < segmentCount; ++i)
@@ -90,11 +101,11 @@ uuids::uuid Gizmo::MakeCircle(glm::vec2 center, float radius, Transform& transfo
             center.y + radius * std::sin(angle) });
     }
 
-    return Gizmo::register_.Add(position2Ds, &transform_, color, false).GetID();
+    return Gizmo::Add(position2Ds, &transform_, color, false);
 }
 
 
-std::string Gizmo::to_string() const
+string Gizmo::to_string() const
 {
     return logger::make_string("Gizmo on ", transformID ? Entity::GetComponent<Transform>(*transformID).to_string() : " no transform");
 }

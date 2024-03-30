@@ -7,9 +7,8 @@
 #include "Dynamic.h"
 #include "CollisionLoop.h"
 #include "ImGuiSetup.h"
+#include "EngineMode.h"
 
-bool Core::gameIsRunning = true;
-bool Core::inEditor = false;
 
 
 void Core::Run(std::unique_ptr<Scene> firstScene)
@@ -31,14 +30,14 @@ void Core::Setup()
 {
     // externals setup
     OpenGlSetup::Setup();
-    ImGuiSetup::Setup(inEditor);
+    ImGuiSetup::Setup();
     // engine setup
     InputLoop::Setup();
     Time::Setup();
     CollisionLoop::Setup();
     EngineAssets::Setup();
     // editor / game setup
-    if (inEditor)
+    if (EngineMode::InEditor())
         Dynamic::CallOnEditorStart();
     Dynamic::CallOnGameStart(); // this must be called even if (gameIsRunning == false). Thats a bit messy.
     Scene::ReloadImmediately();
@@ -52,14 +51,14 @@ void Core::Update()
     Time::Update();
     
     // update world
-    if (gameIsRunning)
+    if (EngineMode::GameIsRunning())
     {
         CollisionLoop::Update();
         Dynamic::CallOnUpdate();
         Entity::Update();
         Renderer::DrawToScreen();
     }
-    if (inEditor)
+    if (EngineMode::InEditor())
         Dynamic::CallOnEditorUpdate();
     Delay::CallToFrameEnd(); 
 
@@ -73,9 +72,9 @@ void Core::Shutdown()
 {
     // editor / game shutdown
     Scene::GetActiveScene().ShutDown(); // inEditor on end game reload scene
-    if (gameIsRunning)
+    if (EngineMode::GameIsRunning())
         Dynamic::CallOnGameEnd(); // evt. call EndGame
-    if (inEditor)
+    if (EngineMode::InEditor())
         Dynamic::CallOnEditorEnd();
     // engine shutdown
     Renderer::ShutDown();
@@ -88,7 +87,7 @@ void Core::Shutdown()
 
 void Core::StartRunningGame()
 {
-    gameIsRunning = true;
+    EngineMode::gameIsRunning = true;
     Time::GameSetup();
     Dynamic::CallOnGameStart();
     Renderer::ShowWindow(true);
@@ -102,12 +101,12 @@ void Core::StopRunningGame()
             Renderer::ShowWindow(false);
             Scene::ReloadImmediately();
             Dynamic::CallOnGameEnd();
-            gameIsRunning = false;
+            EngineMode::gameIsRunning = false;
         });
 }
 
 void Core::MarkAsEditor()
 {
-    inEditor = true;
-    gameIsRunning = false;
+    EngineMode::inEditor = true;
+    EngineMode::gameIsRunning = false;
 }
