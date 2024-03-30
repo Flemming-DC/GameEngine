@@ -8,6 +8,7 @@
 #include "Renderer.h"
 #include "InputKey.h"
 #include "Core.h"
+#include "Time_.h"
 
 
 // make viewport framebuffer size sensitive to my viewport vindow size.
@@ -48,9 +49,14 @@ void TransformGUI2D(const Entity& entity)
 }
 
 void Inspector() {}
-void SceneEditor()
+void Editor::SceneEditor()
 {
-    auto renderResult = Renderer::DrawToFrameBuffer();
+    UpdateCamera();
+    //auto pos = Camera::Current().GetTransform().GetPosition();
+    //auto rot = Camera::Current().GetTransform().GetRotation();
+    //auto scale = Camera::Current().GetTransform().GetScale();
+    auto projectionView = Camera::ProjectionView(cameraPos, cameraRot, cameraScale);
+    auto renderResult = Renderer::DrawToFrameBuffer(projectionView, true);
         
     ImVec2 uvBottumLeft = { 0, 1 };
     ImVec2 uvTopRight = { 1, 0 };
@@ -199,3 +205,26 @@ void Editor::OnEditorUpdate()
 }
 
 
+
+void Editor::UpdateCamera()
+{
+    // we dont multiply by delta_time, since mouseScrollDelta already acculumates over time.
+    float scaling = 1 + InputKey::GetFloat(Key::FloatKey::mouseScrollDelta) * scrollSpeed; // exp(x) = 1 + x + O(x^2) is used
+    cameraScale *= scaling;
+    cameraScale = glm::clamp(cameraScale, glm::vec3(1.0f) / maxScale, glm::vec3(1.0f) * maxScale);
+
+    glm::vec3 moveDirection = glm::vec3(0.0f);
+    if (InputKey::IsPressed(Key::Keyboard::A))
+        moveDirection.x -= 1;
+    if (InputKey::IsPressed(Key::Keyboard::D))
+        moveDirection.x += 1;
+    if (InputKey::IsPressed(Key::Keyboard::S))
+        moveDirection.y -= 1;
+    if (InputKey::IsPressed(Key::Keyboard::W))
+        moveDirection.y += 1;
+    if (moveDirection.x != 0 && moveDirection.y != 0)
+        moveDirection = glm::normalize(moveDirection);
+
+    moveSpeed *= scaling;
+    cameraPos += moveDirection * moveSpeed * Time::Delta();
+}

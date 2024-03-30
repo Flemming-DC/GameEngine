@@ -26,14 +26,18 @@ void Camera::SetToOrthographic(float scale, float nearClipping, float farClippin
 {
     isProjectionInitialized = true;
     this->nearClipping = nearClipping;
+    projection = MakeOrthoProjection();
+}
 
+mat4 Camera::MakeOrthoProjection(float scale, float nearClipping, float farClipping)
+{
     GLint viewport[4];
     glCall(glGetIntegerv(GL_VIEWPORT, viewport));
     int width = viewport[2];
     int height = viewport[3];
     float aspectRatio = width / (float)height;
 
-    projection = glm::ortho(
+    return glm::ortho(
         -aspectRatio / scale,
         aspectRatio / scale,
         -1 / scale,
@@ -42,7 +46,7 @@ void Camera::SetToOrthographic(float scale, float nearClipping, float farClippin
         farClipping);
 }
 
-glm::mat4 Camera::GetProjection() const
+glm::mat4 Camera::Projection() const
 {
     if (!isProjectionInitialized)
         RaiseError("projection must be initialized before it can be used.");
@@ -50,7 +54,7 @@ glm::mat4 Camera::GetProjection() const
 }
 
 
-glm::mat4 Camera::GetView() //const
+glm::mat4 Camera::View() const
 {
     if (nearClipping > -GetTransform().GetPosition().z)
         Warning(
@@ -63,12 +67,17 @@ glm::mat4 Camera::GetView() //const
 
 mat4 Camera::ProjectionView(vec3 cameraPos, quat cameraRot, vec3 cameraScale)
 {
-    return mat4(1.0f);
+    mat4 view = glm::scale(glm::mat4(1.0f), 1.0f / cameraScale)
+        * glm::mat4_cast(glm::inverse(cameraRot))
+        * glm::translate(glm::mat4(1.0f), -cameraPos);
+
+    return MakeOrthoProjection() * view;
 }
 
 void Camera::OnUpdate()
 {
-    float scaling = 1 + InputKey::GetFloat(Key::FloatKey::mouseScrollDirection) * scrollSpeed * Time::Delta(); // exp(x) = 1 + x + O(x^2) is used
+    /*
+    float scaling = 1 + InputKey::GetFloat(Key::FloatKey::mouseScrollDelta) * scrollSpeed * Time::Delta(); // exp(x) = 1 + x + O(x^2) is used
     projection = glm::scale(projection, glm::vec3(scaling));
 
     glm::vec3 moveDirection = glm::vec3(0.0f);
@@ -85,11 +94,12 @@ void Camera::OnUpdate()
 
     moveSpeed /= scaling; // large scaling means stuff looks bigger, which means zooming in.
     GetTransform().localPosition += moveDirection * moveSpeed * Time::Delta();
+    */
 }
 
 
 
-Camera& Camera::GetCurrent()
+Camera& Camera::Current()
 {
     if (currentCamera == nullptr)
         RaiseError("currentCamera is null. If you destroy the current camera, then you must set a new camera as the current one.");

@@ -18,31 +18,24 @@ uuid Renderer::verticalGridID;
 FrameBuffer Renderer::frameBuffer;
 
 
+Renderer::RenderResult Renderer::DrawToFrameBuffer()
+{
+    return DrawToFrameBuffer(Camera::Current().ProjectionView());
+}
+
 void Renderer::DrawToScreen()
 {
-    DrawToScreen(Camera::GetCurrent().ProjectionView());
-    /*
-    glCall(glClear(GL_COLOR_BUFFER_BIT)); // same as renderer.Clear()
-    Renderable::UnBind(); //  evt. add framebuffer unbind
-    Gizmo::CleanupDeadGizmos();
-
-    glm::mat4 projectionView = Camera::GetCurrent().ProjectionView();
-
-    for (const uuids::uuid& renderableID : Renderable::allRenderables)
-        Entity::GetComponent<Renderable>(renderableID).Draw(projectionView);
-    for (Gizmo& gizmo : Gizmo::register_.GetData())
-        gizmo.Draw(projectionView);
-    */
+    DrawToScreen(Camera::Current().ProjectionView());
 }
 
 
-Renderer::RenderResult Renderer::DrawToFrameBuffer()
+Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView, bool useGizmos)
 {
     if (!UuidCreator::IsInitialized(frameBuffer.GetID()))
         frameBuffer = FrameBuffer::register_.Add(OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight());
     frameBuffer.Bind();
     glCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-    Renderer::DrawToScreen();
+    Renderer::DrawToScreen(projectionView);
     frameBuffer.UnBind();
     return { frameBuffer.GetTextureOpenGLid(), OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight() };
 }
@@ -60,19 +53,15 @@ void Renderer::DrawToScreen(mat4 projectionView, bool useGizmos)
         gizmo.Draw(projectionView);
 }
 
-Renderer::RenderResult Renderer::DrawToFrameBuffer(vec3 cameraPos, quat cameraRot, vec3 cameraScale, bool useGizmos)
-{
-    return { 0, 0, 0 }; // dummy
-}
 
 void Renderer::SetupGrid2D(float gridScale)
 {
     float brightness = 0.2f;
-    glm::vec4 color = glm::vec4(brightness, brightness, brightness, 1);
+    vec4 color = vec4(brightness, brightness, brightness, 1);
     
     float gridSize = 50;
-    std::vector<glm::vec2> horizontallyOrganizedPosition2Ds;
-    std::vector<glm::vec2> verticallyOrganizedPosition2Ds;
+    vector<vec2> horizontallyOrganizedPosition2Ds;
+    vector<vec2> verticallyOrganizedPosition2Ds;
 
     for (float y = -gridSize; y < gridSize; y += gridScale)
     {

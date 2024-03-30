@@ -6,7 +6,7 @@
 #include "InputKey.h" // letting GlfwInput refer to InputKey is dirty, but neessary in order to forward events
 #include "GlmTools.h"
 
-float GlfwInput::scrollDirection = 0;
+float GlfwInput::scrollDelta = 0;
 std::unordered_map<int, int> GlfwInput::actionByKey;
 std::unordered_map<int, int> GlfwInput::actionByMouseButton;
 std::vector<unsigned int> GlfwInput::gamepadIDs;
@@ -46,7 +46,7 @@ void GlfwInput::LateUpdate()
     }
     
     // resetting input data
-    scrollDirection = 0;
+    scrollDelta = 0;
     actionByKey.clear();
     actionByMouseButton.clear();
 }
@@ -170,7 +170,7 @@ void GlfwInput::_MouseButtonCallback(GLFWwindow* window, int button, int action,
 // the docs say that pressed and direction are xOffset and yOffset. I guess that might hold for touchpad, but not for mouse.
 void GlfwInput::_ScrollCallback(GLFWwindow* window, double pressed, double direction)
 {
-    scrollDirection = glm::clamp((float)direction, -1.0f, 1.0f);
+    scrollDelta = (float)direction;
 }
 
 void GlfwInput::_JoystickCallback(int gamepadID_, int event) 

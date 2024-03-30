@@ -48,7 +48,7 @@ template<typename T> void InputAction<T>::IndividualUpdate()
 	else if (BecomesReleased())
 		OnReleased.Invoke();
 	else
-		RaiseError("This else clause should be impossible to reach.");
+		RaiseError("This else clause should be impossible to reach. \nError in ", to_string());
 	timeOfLastPressOrRelease = Time::Now();
 }
 
@@ -86,16 +86,18 @@ template<> float InputAction<float>::FindState()
 		return 0;
 	float maxMagnitude = 0; // without sign
 	float maxFloat = 0; // with sign
+	Key::FloatKey maxKey;
 	for (const auto& k : floatKeys)
 	{
 		if (Magnitude(InputKey::GetFloat(k, gamepadID)) > maxMagnitude)
 		{
 			maxFloat = InputKey::GetFloat(k, gamepadID);
 			maxMagnitude = Magnitude(maxFloat);
+			maxKey = k;
 		}
 	}
-	if (maxFloat < -1.001f || maxFloat > 1.001f)
-		RaiseError("Impossible state encountered. FindState() = ", maxFloat);
+	if ((maxFloat < -1.001f || maxFloat > 1.001f) && maxKey != Key::FloatKey::mouseScrollDelta)
+		RaiseError("Impossible state encountered. FindState() = ", maxFloat, "\nError in ", to_string());
 	return maxFloat;
 }
 
@@ -114,7 +116,7 @@ template<> glm::vec2 InputAction<glm::vec2>::FindState()
 		}
 	}
 	if (maxMagnitude > 1.001f)
-		RaiseError("Impossible state encountered. FindState() = ", maxVector);
+		RaiseError("Impossible state encountered. FindState() = ", maxVector, "\nError in ", to_string());
 	return maxVector;
 }
 

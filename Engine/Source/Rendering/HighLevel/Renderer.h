@@ -15,11 +15,11 @@ public:
 	Shorts
 	struct RenderResult { unsigned int textureOpenGlid; int width; int height; };
 
-	static void DrawToScreen();
 	static RenderResult DrawToFrameBuffer();
+	static void DrawToScreen();
 	// evt. drop useGizmos and make InEditor globally available
+	static RenderResult DrawToFrameBuffer(mat4 projectionView, bool useGizmos = false);
 	static void DrawToScreen(mat4 projectionView, bool useGizmos = false);
-	static RenderResult DrawToFrameBuffer(vec3 cameraPos, quat cameraRot, vec3 cameraScale = vec3(1.0f), bool useGizmos = false);
 	static void SetupGrid2D(float gridScale);
 	static void ShutDown();
 	//static void ToggleGameWindow() { OpenGlSetup::ToggleGlfwWindow(); }

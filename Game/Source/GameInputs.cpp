@@ -12,7 +12,7 @@ void GameInputs::OnGameStart()
 		.AddKey(Key::Gamepad::A);
 
 	fire = &InputAction<float>::Create()
-		.AddKey(Key::FloatKey::mouseScrollDirection)
+		.AddKey(Key::FloatKey::mouseScrollDelta)
 		.AddKey(Key::FloatKey::leftTrigger);
 
 	walk = &InputAction<glm::vec2>::Create()

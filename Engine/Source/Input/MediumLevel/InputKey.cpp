@@ -12,14 +12,21 @@ using namespace Key;
 Event<bool, unsigned int> InputKey::onGamepadConnectionChanged;
 
 
+float InputKey::GetFloat(FloatKey key, int gamepadID)
+{
+    if (key == FloatKey::mouseScrollDelta)
+        return ScrollDelta();
+    return GlfwInput::GamepadFloat(KeyMap::ToGlfw(key), gamepadID);
+}
+
 // -------------- Mouse special input --------------
 
-float InputKey::GetScrollDirection()
+float InputKey::ScrollDelta()
 {
     if (ImGui::GetIO().WantCaptureMouse)
         return ImGui::GetIO().MouseWheel;
     else
-        return GlfwInput::scrollDirection;
+        return GlfwInput::scrollDelta;
 }
 
 
@@ -49,13 +56,6 @@ glm::vec2 InputKey::MouseWorldPosition2D() { return Screen::ToWorldPosition(Norm
 
 // -------------- Gamepad special input --------------
 
-
-float InputKey::GetFloat(FloatKey key, int gamepadID)
-{
-    if (key == FloatKey::mouseScrollDirection)
-        return GetScrollDirection();
-    return GlfwInput::GamepadFloat(KeyMap::ToGlfw(key), gamepadID);
-}
 
 bool InputKey::HasGamepad(int gamepadID) { return GlfwInput::HasGamepad(gamepadID); }
 std::vector<unsigned int> InputKey::GamepadIDs() { return GlfwInput::gamepadIDs; }

@@ -42,8 +42,8 @@ void Gizmo::Draw(const glm::mat4& projectionView)
 {
     if (!UuidCreator::IsInitialized(id))
         RaiseError("Cannot draw uninitialized gizmo");
-    //glm::mat4 projection = Camera::GetCurrent().GetProjection(); // evt. save the projectionView. at least within each frame
-    //glm::mat4 view = Camera::GetCurrent().GetView();
+    //glm::mat4 projection = Camera::Current().Projection(); // evt. save the projectionView. at least within each frame
+    //glm::mat4 view = Camera::Current().View();
     glm::mat4 model = transformID ? Entity::GetComponent<Transform>(*transformID).GetModel() : glm::mat4(1.0f);
     material.SetUniform("u_MVP", projectionView * model);
     material.SetUniform("u_color", color);

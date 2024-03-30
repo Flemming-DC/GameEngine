@@ -28,8 +28,8 @@ vec3 Screen::ToWorldPosition(vec2 screenPos, bool* foundDepth)
     vec3 screenPos3D(screenPos.x, screenPos.y, depth);
 
     vec4 viewport = vec4(0.0f, 0.0f, OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight());
-    mat4 projection = Camera::GetCurrent().GetProjection();
-    mat4 view = Camera::GetCurrent().GetView();
+    mat4 projection = Camera::Current().Projection();
+    mat4 view = Camera::Current().View();
     vec3 worldPos = glm::unProject(screenPos3D, view, projection, viewport);
 
     return worldPos;
@@ -38,8 +38,8 @@ vec3 Screen::ToWorldPosition(vec2 screenPos, bool* foundDepth)
 vec2 Screen::FromWorldPosition(vec3 worldPosition)
 {
     vec4 viewport = vec4(0.0f, 0.0f, OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight());
-    mat4 projection = Camera::GetCurrent().GetProjection();
-    mat4 view = Camera::GetCurrent().GetView();
+    mat4 projection = Camera::Current().Projection();
+    mat4 view = Camera::Current().View();
     
     vec2 screenPos = glm::project(worldPosition, view, projection, viewport);
 
