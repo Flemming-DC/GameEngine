@@ -6,10 +6,7 @@
 
 
 
-void InputLoop::Setup()
-{
-    GlfwInput::Setup();
-}
+void InputLoop::GlfwSetup() { GlfwInput::Setup(); }
 
 void InputLoop::LateUpdate()
 {

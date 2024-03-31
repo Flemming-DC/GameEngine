@@ -4,7 +4,7 @@
 class InputLoop
 {
 public:
-	static void Setup();
+	static void GlfwSetup();
 	static void LateUpdate();
 };
 

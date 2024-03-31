@@ -1,10 +1,5 @@
 #include "Editor.h"
 #include "imgui/imgui.h"
-//#include "imgui/imgui_impl_glfw_gl3.h"
-#include "imgui/imgui_impl_glfw.h"
-#include "imgui/imgui_impl_opengl3.h"
-#include "GameAssets.h"
-#include "FrameBuffer.h"
 #include "Renderer.h"
 #include "InputKey.h"
 #include "Core.h"
@@ -54,7 +49,6 @@ void Editor::SceneEditor()
 {
     UpdateCamera();
     
-    //auto projectionView = Camera::ProjectionView(cameraPos, cameraRot, cameraScale);
     auto renderResult = Renderer::DrawToFrameBuffer(cameraPos, cameraRot, cameraScale);
         
     ImVec2 uvBottumLeft = { 0, 1 };

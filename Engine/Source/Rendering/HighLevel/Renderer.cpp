@@ -106,13 +106,13 @@ void Renderer::ShutDown()
 void Renderer::ShowWindow(bool show)
 {
     auto window = OpenGlSetup::GetWindow();
-    if (IsWindowVisible())
+    if (show)
     {
-        glCall(glfwHideWindow(window));
+        glCall(glfwShowWindow(window));
     }
     else
     {
-        glCall(glfwShowWindow(window));
+        glCall(glfwHideWindow(window));
     }
 }
 

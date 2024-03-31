@@ -30,9 +30,9 @@ void Core::Setup()
 {
     // externals setup
     OpenGlSetup::Setup();
+    InputLoop::GlfwSetup();
     ImGuiSetup::Setup();
     // engine setup
-    InputLoop::Setup();
     Time::Setup();
     CollisionLoop::Setup();
     EngineAssets::Setup();

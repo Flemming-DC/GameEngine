@@ -1,6 +1,6 @@
 include "../Engine/BuildEngine.lua"
-project "Game"
-    kind "ConsoleApp"
+project "Editor"
+    kind "StaticLib"
     language(Engine.language)
     cppdialect(Engine.cppdialect)
     targetdir(Engine.targetdir)
@@ -10,15 +10,13 @@ project "Game"
     files { "Source/**.h", "Source/**.cpp", "Source/**.hpp", "Source/**.inl" } 
    
     includedirs {
-        "../Game/Source",
-        "../Game/Source/**",
+        "../Editor/Source",
+        "../Editor/Source/**",
         "../Engine/Source/", 
-        "../Editor/Source/", 
         Engine.includedirs
     }
     links {
         "Engine",
-		"Editor",
         Engine.links
     }
     ignoredefaultlibraries(Engine.ignoredefaultlibraries)
