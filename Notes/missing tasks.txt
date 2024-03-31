@@ -6,8 +6,9 @@ diverse
 	input keyPressed and keyReleased bools and events.
 	copy res automatically to build folder, and provide a better error messages if res is missing. 
 	cleanup Get prefixes
-	store any special folders in const
+	store all special folders in some const variables
 	closing game by X in right cornr, shouldn't also close editor
+	2D lighting
 
 
 components & gameobjects

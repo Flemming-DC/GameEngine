@@ -19,6 +19,7 @@ public:
 	// normalize by screen width and height. Set origin to bottom-left.
 	static glm::vec2 NormalizeScreenPosition(glm::vec2 screenPosition);
 	static void SetCursorMode(CursorMode cursorMode);
+	static void SetTitle(std::string gameTitle);
 
 private:
 	static CursorMode cursorMode;

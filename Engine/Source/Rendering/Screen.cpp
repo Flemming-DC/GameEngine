@@ -71,3 +71,8 @@ void Screen::SetCursorMode(CursorMode cursorMode_)
     }
 
 }
+
+void Screen::SetTitle(std::string gameTitle) 
+{ 
+    glCall(glfwSetWindowTitle(OpenGlSetup::GetWindow(), gameTitle.c_str()));
+}
