@@ -6,6 +6,7 @@
 #include "InputVectorizer.h"
 #include "GameInputs.h"
 #include "OpenGlExternal.h"
+#include "Core.h"
 
 using namespace Key;
 
@@ -40,6 +41,16 @@ void DummyComp::OnDestroy()
 void DummyComp::OnUpdate()
 {
 	TestInputActions();
+
+	if (InputKey::BecomesPressed(Keyboard::G))
+	{
+		logger::print("G");
+		Screen::SetCursorMode(CursorMode::hidden);
+	}
+
+	if (InputKey::BecomesPressed(Keyboard::F))
+		Core::StopRunningGame();
+
 }
 
 

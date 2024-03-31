@@ -1,4 +1,4 @@
-#include "Editor.h"
+#include "EditorLoop.h"
 #include "imgui/imgui.h"
 #include "Renderer.h"
 #include "InputKey.h"
@@ -7,13 +7,14 @@
 #include "Temp_Inspector.h"
 #include "Hierarchy.h"
 #include "SceneEditor.h"
+#include "OpenGlSetup.h"
 
 
 
-void Editor::OnEditorStart() { Renderer::ShowWindow(false); }
+void EditorLoop::OnEditorStart() { Renderer::ShowWindow(false); }
 
 
-void Editor::OnEditorUpdate()
+void EditorLoop::OnEditorUpdate()
 {
     for (const auto& entity : Entity::register_.GetData())
         Temp_Inspector::TransformGUI2D(entity);
@@ -36,7 +37,7 @@ void Editor::OnEditorUpdate()
     }
 
     if (InputKey::BecomesPressed(Key::Keyboard::exc))
-        OpenGlSetup::Exit(); // save first
+        EngineMode::ExitEditor(); // save first
 }
 
 

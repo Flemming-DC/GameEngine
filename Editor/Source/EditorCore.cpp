@@ -1,12 +1,12 @@
 #include "EditorCore.h"
-#include "Core.h"
+#include "EngineMode.h"
 #include "Dynamic.h"
-#include "Editor.h"
+#include "EditorLoop.h"
 
 
 void EditorCore::MarkAsEditor()
 {
-	Core::MarkAsEditor();
-	Dynamic::Setup<Editor>();
+	EngineMode::MarkAsEditor();
+	Dynamic::Setup<EditorLoop>();
 }
 

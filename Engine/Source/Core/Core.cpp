@@ -8,6 +8,7 @@
 #include "CollisionLoop.h"
 #include "ImGuiSetup.h"
 #include "EngineMode.h"
+#include "OpenGlSetup.h"
 
 
 
@@ -18,13 +19,16 @@ void Core::Run(std::unique_ptr<Scene> firstScene)
     Setup();
 
     LogHeader("Loop");
-    while (OpenGlSetup::Update())
+    while (!EngineMode::ShouldClose())
         Update();
 
     LogHeader("Shutdown");
     Shutdown();
     LogHeader("Done");
 }
+
+
+// ------------------ setup, Update, Shutdown --------------------
 
 void Core::Setup()
 {
@@ -47,9 +51,10 @@ void Core::Setup()
 void Core::Update()
 {
     // setup frame
+    OpenGlSetup::Update();
     ImGuiSetup::EarlyUpdate();
     Time::Update();
-    
+
     // update world
     if (EngineMode::GameIsRunning())
     {
@@ -60,6 +65,8 @@ void Core::Update()
     }
     if (EngineMode::InEditor())
         Dynamic::CallOnEditorUpdate();
+    if (EngineMode::CloseButtonIsClicked())
+        StopRunningGame();
     Delay::CallToFrameEnd(); 
 
     // shutdown frame
@@ -85,12 +92,17 @@ void Core::Shutdown()
 }
 
 
+
+// ---------------------- open/close game ----------------------
+
+
 void Core::StartRunningGame()
 {
     EngineMode::gameIsRunning = true;
     Time::GameSetup();
     Dynamic::CallOnGameStart();
-    Renderer::ShowWindow(true);
+    EngineMode::MarkGameWindowAsUnclosed();
+    Renderer::ShowWindow(true); 
 }
 
 
@@ -98,15 +110,9 @@ void Core::StopRunningGame()
 {
     Delay::ToFrameEnd([]()
         {
-            Renderer::ShowWindow(false);
+            Renderer::ShowWindow(false); 
             Scene::ReloadImmediately();
             Dynamic::CallOnGameEnd();
             EngineMode::gameIsRunning = false;
         });
-}
-
-void Core::MarkAsEditor()
-{
-    EngineMode::inEditor = true;
-    EngineMode::gameIsRunning = false;
 }

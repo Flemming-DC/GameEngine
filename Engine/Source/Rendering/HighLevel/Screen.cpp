@@ -6,7 +6,7 @@ Shorts;
 CursorMode Screen::cursorMode = CursorMode::normal;
 
 
-void Screen::LateUpdate()
+void Screen::ApplyCursorState()
 {
     if (cursorMode == CursorMode::hidden)
     {
@@ -14,6 +14,30 @@ void Screen::LateUpdate()
         glCall(glfwSetInputMode(OpenGlSetup::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN)); 
     }
 }
+
+
+void Screen::SetCursorMode(CursorMode cursorMode_)
+{
+    cursorMode = cursorMode_;
+    switch (cursorMode_)
+    {
+    case CursorMode::normal: glCall(glfwSetInputMode(OpenGlSetup::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL)); break;
+    case CursorMode::hidden: glCall(glfwSetInputMode(OpenGlSetup::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN)); break;
+    case CursorMode::locked: glCall(glfwSetInputMode(OpenGlSetup::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED)); break;
+    default:
+        RaiseError("unrecognized cursorMode ", cursorMode_);
+    }
+
+}
+
+void Screen::SetTitle(std::string gameTitle)
+{
+    glCall(glfwSetWindowTitle(OpenGlSetup::GetWindow(), gameTitle.c_str()));
+}
+
+
+
+// --------------- world/screen position conversions ---------------
 
 vec3 Screen::ToWorldPosition(vec2 screenPos, bool* foundDepth)
 {
@@ -46,7 +70,6 @@ vec2 Screen::FromWorldPosition(vec3 worldPosition)
     return screenPos;
 }
 
-
 vec2 Screen::NormalizeScreenPosition(vec2 screenPos)
 {
     float width = (float)OpenGlSetup::GetWidth();
@@ -58,21 +81,4 @@ vec2 Screen::NormalizeScreenPosition(vec2 screenPos)
     return screenPos;
 }
 
-void Screen::SetCursorMode(CursorMode cursorMode_)
-{
-    cursorMode = cursorMode_;
-    switch (cursorMode_)
-    {
-    case CursorMode::normal: glCall(glfwSetInputMode(OpenGlSetup::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL)); break;
-    case CursorMode::hidden: glCall(glfwSetInputMode(OpenGlSetup::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN)); break;
-    case CursorMode::locked: glCall(glfwSetInputMode(OpenGlSetup::GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED)); break;
-    default:
-        RaiseError("unrecognized cursorMode ", cursorMode_);
-    }
 
-}
-
-void Screen::SetTitle(std::string gameTitle) 
-{ 
-    glCall(glfwSetWindowTitle(OpenGlSetup::GetWindow(), gameTitle.c_str()));
-}

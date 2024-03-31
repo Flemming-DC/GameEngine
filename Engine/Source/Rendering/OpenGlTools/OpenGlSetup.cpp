@@ -16,7 +16,7 @@ void OpenGlSetup::Setup()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
-    window = glfwCreateWindow(width, height, "Hello World", NULL, NULL); // Create a windowed mode window and its OpenGL context
+    window = glfwCreateWindow(width, height, "Default Title", NULL, NULL); // Create a windowed mode window and its OpenGL context
     if (!window)
     {
         glfwTerminate();
@@ -42,20 +42,9 @@ void OpenGlSetup::Shutdown()
     glfwTerminate();
 }
 
-bool OpenGlSetup::NewFrame()
-{
-    return !glfwWindowShouldClose(window);
-}
-
 bool OpenGlSetup::Update()
 {
     glCall(glfwSwapBuffers(window)); // Swap front and back buffers
     glCall(glfwPollEvents()); // Poll for and process events
     return !glfwWindowShouldClose(window);
-}
-
-void OpenGlSetup::Exit()
-{
-    glCall(glfwSetWindowShouldClose(window, GLFW_TRUE));
-    //std::exit(0);
 }

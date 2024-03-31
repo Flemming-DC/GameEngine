@@ -11,19 +11,21 @@
 #endif // InEditor
 
 
+
 int main()
 {
-    //logger::print(UuidCreator::MakeID());
     #ifdef InEditor
         EditorCore::MarkAsEditor();
     #endif // InEditor
 
     Dynamic::Setup<GameAssets, GameInputs, Settings>();
     Core::Run(std::make_unique<DemoScene>());
-    return 0;
 }
 
+
+// logger::print(UuidCreator::MakeID());
 // findstr /S /M "_Debug" "Engine\Source\*.*"
 // 
 // git add . && git commit -m "m" && git push
+
 

@@ -1,7 +1,7 @@
 #include "Renderer.h"
-#include "Camera.h"
 #include <GL/glew.h>
-#include "OpenGlError.h"
+#include "Camera.h"
+#include "OpenGlSetup.h"
 #include "Renderable.h"
 #include "Gizmo.h"
 #include "Shader.h"
@@ -9,9 +9,9 @@
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
 #include "VertexArray.h"
-#include "FrameBuffer.h"
 #include "OpenGLidChecker.h"
 #include "EngineMode.h"
+#include "Screen.h"
 
 Shorts
 uuid Renderer::horizontalGridID;
@@ -52,6 +52,7 @@ void Renderer::DrawToScreen(mat4 projectionView, bool drawGizmos)
         for (Gizmo& gizmo : Gizmo::GetData())
             gizmo.Draw(projectionView);
     }
+    Screen::ApplyCursorState();
 }
 
 

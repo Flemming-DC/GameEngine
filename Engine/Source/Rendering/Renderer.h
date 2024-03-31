@@ -1,12 +1,5 @@
 #pragma once
-#include "VertexArray.h"
-#include "IndexBuffer.h"
-#include "Material.h"
-#include "Mesh.h"
-#include "Gizmo.h"
 #include "FrameBuffer.h"
-#include "OpenGlSetup.h"
-#include <stduuid/uuid.h>
 
 
 class Renderer

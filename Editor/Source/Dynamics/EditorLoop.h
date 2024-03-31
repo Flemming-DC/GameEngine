@@ -1,7 +1,7 @@
 #pragma once
 #include "Dynamic.h"
 
-class Editor : public Dynamic
+class EditorLoop : public Dynamic
 {
 public:
 	//static void OnSceneChanged();
