@@ -20,4 +20,5 @@ group ""
 group ""
 
 include "Game/BuildGame.lua"
+include "Game/BuildGame-InEditor.lua"
 

@@ -1,21 +1,24 @@
 #include "Core.h"
 #include "Dynamic.h"
 #include "GameAssets.h"
-#include "Editor.h" 
+#include "GameInputs.h"
 #include "DemoScene.h"
 #include "SecondScene.h"
 #include "MiniScene.h"
-#include "GameInputs.h"
-#include "EditorCore.h"
+#ifdef InEditor
+    #include "EditorCore.h"
+#endif // InEditor
+
 
 
 int main()
 {
     //logger::print(UuidCreator::MakeID());
+#ifdef InEditor
     EditorCore::MarkAsEditor();
+#endif // InEditor
     Dynamic::Setup<GameAssets, GameInputs>();
     Core::Run(std::make_unique<DemoScene>());
-
     return 0;
 }
 

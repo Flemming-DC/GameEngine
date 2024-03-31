@@ -1,5 +1,5 @@
 include "../Engine/BuildEngine.lua"
-project "Game"
+Game = project "Game"
     kind "ConsoleApp"
     language(Engine.language)
     cppdialect(Engine.cppdialect)
@@ -13,12 +13,10 @@ project "Game"
         "../Game/Source",
         "../Game/Source/**",
         "../Engine/Source/", 
-        "../Editor/Source/", 
         Engine.includedirs
     }
     links {
         "Engine",
-		"Editor",
         Engine.links
     }
     ignoredefaultlibraries(Engine.ignoredefaultlibraries)
@@ -40,5 +38,5 @@ project "Game"
     filter "configurations:Release"
         defines { "GLEW_STATIC", "WIN32", "NDEBUG", "_CONSOLE" } 
         runtime "Release"
-        optimize "On" -- this breaks openGL
+        optimize "On"
         symbols "On"
