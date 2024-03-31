@@ -6,6 +6,7 @@
 #include "GlfwInput.h"
 #include "KeyMap.h"
 #include "Screen.h"
+#include "Time_.h"
 #include "InputAction.h" // its a bit messy that input imports this, since InputAction is a higher level objects than Input
 
 using namespace Key;
@@ -14,8 +15,9 @@ Event<bool, unsigned int> InputKey::onGamepadConnectionChanged;
 
 float InputKey::GetFloat(FloatKey key, int gamepadID)
 {
-    if (key == FloatKey::mouseScrollDelta)
-        return ScrollDelta();
+    // we turn scrollDelta into scrollVelocity and scale the sensitivity to resemble that of other inputs
+    if (key == FloatKey::mouseScrollVelocity)
+        return ScrollDelta() / Time::Delta() / 24.0f; 
     return GlfwInput::GamepadFloat(KeyMap::ToGlfw(key), gamepadID);
 }
 

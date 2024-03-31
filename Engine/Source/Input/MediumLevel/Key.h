@@ -37,7 +37,7 @@ namespace Key
 
 	enum class FloatKey
 	{
-		leftStick_x, leftStick_y, rightStick_x, rightStick_y, leftTrigger, rightTrigger, mouseScrollDelta
+		leftStick_x, leftStick_y, rightStick_x, rightStick_y, leftTrigger, rightTrigger, mouseScrollVelocity
 	};
 
 

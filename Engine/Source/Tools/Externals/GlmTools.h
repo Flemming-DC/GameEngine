@@ -3,14 +3,15 @@
 #include "glm/glm.hpp"
 #include <glm/gtc/quaternion.hpp>
 
-namespace Tools
+namespace glm
 {
-
+	
 	bool HasNAN(glm::vec2 vec);
 	bool HasNAN(glm::vec3 vec);
 	bool HasNAN(glm::vec4 vec);
 	bool HasNAN(glm::mat4 mat);
 
+	glm::vec3 ToVec3(glm::vec2 mat);
 
 }
 

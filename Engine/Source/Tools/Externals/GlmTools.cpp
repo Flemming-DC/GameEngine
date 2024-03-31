@@ -1,6 +1,9 @@
 #include "GlmTools.h"
+#include "ShortHands.h"
 
-namespace Tools
+
+
+namespace glm
 {
 
 	bool HasNAN(glm::vec2 vec)
@@ -28,6 +31,12 @@ namespace Tools
 			}
 		}
 		return false;
+	}
+
+
+	glm::vec3 ToVec3(glm::vec2 vec)
+	{
+		return glm::vec3(vec.x, vec.y, 0);
 	}
 }
 

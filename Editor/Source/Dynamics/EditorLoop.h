@@ -1,14 +1,17 @@
 #pragma once
 #include "Dynamic.h"
 
-class EditorLoop : public Dynamic
+namespace Editor
 {
-public:
-	//static void OnSceneChanged();
+	class EditorLoop : public Dynamic
+	{
+	public:
+		//static void OnSceneChanged();
 
-private:
-	void OnEditorStart() override;
-	void OnEditorUpdate() override;
+	private:
+		void OnEditorStart() override;
+		void OnEditorUpdate() override;
 
-};
+	};
+}
 

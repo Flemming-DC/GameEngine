@@ -1,11 +1,14 @@
 #include "GlmTools.h"
 
-class SceneEditor
+namespace Editor
 {
-public:
-	static void Draw();
+	class SceneEditor
+	{
+	public:
+		static void Draw();
 
-private:
+	private:
 
-	static void UpdateCamera();
-};
+		static void UpdateCamera();
+	};
+}

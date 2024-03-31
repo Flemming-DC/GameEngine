@@ -1,6 +1,6 @@
 #include "imgui/imgui.h"
 #include "Temp_Inspector.h"
-
+using namespace Editor;
 
 
 

@@ -1,7 +1,11 @@
 
 
-class Hierarchy
+namespace Editor
 {
-public:
-	static void Draw();
-};
+	class Hierarchy
+	{
+	public:
+		static void Draw();
+	};
+
+}

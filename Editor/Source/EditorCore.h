@@ -1,9 +1,10 @@
 #pragma once
 
-
-class EditorCore
+namespace Editor
 {
-public:
-    static void MarkAsEditor();
-};
-
+    class EditorCore
+    {
+    public:
+        static void MarkAsEditor();
+    };
+}

@@ -15,7 +15,7 @@
 int main()
 {
     #ifdef InEditor
-        EditorCore::MarkAsEditor();
+        Editor::EditorCore::MarkAsEditor();
     #endif // InEditor
 
     Dynamic::Setup<GameAssets, GameInputs, Settings>();

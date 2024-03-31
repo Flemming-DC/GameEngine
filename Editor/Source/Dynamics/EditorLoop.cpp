@@ -8,7 +8,7 @@
 #include "Hierarchy.h"
 #include "SceneEditor.h"
 #include "OpenGlSetup.h"
-
+using namespace Editor;
 
 
 void EditorLoop::OnEditorStart() { Renderer::ShowWindow(false); }

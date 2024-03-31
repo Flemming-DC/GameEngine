@@ -1,7 +1,7 @@
 #include "Hierarchy.h"
 #include "imgui/imgui.h"
 #include <string>
-
+using namespace Editor;
 
 
 

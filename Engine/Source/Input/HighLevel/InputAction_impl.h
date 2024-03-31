@@ -96,7 +96,7 @@ template<> float InputAction<float>::FindState()
 			maxKey = k;
 		}
 	}
-	if ((maxFloat < -1.001f || maxFloat > 1.001f) && maxKey != Key::FloatKey::mouseScrollDelta)
+	if ((maxFloat < -1.001f || maxFloat > 1.001f) && maxKey != Key::FloatKey::mouseScrollVelocity)
 		RaiseError("Impossible state encountered. FindState() = ", maxFloat, "\nError in ", to_string());
 	return maxFloat;
 }
