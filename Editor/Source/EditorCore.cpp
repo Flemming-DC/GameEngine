@@ -5,8 +5,11 @@
 using namespace Editor;
 
 
+
+
 void EditorCore::MarkAsEditor()
 {
+
 	EngineMode::MarkAsEditor();
 	Dynamic::Setup<EditorLoop>();
 }
