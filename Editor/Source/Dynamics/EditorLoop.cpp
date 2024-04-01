@@ -8,10 +8,16 @@
 #include "Hierarchy.h"
 #include "SceneEditor.h"
 #include "OpenGlSetup.h"
+#include "EditorInputs.h"
+#include "Delay.h"
+
 using namespace Editor;
 
 
-void EditorLoop::OnEditorStart() { Renderer::ShowWindow(false); }
+void EditorLoop::OnEditorStart() 
+{
+    Renderer::ShowWindow(false); 
+}
 
 
 void EditorLoop::OnEditorUpdate()
@@ -38,6 +44,7 @@ void EditorLoop::OnEditorUpdate()
 
     if (InputKey::BecomesPressed(Key::Keyboard::exc))
         EngineMode::ExitEditor(); // save first
+
 }
 
 

@@ -1,7 +1,9 @@
 #include "CollisionChecker.h"
+#include "ShortHands.h"
+Shorts
 
 Collider* CollisionChecker::RayCast(
-	glm::vec2 startPosition, glm::vec2 direction, float distance)
+	vec2 startPosition, vec2 direction, float distance)
 {
 	// some kind of broad phase filter ???
 
@@ -9,8 +11,8 @@ Collider* CollisionChecker::RayCast(
 	Collider* nearestHit = nullptr;
 
 	float startPosAlongDir = glm::dot(startPosition, direction);
-	std::pair<float, float> rayShadow = { startPosAlongDir, startPosAlongDir + distance };
-	auto normal = glm::vec2(-direction.y, direction.x);
+	pair<float, float> rayShadow = { startPosAlongDir, startPosAlongDir + distance };
+	auto normal = vec2(-direction.y, direction.x);
 	float startPosAlongNormal = glm::dot(startPosition, normal);
 
 	for (const auto colID : Collider::GetAllColliders())
@@ -38,16 +40,16 @@ Collider* CollisionChecker::RayCast(
 
 }
 
-std::vector<Collider*> CollisionChecker::RayOverlaps(
-	glm::vec2 startPosition, glm::vec2 direction, float distance)
+vector<Collider*> CollisionChecker::RayOverlaps(
+	vec2 startPosition, vec2 direction, float distance)
 {
 	// some kind of broad phase filter ???
 
-	std::vector<Collider*> hits = {};
+	vector<Collider*> hits = {};
 
 	float startPosAlongDirection = glm::dot(startPosition, direction);
-	std::pair<float, float> rayShadow = { startPosAlongDirection, startPosAlongDirection + distance };
-	auto normal = glm::vec2(-direction.y, direction.x);
+	pair<float, float> rayShadow = { startPosAlongDirection, startPosAlongDirection + distance };
+	auto normal = vec2(-direction.y, direction.x);
 	float startPosAlongNormal = glm::dot(startPosition, normal);
 
 	for (const auto& colID : Collider::GetAllColliders())
@@ -69,3 +71,7 @@ std::vector<Collider*> CollisionChecker::RayOverlaps(
 
 }
 
+vector<Collider*> CollisionChecker::RectangleOverlaps(vec2 upperLeft, vec2 lowerRight)
+{
+	RaiseError("not implemented");
+}

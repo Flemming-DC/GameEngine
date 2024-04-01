@@ -3,18 +3,13 @@
 #include "Dynamic.h"
 
 
-namespace Editor
+namespace Editor::EditorInputs
 {
-	class EditorInputs : public Dynamic
-	{
-	public:
-		inline static InputAction<float>& Zoom() { return *zoom; };
-		inline static InputAction<glm::vec2>& MoveCamera() { return *moveCamera; };
+	using vec2 = glm::vec2;
+	InputAction<float>& Zoom();
+	InputAction<vec2>& MoveCamera();
+	InputAction<bool>& Select();
+	InputAction<vec2>& SelectionPosition();
+	InputAction<bool>& KeepSelection();
 
-	private:
-		static InputAction<float>* zoom;
-		static InputAction<glm::vec2>* moveCamera;
-
-		void OnGameStart() override;
-	};
 }

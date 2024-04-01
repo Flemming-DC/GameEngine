@@ -15,5 +15,6 @@ public:
 	static Overlaps GetOverlaps() { return CollisionLoop::GetOverlaps(); }
 	static Collider* RayCast(glm::vec2 startPosition, glm::vec2 direction, float distance = INFINITY);
 	static std::vector<Collider*> RayOverlaps(glm::vec2 startPosition, glm::vec2 direction, float distance = INFINITY);
+	static std::vector<Collider*> RectangleOverlaps(glm::vec2 upperLeft, glm::vec2 lowerRight);
 };
 

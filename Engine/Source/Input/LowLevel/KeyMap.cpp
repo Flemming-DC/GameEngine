@@ -72,6 +72,7 @@ int KeyMap::ToGlfw(Keyboard key)
     case Keyboard::comma: return GLFW_KEY_COMMA;
     case Keyboard::period: return GLFW_KEY_PERIOD;
     case Keyboard::dash: return GLFW_KEY_MINUS;
+    case Keyboard::leftShift: return GLFW_KEY_LEFT_SHIFT;
     case Keyboard::rightShift: return GLFW_KEY_RIGHT_SHIFT;
     case Keyboard::upArrow: return GLFW_KEY_UP;
     case Keyboard::numpad_1: return GLFW_KEY_KP_1;
