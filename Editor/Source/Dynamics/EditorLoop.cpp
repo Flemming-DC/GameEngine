@@ -8,7 +8,6 @@
 #include "Hierarchy.h"
 #include "SceneEditor.h"
 #include "OpenGlSetup.h"
-#include "EditorInputs.h"
 #include "Delay.h"
 
 using namespace Editor;

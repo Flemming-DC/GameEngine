@@ -32,6 +32,10 @@ namespace Editor::EditorInputs
 	InputAction<bool>& Select() { return select; };
 	InputAction<vec2>& SelectionPosition() { return selectionPosition; };
 	InputAction<bool>& KeepSelection() { return keepSelection; };
+
+
+
+
 }
 
 

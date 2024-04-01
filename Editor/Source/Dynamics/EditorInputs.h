@@ -12,4 +12,5 @@ namespace Editor::EditorInputs
 	InputAction<vec2>& SelectionPosition();
 	InputAction<bool>& KeepSelection();
 
+
 }

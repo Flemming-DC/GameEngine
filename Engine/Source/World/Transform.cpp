@@ -97,6 +97,7 @@ std::string Transform::GetPath() const
 		return parent->GetPath() + "/" + GetEntity().GetName();
 }
 
+// isPosition is used to distinguish position vector from other vectors
 glm::vec3 Transform::ToWorldSpace(glm::vec3 localPosition_, bool isPosition) const
 {
 	// we extend the localPosition using a homogenous coordinate
