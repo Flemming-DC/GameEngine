@@ -8,7 +8,6 @@ namespace Editor
 		static void Draw();
 
 	private:
-
 		static void UpdateCamera();
 	};
 }

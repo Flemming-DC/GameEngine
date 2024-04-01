@@ -65,6 +65,7 @@ read/save files from/to disk
 input:
 	evt. icons
 	evt. pass float input trough a function that makes them more linear
+	evt. scale input by passing a float to InputAction.AddKey
 
 
 headers
