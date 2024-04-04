@@ -32,7 +32,6 @@ void DummyComp::OnStart()
 		});
 	*/
 
-	P(GameInputs::Jump())
 }
 
 void DummyComp::OnDestroy()

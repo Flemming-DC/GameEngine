@@ -19,21 +19,21 @@ uuid Renderer::verticalGridID;
 FrameBuffer Renderer::frameBuffer;
 
 
-Renderer::RenderResult Renderer::DrawToFrameBuffer(vec3 cameraPos, quat cameraRot, vec3 cameraScale)
-    { return DrawToFrameBuffer(Camera::ProjectionView(cameraPos, cameraRot, cameraScale)); }
+Renderer::RenderResult Renderer::DrawToFrameBuffer(vec3 cameraPos, quat cameraRot, vec3 cameraScale, bool drawGizmos)
+    { return DrawToFrameBuffer(Camera::ProjectionView(cameraPos, cameraRot, cameraScale), drawGizmos); }
 Renderer::RenderResult Renderer::DrawToFrameBuffer() 
-    { return DrawToFrameBuffer(Camera::Current().ProjectionView()); }
+    { return DrawToFrameBuffer(Camera::Current().ProjectionView(), false); }
 void Renderer::DrawToScreen() 
     { DrawToScreen(Camera::Current().ProjectionView()); }
 
 
-Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView)
+Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView, bool drawGizmos)
 {
     if (!UuidCreator::IsInitialized(frameBuffer.GetID()))
         frameBuffer = FrameBuffer::register_.Add(OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight());
     frameBuffer.Bind();
     glCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-    Renderer::DrawToScreen(projectionView, !EngineMode::GameIsRunning());
+    Renderer::DrawToScreen(projectionView, drawGizmos);
     frameBuffer.UnBind();
     return { frameBuffer.GetTextureOpenGLid(), OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight() };
 }

@@ -23,7 +23,7 @@ void SceneEditor::Draw()
 {
     UpdateCamera();
 
-    auto renderResult = Renderer::DrawToFrameBuffer(cameraPos, cameraRot, cameraScale);
+    auto renderResult = Renderer::DrawToFrameBuffer(cameraPos, cameraRot, cameraScale, true);
 
     ImVec2 uvBottumLeft = { 0, 1 };
     ImVec2 uvTopRight = { 1, 0 };

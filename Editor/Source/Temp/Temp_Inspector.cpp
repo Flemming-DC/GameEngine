@@ -18,7 +18,7 @@ void Temp_Inspector::TransformGUI2D(const Entity& entity)
     ImGui::SliderFloat2((name + ".Scale").c_str(), pointerToScale, 0.001f, 3);
 
     //transform.localRotation = glm::quat(glm::radians(*eulerAngles));
-    transform.localRotation = glm::quat(glm::radians(glm::vec3(0.0f, angle, 0.0f)));
+    transform.localRotation = glm::quat(glm::radians(glm::vec3(0.0f, 0.0f, angle)));
 }
 
 

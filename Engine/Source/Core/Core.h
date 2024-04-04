@@ -13,6 +13,5 @@ private:
     static void Setup();
     static void Update();
     static void Shutdown();
-    static void LogHeader(std::string header) { logger::print("------- " + header + " --------"); }
 
 };

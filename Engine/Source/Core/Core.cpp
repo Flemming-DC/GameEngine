@@ -14,17 +14,17 @@
 
 void Core::Run(std::unique_ptr<Scene> firstScene)
 {
-    LogHeader("Setup");
+    logger::print("------- Setup --------");
     Scene::SetFirstScene(std::move(firstScene));
     Setup();
 
-    LogHeader("Loop");
+    logger::print("------- Loop --------");
     while (!EngineMode::ShouldClose())
         Update();
 
-    LogHeader("Shutdown");
+    logger::print("------- Shutdown --------");
     Shutdown();
-    LogHeader("Done");
+    logger::print("------- Done --------");
 }
 
 
@@ -98,11 +98,14 @@ void Core::Shutdown()
 
 void Core::StartRunningGame()
 {
+    logger::print("--- Running Game ---");
     EngineMode::gameIsRunning = true;
     Time::GameSetup();
     Dynamic::CallOnGameStart();
     EngineMode::MarkGameWindowAsUnclosed();
-    Renderer::ShowWindow(true); 
+    Scene::Save();
+    Scene::ReloadImmediately();
+    Renderer::ShowWindow(true);
 }
 
 
@@ -111,8 +114,9 @@ void Core::StopRunningGame()
     Delay::ToFrameEnd([]()
         {
             Renderer::ShowWindow(false); 
-            //Scene::ReloadImmediately();
+            Scene::ReloadImmediately();
             Dynamic::CallOnGameEnd();
             EngineMode::gameIsRunning = false;
         });
+    logger::print("--- Stopping Game ---");
 }

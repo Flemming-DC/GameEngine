@@ -20,7 +20,7 @@ void GameLogic::OnStart()
         });
     onExitIndex = Get<RectangleCollider>().onExit.Add([this](Collider& other)
         { 
-            logger::print("GameLogic: Collider.Enter: " + other.GetEntity().name + " enters " + this->GetEntity().name); 
+            logger::print("GameLogic: Collider.onExit: " + other.GetEntity().name + " enters " + this->GetEntity().name); 
         });
 }
 

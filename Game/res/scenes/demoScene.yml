@@ -9,16 +9,16 @@ Entities:
             localPosition: [0, 0, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
-    circle 1: 
+    circle 1:
         id: 465e6f11-1daa-46ed-9eab-ada19408dd94
-        Transform: 
+        CircleCollider:
+            id: 7a2121ba-cb58-4a14-bc42-c907070a6d94
+            localRadius: 0.5
+        Transform:
             id: c8f4574c-079a-48f7-9055-6b2fd37e023c
             localPosition: [-0.5, 0.5, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
-        CircleCollider:
-          id: 7a2121ba-cb58-4a14-bc42-c907070a6d94
-          localRadius: 0.5
     circle 2:
         id: 16aaa607-4e7a-465b-bef0-141127983c85
         CircleCollider:
@@ -31,17 +31,17 @@ Entities:
             localScale: [1, 1, 1]
     picture 1:
         id: 62b4da63-0610-4eff-9820-3e1f073c9cff
+        RectangleCollider:
+            id: fdcac1ad-d3ab-48e1-b909-911a1f5e2107
+            size: [1, 1]
         Renderable:
             id: 8f2e1e26-e6d6-4917-ad9e-61e1e3c81791
-            material: 18ead38c-bb49-4692-a840-4246b2ac1b86
+            material: 282fb27a-dfb7-46ed-9e6b-b8d9c31bc184
         Transform:
             id: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
             localPosition: [-0.5, -0.5, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
-        RectangleCollider:
-            id: fdcac1ad-d3ab-48e1-b909-911a1f5e2107
-            size: [1, 1]
     picture 2:
         id: 9f90ac2c-01c1-439a-b75e-98acd00255e4
         RectangleCollider:
@@ -49,12 +49,14 @@ Entities:
             size: [1, 1]
         Renderable:
             id: 7cb23b0c-f684-4b93-98bb-6ff3d2290336
-            material: 18ead38c-bb49-4692-a840-4246b2ac1b86
+            material: 282fb27a-dfb7-46ed-9e6b-b8d9c31bc184
         Transform:
             id: a5be3ef9-f754-42ca-af89-8842ab357ab7
-            localPosition: [1.25, 0, 0]
+            localPosition: [1.25, 0.00100000005, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
             parent: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
+        GameLogic:
+            id: baccc24c-eeba-4db5-b748-9513cb4c6322
         DummyComp:
-            id: 5799e560-ffe1-4834-adf9-de269c0d98af
+            id: e617b147-c360-460b-90e6-35f02420d1f3
