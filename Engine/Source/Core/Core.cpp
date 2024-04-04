@@ -111,7 +111,7 @@ void Core::StopRunningGame()
     Delay::ToFrameEnd([]()
         {
             Renderer::ShowWindow(false); 
-            Scene::ReloadImmediately();
+            //Scene::ReloadImmediately();
             Dynamic::CallOnGameEnd();
             EngineMode::gameIsRunning = false;
         });

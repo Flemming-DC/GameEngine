@@ -17,6 +17,7 @@ private:
 	void OnUpdate() override;
 	void OnDestroy() override;
 
-	void OldTests();
+	void OldCollisionTests();
+	void CollisionTests();
 };
 

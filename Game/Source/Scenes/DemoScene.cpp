@@ -32,11 +32,11 @@ void DemoScene::PurelyManualSetup()
 
     auto circle1ID = Entity::register_.Add("circle 1").GetID();
     Entity::Add<Transform>(circle1ID);
-    Entity::Add<CircleCollider>(circle1ID).SetLocalRadius(0.5f);
+    Entity::Add<CircleCollider>(circle1ID).Setup(0.5f);
 
     auto circle2ID = Entity::register_.Add("circle 2").GetID();
     Entity::Add<Transform>(circle2ID);
-    Entity::Add<CircleCollider>(circle2ID).SetLocalRadius(0.5f);
+    Entity::Add<CircleCollider>(circle2ID).Setup(0.5f);
 
 
     // ---------- saved scene data ---------- 

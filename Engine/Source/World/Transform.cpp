@@ -97,27 +97,27 @@ std::string Transform::GetPath() const
 		return parent->GetPath() + "/" + GetEntity().GetName();
 }
 
-// isPosition is used to distinguish position vector from other vectors
-glm::vec3 Transform::ToWorldSpace(glm::vec3 localPosition_, bool isPosition) const
+// isPosition is used to distinguish position vector from other vectors (e.g. a velocity vector)
+glm::vec3 Transform::ToWorldSpace(glm::vec3 localVector, bool isPosition) const
 {
 	// we extend the localPosition using a homogenous coordinate
 	glm::mat4 matrix = isPosition ? GetModel() : glm::mat4_cast(GetRotation());
-	return matrix * glm::vec4(localPosition_.x, localPosition_.y, localPosition_.z, 1);
+	return matrix * glm::vec4(localVector.x, localVector.y, localVector.z, 1);
 }
-glm::vec2 Transform::ToWorldSpace(glm::vec2 localPosition2D_, bool isPosition) const
+glm::vec2 Transform::ToWorldSpace(glm::vec2 localVector2D, bool isPosition) const
 {
 	glm::mat4 matrix = isPosition ? GetModel() : glm::mat4_cast(GetRotation());
-	return matrix * glm::vec4(localPosition2D_.x, localPosition2D_.y, 0, 1);
+	return matrix * glm::vec4(localVector2D.x, localVector2D.y, 0, 1);
 }
-glm::vec3 Transform::ToLocalSpace(glm::vec3 worldPosition, bool isPosition) const
+glm::vec3 Transform::ToLocalSpace(glm::vec3 worldVector, bool isPosition) const
 {
 	glm::mat4 matrix = isPosition ? GetInverseModel() : glm::mat4_cast(glm::inverse(GetRotation()));
-	return matrix * glm::vec4(worldPosition.x, worldPosition.y, worldPosition.z, 1);
+	return matrix * glm::vec4(worldVector.x, worldVector.y, worldVector.z, 1);
 }
-glm::vec2 Transform::ToLocalSpace(glm::vec2 worldPosition2D, bool isPosition) const
+glm::vec2 Transform::ToLocalSpace(glm::vec2 worldVector2D, bool isPosition) const
 {
 	glm::mat4 matrix = isPosition ? GetInverseModel() : glm::mat4_cast(glm::inverse(GetRotation()));
-	return matrix * glm::vec4(worldPosition2D.x, worldPosition2D.y, 0, 1);
+	return matrix * glm::vec4(worldVector2D.x, worldVector2D.y, 0, 1);
 }
 
 void Transform::SetLocalDataUsingTransform(const glm::mat4& transform)

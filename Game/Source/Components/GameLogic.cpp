@@ -5,8 +5,10 @@
 #include "DemoScene.h"
 #include "SecondScene.h"
 #include "Time_.h"
+#include "ColMaker.h"
 
 using namespace Key;
+Shorts;
 
 void GameLogic::OnStart()
 {
@@ -55,36 +57,75 @@ void GameLogic::OnUpdate()
         Scene::Activate<SecondScene>();
         //Scene::Activate(new SecondScene());
     }
+    //CollisionTests();
+    CollisionTests();
+}
+
+void GameLogic::CollisionTests()
+{
+    if (InputKey::BecomesPressed(Keyboard::P))
+    {
+        logger::print("P");
+        auto overlaps = CollisionChecker::GetOverlaps(ColMaker::MakeCircle(vec2(0.5f), 0.49f));
+        for (const auto& overlap : overlaps)
+            logger::print(overlap->GetEntity().name + " overlaps Circle(vec2(0.49f), 0.49f)");
+    }
+    if (InputKey::BecomesPressed(Keyboard::O))
+    {
+        logger::print("O");
+        auto overlaps = CollisionChecker::GetOverlaps(ColMaker::MakePoint(vec2(-0.2f)));
+        for (const auto& overlap : overlaps)
+            logger::print(overlap->GetEntity().name + " overlaps Point(vec2(-0.2f))");
+    }
+    if (InputKey::BecomesPressed(Keyboard::I))
+    {
+        logger::print("I");
+        auto overlaps = CollisionChecker::GetOverlaps(ColMaker::MakePolygon({ vec2(0.5f), vec2(-0.5f), vec2(-0.5f, 0.5f) }));
+        for (const auto& overlap : overlaps)
+            logger::print(overlap->GetEntity().name + " overlaps Polygon({ vec2(0.5f), vec2(-0.5f), vec2(-0.5f, 0.5f) })");
+    }
+    if (InputKey::BecomesPressed(Keyboard::U))
+    {
+        logger::print("U");
+        auto overlaps = CollisionChecker::GetOverlaps(ColMaker::MakeRectangle(vec2(0.5f), quat(), vec2(2.0f)));
+        for (const auto& overlap : overlaps)
+            logger::print(overlap->GetEntity().name + " overlaps Rectangle(vec2(0.5f), quat(), vec2(2.0f)");
+    }
+    if (InputKey::BecomesPressed(Keyboard::Y))
+    {
+        logger::print("Y");
+        auto collider = CollisionChecker::TryGetOverlap(ColMaker::MakeCircle(vec2(0.5f), 0.49f));
+        logger::print("TryGetOverlap with Circle(vec2(0.5f), 0.5f) yields ", collider);
+    }
+    if (InputKey::BecomesPressed(Keyboard::T))
+    {
+        logger::print("T");
+        bool isOverlapping = CollisionChecker::IsOverlapping(ColMaker::MakeCircle(vec2(0.5f), 0.51f), ColMaker::MakeCircle(vec2(-0.5f), 0.51f));
+        logger::print("isOverlapping = ", isOverlapping, " distance = ", glm::length((vec2(0.5f) - vec2(-0.5f))), " r1+r2 = ", 0.51f + 0.51f);
+    }
+
 
 }
 
-void GameLogic::OldTests()
+void GameLogic::OldCollisionTests()
 {
-    material->SetUniform("u_color", color);
-    
-    if (color.r > 1)
-        increment = -6.0f * Time::Delta();
-    if (color.r < 0)
-        increment = 6.0f * Time::Delta();
-    color.r += increment;
 
-
-    if (InputKey::BecomesPressed(Keyboard::K))
+    if (InputKey::BecomesPressed(Keyboard::P))
     {
-        logger::print("K");
+        logger::print("P");
         for (const auto& overlap : CollisionChecker::GetOverlaps())
             logger::print(overlap.first->GetEntity().name + " overlaps " + overlap.second->GetEntity().name);
     }
-    if (InputKey::BecomesPressed(Keyboard::L))
+    if (InputKey::BecomesPressed(Keyboard::O))
     {
-        logger::print("L");
+        logger::print("O");
         auto colliders = CollisionChecker::RayOverlaps(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
         for (const auto& col : colliders)
             logger::print(col->GetEntity().name + " was hit");
     }
-    if (InputKey::BecomesPressed(Keyboard::P))
+    if (InputKey::BecomesPressed(Keyboard::I))
     {
-        logger::print("P");
+        logger::print("I");
         auto collider = CollisionChecker::RayCast(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
         if (collider)
             logger::print(collider->GetEntity().name + " was hit");
@@ -92,21 +133,6 @@ void GameLogic::OldTests()
             logger::print("Hit nothing");
     }
 
-    if (InputKey::BecomesPressed(Keyboard::O))
-    {
-        logger::print("O");
-        Renderer::ShowWindow(!Renderer::IsWindowVisible());
-    }
-    if (InputKey::BecomesPressed(Keyboard::M))
-    {
-        logger::print("M");
-        Scene::Activate<DemoScene>(); // this gets called multiple frames in a row, which you shouldn't do in a real game
-    }
-    if (InputKey::BecomesPressed(Keyboard::N))
-    {
-        logger::print("N");
-        Scene::Activate<SecondScene>(); // this gets called multiple frames in a row, which you shouldn't do in a real game
-    }
 }
 
 

@@ -39,6 +39,9 @@ Entities:
             localPosition: [-0.5, -0.5, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
+        RectangleCollider:
+            id: fdcac1ad-d3ab-48e1-b909-911a1f5e2107
+            size: [1, 1]
     picture 2:
         id: 9f90ac2c-01c1-439a-b75e-98acd00255e4
         RectangleCollider:

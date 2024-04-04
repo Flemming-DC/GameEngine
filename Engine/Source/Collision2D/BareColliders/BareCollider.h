@@ -1,34 +1,34 @@
 #pragma once
-#include "Component.h"
-#include "Transform.h"
-#include "Gizmo.h"
-#include "Event.h"
-#include <vector>
+#include "ErrorChecker.h"
 #include <functional>
-#include <stduuid/uuid.h>
+#include "ShortHands.h"
+#include "GlmTools.h"
 
 //struct Bounds { float x, y; };
+
+struct ITransform // this struct serves as an interface for a transform.
+{
+	Shorts;
+	function<vec3()> GetPosition;
+	function<vec3()> GetScale;
+	function<vec2(vec2, bool)> ToWorldSpace; // (localVector, isPositionvector) -> worldVector
+};
 
 class BareCollider
 {
 public:
-	//Event<BareCollider&> onEnter; // invoked by the collision detection system
-	//Event<BareCollider&> onExit; // invoked by the collision detection system
+	Shorts;
+	ITransform iTransform;
+	// Bounds bounds;
+	
+	//void SetupTransform(ITransform iTransform_) { iTransform = iTransform_; };
+	virtual std::pair<float, float> ShadowAlongNormal(glm::vec2 normal) const { RaiseError("Must be overridden"); return {0.0f, 0.0f}; };
 
-	//static std::vector<uuids::uuid>& GetAllColliders() { return allColliders; }
-	virtual std::pair<float, float> ShadowAlongNormal(glm::vec2 normal) const = 0;
-	//Bounds GetBounds() { return bounds; }
-
-	std::function<glm::vec3()> ToWorldSpace; //glm::vec3 position, bool isPosition
-	std::function<glm::vec3()> Position;
-	std::function<glm::vec3()> Scale;
-
-//protected:
-	//uuids::uuid gizmoID;
-
-private:
-	//static std::vector<uuids::uuid> allColliders;
-	//Bounds bounds;
+protected:
+	ITransform MakeTransform(vec2 pos = vec2(), quat rot = quat(), vec2 scale = vec2(1.0f));
 
 };
+
+
+
 

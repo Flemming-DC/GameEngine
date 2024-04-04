@@ -3,29 +3,43 @@
 #include <algorithm> 
 
 
-void BareCircleCollider::SetLocalRadius(float radius_)
+
+BareCircleCollider BareCircleCollider::MakePoint(vec2 pos)
 {
-	localRadius = radius_;
-	glm::vec2 center = glm::vec2(0.0f); // evt. make this a variable
-	//gizmoID = Gizmo::MakeCircle(center, radius_, GetTransform());
+	float epsilon = glm::pow(10.0f, -9.0f);
+	return Make(pos, epsilon);
 }
 
+BareCircleCollider BareCircleCollider::Make(vec2 center, float radius_)
+{
+	BareCircleCollider col;
+	col.Setup(col.MakeTransform(center), radius_); // , quat(), vec2(1.0f)
+	return col;
+}
+
+void BareCircleCollider::Setup(ITransform iTransform_, float radius_)
+{
+	iTransform = iTransform_,
+	localRadius = radius_;
+}
 
 float BareCircleCollider::GetRadius() const
 {
-	auto scale = Scale();
+	glm::vec3 scale = iTransform.GetScale();
 
+#ifdef _DEBUG
 	// replace error checking with constrained proportions
 	float error = (scale.x - scale.y) / std::max(0.005f, scale.x + scale.y);
 	if (error * error > 0.01f)
 		Warning("non-uniform scales are not supported for exact circle colliders");
+#endif // _DEBUG
 
 	return scale.x * localRadius;
 }
 
 std::pair<float, float> BareCircleCollider::ShadowAlongNormal(glm::vec2 normal) const
 {
-	float positionAlongNormal = glm::dot((glm::vec2)Position(), normal);
+	float positionAlongNormal = glm::dot((glm::vec2)iTransform.GetPosition(), normal);
 	return { positionAlongNormal - GetRadius(), positionAlongNormal + GetRadius() };
 }
 

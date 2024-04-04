@@ -150,7 +150,7 @@ void DummyComp::OldTests()
 			circle1.Add<CircleCollider>().SetLocalRadius(0.5f);
 			*/
 			Entity::Make<Transform, CircleCollider>("circle 1")
-				.Get<CircleCollider>().SetLocalRadius(0.5);
+				.Get<CircleCollider>().Setup(0.5);
 		}
 		if (!Entity::TryGetID("XX"))
 			Entity::Make<DummyComp, DummyComp>("XX");

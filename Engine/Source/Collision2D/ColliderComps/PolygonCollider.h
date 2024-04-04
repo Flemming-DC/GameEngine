@@ -1,5 +1,6 @@
 #pragma once
 #include "Collider.h"
+#include "BarePolygonCollider.h"
 #include "glm/glm.hpp"
 
 
@@ -7,18 +8,16 @@
 class PolygonCollider : public Collider
 {
 public:
+	BarePolygonCollider bare;
+
 	void Setup(std::vector<glm::vec2> localPosition2Ds);
 	// add position and remove position would be useful in an editor
 
-	const std::vector<glm::vec2>& GetLocalPosition2Ds() const { return localPosition2Ds; } 
-	std::pair<float, float> ShadowAlongNormal(glm::vec2 normal) const override;
-	const glm::vec2 GetNormalByIndex(int i) const { return GetTransform().ToWorldSpace(localNormals[i], false); };
+	//inline std::pair<float, float> ShadowAlongNormal(glm::vec2 normal) const override { return bare.ShadowAlongNormal(normal); };
 	void Save(YAML::Node& node) const override;
 	void Load(const YAML::Node& node) override;
+	const BareCollider& Bare() const override { return bare; };
 
 private:
-	std::vector<glm::vec2> localPosition2Ds; // positions in local space i.e. relative to transform.GetPosition()
-	std::vector<glm::vec2> localNormals;
-	glm::vec2 centerOfMass; // same as average position2D, since we assume uniform density
 };
 

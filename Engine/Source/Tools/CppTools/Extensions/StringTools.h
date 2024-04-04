@@ -15,7 +15,7 @@ namespace Tools
 	std::string RemovePrefix(const std::string& str, const std::string& prefix);
 	std::string Replace(std::string str, const std::string& toBeReplaced, const std::string& replacement);
 
-
+	// if used on A deriving from B, then this prints A. However, if used on a pointer to A that is declared as B*, this print B*.
 	template<typename T>
 	std::string TypeName(const T& obj)
 	{

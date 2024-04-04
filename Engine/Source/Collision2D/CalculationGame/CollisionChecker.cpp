@@ -1,5 +1,5 @@
 #include "CollisionChecker.h"
-#include "ShortHands.h"
+#include "NarrowPhase.h"
 Shorts
 
 Collider* CollisionChecker::RayCast(
@@ -71,7 +71,36 @@ vector<Collider*> CollisionChecker::RayOverlaps(
 
 }
 
-vector<Collider*> CollisionChecker::RectangleOverlaps(vec2 upperLeft, vec2 lowerRight)
+Collider* CollisionChecker::TryGetOverlap(const BareCollider& collider)
 {
-	RaiseError("not implemented");
+	// introduce a broadphase first
+	vector<Collider*> overlappingColliders;
+	for (const auto& colliderID : Collider::GetAllColliders())
+	{
+		auto& colComp = Entity::GetComponent<Collider>(colliderID);
+		if (NarrowPhase::IsOverLapping(collider, colComp.Bare()))
+			return &colComp;
+	}
+	return nullptr;
+}
+
+vector<Collider*> CollisionChecker::GetOverlaps(const BareCollider& collider)
+{
+	// introduce a broadphase first
+	vector<Collider*> overlappingColliders;
+	for (const auto& colliderID : Collider::GetAllColliders())
+	{
+		auto& colComp = Entity::GetComponent<Collider>(colliderID);
+		if (colComp.GetEntity().GetName() == "circle 1")
+			SetDebug;
+		if (NarrowPhase::IsOverLapping(collider, colComp.Bare()))
+			overlappingColliders.push_back(&colComp);
+	}
+	return overlappingColliders;
+}
+
+bool CollisionChecker::IsOverlapping(const BareCollider& col1, const BareCollider& col2)
+{
+	// evt. apply a broadphase check first
+	return NarrowPhase::IsOverLapping(col1, col2);
 }

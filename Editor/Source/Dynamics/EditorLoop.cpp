@@ -28,7 +28,7 @@ void EditorLoop::OnEditorUpdate()
     SceneEditor::Draw();
     //evt. GameView::Draw();
     //AssetFolder::Draw();
-    Hierarchy::Draw();
+    //Hierarchy::Draw();
 
     //ImGui::ShowDemoWindow();
 

@@ -11,11 +11,12 @@
 #include "PolygonCollider.h" 
 #include "RectangleCollider.h" 
 #include "CircleCollider.h" 
+#include "Register.h"
+#include "Renderer.h"
+#include "Gizmo.h"
 #include <fstream>
 #include <filesystem>
 #include <sstream>
-#include "Register.h"
-#include "Renderer.h"
 
 
 Shorts;
