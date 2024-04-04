@@ -68,7 +68,6 @@ void Core::Update()
     if (EngineMode::CloseButtonIsClicked())
         StopRunningGame();
     Delay::CallToFrameEnd(); 
-
     // shutdown frame
     InputLoop::LateUpdate();
     ImGuiSetup::LateUpdate();
@@ -100,9 +99,9 @@ void Core::StartRunningGame()
 {
     logger::print("--- Running Game ---");
     EngineMode::gameIsRunning = true;
+    EngineMode::MarkGameWindowAsUnclosed();
     Time::GameSetup();
     Dynamic::CallOnGameStart();
-    EngineMode::MarkGameWindowAsUnclosed();
     Scene::Save();
     Scene::ReloadImmediately();
     Renderer::ShowWindow(true);
@@ -117,6 +116,7 @@ void Core::StopRunningGame()
             Scene::ReloadImmediately();
             Dynamic::CallOnGameEnd();
             EngineMode::gameIsRunning = false;
+            EngineMode::MarkGameWindowAsUnclosed();
+            logger::print("--- Stopping Game ---");
         });
-    logger::print("--- Stopping Game ---");
 }
