@@ -1,11 +1,10 @@
 #include "GameLogic.h"
 #include "InputKey.h"
-#include "CollisionChecker.h"
+#include "ColQuery.h"
 #include "Renderer.h"
 #include "DemoScene.h"
 #include "SecondScene.h"
 #include "Time_.h"
-#include "ColMaker.h"
 
 using namespace Key;
 Shorts;
@@ -66,41 +65,41 @@ void GameLogic::CollisionTests()
     if (InputKey::BecomesPressed(Keyboard::P))
     {
         logger::print("P");
-        auto overlaps = CollisionChecker::GetOverlaps(ColMaker::MakeCircle(vec2(0.5f), 0.49f));
+        auto overlaps = ColQuery::GetOverlaps(ColMaker::Circle(vec2(0.5f), 0.49f));
         for (const auto& overlap : overlaps)
             logger::print(overlap->GetEntity().name + " overlaps Circle(vec2(0.49f), 0.49f)");
     }
     if (InputKey::BecomesPressed(Keyboard::O))
     {
         logger::print("O");
-        auto overlaps = CollisionChecker::GetOverlaps(ColMaker::MakePoint(vec2(-0.2f)));
+        auto overlaps = ColQuery::GetOverlaps(ColMaker::Point(vec2(-0.2f)));
         for (const auto& overlap : overlaps)
             logger::print(overlap->GetEntity().name + " overlaps Point(vec2(-0.2f))");
     }
     if (InputKey::BecomesPressed(Keyboard::I))
     {
         logger::print("I");
-        auto overlaps = CollisionChecker::GetOverlaps(ColMaker::MakePolygon({ vec2(0.5f), vec2(-0.5f), vec2(-0.5f, 0.5f) }));
+        auto overlaps = ColQuery::GetOverlaps(ColMaker::Polygon({ vec2(0.5f), vec2(-0.5f), vec2(-0.5f, 0.5f) }));
         for (const auto& overlap : overlaps)
             logger::print(overlap->GetEntity().name + " overlaps Polygon({ vec2(0.5f), vec2(-0.5f), vec2(-0.5f, 0.5f) })");
     }
     if (InputKey::BecomesPressed(Keyboard::U))
     {
         logger::print("U");
-        auto overlaps = CollisionChecker::GetOverlaps(ColMaker::MakeRectangle(vec2(0.5f), quat(), vec2(2.0f)));
+        auto overlaps = ColQuery::GetOverlaps(ColMaker::Rectangle(vec2(0.5f), quat(), vec2(2.0f)));
         for (const auto& overlap : overlaps)
             logger::print(overlap->GetEntity().name + " overlaps Rectangle(vec2(0.5f), quat(), vec2(2.0f)");
     }
     if (InputKey::BecomesPressed(Keyboard::Y))
     {
         logger::print("Y");
-        auto collider = CollisionChecker::TryGetOverlap(ColMaker::MakeCircle(vec2(0.5f), 0.49f));
+        auto collider = ColQuery::TryGetOverlap(ColMaker::Circle(vec2(0.5f), 0.49f));
         logger::print("TryGetOverlap with Circle(vec2(0.5f), 0.5f) yields ", collider);
     }
     if (InputKey::BecomesPressed(Keyboard::T))
     {
         logger::print("T");
-        bool isOverlapping = CollisionChecker::IsOverlapping(ColMaker::MakeCircle(vec2(0.5f), 0.51f), ColMaker::MakeCircle(vec2(-0.5f), 0.51f));
+        bool isOverlapping = ColQuery::IsOverlapping(ColMaker::Circle(vec2(0.5f), 0.51f), ColMaker::Circle(vec2(-0.5f), 0.51f));
         logger::print("isOverlapping = ", isOverlapping, " distance = ", glm::length((vec2(0.5f) - vec2(-0.5f))), " r1+r2 = ", 0.51f + 0.51f);
     }
 
@@ -113,20 +112,20 @@ void GameLogic::OldCollisionTests()
     if (InputKey::BecomesPressed(Keyboard::P))
     {
         logger::print("P");
-        for (const auto& overlap : CollisionChecker::GetOverlaps())
+        for (const auto& overlap : ColQuery::GetOverlaps())
             logger::print(overlap.first->GetEntity().name + " overlaps " + overlap.second->GetEntity().name);
     }
     if (InputKey::BecomesPressed(Keyboard::O))
     {
         logger::print("O");
-        auto colliders = CollisionChecker::RayOverlaps(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
+        auto colliders = ColQuery::RayOverlaps(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
         for (const auto& col : colliders)
             logger::print(col->GetEntity().name + " was hit");
     }
     if (InputKey::BecomesPressed(Keyboard::I))
     {
         logger::print("I");
-        auto collider = CollisionChecker::RayCast(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
+        auto collider = ColQuery::RayCast(glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1);
         if (collider)
             logger::print(collider->GetEntity().name + " was hit");
         else

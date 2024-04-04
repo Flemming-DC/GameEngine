@@ -4,7 +4,7 @@
 #include "ShortHands.h"
 #include "EditorInputs.h"
 #include "Time_.h"
-#include "CollisionChecker.h"
+#include "ColQuery.h"
 
 using namespace Editor;
 Shorts

@@ -2,15 +2,16 @@
 #include "Collider.h"
 #include "CollisionLoop.h"
 #include "ShortHands.h"
+#include "ColMaker.h" // when the gamelogic includes ColQuery, then it also needs ColMaker
 #include <vector>
 
 // this class exposes some functions to be used by the gamelogic, 
-// in contrast to CollisionChecker, which is an internal engine only class.
+// in contrast to ColQuery, which is an internal engine only class.
 
 // evt. add GetCircleOverlaps, GetRectangleOverlaps and GetPolygonOverlaps. 
 // Either accept dublication or with hidden/engine-only colliders
 
-class CollisionChecker // coliquery, colimata, colisor, ColliQuery, ColQuery
+class ColQuery // coliquery, colimata, colisor, ColliQuery, ColQuery
 {
 	Shorts;
 	using Overlaps = vector<pair<Collider*, Collider*>>;
