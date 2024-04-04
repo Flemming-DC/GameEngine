@@ -11,12 +11,13 @@ using namespace Editor;
 
 // make viewport framebuffer size sensitive to my viewport vindow size.
 
-static glm::vec3 cameraPos = glm::vec3(0.0f);
-static const glm::quat cameraRot = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-static glm::vec3 cameraScale = glm::vec3(1.0f);
-static float moveSpeed = 1.0f;
+static float moveSpeed = 1.5f;
 static const float scrollSpeed = 3.0f;
 static const float maxScale = 100;
+static glm::vec3 cameraPos = glm::vec3(0.0f);
+static const glm::quat cameraRot = glm::NoRotation();
+static glm::vec3 cameraScale = glm::vec3(1.0f);
+
 
 
 void SceneEditor::Draw()

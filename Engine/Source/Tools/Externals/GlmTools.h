@@ -11,7 +11,8 @@ namespace glm
 	bool HasNAN(glm::vec4 vec);
 	bool HasNAN(glm::mat4 mat);
 
-	glm::vec3 ToVec3(glm::vec2 mat);
+	glm::vec3 ToVec3(glm::vec2 vec);
+	glm::quat NoRotation();
 
 }
 
@@ -22,6 +23,7 @@ namespace logger
 	std::string to_string(glm::vec3 vec);
 	std::string to_string(glm::vec4 vec);
 	std::string to_string(glm::mat4 mat);
+	std::string to_string(glm::quat rot);
 }
 
 

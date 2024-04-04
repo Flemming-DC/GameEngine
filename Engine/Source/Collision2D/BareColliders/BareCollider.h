@@ -25,7 +25,7 @@ public:
 	virtual std::pair<float, float> ShadowAlongNormal(glm::vec2 normal) const { RaiseError("Must be overridden"); return {0.0f, 0.0f}; };
 
 protected:
-	ITransform MakeTransform(vec2 pos = vec2(), quat rot = quat(), vec2 scale = vec2(1.0f));
+	ITransform MakeTransform(vec2 pos = vec2(), quat rot = glm::NoRotation(), vec2 scale = vec2(1.0f));
 
 };
 

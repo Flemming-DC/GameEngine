@@ -38,6 +38,11 @@ namespace glm
 	{
 		return glm::vec3(vec.x, vec.y, 0);
 	}
+
+	glm::quat NoRotation()
+	{
+		return glm::identity<glm::quat>();
+	}
 }
 
 
@@ -75,6 +80,24 @@ namespace logger
 		}
 		out += ")";
 		return out;
+	}
+
+
+	std::string to_string(glm::quat rot)
+	{
+		/*
+		return "quat("
+			+ std::to_string(rot.w) + ", "
+			+ std::to_string(rot.x) + ", "
+			+ std::to_string(rot.y) + ", "
+			+ std::to_string(rot.z) + ", "
+			+ ")";*/
+		glm::vec3 euler = glm::eulerAngles(rot);
+		return "quat.euler("
+			+ std::to_string(euler.x) + ", "
+			+ std::to_string(euler.y) + ", "
+			+ std::to_string(euler.z) + ", "
+			+ ")";
 	}
 }
 
