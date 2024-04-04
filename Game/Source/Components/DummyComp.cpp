@@ -31,6 +31,8 @@ void DummyComp::OnStart()
 			logger::print("DummyComp.OnStart.onGamepadConnectionChanged: ", hasBecomeConnected, " ", gamepadID);
 		});
 	*/
+
+	P(GameInputs::Jump())
 }
 
 void DummyComp::OnDestroy()

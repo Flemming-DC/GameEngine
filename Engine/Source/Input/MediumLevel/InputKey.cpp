@@ -21,6 +21,7 @@ float InputKey::GetFloat(FloatKey key, int gamepadID)
     return GlfwInput::GamepadFloat(KeyMap::ToGlfw(key), gamepadID);
 }
 
+
 // -------------- Mouse special input --------------
 
 float InputKey::ScrollDelta()

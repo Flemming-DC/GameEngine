@@ -2,6 +2,7 @@
 #include "InputAction.h"
 #include "InputKey.h"
 #include "Time_.h"
+#include "KeyMap.h" // this file contains the to_string method og the keys
 
 
 // ------------------------- specialized declarations -------------------------

@@ -2,6 +2,10 @@
 #include "ErrorChecker.h"
 
 using namespace Key;
+using std::string;
+
+// nb: you can in fact support left/right ctrl distinction via
+// ImGuiKey_LeftCtrl, ImGuiKey_RightCtrl, GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL if you so want
 
 // --------------- Glfw --------------- //
 
@@ -20,7 +24,7 @@ int KeyMap::ToGlfw(Keyboard key)
     case Keyboard::_8: return GLFW_KEY_8;
     case Keyboard::_9: return GLFW_KEY_9;
     case Keyboard::_0: return GLFW_KEY_0;
-    //case Keyboard::plus: return GLFW_KEY_EQUAL;
+    //case Keyboard::plus: return ;
     case Keyboard::apostrophe: return GLFW_KEY_APOSTROPHE;
     case Keyboard::back: return GLFW_KEY_BACKSPACE;
     case Keyboard::insert: return GLFW_KEY_INSERT;
@@ -40,7 +44,7 @@ int KeyMap::ToGlfw(Keyboard key)
     case Keyboard::I: return GLFW_KEY_I;
     case Keyboard::O: return GLFW_KEY_O;
     case Keyboard::P: return GLFW_KEY_P;
-    //case Keyboard::hat: return GLFW_KEY_GRAVE_ACCENT;
+    //case Keyboard::hat: return ;
     case Keyboard::end: return GLFW_KEY_END;
     case Keyboard::pagedown: return GLFW_KEY_PAGE_DOWN;
     case Keyboard::numpad_home: return GLFW_KEY_KP_7;
@@ -57,7 +61,7 @@ int KeyMap::ToGlfw(Keyboard key)
     case Keyboard::J: return GLFW_KEY_J;
     case Keyboard::K: return GLFW_KEY_K;
     case Keyboard::L: return GLFW_KEY_L;
-    //case Keyboard::pling: return GLFW_KEY_SEMICOLON;
+    case Keyboard::pling: return GLFW_KEY_APOSTROPHE;
     case Keyboard::numpad_4: return GLFW_KEY_KP_4;
     case Keyboard::numpad_5: return GLFW_KEY_KP_5;
     case Keyboard::numpad_6: return GLFW_KEY_KP_6;
@@ -211,12 +215,12 @@ ImGuiKey KeyMap::ToImGui(Keyboard key)
     case Keyboard::_delete: return ImGuiKey_Delete;
     case Keyboard::end: return ImGuiKey_End;
     case Keyboard::pagedown: return ImGuiKey_PageDown;
-    // case Keyboard::numpad_home: return 
+    case Keyboard::numpad_home: return ImGuiKey_Home;
     case Keyboard::numpad_7: return ImGuiKey_Keypad7;
     case Keyboard::numpad_8: return ImGuiKey_Keypad8;
     case Keyboard::numpad_9: return ImGuiKey_Keypad9;
-    // case Keyboard::numpad_plus: return 
-    // case Keyboard::capslock: return ImGuiKey_CapsLock;
+    case Keyboard::numpad_plus: return ImGuiKey_KeypadAdd;
+    case Keyboard::capslock: return ImGuiKey_CapsLock; //
     case Keyboard::A: return ImGuiKey_A;
     case Keyboard::S: return ImGuiKey_S;
     case Keyboard::D: return ImGuiKey_D;
@@ -226,7 +230,7 @@ ImGuiKey KeyMap::ToImGui(Keyboard key)
     case Keyboard::J: return ImGuiKey_J;
     case Keyboard::K: return ImGuiKey_K;
     case Keyboard::L: return ImGuiKey_L;
-    // case Keyboard::pling: return 
+    case Keyboard::pling: return ImGuiKey_Apostrophe;
     case Keyboard::numpad_4: return ImGuiKey_Keypad4;
     case Keyboard::numpad_5: return ImGuiKey_Keypad5;
     case Keyboard::numpad_6: return ImGuiKey_Keypad6;
@@ -251,12 +255,12 @@ ImGuiKey KeyMap::ToImGui(Keyboard key)
     case Keyboard::ctrl: return ImGuiMod_Ctrl;
     case Keyboard::alt: return ImGuiKey_LeftAlt;
     case Keyboard::space: return ImGuiKey_Space;
-    // case Keyboard::altgr: return 
+    case Keyboard::altgr: return ImGuiKey_RightAlt;
     case Keyboard::leftArrow: return ImGuiKey_LeftArrow;
     case Keyboard::downArrow: return ImGuiKey_DownArrow;
     case Keyboard::rightArrow: return ImGuiKey_RightArrow;
     case Keyboard::numpad_0: return ImGuiKey_Keypad0;
-    case Keyboard::numpad_del: return ImGuiKey_KeypadDecimal;
+    // case Keyboard::numpad_del: return ImGuiKey_KeypadDecimal;
 
     default:
         RaiseError("Missing key ", key);
@@ -277,4 +281,92 @@ ImGuiKey KeyMap::ToImGui(Mouse key)
     }
 }
 
+ImGuiKey KeyMap::ToImGui(Gamepad key)
+{
+    switch (key)
+    {
+    case Gamepad::A: return ImGuiKey_GamepadFaceDown;
+    case Gamepad::B: return ImGuiKey_GamepadFaceRight;
+    case Gamepad::X: return ImGuiKey_GamepadFaceLeft;
+    case Gamepad::Y: return ImGuiKey_GamepadFaceUp;
+    case Gamepad::leftBumper: return ImGuiKey_GamepadL1;
+    case Gamepad::rightBumper: return ImGuiKey_GamepadR1;
+    case Gamepad::back: return ImGuiKey_GamepadBack;
+    case Gamepad::start: return ImGuiKey_GamepadStart;
+    // case Gamepad::guide: return GLFW_GAMEPAD_BUTTON_GUIDE;
+    case Gamepad::leftStickPress: return ImGuiKey_GamepadL3;
+    case Gamepad::rightStickPress: return ImGuiKey_GamepadR3;
+    case Gamepad::dpad_up: return ImGuiKey_GamepadDpadUp;
+    case Gamepad::dpad_right: return ImGuiKey_GamepadDpadRight;
+    case Gamepad::dpad_down: return ImGuiKey_GamepadDpadDown;
+    case Gamepad::dpad_left: return ImGuiKey_GamepadDpadLeft;
+    default:
+        RaiseError("Missing key ", key);
+        return ImGuiKey_COUNT; // dummy return value
+    }
+}
 
+ImGuiKey KeyMap::ToImGui(FloatKey key)
+{
+    switch (key)
+    {
+    // case FloatKey::leftStick_x: return ImGuiKey_GamepadLStickLeft, ImGuiKey_GamepadLStickRight;
+    // case FloatKey::leftStick_y: return ImGuiKey_GamepadLStickDown, ImGuiKey_GamepadLStickUp;
+    // case FloatKey::rightStick_x: return ImGuiKey_GamepadRStickLeft, ImGuiKey_GamepadRStickRight;
+    // case FloatKey::rightStick_y: return ImGuiKey_GamepadRStickDown, ImGuiKey_GamepadRStickUp;
+    case FloatKey::leftTrigger: return ImGuiKey_GamepadL2;
+    case FloatKey::rightTrigger: return ImGuiKey_GamepadR2;
+    default:
+        RaiseError("Missing key ", key);
+        return ImGuiKey_COUNT; // dummy return value
+    }
+}
+
+
+// -------------- ToString ---------------
+
+namespace logger
+{
+    string to_string(Keyboard key) { return string("Keyboard") + ImGui::GetKeyName(KeyMap::ToImGui(key)); }
+    string to_string(Mouse key) { return ImGui::GetKeyName(KeyMap::ToImGui(key)); }
+    string to_string(Gamepad key)
+    {
+        if (key == Gamepad::guide)
+            return "GamepadGuide";
+        else
+            return ImGui::GetKeyName(KeyMap::ToImGui(key));
+    }
+    string to_string(FloatKey key)
+    {
+        switch (key)
+        {
+        case FloatKey::leftStick_x:  return "FloatKeyLeftStick_x";
+        case FloatKey::leftStick_y:  return "FloatKeyLeftStick_y";
+        case FloatKey::rightStick_x: return "FloatKeyRightStick_x";
+        case FloatKey::rightStick_y: return "FloatKeyRightStick_y";
+        case FloatKey::leftTrigger:  return "FloatKeyLeftTrigger";
+        case FloatKey::rightTrigger: return "FloatKeyRightTrigger";;
+        default:
+            RaiseError("Missing key ", key);
+            return ""; // dummy return value
+        }
+    }
+    string to_string(VectorKey key)
+    {
+        switch (key)
+        {
+        case VectorKey::leftStick: return "VectorKeyLeftStick";
+        case VectorKey::rightStick: return "VectorKeyRightStick";
+        case VectorKey::dpad: return "VectorKeyDpad";
+        case VectorKey::WASD: return "VectorKeyWASD";
+        case VectorKey::Arrows: return "VectorKeyArrows";
+        case VectorKey::mouseScreenPosition: return "VectorKeyMouseScreenPosition";;
+        case VectorKey::normalizedMouseScreenPosition: return "VectorKeyMouseScreenPosition";;
+        case VectorKey::mouseWorldPosition2D: return "VectorKeyMouseWorldPosition2D";;
+        default:
+            RaiseError("Missing key ", key);
+            return ""; // dummy return value
+        }
+    }
+
+}

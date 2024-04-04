@@ -38,7 +38,7 @@ public:
 	static bool BecomesPressed(Key::Gamepad key, int gamepadID = _singlePlayerGamepadID);
 	static bool BecomesReleased(Key::Gamepad key, int gamepadID = _singlePlayerGamepadID);
 	static bool IsPressed(Key::Gamepad key, int gamepadID = _singlePlayerGamepadID);
-
+	
 private:
 	static float ScrollDelta();
 };

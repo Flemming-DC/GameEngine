@@ -6,7 +6,6 @@
 #include "InputVectorizer.h"
 #include "Key.h" // move some headers into impl file
 
-
 template <typename T>
 class InputAction
 {

@@ -112,7 +112,7 @@ void GameLogic::OldCollisionTests()
     if (InputKey::BecomesPressed(Keyboard::P))
     {
         logger::print("P");
-        for (const auto& overlap : ColQuery::GetOverlaps())
+        for (const auto& overlap : ColQuery::GetAllOverlaps())
             logger::print(overlap.first->GetEntity().name + " overlaps " + overlap.second->GetEntity().name);
     }
     if (InputKey::BecomesPressed(Keyboard::O))

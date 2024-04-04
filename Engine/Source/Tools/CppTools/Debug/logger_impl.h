@@ -83,7 +83,7 @@ namespace logger
 	string inline to_string(double value) { return std::to_string(value); }
 	string inline to_string(long double value) { return std::to_string(value); }
 
-
+	/*
 	template<typename EnumType>
 	typename std::enable_if<std::is_enum<EnumType>::value, string>::type
 		TryCallToString(const std::type_info& type_, const EnumType& e)
@@ -92,7 +92,7 @@ namespace logger
 		//  RemovePrefix(type_.name(), "class ") 
 		out += Tools::TypeName<EnumType>() + " value " + std::to_string((int)e);
 		return out;
-	}
+	}*/
 	
 }
 
