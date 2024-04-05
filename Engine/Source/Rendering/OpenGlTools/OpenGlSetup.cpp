@@ -28,6 +28,7 @@ void OpenGlSetup::Setup()
     if (glewInit() != GLEW_OK)
         RaiseError("glewInit failed");
     glCall(auto glVersion = glGetString(GL_VERSION));
+    //Log(glVersion);
     glCall(glfwSwapInterval(1));
 
     glCall(glEnable(GL_BLEND));

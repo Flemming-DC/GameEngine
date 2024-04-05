@@ -1,6 +1,7 @@
 #include "BarePolygonCollider.h"
 #include "ErrorChecker.h"
 
+static const inline float minPositionSeperation = glm::pow(10.0f, -8.0f);
 
 BarePolygonCollider BarePolygonCollider::MakeRectangle(vec2 center, quat rot, vec2 size)
 {
@@ -35,6 +36,13 @@ void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> l
 	{
 		int nextIndex = i + 1 < count ? i + 1 : 0;
 		auto vectorAlongEdge = localPosition2Ds[nextIndex] - localPosition2Ds[i];
+		if (glm::LessThan(vectorAlongEdge, minPositionSeperation))
+		{
+			// evt. replace with a warning and a hacky fix
+			RaiseError("localPosition2Ds contains the elements ", localPosition2Ds[nextIndex], ", ", localPosition2Ds[i],
+				", which yields vectorAlongEdge from positionIndex", i, " to positionIndex", nextIndex, " with a length of ",
+				glm::Magnitude(vectorAlongEdge), ", which is too small.");
+		}
 		auto perpendicular = glm::vec2(-vectorAlongEdge.y, vectorAlongEdge.x);
 		localNormals.push_back(glm::normalize(perpendicular));
 	}
@@ -56,6 +64,8 @@ void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> l
 		for (int i = 0; i < count; i++)
 			localNormals[i] *= -1;
 	}
+	if (glm::isnan(divergence))
+		RaiseError("divergence is NAN", divergence);
 }
 
 
@@ -63,6 +73,8 @@ void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> l
 
 std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(glm::vec2 normal) const
 {
+	if (glm::HasNAN(normal))
+		RaiseError("normal is nan: ", normal);
 	float min = INFINITY;
 	float max = -INFINITY;
 	for (auto localPosition2D : localPosition2Ds)
@@ -77,8 +89,22 @@ std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(glm::vec2 normal)
 	}
 	if (min > max)
 	{
-		RaiseError("min should be less than max. But found min = "
-			+ std::to_string(min) + " and max = " + std::to_string(max));
+		float min_ = INFINITY;
+		float max_ = -INFINITY;
+		for (auto localPosition2D : localPosition2Ds)
+		{
+			//glm::vec2 position2D = isLocal ? localPosition2D : GetTransform().ToWorldSpace(localPosition2D, true);
+			glm::vec2 position2D = iTransform.ToWorldSpace(localPosition2D, true);
+			float coordinateAlongNormal = glm::dot(position2D, normal);
+			if (coordinateAlongNormal < min_)
+				min_ = coordinateAlongNormal;
+			if (coordinateAlongNormal > max_)
+				max_ = coordinateAlongNormal;
+			P(localPosition2D, " ", position2D, " ", coordinateAlongNormal, " ", min_, " ", max_)
+		}
+
+		RaiseError("min should be less than max. But found min = ", min, " and max = ", max, 
+			"\n localPosition2Ds: ", localPosition2Ds, "\n normal:", normal);
 	}
 	return { min, max };
 }

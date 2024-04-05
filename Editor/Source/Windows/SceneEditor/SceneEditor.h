@@ -9,5 +9,6 @@ namespace Editor
 
 	private:
 		static void UpdateCamera();
+		static void UpdateVisuals();
 	};
 }

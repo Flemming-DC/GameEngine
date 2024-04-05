@@ -8,7 +8,7 @@ ITransform BareCollider::MakeTransform(vec2 pos, quat rot, vec2 scale)
 	mat4 rot_matrix = glm::mat4_cast(rot);
 	mat4 model = glm::translate(glm::mat4(1.0f), glm::ToVec3(pos))
 		* rot_matrix
-		* glm::scale(glm::mat4(1.0f), glm::ToVec3(scale));
+		* glm::scale(glm::mat4(1.0f), glm::ToVec3(scale, 1.0f));
 	auto ToWorldSpace = [model, rot_matrix](vec2 vec, bool isPos)
 	{
 		mat4 matrix = isPos ? model : rot_matrix;
@@ -16,6 +16,8 @@ ITransform BareCollider::MakeTransform(vec2 pos, quat rot, vec2 scale)
 		vec2 out2 = (vec2)out4;
 		return out2;
 	};
+	if (glm::HasNAN(model))
+		RaiseError("model has nan: ", model);
 
 	return {
 		[pos]() { return glm::ToVec3(pos); },

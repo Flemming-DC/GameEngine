@@ -1,9 +1,13 @@
 #include "ColQuery.h"
 #include "NarrowPhase.h"
+
+#include "Component.h"
+#include "ListTools.h"
+#include "Collider.h"
+#include "logger.h"
 Shorts
 
-Collider* ColQuery::RayCast(
-	vec2 startPosition, vec2 direction, float distance)
+Collider* ColQuery::RayCast(vec2 startPosition, vec2 direction, float distance)
 {
 	// some kind of broad phase filter ???
 
@@ -40,8 +44,7 @@ Collider* ColQuery::RayCast(
 
 }
 
-vector<Collider*> ColQuery::RayOverlaps(
-	vec2 startPosition, vec2 direction, float distance)
+vector<Collider*> ColQuery::RayOverlaps(vec2 startPosition, vec2 direction, float distance)
 {
 	// some kind of broad phase filter ???
 
@@ -84,7 +87,7 @@ Collider* ColQuery::TryGetOverlap(const BareCollider& collider)
 	return nullptr;
 }
 
-vector<Collider*> ColQuery::GetOverlaps(const BareCollider& collider)
+vector<Collider*> ColQuery::Overlaps(const BareCollider& collider)
 {
 	// introduce a broadphase first
 	vector<Collider*> overlappingColliders;

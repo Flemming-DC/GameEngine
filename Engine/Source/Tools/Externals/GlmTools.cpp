@@ -34,9 +34,9 @@ namespace glm
 	}
 
 
-	glm::vec3 ToVec3(glm::vec2 vec)
+	glm::vec3 ToVec3(glm::vec2 vec, float z)
 	{
-		return glm::vec3(vec.x, vec.y, 0);
+		return glm::vec3(vec.x, vec.y, z);
 	}
 
 	glm::quat NoRotation()

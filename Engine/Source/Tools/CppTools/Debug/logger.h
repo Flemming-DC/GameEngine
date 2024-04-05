@@ -5,7 +5,6 @@
 
 #ifdef _DEBUG
 #define P(...) logger::print(logger::file_name(__FILE__), ".", __func__, ": ", __VA_ARGS__);
-#define PP P("")
 #endif // _DEBUG
 
 

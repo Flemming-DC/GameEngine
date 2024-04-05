@@ -3,6 +3,7 @@
 #include <memory>
 #include "StringTools.h"
 #include "GlmTools.h" // this contains some overloads of to_string that might otherwise be counterintuitively absent
+#include "ListTools.h" // this contains some overloads of to_string that might otherwise be counterintuitively absent
 
 
 namespace logger

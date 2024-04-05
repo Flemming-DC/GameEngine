@@ -65,28 +65,28 @@ void GameLogic::CollisionTests()
     if (InputKey::BecomesPressed(Keyboard::P))
     {
         logger::print("P");
-        auto overlaps = ColQuery::GetOverlaps(ColMaker::Circle(vec2(0.5f), 0.49f));
+        auto overlaps = ColQuery::Overlaps(ColMaker::Circle(vec2(0.5f), 0.49f));
         for (const auto& overlap : overlaps)
             logger::print(overlap->GetEntity().name + " overlaps Circle(vec2(0.49f), 0.49f)");
     }
     if (InputKey::BecomesPressed(Keyboard::O))
     {
         logger::print("O");
-        auto overlaps = ColQuery::GetOverlaps(ColMaker::Point(vec2(-0.2f)));
+        auto overlaps = ColQuery::Overlaps(ColMaker::Point(vec2(-0.2f)));
         for (const auto& overlap : overlaps)
             logger::print(overlap->GetEntity().name + " overlaps Point(vec2(-0.2f))");
     }
     if (InputKey::BecomesPressed(Keyboard::I))
     {
         logger::print("I");
-        auto overlaps = ColQuery::GetOverlaps(ColMaker::Polygon({ vec2(0.5f), vec2(-0.5f), vec2(-0.5f, 0.5f) }));
+        auto overlaps = ColQuery::Overlaps(ColMaker::Polygon({ vec2(0.5f), vec2(-0.5f), vec2(-0.5f, 0.5f) }));
         for (const auto& overlap : overlaps)
             logger::print(overlap->GetEntity().name + " overlaps Polygon({ vec2(0.5f), vec2(-0.5f), vec2(-0.5f, 0.5f) })");
     }
     if (InputKey::BecomesPressed(Keyboard::U))
     {
         logger::print("U");
-        auto overlaps = ColQuery::GetOverlaps(ColMaker::Rectangle(vec2(0.5f), quat(), vec2(2.0f)));
+        auto overlaps = ColQuery::Overlaps(ColMaker::Rectangle(vec2(0.5f), quat(), vec2(2.0f)));
         for (const auto& overlap : overlaps)
             logger::print(overlap->GetEntity().name + " overlaps Rectangle(vec2(0.5f), quat(), vec2(2.0f)");
     }
@@ -112,7 +112,7 @@ void GameLogic::OldCollisionTests()
     if (InputKey::BecomesPressed(Keyboard::P))
     {
         logger::print("P");
-        for (const auto& overlap : ColQuery::GetAllOverlaps())
+        for (const auto& overlap : ColQuery::AllOverlaps())
             logger::print(overlap.first->GetEntity().name + " overlaps " + overlap.second->GetEntity().name);
     }
     if (InputKey::BecomesPressed(Keyboard::O))

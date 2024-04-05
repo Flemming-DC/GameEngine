@@ -7,6 +7,7 @@
 #include "EngineMode.h"
 #include "EditorInputs.h"
 #include "GlmTools.h"
+#include "Selector.h"
 using namespace Editor;
 
 // make viewport framebuffer size sensitive to my viewport vindow size.
@@ -22,17 +23,9 @@ static glm::vec3 cameraScale = glm::vec3(1.0f);
 
 void SceneEditor::Draw()
 {
+    Selector::Update();
     UpdateCamera();
-
-    auto renderResult = Renderer::DrawToFrameBuffer(cameraPos, cameraRot, cameraScale, true);
-
-    ImVec2 uvBottumLeft = { 0, 1 };
-    ImVec2 uvTopRight = { 1, 0 };
-    ImVec2 size = { (float)renderResult.width, (float)renderResult.height };
-
-    ImGui::Begin("ViewPort");
-    ImGui::Image((void*)(intptr_t)renderResult.textureOpenGlid, size, uvBottumLeft, uvTopRight);
-    ImGui::End();
+    UpdateVisuals();
 }
 
 
@@ -49,4 +42,15 @@ void SceneEditor::UpdateCamera()
 
 }
 
+void SceneEditor::UpdateVisuals()
+{
+    auto renderResult = Renderer::DrawToFrameBuffer(cameraPos, cameraRot, cameraScale, true);
 
+    ImVec2 uvBottumLeft = { 0, 1 };
+    ImVec2 uvTopRight = { 1, 0 };
+    ImVec2 size = { (float)renderResult.width, (float)renderResult.height };
+
+    ImGui::Begin("ViewPort");
+    ImGui::Image((void*)(intptr_t)renderResult.textureOpenGlid, size, uvBottumLeft, uvTopRight);
+    ImGui::End();
+}

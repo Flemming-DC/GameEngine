@@ -39,3 +39,4 @@ project "Game-InEditor"
         runtime "Release"
         optimize "On" 
         symbols "On"
+        --flags { "LinkTimeOptimization" } -- this seems to break stuff

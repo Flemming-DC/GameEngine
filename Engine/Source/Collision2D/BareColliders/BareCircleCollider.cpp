@@ -6,12 +6,14 @@
 
 BareCircleCollider BareCircleCollider::MakePoint(vec2 pos)
 {
-	float epsilon = glm::pow(10.0f, -9.0f);
+	float epsilon = glm::pow(10.0f, -4.0f);
 	return Make(pos, epsilon);
 }
 
 BareCircleCollider BareCircleCollider::Make(vec2 center, float radius_)
 {
+	if (radius_ < glm::pow(10.0f, -8.0f))
+		RaiseError("Unrealistically small radius: ", radius_);
 	BareCircleCollider col;
 	col.Setup(col.MakeTransform(center), radius_); // , quat(), vec2(1.0f)
 	return col;

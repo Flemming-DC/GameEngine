@@ -11,7 +11,6 @@
 #endif // InEditor
 
 
-
 int main()
 {
     #ifdef InEditor
