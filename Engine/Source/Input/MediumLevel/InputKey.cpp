@@ -7,6 +7,7 @@
 #include "KeyMap.h"
 #include "Screen.h"
 #include "Time_.h"
+#include "EngineMode.h"
 #include "InputAction.h" // its a bit messy that input imports this, since InputAction is a higher level objects than Input
 
 using namespace Key;
@@ -32,29 +33,30 @@ float InputKey::ScrollDelta()
         return GlfwInput::scrollDelta;
 }
 
-
-glm::vec2 InputKey::MouseScreenPosition()
+glm::vec2 InputKey::MouseEntireScreenPosition() // absolute mouse position (i.e. window independent)
 {
     if (ImGui::GetIO().WantCaptureMouse)
     {
-        auto mousePos = ImGui::GetMousePos();
-        return Screen::NormalizeScreenPosition({ mousePos.x, mousePos.y});
+        auto mousePos = ImGui::GetMousePos(); 
+        return { mousePos.x, mousePos.y };
     }
     else
     {
-        auto mousePos = GlfwInput::MouseScreenPosition();
-        return Screen::NormalizeScreenPosition({ mousePos.first, mousePos.second });
+        auto mousePos = GlfwInput::MouseScreenPosition(false);
+        return { mousePos.first, mousePos.second };
     }
 }
-glm::vec2 InputKey::NormalizedMouseScreenPosition()
+glm::vec2 InputKey::MouseGameScreenPosition()
 {
+    if (!EngineMode::GameIsRunning())
+        RaiseError("you can only use MouseGameScreenPosition, if the game is running.");
     // normalized screen position only uses the game screen, not the editor and therefore not imGUI
-    auto mousePos = GlfwInput::MouseScreenPosition();
-    return Screen::NormalizeScreenPosition({ mousePos.first, mousePos.second });
+    auto mousePos = GlfwInput::MouseScreenPosition(true);
+    return Screen::NormalizeGameScreenPosition({ mousePos.first, mousePos.second });
 }
 
-glm::vec3 InputKey::MouseWorldPosition() { return Screen::ToWorldPosition(NormalizedMouseScreenPosition()); }
-glm::vec2 InputKey::MouseWorldPosition2D() { return Screen::ToWorldPosition(NormalizedMouseScreenPosition()); }
+glm::vec3 InputKey::MouseWorldPosition() { return Screen::ToWorldPosition(MouseGameScreenPosition()); }
+glm::vec2 InputKey::MouseWorldPosition2D() { return Screen::ToWorldPosition(MouseGameScreenPosition()); }
 
 
 // -------------- Gamepad special input --------------

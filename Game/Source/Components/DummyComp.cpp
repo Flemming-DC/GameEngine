@@ -187,20 +187,20 @@ void DummyComp::OldTests()
 		logger::print("Mouse::middle: released");
 
 	if (InputKey::BecomesPressed(Keyboard::G))
-		logger::print("G: ", InputKey::MouseScreenPosition());
+		logger::print("G: ", InputKey::MouseEntireScreenPosition());
 	if (InputKey::BecomesPressed(Keyboard::F))
 		logger::print("F: ", InputKey::MouseWorldPosition2D());
 
 	if (InputKey::BecomesPressed(Keyboard::B))
 	{
 		bool foundDepth;
-		auto pos = Screen::ToWorldPosition(InputKey::MouseScreenPosition(), &foundDepth);
+		auto pos = Screen::ToWorldPosition(InputKey::MouseEntireScreenPosition(), &foundDepth);
 		logger::print("B: ", foundDepth, " ", pos);
 	}
 
 	if (InputKey::BecomesPressed(Keyboard::_1))
 	{
-		auto before = InputKey::MouseScreenPosition();
+		auto before = InputKey::MouseEntireScreenPosition();
 		auto world = Screen::ToWorldPosition(before);
 		auto after = Screen::FromWorldPosition(world);
 		logger::print("1: ", before, " == ", after);

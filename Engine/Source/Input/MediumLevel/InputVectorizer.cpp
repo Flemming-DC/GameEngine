@@ -14,8 +14,8 @@ glm::vec2 InputVectorizer::GetVectorInput(VectorKey key, int gamepadID)
 	case VectorKey::dpad: return VectorFromBools(Gamepad::dpad_left, Gamepad::dpad_right, Gamepad::dpad_up, Gamepad::dpad_down, gamepadID);
 	case VectorKey::WASD: return VectorFromBools(Keyboard::A, Keyboard::D, Keyboard::W, Keyboard::S);
 	case VectorKey::Arrows: return VectorFromBools(Keyboard::leftArrow, Keyboard::rightArrow, Keyboard::upArrow, Keyboard::downArrow);
-	case VectorKey::mouseScreenPosition: return InputKey::MouseScreenPosition();
-	case VectorKey::normalizedMouseScreenPosition: return InputKey::NormalizedMouseScreenPosition();
+	case VectorKey::MouseEntireScreenPosition: return InputKey::MouseEntireScreenPosition();
+	case VectorKey::MouseGameScreenPosition: return InputKey::MouseGameScreenPosition();
 	case VectorKey::mouseWorldPosition2D: return InputKey::MouseWorldPosition2D();
 	default:
         RaiseError("Missing key", key);

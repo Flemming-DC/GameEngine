@@ -1,6 +1,7 @@
 #include "Selector.h"
 #include "Collider.h"
 #include "ShortHands.h"
+#include "SceneCamera.h"
 #include "EditorInputs.h"
 #include "ColQuery.h"
 
@@ -28,14 +29,13 @@ void Selector::Update()
 
 void Selector::StartSelecting()
 {
-    selectionStartPosition = EditorInputs::SelectionPosition().State();
+    selectionStartPosition = SceneCamera::MouseWorldPosition();
     UpdateSelectionBox();
-    P(1);
 }
 
 void Selector::UpdateSelectionBox()
 {
-    vec2 mousePosition = EditorInputs::SelectionPosition().State();
+    vec2 mousePosition = SceneCamera::MouseWorldPosition();
     if (glm::LargerThan(mousePosition - selectionStartPosition, minSelectionBoxSize))
         isBoxSelecting = true;
 
@@ -67,7 +67,7 @@ void Selector::BoxSelect()
     if (!EditorInputs::KeepSelection().IsPressed())
         selection.clear();
 
-    vec2 selectionEndPosition = EditorInputs::SelectionPosition().State();
+    vec2 selectionEndPosition = SceneCamera::MouseWorldPosition();
     vec2 center = (selectionStartPosition + selectionEndPosition) / 2.0f;
     vec2 size = (selectionStartPosition - selectionEndPosition);
     size = glm::max(size, vec2(minSelectionBoxSize));
@@ -80,15 +80,14 @@ void Selector::BoxSelect()
 
 void Selector::ClickSelect()
 {
-    vec2 clickPostion = EditorInputs::SelectionPosition().State();
-    P(clickPostion);
+    vec2 clickPostion = SceneCamera::MouseWorldPosition();
     Collider* col = ColQuery::TryGetOverlap(ColMaker::Point(clickPostion));
     P(col);
 
-    if (!col)
-        return;
     if (!EditorInputs::KeepSelection().IsPressed())
         selection.clear();
+    if (!col)
+        return;
     if (Tools::Contains(selection, col))
         return;
     selection.push_back(col);

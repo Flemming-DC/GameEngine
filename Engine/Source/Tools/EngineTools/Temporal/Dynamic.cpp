@@ -4,7 +4,7 @@
 std::vector<std::unique_ptr<Dynamic>> Dynamic::dynamics;
 
 
-bool Dynamic::Remove(Dynamic& dynamic)
+bool Dynamic::ShutDown(Dynamic& dynamic)
 {
     return Tools::Remove(dynamics,
         [&](const std::unique_ptr<Dynamic>& ptr) { return ptr.get() == &dynamic; });

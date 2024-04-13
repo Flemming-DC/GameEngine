@@ -17,8 +17,8 @@ private:
     static bool exitEditorhasBeenCalled;
 
     static bool ShouldClose() { return (!inEditor && !gameIsRunning) || (inEditor && exitEditorhasBeenCalled); }
-    static void MarkGameWindowAsUnclosed();
-    static bool CloseButtonIsClicked(); // its the gameWindow, not the editor
+    static void MarkGameCloseButtonAsUnclicked();
+    static bool GameCloseButtonIsClicked(); // its the gameWindow, not the editor
 };
 
 

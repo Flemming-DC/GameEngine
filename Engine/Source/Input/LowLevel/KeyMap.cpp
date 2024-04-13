@@ -360,8 +360,8 @@ namespace logger
         case VectorKey::dpad: return "VectorKeyDpad";
         case VectorKey::WASD: return "VectorKeyWASD";
         case VectorKey::Arrows: return "VectorKeyArrows";
-        case VectorKey::mouseScreenPosition: return "VectorKeyMouseScreenPosition";;
-        case VectorKey::normalizedMouseScreenPosition: return "VectorKeyMouseScreenPosition";;
+        case VectorKey::MouseEntireScreenPosition: return "VectorKeyMouseScreenPosition";;
+        case VectorKey::MouseGameScreenPosition: return "VectorKeyMouseScreenPosition";;
         case VectorKey::mouseWorldPosition2D: return "VectorKeyMouseWorldPosition2D";;
         default:
             RaiseError("Missing key ", key);

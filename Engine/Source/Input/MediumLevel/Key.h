@@ -46,8 +46,9 @@ namespace Key
 	enum class VectorKey
 	{
 		leftStick, rightStick, dpad, WASD, Arrows,
-		mouseScreenPosition, normalizedMouseScreenPosition, mouseWorldPosition2D,
+		MouseEntireScreenPosition, MouseGameScreenPosition, mouseWorldPosition2D,
 	};
 
 }
 
+//MouseEntireScreenPosition, MouseGameScreenPosition

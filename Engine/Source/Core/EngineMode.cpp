@@ -6,8 +6,8 @@ bool EngineMode::inEditor = false;
 bool EngineMode::exitEditorhasBeenCalled = false;
 
 
-void EngineMode::MarkGameWindowAsUnclosed() { glCall(glfwSetWindowShouldClose(OpenGlSetup::GetWindow(), false)); }
-bool EngineMode::CloseButtonIsClicked() { return glfwWindowShouldClose(OpenGlSetup::GetWindow()); }
+void EngineMode::MarkGameCloseButtonAsUnclicked() { glCall(glfwSetWindowShouldClose(OpenGlSetup::GetWindow(), false)); }
+bool EngineMode::GameCloseButtonIsClicked() { return glfwWindowShouldClose(OpenGlSetup::GetWindow()); }
 
 void EngineMode::MarkAsEditor()
 {

@@ -2,6 +2,7 @@
 #include "EngineMode.h"
 #include "Dynamic.h"
 #include "EditorLoop.h"
+#include "EditorSandbox.h"
 using namespace Editor;
 
 
@@ -9,8 +10,7 @@ using namespace Editor;
 
 void EditorCore::MarkAsEditor()
 {
-
 	EngineMode::MarkAsEditor();
-	Dynamic::Setup<EditorLoop>();
+	Dynamic::Setup<EditorLoop, EditorSandbox>();
 }
 

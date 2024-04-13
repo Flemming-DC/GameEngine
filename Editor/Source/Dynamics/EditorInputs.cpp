@@ -16,8 +16,8 @@ static auto& moveCamera = InputAction<vec2>::Create()
 // scene editor - selection
 static auto& select = InputAction<bool>::Create()
 	.AddKey(Key::Mouse::left);
-static auto& selectionPosition = InputAction<vec2>::Create()
-	.AddKey(Key::VectorKey::mouseWorldPosition2D);
+static auto& screenPosition = InputAction<vec2>::Create()
+	.AddKey(Key::VectorKey::MouseEntireScreenPosition);
 static auto& keepSelection = InputAction<bool>::Create()
 	.AddKey(Key::Keyboard::leftShift)
 	.AddKey(Key::Keyboard::rightShift);
@@ -30,7 +30,7 @@ namespace Editor::EditorInputs
 	InputAction<float>& Zoom() { return zoom; };
 	InputAction<vec2>& MoveCamera() { return moveCamera; };
 	InputAction<bool>& Select() { return select; };
-	InputAction<vec2>& SelectionPosition() { return selectionPosition; };
+	InputAction<vec2>& ScreenPosition() { return screenPosition; };
 	InputAction<bool>& KeepSelection() { return keepSelection; };
 
 

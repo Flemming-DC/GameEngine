@@ -20,11 +20,17 @@ FrameBuffer Renderer::frameBuffer;
 
 
 Renderer::RenderResult Renderer::DrawToFrameBuffer(vec3 cameraPos, quat cameraRot, vec3 cameraScale, bool drawGizmos)
-    { return DrawToFrameBuffer(Camera::ProjectionView(cameraPos, cameraRot, cameraScale), drawGizmos); }
+{ 
+    return DrawToFrameBuffer(Camera::ProjectionView(cameraPos, cameraRot, cameraScale), drawGizmos); 
+}
 Renderer::RenderResult Renderer::DrawToFrameBuffer() 
-    { return DrawToFrameBuffer(Camera::Current().ProjectionView(), false); }
+{ 
+    return DrawToFrameBuffer(Camera::Current().ProjectionView(), false); 
+}
 void Renderer::DrawToScreen() 
-    { DrawToScreen(Camera::Current().ProjectionView()); }
+{ 
+    DrawToScreen(Camera::Current().ProjectionView()); 
+}
 
 
 Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView, bool drawGizmos)

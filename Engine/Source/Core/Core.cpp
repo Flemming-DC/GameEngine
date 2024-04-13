@@ -65,7 +65,7 @@ void Core::Update()
     }
     if (EngineMode::InEditor())
         Dynamic::CallOnEditorUpdate();
-    if (EngineMode::CloseButtonIsClicked())
+    if (EngineMode::GameCloseButtonIsClicked())
         StopRunningGame();
     Delay::CallToFrameEnd(); 
 
@@ -100,9 +100,9 @@ void Core::StartRunningGame()
 {
     logger::print("--- Running Game ---");
     EngineMode::gameIsRunning = true;
+    EngineMode::MarkGameCloseButtonAsUnclicked();
     Time::GameSetup();
     Dynamic::CallOnGameStart();
-    EngineMode::MarkGameWindowAsUnclosed();
     Scene::Save();
     Scene::ReloadImmediately();
     Renderer::ShowWindow(true);
@@ -117,6 +117,7 @@ void Core::StopRunningGame()
             Scene::ReloadImmediately();
             Dynamic::CallOnGameEnd();
             EngineMode::gameIsRunning = false;
+            EngineMode::MarkGameCloseButtonAsUnclicked();
         });
     logger::print("--- Stopping Game ---");
 }

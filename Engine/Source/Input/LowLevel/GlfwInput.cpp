@@ -112,12 +112,21 @@ bool GlfwInput::GamepadButtonWasHeldDown(int button, int gamepadID)
 
 // ------------------ get input (floats) -------------------
 
-std::pair<float, float> GlfwInput::MouseScreenPosition()
+std::pair<float, float> GlfwInput::MouseScreenPosition(bool relativeToWindow)
 {
-    double xpos, ypos; // screen coordinates relative to the upper-left corner.
+    double cursorPos_x, cursorPos_y; // screen coordinates relative to the upper-left corner.
     auto window = OpenGlSetup::GetWindow();
-    glCall(glfwGetCursorPos(window, &xpos, &ypos));
-    return { (float)xpos, (float)ypos };
+    glCall(glfwGetCursorPos(window, &cursorPos_x, &cursorPos_y));
+
+    if (!relativeToWindow)
+    {
+        int windowPos_x, windowPos_y;
+        glCall(glfwGetWindowPos(window, &windowPos_x, &windowPos_y));
+        cursorPos_x += windowPos_x;
+        cursorPos_y += windowPos_y;
+    }
+
+    return { (float)cursorPos_x, (float)cursorPos_y };
 }
 
 float GlfwInput::GamepadFloat(int axis, int gamepadID)

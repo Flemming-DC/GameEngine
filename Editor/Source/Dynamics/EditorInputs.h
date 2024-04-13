@@ -9,7 +9,7 @@ namespace Editor::EditorInputs
 	InputAction<float>& Zoom();
 	InputAction<vec2>& MoveCamera();
 	InputAction<bool>& Select();
-	InputAction<vec2>& SelectionPosition();
+	InputAction<vec2>& ScreenPosition();
 	InputAction<bool>& KeepSelection();
 
 

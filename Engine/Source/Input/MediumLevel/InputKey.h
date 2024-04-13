@@ -17,8 +17,8 @@ public:
 	
 	// Screen coordinates relative to the upper-left corner.
 	// nb: that screen position coordinates are not comparable between ImGui / editor and glfw / game
-	static glm::vec2 MouseScreenPosition();
-	static glm::vec2 NormalizedMouseScreenPosition();
+	static glm::vec2 MouseEntireScreenPosition();
+	static glm::vec2 MouseGameScreenPosition();
 	static glm::vec3 MouseWorldPosition();
 	static glm::vec2 MouseWorldPosition2D();
 	// gamepad

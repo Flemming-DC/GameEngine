@@ -5,6 +5,7 @@
 #include "DemoScene.h"
 #include "SecondScene.h"
 #include "Time_.h"
+#include "InputVectorizer.h"
 
 using namespace Key;
 Shorts;
@@ -57,8 +58,10 @@ void GameLogic::OnUpdate()
         //Scene::Activate(new SecondScene());
     }
     //CollisionTests();
-    CollisionTests();
+    //CollisionTests();
 }
+
+
 
 void GameLogic::CollisionTests()
 {
