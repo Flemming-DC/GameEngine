@@ -63,19 +63,17 @@ void Selector::FinishSelecting()
 
 void Selector::BoxSelect()
 {
-    P(1);
     if (!EditorInputs::KeepSelection().IsPressed())
         selection.clear();
 
     vec2 selectionEndPosition = SceneCamera::MouseWorldPosition();
     vec2 center = (selectionStartPosition + selectionEndPosition) / 2.0f;
-    vec2 size = (selectionStartPosition - selectionEndPosition);
+    vec2 size = glm::abs((selectionStartPosition - selectionEndPosition));
     size = glm::max(size, vec2(minSelectionBoxSize));
 
     auto colliders = ColQuery::Overlaps(ColMaker::Rectangle(center, size));
     for (const auto& col : colliders)
         selection.push_back(col);
-    P(selectionEndPosition, center, size, colliders);
 }
 
 void Selector::ClickSelect()
