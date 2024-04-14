@@ -36,8 +36,8 @@ public:
 
 	template <typename... Args> static Entity& Make(string name = "Entity");
 	template <typename... Args> void AddMultiple() { (..., AddComponent<Args>()); };
-	template <typename ComponentType> inline ComponentType* TryGet() { return TryGetComponent<ComponentType>(); };
-	template <typename ComponentType> inline ComponentType& Get() { return GetComponent<ComponentType>(); };
+	template <typename ComponentType> inline ComponentType* TryGet() const { return TryGetComponent<ComponentType>(); };
+	template <typename ComponentType> inline ComponentType& Get() const { return GetComponent<ComponentType>(); };
 	template <typename ComponentType> inline ComponentType& Add() { return AddComponent<ComponentType>(); };
 	template <typename ComponentType> bool Destroy() { return Destroy(GetComponent<ComponentType>()); }
 

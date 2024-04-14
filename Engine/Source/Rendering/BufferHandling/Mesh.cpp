@@ -64,3 +64,79 @@ std::string Mesh::to_string() const
 
     return out;
 }
+
+std::vector<glm::vec2> Mesh::FindPositions2D()
+{
+    if (layout.positionDimension != 2)
+        RaiseError("calling GetPositions2D, but layout.positionDimension isn't 2.");
+    int layoutIndex = 0;
+    int layoutSize = layout.positionDimension + layout.textureDimension + layout.colorDimension + layout.textureID;
+    std::vector<glm::vec2> positions;
+
+    for (const float datum : vertices)
+    {
+        // append position data
+        if (layoutIndex == 0)
+            positions.push_back(glm::vec2(datum, 0.0f));
+        else if (layoutIndex == 1)
+        {
+            auto pos = positions.back();
+            pos.y = datum;
+            positions.back() = pos;
+        }
+
+        // ignore other data
+
+        // increment layoutIndex in cycles from 0 to layoutSize - 1
+        layoutIndex++;
+        if (layoutIndex >= layoutSize)
+            layoutIndex = 0;
+    }
+    return positions;
+}
+/*
+Mesh::Bounds2D Mesh::FindBounds2D() const
+{
+    if (layout.positionDimension != 2)
+        RaiseError("calling GetPositions2D, but layout.positionDimension isn't 2.");
+    int layoutIndex = 0;
+    int layoutSize = layout.positionDimension + layout.textureDimension + layout.colorDimension + layout.textureID;
+    float minX = INFINITY;
+    float minY = INFINITY;
+    float maxX = -INFINITY;
+    float maxY = -INFINITY;
+
+
+    for (const float datum : vertices)
+    {
+        // append position data
+        if (layoutIndex == 0)
+        {
+            if (datum < minX)
+                minX = datum;
+            if (datum > maxX)
+                maxX = datum;
+        }
+
+        else if (layoutIndex == 1)
+        {
+            if (datum < minY)
+                minY = datum;
+            if (datum > maxY)
+                maxY = datum;
+        }
+
+        // ignore other data
+
+        // increment layoutIndex in cycles from 0 to layoutSize - 1
+        layoutIndex++;
+        if (layoutIndex >= layoutSize)
+            layoutIndex = 0;
+    }
+    if (minX == INFINITY || minY == INFINITY || maxX == -INFINITY || maxY == -INFINITY)
+        RaiseError("failed to find bounds2D");
+
+    return { minX, minY, maxX, maxY };
+
+}
+*/

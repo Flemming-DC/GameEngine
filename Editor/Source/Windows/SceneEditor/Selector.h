@@ -1,14 +1,17 @@
 #pragma once
 #include "Event.h"
-#include "Collider.h"
+#include "GlmTools.h"
+#include "Entity.h"
+//#include "Collider.h"
 
 namespace Editor
 {
 	class Selector
 	{
 	public:
-		static Event<std::vector<Collider*>> onSelected;
+		static Event<std::vector<Entity*>> onSelected; // < selection >
 		static void Update();
+		static std::vector<Entity*> Selection();
 
 	private:
 		static void StartSelecting();
@@ -17,6 +20,8 @@ namespace Editor
 		
 		static void BoxSelect();
 		static void ClickSelect();
+
+		static std::vector<Entity*> GetOverlaps(glm::vec2 selectionBoxCenter, glm::vec2 selectionBoxSize);
 	};
 }
 
