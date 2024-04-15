@@ -36,7 +36,21 @@ vec3 SceneCamera::MouseWorldPosition()
     return editorWorldPos;
 }
 
-void SceneCamera::SetScreenPosition(ImVec2 minSceneCorner_, ImVec2 maxSceneCorner_)
+glm::vec2 SceneCamera::ToWorldPosition(glm::vec2 screenPosition)
+{
+    return (vec2)Screen::ToWorldPosition(
+        screenPosition, minSceneCorner, maxSceneCorner,
+        cameraPos, cameraRot, cameraScale);
+}
+glm::vec2 SceneCamera::FromWorldPosition(glm::vec2 worldPosition)
+{
+    return Screen::FromWorldPosition(
+        glm::ToVec3(worldPosition), minSceneCorner, maxSceneCorner,
+        cameraPos, cameraRot, cameraScale);
+}
+
+
+void SceneCamera::SetScreenBoundary(ImVec2 minSceneCorner_, ImVec2 maxSceneCorner_)
 {
     minSceneCorner = { minSceneCorner_.x, minSceneCorner_.y };
     maxSceneCorner = { maxSceneCorner_.x, maxSceneCorner_.y };

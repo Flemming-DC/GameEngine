@@ -12,6 +12,7 @@ namespace Editor
 		static Event<std::vector<Entity*>> onSelected; // < selection >
 		static void Update();
 		static std::vector<Entity*> Selection();
+		static glm::vec2 SelectionStartPosition();
 
 	private:
 		static void StartSelecting();

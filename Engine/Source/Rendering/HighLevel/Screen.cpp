@@ -80,10 +80,33 @@ vec3 Screen::ToWorldPosition(
 
     return worldPos3D;
 }
-vec2 Screen::FromWorldPosition(vec3 worldPosition, vec3 cameraPos, quat cameraRot, vec3 cameraScale)
+
+vec2 Screen::FromWorldPosition(
+    vec3 worldPosition, vec2 screenMinCorner, vec2 screenMaxCorner,
+    vec3 cameraPos, quat cameraRot, vec3 cameraScale)
 {
+    // setup required info
+    vec2 halfDelta = vec2((screenMaxCorner.x - screenMinCorner.x) / 2.0f,
+        (screenMaxCorner.y - screenMinCorner.y) / 2.0f);
+    vec2 center = vec2((screenMaxCorner.x + screenMinCorner.x) / 2.0f,
+        (screenMaxCorner.y + screenMinCorner.y) / 2.0f);
     mat4 projView = Camera::ProjectionView(cameraPos, cameraRot, cameraScale);
-    return FromWorldPosition(worldPosition, projView);
+
+    // do calculation
+    vec4 worldPos4D = vec4(worldPosition.x, worldPosition.y, worldPosition.z, 1.0f);
+    vec4 normalizedScreenPos4D = projView * worldPos4D;
+    vec2 normalizedScreenPos2D = vec2(normalizedScreenPos4D.x, -normalizedScreenPos4D.y); // note the minus sign
+    vec2 screenPos = center + normalizedScreenPos2D * halfDelta; // elementwise multiplication
+    return screenPos; 
+    /*
+    mat4 projView = Camera::ProjectionView(cameraPos, cameraRot, cameraScale);
+    vec4 viewport = vec4(screenMinCorner.x, screenMinCorner.y, screenMaxCorner.x, screenMaxCorner.y);
+    // unProject expect a view, projection, where we give it a identity, projectionView, but its ok, 
+    // since it anyhow only uses this data to construct the projectionView
+    vec2 screenPos = glm::project(worldPosition, mat4(1.0f), projView, viewport);
+    screenPos.y = screenMaxCorner.y - screenPos.y;
+    return screenPos;
+    */
 }
 
 

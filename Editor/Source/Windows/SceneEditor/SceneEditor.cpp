@@ -9,6 +9,7 @@
 #include "GlmTools.h"
 #include "Selector.h"
 #include "SceneCamera.h"
+#include "SelectionVisuals.h"
 
 using namespace Editor;
 
@@ -37,6 +38,10 @@ void SceneEditor::UpdateVisuals()
     //ImGui::Begin("ViewPort");
     ImGui::Begin("ViewPort", nullptr, ImGuiWindowFlags_NoMove); // NoMove disables drag & drop
     ImGui::Image((void*)(intptr_t)renderResult.textureOpenGlid, size, uvBottumLeft, uvTopRight);
-    SceneCamera::SetScreenPosition(ImGui::GetItemRectMin(), ImGui::GetItemRectMax());
+
+    SceneCamera::SetScreenBoundary(ImGui::GetItemRectMin(), ImGui::GetItemRectMax());
+    SelectionVisuals::DrawSelection();
+    if (EditorInputs::Select().IsPressed())
+        SelectionVisuals::DrawSelectionBox(Selector::SelectionStartPosition(), SceneCamera::MouseWorldPosition());
     ImGui::End();
 }

@@ -12,6 +12,7 @@ public:
 	float GetRadius() const;
 	float GetLocalRadius() const { return localRadius; };
 	pair<float, float> ShadowAlongNormal(vec2 normal) const override;
+	vector<vec2> Positions() const override;
 
 private:
 	float localRadius; // we prohibit uneven scaling for cirles 

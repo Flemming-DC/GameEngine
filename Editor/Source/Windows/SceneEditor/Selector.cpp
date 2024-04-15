@@ -6,7 +6,7 @@
 #include "SceneCamera.h"
 #include "EditorInputs.h"
 #include "ColQuery.h"
-
+#include "SelectionVisuals.h"
 
 using namespace Editor;
 Shorts
@@ -27,6 +27,7 @@ void Selector::Update()
         FinishSelecting();
     else if (EditorInputs::Select().IsPressed())
         UpdateSelectionBox();
+    //SelectionVisuals::DrawSelection();
 }
 
 
@@ -42,14 +43,7 @@ void Selector::UpdateSelectionBox()
     if (glm::LargerThan(mousePosition - selectionStartPosition, minSelectionBoxSize))
         isBoxSelecting = true;
 
-    /*
-    float boxX = glm::abs(mousePosition.x - selectionStartPosition.x);
-    float boxY = glm::abs(mousePosition.y - selectionStartPosition.y);
-    
-    selectionBox.sizeDelta = new vec2(boxX, boxY);
-    vec2 boxCenter = (mousePosition + selectionStartPosition) / 2;
-    selectionBox.anchoredPosition = boxCenter;
-    */
+    //SelectionVisuals::DrawSelectionBox(selectionStartPosition, mousePosition);
 }
 
 void Selector::FinishSelecting()
@@ -134,3 +128,4 @@ vector<Entity*> Selector::GetOverlaps(vec2 selectionBoxCenter, vec2 selectionBox
 
 std::vector<Entity*> Selector::Selection() { return selection; }
 
+glm::vec2 Selector::SelectionStartPosition() { return selectionStartPosition; }

@@ -45,3 +45,22 @@ std::pair<float, float> BareCircleCollider::ShadowAlongNormal(glm::vec2 normal) 
 	return { positionAlongNormal - GetRadius(), positionAlongNormal + GetRadius() };
 }
 
+
+std::vector<glm::vec2> BareCircleCollider::Positions() const
+{
+	vector<vec2> positions;
+	auto center = iTransform.GetPosition();
+	auto radius = GetRadius();
+	int segmentCount = 40;
+	float pi = 3.14159265358979323846f;
+	for (int i = 0; i < segmentCount; ++i)
+	{
+		float angle = (float)i / (float)segmentCount * 2.0f * pi;
+		positions.push_back({
+			center.x + radius * std::cos(angle),
+			center.y + radius * std::sin(angle) });
+	}
+	return positions;
+}
+
+

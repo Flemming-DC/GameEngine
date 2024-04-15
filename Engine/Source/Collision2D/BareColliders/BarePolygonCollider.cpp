@@ -71,7 +71,7 @@ void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> l
 
 
 
-std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(glm::vec2 normal) const
+std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(vec2 normal) const
 {
 	if (glm::HasNAN(normal))
 		RaiseError("normal is nan: ", normal);
@@ -100,7 +100,6 @@ std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(glm::vec2 normal)
 				min_ = coordinateAlongNormal;
 			if (coordinateAlongNormal > max_)
 				max_ = coordinateAlongNormal;
-			P(localPosition2D, " ", position2D, " ", coordinateAlongNormal, " ", min_, " ", max_)
 		}
 
 		RaiseError("min should be less than max. But found min = ", min, " and max = ", max, 
@@ -109,6 +108,12 @@ std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(glm::vec2 normal)
 	return { min, max };
 }
 
-
+std::vector<glm::vec2> BarePolygonCollider::Positions() const
+{
+	vector< vec2> positions;
+	for (auto localPosition2D : localPosition2Ds)
+		positions.push_back(iTransform.ToWorldSpace(localPosition2D, true));
+	return positions;
+}
 
 

@@ -16,7 +16,8 @@ public:
 	const vector<vec2>& GetLocalPosition2Ds() const { return localPosition2Ds; }
 	pair<float, float> ShadowAlongNormal(vec2 normal) const override;
 	const vec2 GetNormalByIndex(int i) const { return iTransform.ToWorldSpace(localNormals[i], false); };
-
+	vector<vec2> Positions() const override;
+	
 private:
 	vector<vec2> localPosition2Ds; // positions in local space i.e. relative to transform.GetPosition()
 	vector<vec2> localNormals;

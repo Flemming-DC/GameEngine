@@ -9,7 +9,9 @@ namespace Editor
 	public:
 		static void UpdateCamera();
 		static glm::vec3 MouseWorldPosition();
-		static void SetScreenPosition(ImVec2 minSceneCorner, ImVec2 maxSceneCorner);
+		static void SetScreenBoundary(ImVec2 minSceneCorner, ImVec2 maxSceneCorner);
+		static glm::vec2 ToWorldPosition(glm::vec2 screenPosition);
+		static glm::vec2 FromWorldPosition(glm::vec2 worldPosition);
 
 		static glm::vec3 Position();
 		static glm::quat Rotation();
