@@ -5,7 +5,7 @@ namespace Editor
 	class SceneEditor
 	{
 	public:
-		static void Draw();
+		static void Update();
 
 	private:
 		static void UpdateVisuals();

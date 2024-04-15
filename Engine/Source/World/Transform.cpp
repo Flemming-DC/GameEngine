@@ -23,6 +23,12 @@ mat4 Transform::GetInverseLocalModel() const
 		* glm::translate(mat4(1.0f), -localPosition);
 }
 
+void Transform::IncrementLocalAngle(float deltaAngle)
+{
+	float localAngle = glm::eulerAngles(localRotation).z + deltaAngle;
+	localRotation = quat(vec3(0.0f, 0.0f, localAngle));
+}
+
 void Transform::SetPosition2D(vec2 pos) { localPosition += glm::ToVec3((pos - Position2D())); }
 void Transform::SetRotation2D(float angle)
 {
@@ -112,6 +118,17 @@ string Transform::GetPath() const
 		return GetEntity().GetName();
 	else
 		return parent->GetPath() + "/" + GetEntity().GetName();
+}
+
+bool Transform::IsDescendantOf(const Transform& putativeAncestor) const
+{
+	auto parent = GetParent();
+	if (parent == nullptr)
+		return false;
+	else if (*parent == putativeAncestor)
+		return true;
+	else
+		return parent->IsDescendantOf(putativeAncestor);
 }
 
 // isPosition is used to distinguish position vector from other vectors (e.g. a velocity vector)

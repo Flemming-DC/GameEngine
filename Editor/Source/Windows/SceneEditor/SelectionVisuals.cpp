@@ -12,6 +12,8 @@ static float minSize = 0.1f; // min Size of the display of a selected object
 
 void SelectionVisuals::DrawSelectionBox(glm::vec2 selectionStartPosition, glm::vec2 selectionEndPosition)
 {
+    if (Selector::IsDraggingSelection())
+        return;
     vector<vec2> positions = {
         vec2(selectionStartPosition.x, selectionStartPosition.y),
         vec2(selectionEndPosition.x, selectionStartPosition.y),

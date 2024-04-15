@@ -33,8 +33,5 @@ public:
 private:
 	static CursorMode cursorMode;
 
-	// this should be able to find the depth, iff the cursor is in window.
-	static vec3 ToWorldPosition(vec2 normalizedScreenPosition, mat4 projectionView, bool* foundDepth = nullptr);
-	static vec2 FromWorldPosition(vec3 worldPosition, mat4 projectionView);
 };
 

@@ -40,16 +40,6 @@ void Screen::SetTitle(std::string gameTitle)
 // --------------- world/screen position conversions ---------------
 
 
-vec3 Screen::ToWorldPosition(vec2 screenPos, bool* foundDepth)
-{
-    mat4 projView = Camera::Current().ProjectionView();
-    return ToWorldPosition(screenPos, projView, foundDepth);
-}
-vec2 Screen::FromWorldPosition(vec3 worldPosition)
-{
-    mat4 projView = Camera::Current().ProjectionView();
-    return FromWorldPosition(worldPosition, projView);
-}
 vec3 Screen::ToWorldPosition(
     vec2 screenPos, vec2 screenMinCorner, vec2 screenMaxCorner, 
     vec3 cameraPos, quat cameraRot, vec3 cameraScale, bool* foundDepth)
@@ -110,7 +100,7 @@ vec2 Screen::FromWorldPosition(
 }
 
 
-vec3 Screen::ToWorldPosition(vec2 screenPos, mat4 projectionView, bool* foundDepth)
+vec3 Screen::ToWorldPosition(vec2 screenPos, bool* foundDepth)
 {
     // find depth
     float depth;
@@ -124,19 +114,21 @@ vec3 Screen::ToWorldPosition(vec2 screenPos, mat4 projectionView, bool* foundDep
     vec3 screenPos3D(screenPos.x, screenPos.y, depth);
 
     vec4 viewport = vec4(0.0f, 0.0f, OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight());
+    mat4 projView = Camera::Current().ProjectionView();
     // unProject expect a view, projection, where we give it a identity, projectionView, but its ok, 
     // since it anyhow only uses this data to construct the projectionView
-    vec3 worldPos = glm::unProject(screenPos3D, mat4(1.0f), projectionView, viewport); 
+    vec3 worldPos = glm::unProject(screenPos3D, mat4(1.0f), projView, viewport);
 
     return worldPos;
 }
 
-vec2 Screen::FromWorldPosition(vec3 worldPosition, mat4 projectionView)
+vec2 Screen::FromWorldPosition(vec3 worldPosition)
 {
     vec4 viewport = vec4(0.0f, 0.0f, OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight());
+    mat4 projView = Camera::Current().ProjectionView();
     // unProject expect a view, projection, where we give it a identity, projectionView, but its ok, 
     // since it anyhow only uses this data to construct the projectionView
-    vec2 screenPos = glm::project(worldPosition, mat4(1.0f), projectionView, viewport);
+    vec2 screenPos = glm::project(worldPosition, mat4(1.0f), projView, viewport);
     return screenPos;
 }
 

@@ -25,7 +25,7 @@ void EditorLoop::OnEditorUpdate()
         Temp_Inspector::TransformGUI2D(entity);
 
     //Inspector::Draw();
-    SceneEditor::Draw();
+    SceneEditor::Update();
     //evt. GameView::Draw();
     //AssetFolder::Draw();
     //Hierarchy::Draw();

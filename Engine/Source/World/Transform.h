@@ -20,6 +20,7 @@ public:
 	quat localRotation = glm::NoRotation(); 
 	vec3 localScale    = vec3(1.0f); 
 
+	void IncrementLocalAngle(float deltaAngle);
 	void SetPosition2D(vec2 pos);
 	void SetRotation2D(float angle);
 	void SetScale2D(vec2 scale);
@@ -39,7 +40,9 @@ public:
 	void SetParent(Transform* newParent);
 	vector<Transform*> GetChildren() const;
 	string GetPath() const; // could also be called to_string
+	bool IsDescendantOf(const Transform& putativeAncestor) const;
 	// get forward, backward, right, left, up, down
+
 
 	//glm::vec2 As2D
 	//glm::vec2 LocalPosition2D() { return glm::vec2(localPosition.x, localPosition.y); }

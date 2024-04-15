@@ -17,6 +17,7 @@ static vector<Entity*> selection;
 static vec2 selectionStartPosition;
 static bool isBoxSelecting = false;
 static int clickSelectionIndex;
+static bool isDraggingSelection = false;
 Event<vector<Entity*>> Selector::onSelected;
 
 void Selector::Update()
@@ -33,11 +34,14 @@ void Selector::Update()
 void Selector::StartSelecting()
 {
     selectionStartPosition = SceneCamera::MouseWorldPosition();
+    isDraggingSelection = ClickedOnSelectedEntity();
     UpdateSelectionBox();
 }
 
 void Selector::UpdateSelectionBox()
 {
+    if (isDraggingSelection)
+        return;
     vec2 mousePosition = SceneCamera::MouseWorldPosition();
     if (glm::LargerThan(mousePosition - selectionStartPosition, minSelectionBoxSize))
         isBoxSelecting = true;
@@ -45,6 +49,12 @@ void Selector::UpdateSelectionBox()
 
 void Selector::FinishSelecting()
 {
+    if (isDraggingSelection)
+    {
+        isDraggingSelection = false;
+        return;
+    }
+
     if (isBoxSelecting)
         BoxSelect();
     else
@@ -123,7 +133,19 @@ vector<Entity*> Selector::GetOverlaps(vec2 selectionBoxCenter, vec2 selectionBox
     return overlaps;
 }
 
+bool Selector::ClickedOnSelectedEntity()
+{
+    vector<Entity*> overlaps = GetOverlaps(selectionStartPosition, vec2(minSelectionBoxSize));
+    for (const auto& selected : selection)
+    {
+        if (Tools::Contains(overlaps, selected))
+            return true;
+    }
+    return false;
+}
 
-std::vector<Entity*> Selector::Selection() { return selection; }
+bool Selector::IsDraggingSelection() { return isDraggingSelection; }
 
-glm::vec2 Selector::SelectionStartPosition() { return selectionStartPosition; }
+vector<Entity*> Selector::Selection() { return selection; }
+
+vec2 Selector::SelectionStartPosition() { return selectionStartPosition; }

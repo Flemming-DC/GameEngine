@@ -13,7 +13,6 @@ static vec3 cameraScale = vec3(1.0f);
 static vec2 minSceneCorner;
 static vec2 maxSceneCorner;
 
-
 void SceneCamera::UpdateCamera()
 {
 

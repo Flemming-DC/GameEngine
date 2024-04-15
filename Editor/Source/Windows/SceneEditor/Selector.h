@@ -13,6 +13,7 @@ namespace Editor
 		static void Update();
 		static std::vector<Entity*> Selection();
 		static glm::vec2 SelectionStartPosition();
+		static bool IsDraggingSelection();
 
 	private:
 		static void StartSelecting();
@@ -23,6 +24,7 @@ namespace Editor
 		static void ClickSelect();
 
 		static std::vector<Entity*> GetOverlaps(glm::vec2 selectionBoxCenter, glm::vec2 selectionBoxSize);
+		static bool ClickedOnSelectedEntity();
 	};
 }
 

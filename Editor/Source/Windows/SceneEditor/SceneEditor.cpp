@@ -10,17 +10,19 @@
 #include "Selector.h"
 #include "SceneCamera.h"
 #include "SelectionVisuals.h"
+#include "SelectionMover.h"
 
 using namespace Editor;
 
 // make viewport framebuffer size sensitive to my viewport vindow size.
 
 
-void SceneEditor::Draw()
+void SceneEditor::Update() // should be called update
 {
     Selector::Update();
     SceneCamera::UpdateCamera();
     UpdateVisuals();
+    SelectionMover::Update();
 }
 
 

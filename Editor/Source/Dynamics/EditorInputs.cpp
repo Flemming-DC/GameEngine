@@ -21,6 +21,14 @@ static auto& screenPosition = InputAction<vec2>::Create()
 static auto& keepSelection = InputAction<bool>::Create()
 	.AddKey(Key::Keyboard::leftShift)
 	.AddKey(Key::Keyboard::rightShift);
+static auto& selectionMoveDirection = InputAction<vec2>::Create()
+	.AddKey(Key::VectorKey::Arrows); // add shift + WASD
+static auto& controlPosition = InputAction<bool>::Create()
+	.AddKey(Key::Keyboard::_1); // evt. add shift condition
+static auto& controlRotation = InputAction<bool>::Create()
+	.AddKey(Key::Keyboard::_2); // evt. add shift condition
+static auto& controlScale = InputAction<bool>::Create()
+	.AddKey(Key::Keyboard::_3); // evt. add shift condition
 
 
 // ------------------ getters -------------------
@@ -32,6 +40,10 @@ namespace Editor::EditorInputs
 	InputAction<bool>& Select() { return select; };
 	InputAction<vec2>& ScreenPosition() { return screenPosition; };
 	InputAction<bool>& KeepSelection() { return keepSelection; };
+	InputAction<vec2>& SelectionMoveDirection() { return selectionMoveDirection; };
+	InputAction<bool>& ControlPosition() { return controlPosition; };
+	InputAction<bool>& ControlRotation() { return controlRotation; };
+	InputAction<bool>& ControlScale() { return controlScale; };
 
 
 
