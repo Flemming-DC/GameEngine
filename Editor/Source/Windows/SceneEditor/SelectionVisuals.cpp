@@ -1,16 +1,17 @@
 #include "SelectionVisuals.h"
-#include "CircleCollider.h"
-#include "PolygonCollider.h"
-#include "RectangleCollider.h"
+//#include "CircleCollider.h"
+//#include "PolygonCollider.h"
+//#include "RectangleCollider.h"
+#include "Collider.h"
 #include "Renderable.h"
 #include "Selector.h"
 #include "ImGuiTools.h"
 #include "SceneCamera.h"
+#include "imgui/imgui.h"
 
 Shorts;
 using namespace Editor;
-static float minSize = 0.3f; // min Size of the display of a selected object
-static ImU32 selectionColor = IM_COL32(0, 0, 255, 128); // blue with alpha = 50%
+static float minSize = 0.1f; // min Size of the display of a selected object
 
 void SelectionVisuals::DrawSelectionBox(glm::vec2 selectionStartPosition, glm::vec2 selectionEndPosition)
 {
@@ -20,7 +21,7 @@ void SelectionVisuals::DrawSelectionBox(glm::vec2 selectionStartPosition, glm::v
         vec2(selectionEndPosition.x, selectionEndPosition.y),
         vec2(selectionStartPosition.x, selectionEndPosition.y),
     };
-    DrawPolygon(positions, selectionColor);
+    DrawPolygon(positions);
 }
 
 void SelectionVisuals::DrawSelection()
@@ -61,12 +62,13 @@ void SelectionVisuals::Display(const Entity& entity)
         };
     }
 
-    DrawPolygon(positions, selectionColor);
+    DrawPolygon(positions);
 }
 
-void SelectionVisuals::DrawPolygon(vector<vec2> positions, ImU32 color)
+void SelectionVisuals::DrawPolygon(vector<vec2> positions)
 {
-    float thickness = 10.0f;
+    ImU32 selectionColor = IM_COL32(0, 125, 255, 125); // blue with alpha = 50%
+    float thickness = 5.0f;
     ImDrawList* drawList = ImGui::GetWindowDrawList();
     int numPoints = positions.size();
 
@@ -77,7 +79,7 @@ void SelectionVisuals::DrawPolygon(vector<vec2> positions, ImU32 color)
     for (int i = 0; i < numPoints; i++)
     {
         int j = (i + 1) % numPoints; // Next vertex index (wrapping around for the last vertex)
-        drawList->AddLine(ImGui::FromGlm(screenPositions[i]), ImGui::FromGlm(screenPositions[j]), color, thickness);
+        drawList->AddLine(ImGui::FromGlm(screenPositions[i]), ImGui::FromGlm(screenPositions[j]), selectionColor, thickness);
     }
 }
 

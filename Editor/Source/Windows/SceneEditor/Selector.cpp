@@ -6,17 +6,17 @@
 #include "SceneCamera.h"
 #include "EditorInputs.h"
 #include "ColQuery.h"
-#include "SelectionVisuals.h"
 
 using namespace Editor;
 Shorts
 // evt. add some kind of filter
 // static pair<vec2, vec2> selectionBox;
-static float minSelectionBoxSize = glm::pow(10.0f, -4.0f);
-static float minSize = 0.3f; // the min size allows one to select objects without anything to give them a size
+static float minSelectionBoxSize = glm::pow(10.0f, -1.0f);
+static float minSize = minSelectionBoxSize; // the min size allows one to select objects without anything to give them a size
 static vector<Entity*> selection;
 static vec2 selectionStartPosition;
 static bool isBoxSelecting = false;
+static int clickSelectionIndex;
 Event<vector<Entity*>> Selector::onSelected;
 
 void Selector::Update()
@@ -27,7 +27,6 @@ void Selector::Update()
         FinishSelecting();
     else if (EditorInputs::Select().IsPressed())
         UpdateSelectionBox();
-    //SelectionVisuals::DrawSelection();
 }
 
 
@@ -42,8 +41,6 @@ void Selector::UpdateSelectionBox()
     vec2 mousePosition = SceneCamera::MouseWorldPosition();
     if (glm::LargerThan(mousePosition - selectionStartPosition, minSelectionBoxSize))
         isBoxSelecting = true;
-
-    //SelectionVisuals::DrawSelectionBox(selectionStartPosition, mousePosition);
 }
 
 void Selector::FinishSelecting()
@@ -72,7 +69,6 @@ void Selector::BoxSelect()
     //auto colliders = ColQuery::Overlaps(ColMaker::Rectangle(center, size));
     for (const auto& entity : overlaps)
         selection.push_back(entity);
-    P(overlaps);
 }
 
 void Selector::ClickSelect()
@@ -80,8 +76,10 @@ void Selector::ClickSelect()
     vec2 clickPostion = SceneCamera::MouseWorldPosition();
     //Collider* col = ColQuery::TryGetOverlap(ColMaker::Point(clickPostion));
     auto overlaps = GetOverlaps(clickPostion, vec2(minSize));
-    Entity* clickedEntity = overlaps.empty() ? nullptr : overlaps[0];
-    P(clickedEntity);
+    if (clickSelectionIndex >= overlaps.size())
+        clickSelectionIndex = 0;
+    Entity* clickedEntity = overlaps.empty() ? nullptr : overlaps[clickSelectionIndex];
+    clickSelectionIndex++;
 
     if (!EditorInputs::KeepSelection().IsPressed())
         selection.clear();
