@@ -7,13 +7,14 @@ namespace Editor::EditorInputs
 {
 	using vec2 = glm::vec2;
 	InputAction<float>& Zoom();
-	InputAction<vec2>& MoveCamera();
+	vec2 MoveCamera();
+	InputAction<bool>& DragCamera();
 
 	// selection
 	InputAction<bool>& Select();
 	InputAction<vec2>& ScreenPosition();
 	InputAction<bool>& KeepSelection();
-	InputAction<vec2>& SelectionMoveDirection();
+	vec2 SelectionMoveDirection();
 
 	InputAction<bool>& ControlPosition();
 	InputAction<bool>& ControlRotation();

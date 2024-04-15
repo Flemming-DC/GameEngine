@@ -35,12 +35,14 @@ public:
 	InputAction<T>& AddKey(Key::Gamepad key) { RaiseError("Key ", key, " doesn't yield input of type ", Tools::TypeName<T>(), " as required by this inputAction"); }
 	InputAction<T>& AddKey(Key::FloatKey key) { RaiseError("Key ", key, " doesn't yield input of type ", Tools::TypeName<T>(), " as required by this inputAction"); }
 	InputAction<T>& AddKey(Key::VectorKey key) { RaiseError("Key ", key, " doesn't yield input of type ", Tools::TypeName<T>(), " as required by this inputAction"); }
+	//InputAction<T>& AddConditionalKey(Key::Keyboard key);
 
 	void RemoveKey(Key::Keyboard key) { RaiseError("Key ", key, " doesn't yield input of type ", Tools::TypeName<T>(), " as required by this inputAction"); }
 	void RemoveKey(Key::Mouse key) { RaiseError("Key ", key, " doesn't yield input of type ", Tools::TypeName<T>(), " as required by this inputAction"); }
 	void RemoveKey(Key::Gamepad key) { RaiseError("Key ", key, " doesn't yield input of type ", Tools::TypeName<T>(), " as required by this inputAction"); }
 	void RemoveKey(Key::FloatKey key) { RaiseError("Key ", key, " doesn't yield input of type ", Tools::TypeName<T>(), " as required by this inputAction"); }
 	void RemoveKey(Key::VectorKey key) { RaiseError("Key ", key, " doesn't yield input of type ", Tools::TypeName<T>(), " as required by this inputAction"); }
+	//void RemoveConditionalKey(Key::Keyboard key);
 
 
 	T State() const { return state; } // these functions are based of current and last state
@@ -58,9 +60,10 @@ private:
 	float timeOfLastPressOrRelease = 0;
 	vector<Key::Keyboard> keyboardKeys;
 	vector<Key::Mouse> mouseKeys;
-	vector<Key::Gamepad> gamepadKeys; // evt. combine these three into boolKeys
+	vector<Key::Gamepad> gamepadKeys; 
 	vector<Key::FloatKey> floatKeys;
-	vector<Key::VectorKey> vectorKeys; // rename to vectorKeys
+	vector<Key::VectorKey> vectorKeys; 
+	vector<Key::Keyboard> conditionalKeyboardKeys;
 	static map_uo<uint, unique_ptr<InputAction>> actions;
 	inline const static float noiseThreshold = 0.0001f; // this should be smaller than noiseThreshold from glfwInput
 	static uint maxID;
@@ -69,7 +72,7 @@ private:
 	void IndividualUpdate(); // update an individual action
 	T FindState() {} // gets the state of the maximally activated key. 
 	float Magnitude(T state) const { return 0; } // could e.g. be public. This function is implemented seperately for each type
-
+	//bool CheckConditionalKeys() const;
 };
 
 

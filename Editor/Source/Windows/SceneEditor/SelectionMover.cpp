@@ -37,9 +37,9 @@ vec2 SelectionMover::Delta()
 
 	vec2 mouseWorldPosition2D = SceneCamera::MouseWorldPosition2D();
 	if (dragging)
-		delta = (mouseWorldPosition2D - lastMouseWorldPosition2D);// *moveSpeed* Time::Delta();
+		delta = (mouseWorldPosition2D - lastMouseWorldPosition2D);
 	else
-		delta = EditorInputs::SelectionMoveDirection().State() * moveSpeed * Time::Delta();
+		delta = EditorInputs::SelectionMoveDirection() * moveSpeed * Time::Delta();
 	lastMouseWorldPosition2D = mouseWorldPosition2D;
 	return delta;
 }

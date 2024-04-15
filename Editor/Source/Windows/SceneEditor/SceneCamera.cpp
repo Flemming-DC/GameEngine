@@ -12,18 +12,26 @@ static const quat cameraRot = glm::NoRotation();
 static vec3 cameraScale = vec3(1.0f);
 static vec2 minSceneCorner;
 static vec2 maxSceneCorner;
+static vec3 lastMouseWorldPosition = vec3();
 
 void SceneCamera::UpdateCamera()
 {
-
     float scaling = 1 + EditorInputs::Zoom().State() * scrollSpeed * Time::Delta(); // exp(x) = 1 + x + O(x^2) is used
     cameraScale *= scaling;
     cameraScale = glm::clamp(cameraScale, vec3(1.0f) / maxScale, vec3(1.0f) * maxScale);
 
-    vec3 moveDirection = glm::ToVec3(EditorInputs::MoveCamera().State());
-    moveSpeed *= scaling;
-    cameraPos += moveDirection * moveSpeed * Time::Delta();
-
+    if (EditorInputs::DragCamera().IsPressed())
+    {
+        vec3 mousePos = SceneCamera::MouseWorldPosition();
+        cameraPos -= (mousePos - lastMouseWorldPosition);
+    }
+    else
+    {
+        vec3 moveDirection = glm::ToVec3(EditorInputs::MoveCamera());
+        moveSpeed *= scaling;
+        cameraPos += moveDirection * moveSpeed * Time::Delta();
+    }
+    lastMouseWorldPosition = SceneCamera::MouseWorldPosition();
 }
 
 vec3 SceneCamera::MouseWorldPosition()

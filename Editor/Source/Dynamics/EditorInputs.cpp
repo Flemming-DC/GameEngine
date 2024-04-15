@@ -9,9 +9,12 @@ using glm::vec2;
 static auto& zoom = InputAction<float>::Create()
 	.AddKey(Key::FloatKey::mouseScrollVelocity)
 	.AddKey(Key::FloatKey::rightStick_y);
-static auto& moveCamera = InputAction<vec2>::Create()
+static auto& directional = InputAction<vec2>::Create()
 	.AddKey(Key::VectorKey::WASD)
+	.AddKey(Key::VectorKey::Arrows)
 	.AddKey(Key::VectorKey::leftStick);
+static auto& dragCamera = InputAction<bool>::Create()
+	.AddKey(Key::Mouse::right);
 
 // scene editor - selection
 static auto& select = InputAction<bool>::Create()
@@ -21,8 +24,15 @@ static auto& screenPosition = InputAction<vec2>::Create()
 static auto& keepSelection = InputAction<bool>::Create()
 	.AddKey(Key::Keyboard::leftShift)
 	.AddKey(Key::Keyboard::rightShift);
+static auto& moveSelectionsNotCamera = InputAction<bool>::Create()
+	.AddKey(Key::Keyboard::leftShift)
+	.AddKey(Key::Keyboard::rightShift);
+/*
 static auto& selectionMoveDirection = InputAction<vec2>::Create()
-	.AddKey(Key::VectorKey::Arrows); // add shift + WASD
+	.AddKey(Key::VectorKey::Arrows);
+	//.AddKey(Key::VectorKey::WASD)
+	//.AddConditionalKey(Key::Keyboard::leftShift); // add shift + WASD
+*/
 static auto& controlPosition = InputAction<bool>::Create()
 	.AddKey(Key::Keyboard::_1); // evt. add shift condition
 static auto& controlRotation = InputAction<bool>::Create()
@@ -36,18 +46,27 @@ static auto& controlScale = InputAction<bool>::Create()
 namespace Editor::EditorInputs
 {
 	InputAction<float>& Zoom() { return zoom; };
-	InputAction<vec2>& MoveCamera() { return moveCamera; };
+	vec2 MoveCamera() { return moveSelectionsNotCamera.IsPressed() ? vec2() : directional.State(); };
+	InputAction<bool>& DragCamera() { return dragCamera; };
+	
 	InputAction<bool>& Select() { return select; };
 	InputAction<vec2>& ScreenPosition() { return screenPosition; };
 	InputAction<bool>& KeepSelection() { return keepSelection; };
-	InputAction<vec2>& SelectionMoveDirection() { return selectionMoveDirection; };
+	vec2 SelectionMoveDirection() { return moveSelectionsNotCamera.IsPressed() ? directional.State() : vec2(); };
+	//InputAction<vec2>& SelectionMoveDirection() { return selectionMoveDirection; };
 	InputAction<bool>& ControlPosition() { return controlPosition; };
 	InputAction<bool>& ControlRotation() { return controlRotation; };
 	InputAction<bool>& ControlScale() { return controlScale; };
 
-
-
-
+	/*
+	vec2 SelectionMoveDirection()
+	{
+		auto arrows = InputVectorizer::GetVectorInput(Key::VectorKey::Arrows);
+		bool shiftPressed = InputKey::IsPressed(Key::Keyboard::leftShift);
+		auto WASD = shiftPressed ? InputVectorizer::GetVectorInput(Key::VectorKey::WASD) : vec2();
+		return glm::LargerThan(arrows, WASD) ? arrows : WASD;
+	}
+	*/
 }
 
 

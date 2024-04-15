@@ -66,7 +66,7 @@ template<typename T> std::string InputAction<T>::to_string() const
 
 template<> bool InputAction<bool>::FindState()
 {
-	if (!enabled)
+	if (!enabled)// || !CheckConditionalKeys())
 		return false;
 	for (const auto& k : keyboardKeys)
 		if (InputKey::IsPressed(k))
@@ -83,7 +83,7 @@ template<> bool InputAction<bool>::FindState()
 
 template<> float InputAction<float>::FindState()
 {
-	if (!enabled)
+	if (!enabled)// || !CheckConditionalKeys())
 		return 0;
 	float maxMagnitude = 0; // without sign
 	float maxFloat = 0; // with sign
@@ -104,7 +104,7 @@ template<> float InputAction<float>::FindState()
 
 template<> glm::vec2 InputAction<glm::vec2>::FindState()
 {
-	if (!enabled)
+	if (!enabled)// || !CheckConditionalKeys())
 		return glm::vec2(0);
 	float maxMagnitude = 0;
 	glm::vec2 maxVector(0);
@@ -119,6 +119,15 @@ template<> glm::vec2 InputAction<glm::vec2>::FindState()
 	return maxVector;
 }
 
+/*
+template<typename T> bool InputAction<T>::CheckConditionalKeys() const
+{
+	for (const auto& k : conditionalKeyboardKeys)
+		if (!InputKey::IsPressed(k))
+			return false;
+	return true;
+}
+*/
 
 template<> float InputAction<bool>::Magnitude(bool state) const { return state; }
 template<> float InputAction<float>::Magnitude(float state) const { return std::abs(state); }
@@ -161,15 +170,22 @@ template<> InputAction<glm::vec2>& InputAction<glm::vec2>::AddKey(Key::VectorKey
 	vectorKeys.push_back(key); 
 	return *this; 
 }
+/*
+template<typename T> InputAction<T>& InputAction<T>::AddConditionalKey(Key::Keyboard key)
+{
+	if (id < 1)
+		RaiseError("This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
+	conditionalKeyboardKeys.push_back(key);
+	return *this;
+}
+*/
 
 template<> void InputAction<bool>::RemoveKey(Key::Keyboard key) { Tools::Remove(keyboardKeys, key); }
 template<> void InputAction<bool>::RemoveKey(Key::Mouse key) { Tools::Remove(mouseKeys, key); }
 template<> void InputAction<bool>::RemoveKey(Key::Gamepad key) { Tools::Remove(gamepadKeys, key); }
 template<> void InputAction<float>::RemoveKey(Key::FloatKey key) { Tools::Remove(floatKeys, key); }
 template<> void InputAction<glm::vec2>::RemoveKey(Key::VectorKey key) { Tools::Remove(vectorKeys, key); }
-
-
-
+//template<typename T> void InputAction<T>::RemoveConditionalKey(Key::Keyboard key) { Tools::Remove(vectorKeys, key); }
 
 
 
