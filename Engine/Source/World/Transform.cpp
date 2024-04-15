@@ -4,54 +4,71 @@
 #include "ErrorChecker.h"
 #include <windows.h>
 
-
+Shorts;
 
 void Transform::OnDestroy()
 {
 	SetParent(nullptr);
 }
-glm::mat4 Transform::GetLocalModel() const
+mat4 Transform::GetLocalModel() const
 {
-	return glm::translate(glm::mat4(1.0f), localPosition)
+	return glm::translate(mat4(1.0f), localPosition)
 		* glm::mat4_cast(localRotation)
-		* glm::scale(glm::mat4(1.0f), localScale);
+		* glm::scale(mat4(1.0f), localScale);
 }
-glm::mat4 Transform::GetInverseLocalModel() const
+mat4 Transform::GetInverseLocalModel() const
 {
-	return glm::scale(glm::mat4(1.0f), 1.0f / localScale)
+	return glm::scale(mat4(1.0f), 1.0f / localScale)
 		* glm::mat4_cast(glm::inverse(localRotation))
-		* glm::translate(glm::mat4(1.0f), -localPosition);
+		* glm::translate(mat4(1.0f), -localPosition);
 }
 
-glm::vec3 Transform::GetPosition() const
+void Transform::SetPosition2D(vec2 pos) { localPosition += glm::ToVec3((pos - Position2D())); }
+void Transform::SetRotation2D(float angle)
+{
+	float oldLocalAngle = glm::eulerAngles(localRotation).z;
+	float newLocalAngle = oldLocalAngle + (angle - Rotation2D());
+	localRotation = quat(vec3(0.0f, 0.0f, newLocalAngle));
+}
+void Transform::SetScale2D(vec2 scale) { localScale += glm::ToVec3((scale - Scale2D())); }
+
+vec2 Transform::Position2D() const { return (vec2)GetPosition(); }
+float Transform::Rotation2D() const { return  glm::eulerAngles(GetRotation()).z; } // this is in radians.
+vec2 Transform::Scale2D() const { return (vec2)GetScale(); }
+
+void Transform::SetPosition(vec3 pos) { localPosition += (pos - GetPosition()); }
+void Transform::SetRotation(quat rot) { localRotation *= (rot * glm::inverse(GetRotation())); }
+void Transform::SetScale(vec3 scale) { localScale += (scale - GetScale()); }
+
+vec3 Transform::GetPosition() const
 {
 	if (GetParent() == nullptr)
 		return localPosition;
 	else
 		return parent->GetPosition() + parent->GetRotation() * localPosition; // this handling of rotation is inefficient
 }
-glm::quat Transform::GetRotation() const
+quat Transform::GetRotation() const
 {
 	if (GetParent() == nullptr)
 		return localRotation;
 	else
 		return parent->GetRotation() * localRotation;
 }
-glm::vec3 Transform::GetScale() const
+vec3 Transform::GetScale() const
 {
 	if (GetParent() == nullptr)
 		return localScale;
 	else
 		return parent->GetScale() * localScale;
 }
-glm::mat4 Transform::GetModel() const
+mat4 Transform::GetModel() const
 {
 	if (GetParent() == nullptr)
 		return GetLocalModel();
 	else
 		return parent->GetModel() * GetLocalModel(); // using this by the renderer is inefficient
 }
-glm::mat4 Transform::GetInverseModel() const
+mat4 Transform::GetInverseModel() const
 {
 	if (GetParent() == nullptr)
 		return GetInverseLocalModel();
@@ -69,8 +86,8 @@ void Transform::SetParent(Transform* newParent)
 	// the local data (which is stored explicitly) is relative to a given parent.
 	// therefore we must adjust for the effect that changing parent has on the world
 	// position, rotation and scale
-	glm::mat4 oldParentModel = GetParent() ? parent->GetModel() : glm::mat4(1.0f);
-	glm::mat4 newParentInverseModel = newParent ? newParent->GetInverseModel() : glm::mat4(1.0f);
+	mat4 oldParentModel = GetParent() ? parent->GetModel() : mat4(1.0f);
+	mat4 newParentInverseModel = newParent ? newParent->GetInverseModel() : mat4(1.0f);
 	SetLocalDataUsingTransform(newParentInverseModel * oldParentModel * GetModel());
 
 	if (parent)
@@ -79,7 +96,7 @@ void Transform::SetParent(Transform* newParent)
 	if (newParent)
 		newParent->children.push_back(this);
 }
-std::vector<Transform*> Transform::GetChildren() const
+vector<Transform*> Transform::GetChildren() const
 {
 	#ifdef _DEBUG
 	for (const auto& child : children)
@@ -89,7 +106,7 @@ std::vector<Transform*> Transform::GetChildren() const
 
 	return children;
 }
-std::string Transform::GetPath() const
+string Transform::GetPath() const
 {
 	if (GetParent() == nullptr)
 		return GetEntity().GetName();
@@ -98,35 +115,35 @@ std::string Transform::GetPath() const
 }
 
 // isPosition is used to distinguish position vector from other vectors (e.g. a velocity vector)
-glm::vec3 Transform::ToWorldSpace(glm::vec3 localVector, bool isPosition) const
+vec3 Transform::ToWorldSpace(vec3 localVector, bool isPosition) const
 {
 	// we extend the localPosition using a homogenous coordinate
-	glm::mat4 matrix = isPosition ? GetModel() : glm::mat4_cast(GetRotation());
-	return matrix * glm::vec4(localVector.x, localVector.y, localVector.z, 1);
+	mat4 matrix = isPosition ? GetModel() : glm::mat4_cast(GetRotation());
+	return matrix * vec4(localVector.x, localVector.y, localVector.z, 1);
 }
-glm::vec2 Transform::ToWorldSpace(glm::vec2 localVector2D, bool isPosition) const
+vec2 Transform::ToWorldSpace(vec2 localVector2D, bool isPosition) const
 {
-	glm::mat4 matrix = isPosition ? GetModel() : glm::mat4_cast(GetRotation());
-	return matrix * glm::vec4(localVector2D.x, localVector2D.y, 0, 1);
+	mat4 matrix = isPosition ? GetModel() : glm::mat4_cast(GetRotation());
+	return matrix * vec4(localVector2D.x, localVector2D.y, 0, 1);
 }
-glm::vec3 Transform::ToLocalSpace(glm::vec3 worldVector, bool isPosition) const
+vec3 Transform::ToLocalSpace(vec3 worldVector, bool isPosition) const
 {
-	glm::mat4 matrix = isPosition ? GetInverseModel() : glm::mat4_cast(glm::inverse(GetRotation()));
-	return matrix * glm::vec4(worldVector.x, worldVector.y, worldVector.z, 1);
+	mat4 matrix = isPosition ? GetInverseModel() : glm::mat4_cast(glm::inverse(GetRotation()));
+	return matrix * vec4(worldVector.x, worldVector.y, worldVector.z, 1);
 }
-glm::vec2 Transform::ToLocalSpace(glm::vec2 worldVector2D, bool isPosition) const
+vec2 Transform::ToLocalSpace(vec2 worldVector2D, bool isPosition) const
 {
-	glm::mat4 matrix = isPosition ? GetInverseModel() : glm::mat4_cast(glm::inverse(GetRotation()));
-	return matrix * glm::vec4(worldVector2D.x, worldVector2D.y, 0, 1);
+	mat4 matrix = isPosition ? GetInverseModel() : glm::mat4_cast(glm::inverse(GetRotation()));
+	return matrix * vec4(worldVector2D.x, worldVector2D.y, 0, 1);
 }
 
-void Transform::SetLocalDataUsingTransform(const glm::mat4& transform)
+void Transform::SetLocalDataUsingTransform(const mat4& transform)
 {
-	localPosition = glm::vec3(transform[3]);
+	localPosition = vec3(transform[3]);
 
-	localScale.x = glm::length(glm::vec3(transform[0]));
-	localScale.y = glm::length(glm::vec3(transform[1]));
-	localScale.z = glm::length(glm::vec3(transform[2]));
+	localScale.x = glm::length(vec3(transform[0]));
+	localScale.y = glm::length(vec3(transform[1]));
+	localScale.z = glm::length(vec3(transform[2]));
 
 	glm::mat3 rotationMatrix(transform);
 	localRotation = glm::quat_cast(rotationMatrix);
@@ -147,11 +164,11 @@ void Transform::Load(const YAML::Node& node)
 {
 	if (node["parent"])
 	{
-		auto parentID = node["parent"].as<uuids::uuid>();
+		auto parentID = node["parent"].as<uuid>();
 		SetParent(&Entity::GetComponent<Transform>(parentID));
 	}
-	localPosition = node["localPosition"].as<glm::vec3>();
-	localRotation = node["localRotation"].as<glm::quat>();
-	localScale = node["localScale"].as<glm::vec3>();
+	localPosition = node["localPosition"].as<vec3>();
+	localRotation = node["localRotation"].as<quat>();
+	localScale = node["localScale"].as<vec3>();
 }
 

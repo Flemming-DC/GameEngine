@@ -1,7 +1,4 @@
 #include "SelectionVisuals.h"
-//#include "CircleCollider.h"
-//#include "PolygonCollider.h"
-//#include "RectangleCollider.h"
 #include "Collider.h"
 #include "Renderable.h"
 #include "Selector.h"

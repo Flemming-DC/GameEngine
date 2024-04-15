@@ -76,7 +76,7 @@ void Selector::ClickSelect()
     vec2 clickPostion = SceneCamera::MouseWorldPosition();
     //Collider* col = ColQuery::TryGetOverlap(ColMaker::Point(clickPostion));
     auto overlaps = GetOverlaps(clickPostion, vec2(minSize));
-    if (clickSelectionIndex >= overlaps.size())
+    if (clickSelectionIndex >= (int)overlaps.size())
         clickSelectionIndex = 0;
     Entity* clickedEntity = overlaps.empty() ? nullptr : overlaps[clickSelectionIndex];
     clickSelectionIndex++;

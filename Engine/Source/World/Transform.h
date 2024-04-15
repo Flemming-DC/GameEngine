@@ -14,29 +14,40 @@
 // toggle enforce proportions and use this by the circle collider
 class Transform : public Component
 {
+	Shorts;
 public:
-	glm::vec3 localPosition = glm::vec3(0.0f); // show in inspector
-	glm::quat localRotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f); // show in inspector
-	glm::vec3 localScale = glm::vec3(1.0f); // show in inspector
+	vec3 localPosition = vec3(0.0f); 
+	quat localRotation = glm::NoRotation(); 
+	vec3 localScale    = vec3(1.0f); 
 
-	glm::vec3 GetPosition() const;
-	glm::quat GetRotation() const;
-	glm::vec3 GetScale() const;
-	glm::mat4 GetModel() const;
-	glm::mat4 GetInverseModel() const; // probably only used by camera
+	void SetPosition2D(vec2 pos);
+	void SetRotation2D(float angle);
+	void SetScale2D(vec2 scale);
+	vec2 Position2D() const;
+	float Rotation2D() const;
+	vec2 Scale2D() const;
+
+	void SetPosition(vec3 pos);
+	void SetRotation(quat rot);
+	void SetScale(vec3 scale);
+	vec3 GetPosition() const;
+	quat GetRotation() const;
+	vec3 GetScale() const;
+	mat4 GetModel() const;
+	mat4 GetInverseModel() const; // probably only used by camera
 	Transform* GetParent() const;
 	void SetParent(Transform* newParent);
-	std::vector<Transform*> GetChildren() const;
-	std::string GetPath() const; // could also be called to_string
+	vector<Transform*> GetChildren() const;
+	string GetPath() const; // could also be called to_string
 	// get forward, backward, right, left, up, down
 
 	//glm::vec2 As2D
 	//glm::vec2 LocalPosition2D() { return glm::vec2(localPosition.x, localPosition.y); }
 
-	glm::vec3 ToWorldSpace(glm::vec3 position, bool isPosition) const;
-	glm::vec2 ToWorldSpace(glm::vec2 position2D, bool isPosition) const;
-	glm::vec3 ToLocalSpace(glm::vec3 position, bool isPosition) const;
-	glm::vec2 ToLocalSpace(glm::vec2 position2D, bool isPosition) const;
+	vec3 ToWorldSpace(vec3 position, bool isPosition) const;
+	vec2 ToWorldSpace(vec2 position2D, bool isPosition) const;
+	vec3 ToLocalSpace(vec3 position, bool isPosition) const;
+	vec2 ToLocalSpace(vec2 position2D, bool isPosition) const;
 
 	void Save(YAML::Node& node) const override;
 	void Load(const YAML::Node& node) override;
@@ -46,13 +57,13 @@ private:
 	Transform* parent = nullptr;
 	bool isUpToDate = false; // i.e. caches are up to data
 	//glm::mat4 model = glm::mat4(1.0f); // cached value
-	std::vector<Transform*> children;
+	vector<Transform*> children;
 
 	void OnStart() override { unique = true; }
 	void OnDestroy() override;
-	glm::mat4 GetLocalModel() const;
-	glm::mat4 GetInverseLocalModel() const; // probably only used by camera
-	void SetLocalDataUsingTransform(const glm::mat4& transform); 
+	mat4 GetLocalModel() const;
+	mat4 GetInverseLocalModel() const; // probably only used by camera
+	void SetLocalDataUsingTransform(const mat4& transform); 
 
 };
 
