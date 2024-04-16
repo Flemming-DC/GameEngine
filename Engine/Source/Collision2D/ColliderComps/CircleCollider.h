@@ -18,5 +18,7 @@ public:
 	//BareCollider& Bare() { return bare; };
 
 private:
+	void OnStart() override;
+
 };
 

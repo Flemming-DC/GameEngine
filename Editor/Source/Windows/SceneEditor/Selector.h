@@ -13,7 +13,7 @@ namespace Editor
 		static void Start();
 		static void Update();
 		static std::vector<uuids::uuid> Selection();
-		static glm::vec2 SelectionStartPosition();
+		static glm::vec2 SelectionStartPosition(); // or dragStartPosition
 		static bool IsDraggingSelection();
 
 	private:

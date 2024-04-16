@@ -2,6 +2,7 @@
 #include <string>
 #include "glm/glm.hpp"
 #include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/vector_angle.hpp> // For angle function
 
 namespace glm
 {
@@ -35,6 +36,14 @@ namespace glm
 	inline float Magnitude(glm::vec2 vec) { return glm::length(vec); }
 	inline float Magnitude(glm::vec3 vec) { return glm::length(vec); }
 	inline float Magnitude(glm::vec4 vec) { return glm::length(vec); }
+
+	inline float Angle(glm::vec2 v1, glm::vec2 v2) { return glm::angle(glm::normalize(v1), glm::normalize(v2)); }
+	inline float Angle(glm::vec3 v1, glm::vec3 v2) { return glm::angle(glm::normalize(v1), glm::normalize(v2)); }
+	inline float Angle(glm::vec4 v1, glm::vec4 v2) { return glm::angle(glm::normalize(v1), glm::normalize(v2)); }
+
+	inline float OrientedAngle(glm::vec2 v1, glm::vec2 v2) { return glm::orientedAngle(glm::normalize(v1), glm::normalize(v2)); }
+	//inline float OrientedAngle(glm::vec3 v1, glm::vec3 v2) { return glm::orientedAngle(glm::normalize(v1), glm::normalize(v2)); }
+	//inline float OrientedAngle(glm::vec4 v1, glm::vec4 v2) { return glm::orientedAngle(glm::normalize(v1), glm::normalize(v2)); }
 
 }
 

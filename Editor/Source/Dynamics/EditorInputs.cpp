@@ -39,6 +39,8 @@ static auto& controlRotation = InputAction<bool>::Create()
 	.AddKey(Key::Keyboard::_2); // evt. add shift condition
 static auto& controlScale = InputAction<bool>::Create()
 	.AddKey(Key::Keyboard::_3); // evt. add shift condition
+static auto& controlUniformScale = InputAction<bool>::Create()
+	.AddKey(Key::Keyboard::_4); // evt. add shift condition
 
 
 // ------------------ getters -------------------
@@ -57,6 +59,7 @@ namespace Editor::EditorInputs
 	InputAction<bool>& ControlPosition() { return controlPosition; };
 	InputAction<bool>& ControlRotation() { return controlRotation; };
 	InputAction<bool>& ControlScale() { return controlScale; };
+	InputAction<bool>& ControlUniformScale() { return controlUniformScale; };
 
 	/*
 	vec2 SelectionMoveDirection()

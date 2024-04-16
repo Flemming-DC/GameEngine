@@ -19,6 +19,7 @@ namespace Editor::EditorInputs
 	InputAction<bool>& ControlPosition();
 	InputAction<bool>& ControlRotation();
 	InputAction<bool>& ControlScale();
+	InputAction<bool>& ControlUniformScale();
 
 
 }

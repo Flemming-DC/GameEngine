@@ -25,11 +25,10 @@ public:
 
 protected:
 	uuids::uuid gizmoID;
+	virtual void OnStart() override;
 
-private:
+protected:
 	static std::vector<uuids::uuid> allColliders;
-
-	void OnStart() override;
 	void OnDestroy() override;
 };
 

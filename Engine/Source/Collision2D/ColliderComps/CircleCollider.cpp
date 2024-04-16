@@ -3,6 +3,14 @@
 #include "glm/glm.hpp"
 #include <algorithm> 
 
+
+void CircleCollider::OnStart()
+{
+	Collider::OnStart();
+	GetTransform().RequireUniformScale(true);
+}
+
+
 void CircleCollider::Setup(float radius_)
 {
 	bare.Setup(MakeTransformInterface(), radius_);

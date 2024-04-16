@@ -10,6 +10,16 @@ void Transform::OnDestroy()
 {
 	SetParent(nullptr);
 }
+
+vec3 Transform::GetLocalScale() const { return localScale; }
+void Transform::SetLocalScale(vec3 localScale_)
+{
+	if (requireUniformScale)
+		localScale_ = vec3(localScale_.x); // unclear whether this is the best way to ensure uniformity
+	localScale = localScale_;
+}
+
+
 mat4 Transform::GetLocalModel() const
 {
 	return glm::translate(mat4(1.0f), localPosition)
@@ -30,21 +40,31 @@ void Transform::IncrementLocalAngle(float deltaAngle)
 }
 
 void Transform::SetPosition2D(vec2 pos) { localPosition += glm::ToVec3((pos - Position2D())); }
-void Transform::SetRotation2D(float angle)
+void Transform::SetAngle(float angle)
 {
 	float oldLocalAngle = glm::eulerAngles(localRotation).z;
-	float newLocalAngle = oldLocalAngle + (angle - Rotation2D());
+	float newLocalAngle = oldLocalAngle + (angle - Angle());
 	localRotation = quat(vec3(0.0f, 0.0f, newLocalAngle));
 }
-void Transform::SetScale2D(vec2 scale) { localScale += glm::ToVec3((scale - Scale2D())); }
+void Transform::SetScale2D(vec2 scale) 
+{
+	if (requireUniformScale)
+		scale.y = scale.x; // unclear whether this is the best way to ensure uniformity
+	localScale *= glm::ToVec3((scale / Scale2D())); 
+}
 
 vec2 Transform::Position2D() const { return (vec2)GetPosition(); }
-float Transform::Rotation2D() const { return  glm::eulerAngles(GetRotation()).z; } // this is in radians.
+float Transform::Angle() const { return  glm::eulerAngles(GetRotation()).z; } // this is in radians.
 vec2 Transform::Scale2D() const { return (vec2)GetScale(); }
 
 void Transform::SetPosition(vec3 pos) { localPosition += (pos - GetPosition()); }
 void Transform::SetRotation(quat rot) { localRotation *= (rot * glm::inverse(GetRotation())); }
-void Transform::SetScale(vec3 scale) { localScale += (scale - GetScale()); }
+void Transform::SetScale(vec3 scale) 
+{
+	if (requireUniformScale)
+		scale = vec3(scale.x); // unclear whether this is the best way to ensure uniformity
+	localScale *= (scale / GetScale());
+}
 
 vec3 Transform::GetPosition() const
 {
