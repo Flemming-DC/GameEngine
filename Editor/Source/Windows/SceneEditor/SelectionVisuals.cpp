@@ -25,11 +25,10 @@ void SelectionVisuals::DrawSelectionBox(glm::vec2 selectionStartPosition, glm::v
 
 void SelectionVisuals::DrawSelection()
 {
-    for (const Entity* entity : Selector::Selection())
+    for (const uuid& entityID : Selector::Selection())
     {
-        if (!entity)
-            RaiseError("entity is nullptr, but that shouldn't be possible.");
-        Display(*entity);
+        Entity& entity = Entity::GetEntity(entityID);
+        Display(entity);
     }
 }
 

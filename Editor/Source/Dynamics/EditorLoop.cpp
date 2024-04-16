@@ -7,6 +7,7 @@
 #include "Temp_Inspector.h"
 #include "Hierarchy.h"
 #include "SceneEditor.h"
+#include "Selector.h"
 #include "OpenGlSetup.h"
 #include "Delay.h"
 
@@ -16,6 +17,7 @@ using namespace Editor;
 void EditorLoop::OnEditorStart() 
 {
     Renderer::ShowWindow(false); 
+    Selector::Start(); // if other scene classes need some startup, then collect it into one startup function
 }
 
 

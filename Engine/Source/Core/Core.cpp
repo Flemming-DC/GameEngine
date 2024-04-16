@@ -65,6 +65,7 @@ void Core::Update()
     }
     if (EngineMode::InEditor())
         Dynamic::CallOnEditorUpdate();
+    Entity::DestroyTheDoomed();
     if (EngineMode::GameCloseButtonIsClicked())
         StopRunningGame();
     Delay::CallToFrameEnd(); 

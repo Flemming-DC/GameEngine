@@ -7,7 +7,8 @@
 
 #ifdef _DEBUG
 #define SetDebug ErrorChecker::_SetDebugFlag(__func__, __FILE__, __LINE__);
-#define IfDebug(codeLine) if (ErrorChecker::_GetDebugFlag()) codeLine;
+#define RunIfDebug(codeLine) if (ErrorChecker::_GetDebugFlag()) codeLine;
+#define IfDebug if (ErrorChecker::_GetDebugFlag())
 #endif // _DEBUG
 
 namespace ErrorChecker

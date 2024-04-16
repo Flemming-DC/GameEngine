@@ -13,12 +13,18 @@ Shorts
 // static pair<vec2, vec2> selectionBox;
 static float minSelectionBoxSize = glm::pow(10.0f, -1.0f);
 static float minSize = minSelectionBoxSize; // the min size allows one to select objects without anything to give them a size
-static vector<Entity*> selection;
+static vector<uuid> selection; // entity-uuid's
 static vec2 selectionStartPosition;
 static bool isBoxSelecting = false;
 static int clickSelectionIndex;
 static bool isDraggingSelection = false;
-Event<vector<Entity*>> Selector::onSelected;
+Event<vector<uuid>> Selector::onSelected; // < entity-uuid's >
+
+void Selector::Start()
+{
+    Entity::OnDestroy.Add([](Entity& destroyed) { 
+        Tools::Remove(selection, destroyed.GetID()); });
+}
 
 void Selector::Update()
 {
@@ -77,8 +83,8 @@ void Selector::BoxSelect()
 
     auto overlaps = GetOverlaps(center, size);
     //auto colliders = ColQuery::Overlaps(ColMaker::Rectangle(center, size));
-    for (const auto& entity : overlaps)
-        selection.push_back(entity);
+    for (const Entity* entity : overlaps)
+        selection.push_back(entity->GetID());
 }
 
 void Selector::ClickSelect()
@@ -95,9 +101,9 @@ void Selector::ClickSelect()
         selection.clear();
     if (!clickedEntity)
         return;
-    if (Tools::Contains(selection, clickedEntity))
+    if (Tools::Contains(selection, clickedEntity->GetID()))
         return;
-    selection.push_back(clickedEntity);
+    selection.push_back(clickedEntity->GetID());
 }
 
 vector<Entity*> Selector::GetOverlaps(vec2 selectionBoxCenter, vec2 selectionBoxSize)
@@ -136,16 +142,19 @@ vector<Entity*> Selector::GetOverlaps(vec2 selectionBoxCenter, vec2 selectionBox
 bool Selector::ClickedOnSelectedEntity()
 {
     vector<Entity*> overlaps = GetOverlaps(selectionStartPosition, vec2(minSelectionBoxSize));
-    for (const auto& selected : selection)
+    for (const auto& selectedID : selection)
     {
-        if (Tools::Contains(overlaps, selected))
-            return true;
+        for (const auto& clicked : overlaps)
+        {
+            if (clicked->GetID() == selectedID)
+                return true;
+        }
     }
     return false;
 }
 
 bool Selector::IsDraggingSelection() { return isDraggingSelection; }
 
-vector<Entity*> Selector::Selection() { return selection; }
+vector<uuid> Selector::Selection() { return selection; }
 
 vec2 Selector::SelectionStartPosition() { return selectionStartPosition; }

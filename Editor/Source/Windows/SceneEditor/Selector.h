@@ -9,9 +9,10 @@ namespace Editor
 	class Selector
 	{
 	public:
-		static Event<std::vector<Entity*>> onSelected; // < selection >
+		static Event<std::vector<uuids::uuid>> onSelected; // < selection >
+		static void Start();
 		static void Update();
-		static std::vector<Entity*> Selection();
+		static std::vector<uuids::uuid> Selection();
 		static glm::vec2 SelectionStartPosition();
 		static bool IsDraggingSelection();
 

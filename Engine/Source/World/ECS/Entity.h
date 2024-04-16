@@ -26,6 +26,7 @@ public:
 
 	void Destroy(); // destroys the entity at the end of the component update calls
 	static void Entity::DestroyEverything(); // engine-only
+	static void DestroyTheDoomed(); // engine-only
 
 	template <typename ComponentType> inline static ComponentType* TryGet(uuid entityID);
 	template <typename ComponentType> inline static ComponentType& Get(uuid entityID);
@@ -66,7 +67,6 @@ private:
 	template <typename ComponentType> ComponentType& AddComponent(YAML::Node* node = nullptr); // id is only used by load
 	void ClearData(); // Engine-only
 	static void ClearData(const unique_ptr<Component>& compPtr); // Engine-only
-	static void DestroyTheDoomed();
 	bool Destroy(Component& comp); // destroys the entity at the end of the component update calls
 	static void CheckConsistency();
 

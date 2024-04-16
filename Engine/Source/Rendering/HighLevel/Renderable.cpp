@@ -12,6 +12,8 @@ std::vector<uuids::uuid> Renderable::allRenderables;
 void Renderable::OnStart()
 {
     allRenderables.push_back(GetID());
+    material = EngineAssets::DefaultMaterial(); // copy, not ref
+    mesh = EngineAssets::SquareMesh(); // copy, not ref
 }
 
 void Renderable::OnDestroy()
@@ -29,14 +31,16 @@ void Renderable::Setup(const Material& material_, const Mesh& mesh_)
 void Renderable::Setup(const Material& material_)
 {
     material = material_; // copy, not ref
-    mesh = EngineAssets::SquareMesh(); // copy, not ref
-
+    //mesh = EngineAssets::SquareMesh(); // copy, not ref
 }
 
 
 
 void Renderable::Draw(const glm::mat4& projectionView)
 {
+    if (!UuidCreator::IsInitialized(material.GetID()) || !UuidCreator::IsInitialized(mesh.GetID()))
+        RaiseError("you must setup the mesh and material on the renderable, before drawing it.");
+        
     glm::mat4 model = GetTransform().GetModel(); // this is inefficient
     material.SetUniform("u_MVP", projectionView * model);
 

@@ -8,6 +8,13 @@
 #include "Camera.h"
 #include "OpenGlSetup.h"
 #include "SceneCamera.h"
+#include "RectangleCollider.h"
+#include "Renderable.h"
+#include "Screen.h"
+#include "InputVectorizer.h"
+#include "OpenGlExternal.h"
+#include "EngineAssets.h"
+
 
 using namespace Editor;
 using namespace Key;
@@ -38,6 +45,45 @@ void TestMousePosition()
         glfwSetWindowPos(OpenGlSetup::GetWindow(), 100, 100);
 }
 
+void TestDestruction()
+{
+
+	if (InputKey::BecomesPressed(Keyboard::L))
+	{
+		logger::print("L: try destroy Renderable from picture 1");
+		Entity& p1 = Entity::GetEntity("picture 1");
+		if (p1.TryGet<Renderable>())
+			p1.Destroy<Renderable>();
+	}
+	if (InputKey::BecomesPressed(Keyboard::K))
+	{
+		logger::print("K: try add Renderable to picture 1");
+		Entity& p1 = Entity::GetEntity("picture 1");
+		if (!p1.TryGet<Renderable>())
+			p1.Add<Renderable>();
+	}
+
+	if (InputKey::BecomesPressed(Keyboard::J))
+	{
+		logger::print("J: try destroy picture 1 RectangleCollider");
+		if (Entity::GetEntity("picture 1").TryGet<RectangleCollider>())
+			Entity::GetEntity("picture 1").Destroy<RectangleCollider>();
+	}
+	if (InputKey::BecomesPressed(Keyboard::H))
+	{
+		logger::print("H: try destroy circle 1");
+		if (Entity::TryGetID("circle 1"))
+			Entity::GetEntity("circle 1").Destroy();
+	}
+	if (InputKey::BecomesPressed(Keyboard::G))
+	{
+		logger::print("G: try create circle 1");
+		if (!Entity::TryGetID("circle 1"))
+			Entity::Make<Transform, CircleCollider>("circle 1").Get<CircleCollider>().Setup(0.5);
+		SetDebug;
+
+	}
+}
 
 void EditorSandbox::OnEditorStart()
 {
@@ -47,6 +93,8 @@ void EditorSandbox::OnEditorStart()
 
 void EditorSandbox::OnEditorUpdate()
 {
-    TestMousePosition();
+    //TestMousePosition();
+	TestDestruction();
 }
+
 

@@ -9,6 +9,9 @@ diverse
 	store all special folders in some const variables
 	closing game by X in right cornr, shouldn't also close editor
 	2D lighting
+	apply standard math checks everywhere in debug collision2D
+	prune away super close cornes in polygon collider and then check that positionCount in polygon collider is at least 3. 
+	evt. let renderable start out with a square mesh and a dummy material
 
 
 components & gameobjects

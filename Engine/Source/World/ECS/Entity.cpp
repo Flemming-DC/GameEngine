@@ -77,7 +77,6 @@ void Entity::Update()
 		for (const auto& compPtr : components)
 			compPtr->OnUpdate();
 	}
-	DestroyTheDoomed();
 
 }
 

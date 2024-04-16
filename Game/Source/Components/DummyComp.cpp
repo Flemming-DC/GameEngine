@@ -136,20 +136,6 @@ void DummyComp::OldTests()
 		logger::print("Y: try make circle 1 and X");
 		if (!Entity::TryGetID("circle 1"))
 		{
-			/*
-			Delay::ToFrameEnd([]()
-			{
-				Entity& circle1 = Entity::register_.Add("circle 1");
-				circle1.Add<Transform>();
-				circle1.Add<CircleCollider>().SetLocalRadius(0.5f);
-			});
-			*/
-			// tilsyneladende kan man sagtens lave entiteter midt i et update loop
-			/*
-			Entity& circle1 = Entity::register_.Add("circle 1");
-			circle1.Add<Transform>();
-			circle1.Add<CircleCollider>().SetLocalRadius(0.5f);
-			*/
 			Entity::Make<Transform, CircleCollider>("circle 1")
 				.Get<CircleCollider>().Setup(0.5);
 		}

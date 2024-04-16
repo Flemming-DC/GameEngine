@@ -46,17 +46,15 @@ vec2 SelectionMover::Delta()
 
 void SelectionMover::Move(vec2 delta)
 {
-	for (const auto& entityPtr : Selector::Selection())
+	for (const uuid& entityID : Selector::Selection())
 	{
-		if (entityPtr == nullptr)
-			RaiseError("entityPtr is nullptr");
-		Transform& transform = entityPtr->Get<Transform>();
+		Transform& transform = Entity::GetEntity(entityID).Get<Transform>();
 
 		// skip descendants, since they will already be moving due to moving their parents
 		bool isDescendant = false;
-		for (const auto& other : Selector::Selection())
+		for (const uuid& otherID : Selector::Selection())
 		{
-			isDescendant = transform.IsDescendantOf(other->Get<Transform>());
+			isDescendant = transform.IsDescendantOf(Entity::GetEntity(otherID).Get<Transform>());
 			if (isDescendant)
 				break;
 		}

@@ -28,6 +28,8 @@ void Material::Setup(
 
 void Material::SetUniform(const std::string& name, std::any value)
 {
+    if (!UuidCreator::IsInitialized(id))
+        RaiseError("You cannot set a uniform upon an uninitialized Material");
     if (!Tools::ContainsKey(uniformValuesByName, name))
         RaiseError(
             "The uniform " + name + " is not recognized.\n"
