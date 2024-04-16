@@ -21,7 +21,8 @@ FrameBuffer Renderer::frameBuffer;
 
 Renderer::RenderResult Renderer::DrawToFrameBuffer(vec3 cameraPos, quat cameraRot, vec3 cameraScale, bool drawGizmos)
 { 
-    return DrawToFrameBuffer(Camera::ProjectionView(cameraPos, cameraRot, cameraScale), drawGizmos); 
+    mat4 projView = Camera::ProjectionView(cameraPos, cameraRot, cameraScale);
+    return DrawToFrameBuffer(projView, drawGizmos); 
 }
 Renderer::RenderResult Renderer::DrawToFrameBuffer() 
 { 
@@ -37,6 +38,12 @@ Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView, bool dra
 {
     if (!UuidCreator::IsInitialized(frameBuffer.GetID()))
         frameBuffer = FrameBuffer::register_.Add(OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight());
+    else if (OpenGlSetup::WindowIsResized())
+    {
+        frameBuffer.ShutDown();
+        frameBuffer = FrameBuffer::register_.Add(OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight());
+    }
+
     frameBuffer.Bind();
     glCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
     Renderer::DrawToScreen(projectionView, drawGizmos);

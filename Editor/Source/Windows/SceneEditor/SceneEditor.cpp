@@ -29,16 +29,20 @@ void SceneEditor::Update() // should be called update
 
 void SceneEditor::UpdateVisuals()
 {
+    ImGui::Begin("ViewPort", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar); // NoMove disables drag & drop
+
     bool drawGizmos = true;
     auto renderResult = Renderer::DrawToFrameBuffer(
         SceneCamera::Position(), SceneCamera::Rotation(), SceneCamera::Scale(), drawGizmos);
 
+    ImVec2 renderSize = { (float)renderResult.width, (float)renderResult.height };
+    ImVec2 windowSize = ImGui::GetWindowSize();
+    float scaling = std::max(windowSize.x / renderSize.x, windowSize.y / renderSize.y);
+    ImVec2 size = { scaling * renderSize.x, scaling * renderSize.y };
+
     ImVec2 uvBottumLeft = { 0, 1 };
     ImVec2 uvTopRight = { 1, 0 };
-    ImVec2 size = { (float)renderResult.width, (float)renderResult.height };
 
-    //ImGui::Begin("ViewPort");
-    ImGui::Begin("ViewPort", nullptr, ImGuiWindowFlags_NoMove); // NoMove disables drag & drop
     ImGui::Image((void*)(intptr_t)renderResult.textureOpenGlid, size, uvBottumLeft, uvTopRight);
 
     SceneCamera::SetScreenBoundary(ImGui::GetItemRectMin(), ImGui::GetItemRectMax());

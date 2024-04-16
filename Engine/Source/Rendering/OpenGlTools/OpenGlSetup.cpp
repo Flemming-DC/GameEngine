@@ -3,9 +3,8 @@
 #include "OpenGlExternal.h"
 
 bool OpenGlSetup::openGLInitialized = false;
-int OpenGlSetup::width = 960;
-int OpenGlSetup::height = 720;
 GLFWwindow* OpenGlSetup::window = nullptr;
+std::pair<int, int> OpenGlSetup::lastWindowSize = { 960, 720 };
 
 void OpenGlSetup::Setup()
 {
@@ -16,7 +15,8 @@ void OpenGlSetup::Setup()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
-    window = glfwCreateWindow(width, height, "Default Title", NULL, NULL); // Create a windowed mode window and its OpenGL context
+    // Create a windowed mode window and its OpenGL context
+    window = glfwCreateWindow(lastWindowSize.first, lastWindowSize.second, "Default Title", NULL, NULL); 
     if (!window)
     {
         glfwTerminate();
@@ -34,7 +34,6 @@ void OpenGlSetup::Setup()
     glCall(glEnable(GL_BLEND));
     glCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
     openGLInitialized = true;
-
 }
 
 void OpenGlSetup::Shutdown()
@@ -44,7 +43,18 @@ void OpenGlSetup::Shutdown()
 
 bool OpenGlSetup::Update()
 {
+    lastWindowSize = WindowSize();
     glCall(glfwSwapBuffers(window)); // Swap front and back buffers
     glCall(glfwPollEvents()); // Poll for and process events
     return !glfwWindowShouldClose(window);
+}
+
+std::pair<int, int> OpenGlSetup::WindowSize()
+{
+    int width = -1;
+    int height = -1;
+    glfwGetWindowSize(window, &width, &height);
+    if (width <= 0 || height <= 0)
+        RaiseError("impossible window size");
+    return {width, height};
 }

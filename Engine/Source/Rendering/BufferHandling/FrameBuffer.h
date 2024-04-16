@@ -11,7 +11,6 @@ public:
 	FrameBuffer(int width, int height) { Setup(width, height); }
 	void ShutDown();
 	void Setup(int width, int height);
-
 	void Bind() const;
 	static void UnBind();
 	inline uuids::uuid GetID() const { return id; }

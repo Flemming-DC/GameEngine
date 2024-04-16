@@ -40,7 +40,6 @@ void Selector::Update()
 void Selector::StartSelecting()
 {
     selectionStartPosition = SceneCamera::MouseWorldPosition();
-    P(selectionStartPosition, SceneCamera::MouseWorldPosition2D());
     isDraggingSelection = ClickedOnSelectedEntity();
     UpdateSelectionBox();
 }
