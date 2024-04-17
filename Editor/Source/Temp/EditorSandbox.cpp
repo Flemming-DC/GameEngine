@@ -80,8 +80,6 @@ void TestDestruction()
 		logger::print("G: try create circle 1");
 		if (!Entity::TryGetID("circle 1"))
 			Entity::Make<Transform, CircleCollider>("circle 1").Get<CircleCollider>().Setup(0.5);
-		SetDebug;
-
 	}
 }
 
