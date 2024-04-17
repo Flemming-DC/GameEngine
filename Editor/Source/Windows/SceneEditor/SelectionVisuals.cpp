@@ -4,11 +4,21 @@
 #include "Selector.h"
 #include "ImGuiTools.h"
 #include "SceneCamera.h"
+#include "EditorInputs.h"
 #include "imgui/imgui.h"
+
 
 Shorts;
 using namespace Editor;
 static float minSize = 0.1f; // min Size of the display of a selected object
+
+void SelectionVisuals::Update()
+{
+    SelectionVisuals::DrawSelection();
+    if (EditorInputs::Select().IsPressed() && Selector::IsSelecting())
+        SelectionVisuals::DrawSelectionBox(Selector::SelectionStartPosition(), SceneCamera::MouseWorldPosition());
+}
+
 
 void SelectionVisuals::DrawSelectionBox(glm::vec2 selectionStartPosition, glm::vec2 selectionEndPosition)
 {

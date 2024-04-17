@@ -90,14 +90,16 @@ bool NarrowPhase::IsOverLapping_CP(circle circle, poly polygon)
 		}
 	}
 	vec2 circleNormal = glm::normalize(closestCorner - circlePosition);
-	if (glm::HasNAN(circleNormal) && minSqrDistance < 0.001f)
+	if (glm::HasNAN(circleNormal) && minSqrDistance < 0.00001f)
 	{
 		// this blockblock activates if closestCorner = circlePosition, in which case we will replace closestCorner with polyPosition
 		vec2 polyPosition = polygon.iTransform.GetPosition();
 		circleNormal = glm::normalize(polyPosition - circlePosition); 
+		if (glm::HasNAN(circleNormal))
+			return true; // since minSqrDistance is tiny, then it can't be very wrong to return true.
 	}
-	if (glm::HasNAN(circleNormal))
-		RaiseError("NAN encountered");
+	else if (glm::HasNAN(circleNormal))
+		RaiseError("NAN encountered"); // if NAN occurs for reasons other than tiny minSqrDistance, then I dont know what to do.
 
 	pair<float, float> circleShadow = circle.ShadowAlongNormal(circleNormal);
 	auto polygonShadow = polygon.ShadowAlongNormal(circleNormal);

@@ -4,11 +4,12 @@
 #include "InputKey.h"
 #include "Core.h"
 #include "EngineMode.h"
-#include "Temp_Inspector.h"
+//#include "Temp_Inspector.h"
 #include "Hierarchy.h"
 #include "SceneEditor.h"
 #include "Selector.h"
 #include "OpenGlSetup.h"
+#include "Inspector.h"
 #include "Delay.h"
 
 using namespace Editor;
@@ -18,21 +19,21 @@ void EditorLoop::OnEditorStart()
 {
     Renderer::ShowWindow(false); 
     Selector::Start(); // if other scene classes need some startup, then collect it into one startup function
+    Inspector::Start();
 }
 
 
 void EditorLoop::OnEditorUpdate()
 {
-    for (const auto& entity : Entity::register_.GetData())
-        Temp_Inspector::TransformGUI2D(entity);
+    //for (const auto& entity : Entity::register_.GetData())
+    //    Temp_Inspector::TransformGUI2D(entity);
 
-    //Inspector::Draw();
     SceneEditor::Update();
-    //evt. GameView::Draw();
-    //AssetFolder::Draw();
-    //Hierarchy::Draw();
+    Inspector::Update();
+    //AssetFolder::Update();
+    //Hierarchy::Update
 
-    //ImGui::ShowDemoWindow();
+    ImGui::ShowDemoWindow();
 
     if (InputKey::BecomesPressed(Key::Keyboard::R))
     {

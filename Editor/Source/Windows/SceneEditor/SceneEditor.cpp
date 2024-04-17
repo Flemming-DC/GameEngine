@@ -19,18 +19,22 @@ using namespace Editor;
 
 void SceneEditor::Update() // should be called update
 {
+    ImGui::Begin("ViewPort", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar); // NoMove disables drag & drop
+
+    
     Selector::Update();
-    SceneCamera::UpdateCamera();
-    UpdateVisuals();
+    DrawScene();
+    SelectionVisuals::Update();
+    SceneCamera::UpdateCamera(ImGui::GetItemRectMin(), ImGui::GetItemRectMax());
     SelectionMover::Update();
+
+    ImGui::End();
 }
 
 
 
-void SceneEditor::UpdateVisuals()
+void SceneEditor::DrawScene()
 {
-    ImGui::Begin("ViewPort", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar); // NoMove disables drag & drop
-
     bool drawGizmos = true;
     auto renderResult = Renderer::DrawToFrameBuffer(
         SceneCamera::Position(), SceneCamera::Rotation(), SceneCamera::Scale(), drawGizmos);
@@ -45,9 +49,4 @@ void SceneEditor::UpdateVisuals()
 
     ImGui::Image((void*)(intptr_t)renderResult.textureOpenGlid, size, uvBottumLeft, uvTopRight);
 
-    SceneCamera::SetScreenBoundary(ImGui::GetItemRectMin(), ImGui::GetItemRectMax());
-    SelectionVisuals::DrawSelection();
-    if (EditorInputs::Select().IsPressed())
-        SelectionVisuals::DrawSelectionBox(Selector::SelectionStartPosition(), SceneCamera::MouseWorldPosition());
-    ImGui::End();
 }

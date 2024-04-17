@@ -1,7 +1,7 @@
 #include "BarePolygonCollider.h"
 #include "ErrorChecker.h"
 
-static const inline float minPositionSeperation = glm::pow(10.0f, -8.0f);
+static const inline float minPositionSeperation = glm::pow(10.0f, -5.0f);
 
 BarePolygonCollider BarePolygonCollider::MakeRectangle(vec2 center, quat rot, vec2 size)
 {
@@ -26,6 +26,7 @@ BarePolygonCollider BarePolygonCollider::Make(vector<vec2> positions)
 
 void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> localPosition2Ds_)
 {
+	PruneEquivalentPositions(localPosition2Ds_);
 	iTransform = iTransform_,
 	localPosition2Ds = localPosition2Ds_;
 
@@ -36,6 +37,7 @@ void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> l
 	{
 		int nextIndex = i + 1 < count ? i + 1 : 0;
 		auto vectorAlongEdge = localPosition2Ds[nextIndex] - localPosition2Ds[i];
+		/*
 		if (glm::LessThan(vectorAlongEdge, minPositionSeperation))
 		{
 			// evt. replace with a warning and a hacky fix
@@ -43,6 +45,7 @@ void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> l
 				", which yields vectorAlongEdge from positionIndex", i, " to positionIndex", nextIndex, " with a length of ",
 				glm::Magnitude(vectorAlongEdge), ", which is too small.");
 		}
+		*/
 		auto perpendicular = glm::vec2(-vectorAlongEdge.y, vectorAlongEdge.x);
 		localNormals.push_back(glm::normalize(perpendicular));
 	}
@@ -117,3 +120,52 @@ std::vector<glm::vec2> BarePolygonCollider::Positions() const
 }
 
 
+void BarePolygonCollider::PruneEquivalentPositions(vector<vec2> localPosition2Ds_)
+{
+	int indexToEliminate = -1;
+	int count = (int)localPosition2Ds_.size();
+	for (int i = 0; i < count; i++)
+	{
+		int nextIndex = i + 1 < count ? i + 1 : 0;
+		auto vectorAlongEdge = localPosition2Ds_[nextIndex] - localPosition2Ds_[i];
+		if (glm::LessThan(vectorAlongEdge, minPositionSeperation))
+		{
+			indexToEliminate = nextIndex;
+			Warning("Eliminating positions in polygon, since they are too close.");
+			break;
+		}
+	}
+	bool found = (indexToEliminate != -1);
+	if (found)
+	{
+		Tools::Remove(localPosition2Ds_, localPosition2Ds_[indexToEliminate]);
+		PruneEquivalentPositions(localPosition2Ds_);
+	}
+	else
+	{
+		if (localPosition2Ds_.size() < 3)
+			RaiseError("localPosition2Ds.size() is below 3. This is not a valid polygon");
+
+		// find max and min coordinates so as to check if the points are one a line
+		float minX = -INFINITY;
+		float minY = -INFINITY;
+		float maxX = INFINITY;
+		float maxY = INFINITY;
+		for (const vec2& pos : localPosition2Ds_)
+		{
+			if (pos.x < minX)
+				minX = pos.x;
+			if (pos.x > maxX)
+				maxX = pos.x;
+
+			if (pos.y < minY)
+				minY = pos.y;
+			if (pos.y > maxY)
+				maxY = pos.y;
+		}
+		float width = std::abs(maxX - minX);
+		float height = std::abs(maxY - minY);
+		if (width < minPositionSeperation || height < minPositionSeperation)
+			RaiseError("The points are all on a single line. This is not a valid polygon.");
+	}
+}

@@ -8,6 +8,6 @@ namespace Editor
 		static void Update();
 
 	private:
-		static void UpdateVisuals();
+		static void DrawScene();
 	};
 }

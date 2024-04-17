@@ -14,8 +14,11 @@ static vec2 minSceneCorner;
 static vec2 maxSceneCorner;
 static vec3 lastMouseWorldPosition = vec3();
 
-void SceneCamera::UpdateCamera()
+void SceneCamera::UpdateCamera(ImVec2 minSceneCorner_, ImVec2 maxSceneCorner_)
 {
+    minSceneCorner = { minSceneCorner_.x, minSceneCorner_.y };
+    maxSceneCorner = { maxSceneCorner_.x, maxSceneCorner_.y };
+
     float scaling = 1 + EditorInputs::Zoom().State() * scrollSpeed * Time::Delta(); // exp(x) = 1 + x + O(x^2) is used
     cameraScale *= scaling;
     cameraScale = glm::clamp(cameraScale, vec3(1.0f) / maxScale, vec3(1.0f) * maxScale);
@@ -56,12 +59,6 @@ glm::vec2 SceneCamera::FromWorldPosition(glm::vec2 worldPosition)
         cameraPos, cameraRot, cameraScale);
 }
 
-
-void SceneCamera::SetScreenBoundary(ImVec2 minSceneCorner_, ImVec2 maxSceneCorner_)
-{
-    minSceneCorner = { minSceneCorner_.x, minSceneCorner_.y };
-    maxSceneCorner = { maxSceneCorner_.x, maxSceneCorner_.y };
-}
 
 vec3 SceneCamera::Position() { return cameraPos; }
 quat SceneCamera::Rotation() { return cameraRot; }

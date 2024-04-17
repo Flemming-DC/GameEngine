@@ -15,9 +15,10 @@ static float minSelectionBoxSize = glm::pow(10.0f, -1.0f);
 static float minSize = minSelectionBoxSize; // the min size allows one to select objects without anything to give them a size
 static vector<uuid> selection; // entity-uuid's
 static vec2 selectionStartPosition;
-static bool isBoxSelecting = false;
+static bool mouseMoved = false;
 static int clickSelectionIndex;
-static bool isDraggingSelection = false;
+static bool clickedOnSelection = false;
+static bool isSelecting;
 Event<vector<uuid>> Selector::onSelected; // < entity-uuid's >
 
 void Selector::Start()
@@ -28,45 +29,43 @@ void Selector::Start()
 
 void Selector::Update()
 {
-    if (EditorInputs::Select().BecomesPressed())
+    //if (ImGui::IsWindowHovered()) {}
+
+    if (EditorInputs::Select().BecomesPressed() && ImGui::IsWindowHovered())
         StartSelecting();
-    else if (EditorInputs::Select().BecomesReleased())
+    else if (EditorInputs::Select().BecomesReleased() && isSelecting)
         FinishSelecting();
-    else if (EditorInputs::Select().IsPressed())
+    else if (EditorInputs::Select().IsPressed() && isSelecting)
         UpdateSelectionBox();
 }
 
 
 void Selector::StartSelecting()
 {
+    isSelecting = true;
     selectionStartPosition = SceneCamera::MouseWorldPosition();
-    isDraggingSelection = ClickedOnSelectedEntity();
+    clickedOnSelection = ClickedOnSelection();
     UpdateSelectionBox();
 }
 
 void Selector::UpdateSelectionBox()
 {
-    if (isDraggingSelection)
-        return;
     vec2 mousePosition = SceneCamera::MouseWorldPosition();
     if (glm::LargerThan(mousePosition - selectionStartPosition, minSelectionBoxSize))
-        isBoxSelecting = true;
+        mouseMoved = true;
 }
 
 void Selector::FinishSelecting()
 {
-    if (isDraggingSelection)
-    {
-        isDraggingSelection = false;
-        return;
-    }
-
-    if (isBoxSelecting)
+    if (mouseMoved && !clickedOnSelection)
         BoxSelect();
-    else
+    else if (!mouseMoved)
         ClickSelect();
-    isBoxSelecting = false;
-    onSelected.Invoke(selection);
+    mouseMoved = false;
+    clickedOnSelection = false;
+    isSelecting = false;
+    if (!IsDraggingSelection())
+        onSelected.Invoke(selection);
 }
 
 
@@ -139,7 +138,7 @@ vector<Entity*> Selector::GetOverlaps(vec2 selectionBoxCenter, vec2 selectionBox
     return overlaps;
 }
 
-bool Selector::ClickedOnSelectedEntity()
+bool Selector::ClickedOnSelection()
 {
     vector<Entity*> overlaps = GetOverlaps(selectionStartPosition, vec2(minSelectionBoxSize));
     for (const auto& selectedID : selection)
@@ -153,8 +152,10 @@ bool Selector::ClickedOnSelectedEntity()
     return false;
 }
 
-bool Selector::IsDraggingSelection() { return isDraggingSelection; }
+bool Selector::IsDraggingSelection() { return clickedOnSelection && mouseMoved; }
 
 vector<uuid> Selector::Selection() { return selection; }
 
 vec2 Selector::SelectionStartPosition() { return selectionStartPosition; }
+
+bool Selector::IsSelecting() { return isSelecting; }

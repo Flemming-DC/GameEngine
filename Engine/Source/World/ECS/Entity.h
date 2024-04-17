@@ -54,6 +54,7 @@ public:
 	string GetName() const { return name; }
 	static Entity& GetEntity(string name) { return register_.Get(GetID(name)); }
 	static Entity& GetEntity(uuid id_) { return register_.Get(id_); }
+	static bool Exists(uuid id_) { return register_.Contains(id_); }
 
 private:
 	static map_uo<uuid, vector<unique_ptr<Component>>> componentsByEntity;
