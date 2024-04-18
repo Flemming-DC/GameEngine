@@ -11,6 +11,7 @@ public:
 	void Setup(ITransform iTransform_, float radius_);
 	float GetRadius() const;
 	float GetLocalRadius() const { return localRadius; };
+	//void SetLocalRadius(float radius) { localRadius = radius; };
 	pair<float, float> ShadowAlongNormal(vec2 normal) const override;
 	vector<vec2> Positions() const override;
 

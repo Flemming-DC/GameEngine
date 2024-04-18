@@ -28,7 +28,7 @@ void DemoScene::PurelyManualSetup()
     Entity::Add<Transform>(picture2ID).SetParent(&Entity::Get<Transform>(picture1ID));
     Entity::Add<Renderable>(picture2ID).Setup(material);
     Entity::Add<GameLogic>(picture2ID);
-    Entity::Add<RectangleCollider>(picture2ID).SetSize({ 1, 1 });
+    //Entity::Add<RectangleCollider>(picture2ID).SetSize({ 1, 1 });
 
     auto circle1ID = Entity::register_.Add("circle 1").GetID();
     Entity::Add<Transform>(circle1ID);

@@ -14,7 +14,7 @@ void GameLogic::OnStart()
 {
     material = &Get<Renderable>().GetMaterial();
     color = material->GetUniform<glm::vec4>("u_color");
-
+    /*
     onEnterIndex = Get<RectangleCollider>().onEnter.Add([this](Collider& other)
         { 
             logger::print("GameLogic.OnStart: Collider.Enter: " + other.GetEntity().name + " enters " + this->GetEntity().name);
@@ -23,13 +23,15 @@ void GameLogic::OnStart()
         { 
             logger::print("GameLogic: Collider.onExit: " + other.GetEntity().name + " enters " + this->GetEntity().name); 
         });
+    */
 }
 
 void GameLogic::OnDestroy() 
 { 
+    /*
     Get<RectangleCollider>().onEnter.Remove(onEnterIndex);
     Get<RectangleCollider>().onExit.Remove(onExitIndex);
-
+    */
 
 }
 

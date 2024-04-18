@@ -11,16 +11,12 @@
 #include "CircleCollider.h" // evt temp
 #include <glm/gtc/type_ptr.hpp> // evt temp
 
-
 using namespace Editor;
 Shorts
 uuid currentEntityID;
-/*
-Entity* CurrentEntity()
-{
-    return Selector::Selection().empty() ? nullptr : &Entity::GetEntity(Selector::Selection()[0]);
-}
-*/
+float dragSensitivity = 0.1f;
+
+
 void Inspector::Start()
 {
     Selector::onSelected.Add([](vector<uuid> selection) {
@@ -50,7 +46,6 @@ void Inspector::DrawComponent(Component& comp)
     if (typeid(comp) == typeid(Transform))
     {
         Transform& transform = *static_cast<Transform*>(&comp);
-        float dragSensitivity = 0.1f;
         ImGui::DragFloat2("position", glm::value_ptr(transform.localPosition), dragSensitivity);
 
         float angle = transform.LocalAngle();
@@ -70,23 +65,36 @@ void Inspector::DrawComponent(Component& comp)
     else if (typeid(comp) == typeid(Camera)) {}
     else if (typeid(comp) == typeid(Renderable))
     {
+        Renderable& renderable = *static_cast<Renderable*>(&comp);
         // node["mesh"] = mesh.GetID();
         // node["material"] = material.GetID();
     }
     else if (typeid(comp) == typeid(PolygonCollider))
     {
-        //node["localPosition2Ds"] = bare.GetLocalPosition2Ds();
+        PolygonCollider& poly = *static_cast<PolygonCollider*>(&comp);
+
+        vector<vec2> positions = poly.bare.GetLocalPosition2Ds();
+        ImGui::Text("positions");
+        for (int i=0; i<(int)positions.size(); i++)
+            ImGui::DragFloat2(std::to_string(i).c_str(), glm::value_ptr(positions[i]), dragSensitivity);
+        poly.Setup(positions);
 
     }
     else if (typeid(comp) == typeid(RectangleCollider))
     {
-        // node["size"] = size; evt. demand that it matches renderer
-
+        RectangleCollider& rect = *static_cast<RectangleCollider*>(&comp);
+        
+        vec2 size = rect.Size();
+        ImGui::DragFloat2("size", glm::value_ptr(size), dragSensitivity, 0.001f, 1000.0f);
+        rect.SetSize(size);
     }
     else if (typeid(comp) == typeid(CircleCollider))
     {
-
-        // node["localRadius"] = bare.GetLocalRadius();
+        CircleCollider& circle = *static_cast<CircleCollider*>(&comp);
+     
+        float radius = circle.bare.GetLocalRadius();
+        ImGui::DragFloat("radius", &radius, dragSensitivity);
+        circle.Setup(radius);
     }
 
 }

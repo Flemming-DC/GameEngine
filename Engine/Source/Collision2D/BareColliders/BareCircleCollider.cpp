@@ -21,6 +21,8 @@ BareCircleCollider BareCircleCollider::Make(vec2 center, float radius_)
 
 void BareCircleCollider::Setup(ITransform iTransform_, float radius_)
 {
+	if (radius_ < glm::pow(10.0f, -8.0f))
+		RaiseError("Unrealistically small radius: ", radius_);
 	iTransform = iTransform_,
 	localRadius = radius_;
 }

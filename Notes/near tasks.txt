@@ -1,0 +1,27 @@
+
+diverse:
+	
+
+Editor
+	save changes automatically and/or on ctrl+s
+	close editor by cross in lower windows bar and by cross in upper right corner. 
+	create and destroy objects
+	
+	Inspector
+		assign mesh and material (reuires an identifier and a save/load funcitonality)
+		assign anythin with a uuid via drag & drop. Particularly other entities and components
+		edit polygon positions in scene by dragging.
+	SceneEditor
+		evt. run button
+		evt. show clidren of selection
+	GameView
+		allow fullscreen mode
+	AssetFolder
+	Hierarchy	
+
+
+	
+
+
+
+

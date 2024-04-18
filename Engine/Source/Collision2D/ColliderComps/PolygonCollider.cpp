@@ -6,6 +6,8 @@
 void PolygonCollider::Setup(std::vector<glm::vec2> localPosition2Ds_)
 {
 	bare.Setup(MakeTransformInterface(), localPosition2Ds_);
+	if (UuidCreator::IsInitialized(gizmoID))
+		Gizmo::Remove(gizmoID);
 	gizmoID = Gizmo::Make(localPosition2Ds_, &GetTransform());
 }
 

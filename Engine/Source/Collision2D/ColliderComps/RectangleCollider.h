@@ -8,7 +8,7 @@
 class RectangleCollider : public PolygonCollider
 {
 public:
-
+	inline glm::vec2 Size() const { return size; }
 	void SetSize(glm::vec2 size);
 	void Save(YAML::Node& node) const override;
 	void Load(const YAML::Node& node) override;

@@ -33,8 +33,9 @@ public:
 	static uuid Make(vector<vec2> position2Ds, Transform* transform, vec4 color = defaultColor, bool showPoints = true, bool loop = true);
 	static vector<Gizmo>& GetData() { return register_.GetData(); }
 	static void Clear() { return register_.Clear(); }
+	static void Remove(uuid id_) { register_.Remove(id_); }
 
-	// dont use this constructor explicitly. Use Gizmo::Add
+	// dont use this constructor explicitly. Use Gizmo::Make
 	Gizmo(vector<vec2> position2Ds, Transform* transform, vec4 color = defaultColor, bool showPoints = true, bool loop = true);
 
 private:

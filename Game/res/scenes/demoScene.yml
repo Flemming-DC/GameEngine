@@ -36,27 +36,32 @@ Entities:
             size: [1, 1]
         Renderable:
             id: 2f87723c-ab25-4817-ae12-c92b26d5aa42
-            material: 6b5086bd-ca59-4ed0-bfc1-028caad9f6f2
+            material: 27498378-9b6f-4fa0-acaf-f3de03dc0051
         Transform:
             id: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
-            localPosition: [-0.5, -0.5, 0]
+            localPosition: [-0.490543664, -0.648936152, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
     picture 2:
         id: 9f90ac2c-01c1-439a-b75e-98acd00255e4
-        RectangleCollider:
+        PolygonCollider:
             id: e4cf93a6-af2c-4bab-a22f-7a2dd7561c36
-            size: [1, 1]
+            localPosition2Ds: [
+                [-0.500000, -0.500000],
+                [-0.500000, 0.500000],
+                [0.500000, 0.500000],
+                [0.500000, -0.500000]
+                ]
         Renderable:
             id: 7cb23b0c-f684-4b93-98bb-6ff3d2290336
-            material: 6b5086bd-ca59-4ed0-bfc1-028caad9f6f2
+            material: 27498378-9b6f-4fa0-acaf-f3de03dc0051
         Transform:
             id: a5be3ef9-f754-42ca-af89-8842ab357ab7
-            localPosition: [1.15000081, 0.589333475, 0]
+            localPosition: [1.11217606, 0.485314727, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
             parent: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
         GameLogic:
-            id: 4a01e1f2-8835-4cce-a90a-8d0a4dffc889
+            id: affc4b49-d3d3-4c65-85df-813efd84f502
         DummyComp:
-            id: f6c911a2-8361-45c2-9f6c-90c71ff73725
+            id: bf889093-b235-43ca-85bf-2905634b7a54
