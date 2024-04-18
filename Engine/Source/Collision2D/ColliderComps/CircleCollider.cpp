@@ -7,7 +7,7 @@
 void CircleCollider::OnStart()
 {
 	Collider::OnStart();
-	GetTransform().RequireUniformScale(true);
+	GetTransform().requireUniformScale = true;
 }
 
 

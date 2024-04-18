@@ -17,9 +17,12 @@ class Transform : public Component
 	Shorts;
 public:
 	vec3 localPosition = vec3(0.0f); 
-	quat localRotation = glm::NoRotation(); 
+	quat localRotation = glm::NoRotation();
+	bool requireUniformScale = false;
 
-	vec3 GetLocalScale() const;
+	float LocalAngle() const;
+	void SetLocalAngle(float localAngle);
+	vec3 LocalScale() const;
 	void SetLocalScale(vec3 localScale);
 
 	void IncrementLocalAngle(float deltaAngle);
@@ -44,7 +47,6 @@ public:
 	string GetPath() const; // could also be called to_string
 	bool IsDescendantOf(const Transform& putativeAncestor) const;
 	// get forward, backward, right, left, up, down
-	void RequireUniformScale(bool isRequired) { requireUniformScale = isRequired; }
 
 	//glm::vec2 As2D
 	//glm::vec2 LocalPosition2D() { return glm::vec2(localPosition.x, localPosition.y); }
@@ -63,7 +65,6 @@ private:
 	bool isUpToDate = false; // i.e. caches are up to data
 	//glm::mat4 model = glm::mat4(1.0f); // cached value
 	vector<Transform*> children;
-	bool requireUniformScale = false;
 	vec3 localScale = vec3(1.0f);
 
 	void OnStart() override { unique = true; }

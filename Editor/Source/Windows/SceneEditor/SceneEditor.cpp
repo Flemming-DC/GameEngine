@@ -5,7 +5,6 @@
 #include "InputKey.h"
 #include "Time_.h"
 #include "EngineMode.h"
-#include "EditorInputs.h"
 #include "GlmTools.h"
 #include "Selector.h"
 #include "SceneCamera.h"

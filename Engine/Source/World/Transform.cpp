@@ -11,7 +11,14 @@ void Transform::OnDestroy()
 	SetParent(nullptr);
 }
 
-vec3 Transform::GetLocalScale() const { return localScale; }
+float Transform::LocalAngle() const { return  glm::eulerAngles(localRotation).z; } // this is in radians.
+void Transform::SetLocalAngle(float localAngle)
+{
+	auto euler = glm::eulerAngles(localRotation);
+	localRotation = quat(vec3(euler.x, euler.y, localAngle));
+}
+
+vec3 Transform::LocalScale() const { return localScale; }
 void Transform::SetLocalScale(vec3 localScale_)
 {
 	if (requireUniformScale)
@@ -35,16 +42,17 @@ mat4 Transform::GetInverseLocalModel() const
 
 void Transform::IncrementLocalAngle(float deltaAngle)
 {
-	float localAngle = glm::eulerAngles(localRotation).z + deltaAngle;
-	localRotation = quat(vec3(0.0f, 0.0f, localAngle));
+	auto euler = glm::eulerAngles(localRotation);
+	float newLocalAngle = euler.z + deltaAngle;
+	localRotation = quat(vec3(euler.x, euler.y, newLocalAngle));
 }
 
 void Transform::SetPosition2D(vec2 pos) { localPosition += glm::ToVec3((pos - Position2D())); }
 void Transform::SetAngle(float angle)
 {
-	float oldLocalAngle = glm::eulerAngles(localRotation).z;
-	float newLocalAngle = oldLocalAngle + (angle - Angle());
-	localRotation = quat(vec3(0.0f, 0.0f, newLocalAngle));
+	auto euler = glm::eulerAngles(localRotation);
+	float newLocalAngle = euler.z + (angle - Angle());
+	localRotation = quat(vec3(euler.x, euler.y, newLocalAngle));
 }
 void Transform::SetScale2D(vec2 scale) 
 {

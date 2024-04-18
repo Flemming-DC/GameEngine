@@ -11,7 +11,7 @@ namespace Editor
 		static void Update();
 
 	private:
-		static void DrawComponent(const Component& comp);
+		static void DrawComponent(Component& comp);
 	};
 }
 
