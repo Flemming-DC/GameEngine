@@ -13,6 +13,7 @@ namespace Tools
 	std::string Trim(const std::string& str);
 	std::string Trim(const char* str);
 	std::string RemovePrefix(const std::string& str, const std::string& prefix);
+	std::string RemoveSuffix(const std::string& str, const std::string& suffix);
 	std::string Replace(std::string str, const std::string& toBeReplaced, const std::string& replacement);
 
 	// if used on A deriving from B, then this prints A. However, if used on a pointer to A that is declared as B*, this print B*.

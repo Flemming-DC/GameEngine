@@ -1,7 +1,7 @@
 #include "GameAssets.h"
 #include "Engine.h"
 
-
+Shorts;
 Shader& GameAssets::shader = Shader();
 Texture& GameAssets::texture = Texture();
 Material& GameAssets::material = Material();
@@ -10,7 +10,7 @@ Material& GameAssets::material = Material();
 void GameAssets::Setup()
 {
     // parameters
-    std::map<std::string, std::any> uniformsByName = {
+    map_uo<string, std::any> uniformsByName = {
         {"u_textureSampler", &texture},
         {"u_color", glm::vec4(0.8f, 0.3f, 0.8f, 1.0f)},
     };
@@ -18,7 +18,7 @@ void GameAssets::Setup()
     // assets
     shader = Shader::register_.Add("res/shaders/Image.shader");
     texture = Texture::register_.Add("res/textures/blizzard attacking fans.png");
-    material = Material::register_.Add(shader, uniformsByName);
+    material = Material::register_.Add("mat", shader, uniformsByName);
 
 }
 

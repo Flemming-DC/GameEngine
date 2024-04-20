@@ -13,9 +13,9 @@
 
 int main()
 {
-    #ifdef InEditor
-        Editor::EditorCore::MarkAsEditor();
-    #endif // InEditor
+#ifdef InEditor
+    Editor::EditorCore::MarkAsEditor();
+#endif // InEditor
     
     Dynamic::Setup<GameAssets, GameInputs, Settings>();
     Core::Run(std::make_unique<DemoScene>());

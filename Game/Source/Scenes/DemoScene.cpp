@@ -59,7 +59,6 @@ void DemoScene::ManualSetup()
     Material& material = GameAssets::GetMaterial();
     
     // ------------ get entities ------------
-    Entity::GetID("circle 1");
     Entity& picture1 = Entity::GetEntity("picture 1");
     Entity& picture2 = Entity::GetEntity("picture 2");
 

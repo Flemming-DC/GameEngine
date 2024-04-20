@@ -57,6 +57,14 @@ namespace Tools
 	}
 
 
+	std::string RemoveSuffix(const std::string& str, const std::string& suffix)
+	{
+		if (str.size() >= suffix.size() && str.substr(str.size() - suffix.size()) == suffix)
+			return str.substr(0, str.size() - suffix.size());
+		else
+			return str; // Suffix not found, return original string
+	}
+
 	std::string Replace(std::string str, const std::string& toBeReplaced, const std::string& replacement)
 	{
 		size_t pos = 0;

@@ -8,10 +8,9 @@
 #include "OpenGlSetup.h"
 
 Register<Material> Material::register_;
+Naming Material::naming;
 
-void Material::Setup(
-    const Shader& shader_,
-    const std::map<std::string, std::any>& uniformValuesByName_)
+void Material::Setup(string name, const Shader& shader_, const map_uo<string, std::any>& uniformValuesByName_)
 {
     if (!OpenGlSetup::Initialized())
         RaiseError("Material cannot be setup before OpenGlSetup::Setup() is called.");
@@ -20,13 +19,14 @@ void Material::Setup(
     id = UuidCreator::MakeID();
     shader = shader_;
     uniformValuesByName = uniformValuesByName_;
+    naming.AddWithSuffix(name, id);
     CheckUniforms();
     SetupTexturesByName();
     Bind(true);
 }
 
 
-void Material::SetUniform(const std::string& name, std::any value)
+void Material::SetUniform(const string& name, std::any value)
 {
     if (!UuidCreator::IsInitialized(id))
         RaiseError("You cannot set a uniform upon an uninitialized Material");

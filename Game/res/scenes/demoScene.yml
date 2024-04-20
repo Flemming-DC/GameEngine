@@ -10,12 +10,12 @@ Entities:
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
     circle 1:
-        id: 465e6f11-1daa-46ed-9eab-ada19408dd94
+        id: 9f5200c9-8a5a-4f6e-9cf1-0d478ccf3c82
         CircleCollider:
-            id: 7a2121ba-cb58-4a14-bc42-c907070a6d94
+            id: 37c2492b-4254-4028-a2d8-764690180715
             localRadius: 0.5
         Transform:
-            id: c8f4574c-079a-48f7-9055-6b2fd37e023c
+            id: 75811620-a2a2-455e-91d3-881ca9c70e1c
             localPosition: [-0.5, 0.5, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
@@ -31,12 +31,9 @@ Entities:
             localScale: [1, 1, 1]
     picture 1:
         id: 62b4da63-0610-4eff-9820-3e1f073c9cff
-        RectangleCollider:
-            id: fdcac1ad-d3ab-48e1-b909-911a1f5e2107
-            size: [1, 1]
         Renderable:
             id: 2f87723c-ab25-4817-ae12-c92b26d5aa42
-            material: 27498378-9b6f-4fa0-acaf-f3de03dc0051
+            material: d4cf24d7-a22e-4860-a426-877689277746
         Transform:
             id: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
             localPosition: [-0.490543664, -0.648936152, 0]
@@ -46,15 +43,10 @@ Entities:
         id: 9f90ac2c-01c1-439a-b75e-98acd00255e4
         PolygonCollider:
             id: e4cf93a6-af2c-4bab-a22f-7a2dd7561c36
-            localPosition2Ds: [
-                [-0.500000, -0.500000],
-                [-0.500000, 0.500000],
-                [0.500000, 0.500000],
-                [0.500000, -0.500000]
-                ]
+            localPosition2Ds: [[-0.5, -0.5], [-0.5, 0.5], [0.5, 0.5], [0.5, -0.5]]
         Renderable:
             id: 7cb23b0c-f684-4b93-98bb-6ff3d2290336
-            material: 27498378-9b6f-4fa0-acaf-f3de03dc0051
+            material: d4cf24d7-a22e-4860-a426-877689277746
         Transform:
             id: a5be3ef9-f754-42ca-af89-8842ab357ab7
             localPosition: [1.11217606, 0.485314727, 0]
@@ -62,6 +54,6 @@ Entities:
             localScale: [1, 1, 1]
             parent: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
         GameLogic:
-            id: affc4b49-d3d3-4c65-85df-813efd84f502
+            id: 6fa0ff49-06cc-42d1-996d-e6ea42842db2
         DummyComp:
-            id: bf889093-b235-43ca-85bf-2905634b7a54
+            id: 18c50010-b582-48ac-8f55-ada856f60e18

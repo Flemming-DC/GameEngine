@@ -78,6 +78,7 @@ namespace Tools
 	}
 
 
+
 	template<typename T> 
 	inline bool Contains(const vector<T>& vec, const T& t)
 	{
@@ -99,7 +100,7 @@ namespace Tools
 	
 
 	template<typename Tkey, typename Tval> 
-	vector<Tkey> GetKeys(const map<Tkey, Tval>& dict)
+	vector<Tkey> GetKeys(const map<Tkey, Tval>& dict) // copying
 	{
 		vector<Tkey> keys;
 		for (const auto& pair : dict)
@@ -108,7 +109,7 @@ namespace Tools
 	};
 
 	template<typename Tkey, typename Tval> 
-	vector<Tkey> GetKeys(const unordered_map<Tkey, Tval>& dict)
+	vector<Tkey> GetKeys(const unordered_map<Tkey, Tval>& dict) // copying
 	{
 		vector<Tkey> keys;
 		for (const auto& pair : dict)

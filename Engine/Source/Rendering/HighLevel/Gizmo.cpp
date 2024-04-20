@@ -33,7 +33,7 @@ Gizmo::Gizmo(vector<vec2> position2Ds, Transform* transform_, vec4 color_, bool 
     glCall(glPointSize(point_size));
 
     material = EngineAssets::GizmoMaterial(); // color is specified in draw call
-    mesh = Mesh::register_.Add(positionsRaw, std::vector<unsigned int>(), VertexLayout({ 2, 0, 0, 0 }));
+    mesh = Mesh::register_.Add(positionsRaw, std::vector<unsigned int>(), VertexLayout({2, 0, 0, 0}));
     positionCount = position2Ds.size();
 
 }
