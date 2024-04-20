@@ -13,9 +13,11 @@ public:
 	static std::vector<uuids::uuid> allRenderables;
 
 	void Setup(const Material& material, const Mesh& mesh);
-	void Setup(const Material& material);
 	void Draw(const glm::mat4& projectionView);
 	static void UnBind();
+
+	inline void SetMaterial(const Material& material_) { material = material_; } // copy, not ref, not used in engine
+	inline void SetMesh(const Mesh& mesh_) { mesh = mesh_; } // copy, not ref, not used in engine
 	inline Material& GetMaterial() { return material; } // not used in engine
 	inline Mesh& GetMesh() { return mesh; } // not used in engine
 	void Save(YAML::Node& node) const override;

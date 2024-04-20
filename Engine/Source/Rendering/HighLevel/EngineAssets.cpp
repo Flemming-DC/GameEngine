@@ -29,7 +29,7 @@ void EngineAssets::Setup()
         0, 3, 2, // triangle(LD, RD, RU)
         0, 1, 2, // triangle(LD, LU, RU)
     };
-    squareMesh = Mesh::register_.Add(vertexVector, indexVector, VertexLayout());
+    squareMesh = Mesh::register_.Add("squareMesh", vertexVector, indexVector, VertexLayout());
 
 }
 

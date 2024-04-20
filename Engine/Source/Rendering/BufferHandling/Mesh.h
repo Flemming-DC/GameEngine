@@ -19,9 +19,9 @@ public:
     //struct Bounds2D { float minX; float minY; float maxX; float maxY; };
 
     Mesh() {}
-    Mesh(const vector<float>& vertices, const vector<unsigned int>& indices, const VertexLayout& layout)
-        { Setup(vertices, indices, layout); }
-    void Setup(const vector<float>& vertices, const vector<unsigned int>& indices, const VertexLayout& layout);
+    Mesh(string name, const vector<float>& vertices, const vector<unsigned int>& indices, const VertexLayout& layout)
+        { Setup(name, vertices, indices, layout); }
+    void Setup(string name, const vector<float>& vertices, const vector<unsigned int>& indices, const VertexLayout& layout);
 
     void Bind() const;
     static void UnBind();

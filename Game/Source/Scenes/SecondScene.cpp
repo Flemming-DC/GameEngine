@@ -22,13 +22,13 @@ void SecondScene::PurelyManualSetup()
 
     auto picture1ID = Entity::register_.Add("picture 1").GetID();
     Entity::Add<Transform>(picture1ID);
-    Entity::Add<Renderable>(picture1ID).Setup(material);
+    Entity::Add<Renderable>(picture1ID).SetMaterial(material);
     Entity::Add<RectangleCollider>(picture1ID).SetSize({ 1, 1 });
 
 
     auto picture2ID = Entity::register_.Add("picture 2").GetID();
     Entity::Add<Transform>(picture2ID).SetParent(&Entity::Get<Transform>(picture1ID));
-    Entity::Add<Renderable>(picture2ID).Setup(material);
+    Entity::Add<Renderable>(picture2ID).SetMaterial(material);
     Entity::Add<RectangleCollider>(picture2ID).SetSize({ 1, 1 });
     Entity::Add<GameLogic>(picture2ID);
     Entity::Add<DummyComp>(picture2ID);
@@ -58,7 +58,7 @@ void SecondScene::ManualSetup()
 
     // ------------ setup components ------------
     //Entity::Get<Renderable>(picture1ID).Setup(material);
-    Entity::Get<Renderable>(picture2ID).Setup(material);
+    Entity::Get<Renderable>(picture2ID).SetMaterial(material);
     Entity::Add<GameLogic>(picture2ID);
 
 

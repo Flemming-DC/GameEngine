@@ -5,14 +5,14 @@
 Register<Mesh> Mesh::register_;
 Naming Mesh::naming;
 
-void Mesh::Setup(const vector<float>& vertices_, const vector<unsigned int>& indices_, const VertexLayout& layout_)
+void Mesh::Setup(string name, const vector<float>& vertices_, const vector<unsigned int>& indices_, const VertexLayout& layout_)
 {
     if (!OpenGlSetup::Initialized())
         RaiseError("Mesh cannot be setup before OpenGlSetup::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("Mesh is already initialized");
     id = UuidCreator::MakeID();
-    //naming.AddWithSuffix(name, id);
+    naming.AddWithSuffix(name, id);
 
     indexBuffer = IndexBuffer::register_.Add(indices_.data(), indices_.size());
     vertexBuffer = VertexBuffer::register_.Add(vertices_.data(), vertices_.size() * sizeof(float));

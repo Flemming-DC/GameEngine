@@ -20,13 +20,13 @@ void DemoScene::PurelyManualSetup()
 
     auto picture1ID = Entity::register_.Add("picture 1").GetID();
     Entity::Add<Transform>(picture1ID);
-    Entity::Add<Renderable>(picture1ID).Setup(material);
+    Entity::Add<Renderable>(picture1ID).SetMaterial(material);
     Entity::Add<RectangleCollider>(picture1ID).SetSize({ 1, 1 });
 
 
     auto picture2ID = Entity::register_.Add("picture 2").GetID();
     Entity::Add<Transform>(picture2ID).SetParent(&Entity::Get<Transform>(picture1ID));
-    Entity::Add<Renderable>(picture2ID).Setup(material);
+    Entity::Add<Renderable>(picture2ID).SetMaterial(material);
     Entity::Add<GameLogic>(picture2ID);
     //Entity::Add<RectangleCollider>(picture2ID).SetSize({ 1, 1 });
 
@@ -63,8 +63,8 @@ void DemoScene::ManualSetup()
     Entity& picture2 = Entity::GetEntity("picture 2");
 
     // ------------ setup components ------------
-    picture1.Get<Renderable>().Setup(material);
-    picture2.Get<Renderable>().Setup(material);
+    picture1.Get<Renderable>().SetMaterial(material);
+    picture2.Get<Renderable>().SetMaterial(material);
     //picture2.Add<GameLogic>();
     //picture2.Add<DummyComp>();
 
