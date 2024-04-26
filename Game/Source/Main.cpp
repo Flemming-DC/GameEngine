@@ -21,10 +21,11 @@ int main()
     Core::Run(std::make_unique<DemoScene>());
 }
 
+/*
+logger::print(UuidCreator::MakeID());
+findstr /S /M "_Debug" "Engine\Source\*.*"
 
-// logger::print(UuidCreator::MakeID());
-// findstr /S /M "_Debug" "Engine\Source\*.*"
-// 
-// git add . && git commit -m "m" && git push
+git add . && git commit -m "m" && git push
+*/
 
 

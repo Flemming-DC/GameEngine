@@ -7,6 +7,9 @@ namespace Editor
 	{
 	public:
 		static void Update();
+	private:
+
+		static void DrawGrid();
 	};
 
 }

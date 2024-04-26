@@ -12,7 +12,7 @@ public:
 	static RenderResult DrawToFrameBuffer();
 	static void DrawToScreen();
 	// evt. drop useGizmos and make InEditor globally available
-	static void SetupGrid2D(float gridScale);
+	static void SetupGrid2D_(float gridScale);
 	static void ShutDown();
 	//static void ToggleGameWindow() { OpenGlSetup::ToggleGlfwWindow(); }
 	static void ShowWindow(bool show);

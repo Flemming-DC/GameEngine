@@ -69,7 +69,7 @@ void Renderer::DrawToScreen(mat4 projectionView, bool drawGizmos)
 }
 
 
-void Renderer::SetupGrid2D(float gridScale)
+void Renderer::SetupGrid2D_(float gridScale)
 {
     float brightness = 0.2f;
     vec4 color = vec4(brightness, brightness, brightness, 1);
@@ -89,12 +89,12 @@ void Renderer::SetupGrid2D(float gridScale)
         verticallyOrganizedPosition2Ds.push_back({ x,  gridSize });
     }
 
-
+    /*
     horizontalGridID = Gizmo::Make(
         horizontallyOrganizedPosition2Ds, nullptr, color, false, false);
     verticalGridID = Gizmo::Make(
         verticallyOrganizedPosition2Ds, nullptr, color, false, false);
-
+    */
 }
 
 

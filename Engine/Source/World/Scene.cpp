@@ -47,7 +47,7 @@ void Scene::ActivateImmediately(Scene* scenePtr)
         activeScene->ShutDown();
 
     activeScene.reset(scenePtr);
-    Renderer::SetupGrid2D(0.25f); // if is_editor
+    //Renderer::SetupGrid2D(0.25f); // if is_editor
 
     activeScene->Load();
     activeScene->ManualSetup();
@@ -60,7 +60,7 @@ void Scene::ReloadImmediately()
         activeScene->ShutDown();
 
     //activeScene = std::move(activeScene);
-    Renderer::SetupGrid2D(0.25f); // if is_editor
+    //Renderer::SetupGrid2D(0.25f); // if is_editor
 
     activeScene->Load();
     activeScene->ManualSetup();

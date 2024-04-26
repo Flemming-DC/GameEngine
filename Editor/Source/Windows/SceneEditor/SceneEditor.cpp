@@ -31,7 +31,6 @@ void SceneEditor::Update() // should be called update
     SelectionMover::Update();
 
     ImGui::End();
-    // bad
 }
 
 
