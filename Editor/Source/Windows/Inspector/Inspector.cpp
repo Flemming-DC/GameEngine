@@ -69,44 +69,19 @@ void Inspector::DrawComponent(Component& comp)
         Renderable& renderable = *static_cast<Renderable*>(&comp);
         // node["mesh"] = mesh.GetID();
         // node["material"] = material.GetID();
-
+        
         optional<uuid> meshID = Mesh::naming.Show("mesh", renderable.GetMesh().GetID());
         if (meshID)
         {
             Mesh& mesh = Mesh::register_.Get(*meshID);
             renderable.SetMesh(mesh);
-            //P(mesh);
         }
         optional<uuid> matID = Material::naming.Show("material", renderable.GetMaterial().GetID());
         if (matID)
         {
             Material& mat = Material::register_.Get(*matID);
             renderable.SetMaterial(mat);
-            //P(mat);
         }
-        /*
-        static int item_current = 0;
-        Naming& naming = Material::naming;
-        ImGui::Combo("names", &item_current, naming.Names());
-        string name = naming.Names()[item_current];
-        uuid id = naming.at(name);
-        Material& mat = Material::register_.Get(id);
-        */
-
-        /*
-        static char str0[128] = "Hello, world!";
-        ImGui::InputText("input text 1", str0, IM_ARRAYSIZE(str0));
-
-        const char* items[] = { "name 1", "name 2", "name 3" };
-        static int item_current = 0;
-        ImGui::Combo("names", &item_current, items, IM_ARRAYSIZE(items)); // used in material, mesh and evt. entity
-
-        static float col2[4] = { 0.4f, 0.7f, 0.0f, 0.5f };
-        ImGui::ColorEdit4("color 1", col2); // used in uniform
-        int item = 3;
-        ImGui::TextColored(ImVec4(1, 1, 0, 1), "WARNING");
-        ImGui::TextColored(ImVec4(1, 0, 0, 1), "ERROR");
-        */
     }
     else if (typeid(comp) == typeid(PolygonCollider))
     {
@@ -137,3 +112,28 @@ void Inspector::DrawComponent(Component& comp)
     }
 
 }
+
+
+/*
+static int item_current = 0;
+Naming& naming = Material::naming;
+ImGui::Combo("names", &item_current, naming.Names());
+string name = naming.Names()[item_current];
+uuid id = naming.at(name);
+Material& mat = Material::register_.Get(id);
+*/
+
+/*
+static char str0[128] = "Hello, world!";
+ImGui::InputText("input text 1", str0, IM_ARRAYSIZE(str0));
+
+const char* items[] = { "name 1", "name 2", "name 3" };
+static int item_current = 0;
+ImGui::Combo("names", &item_current, items, IM_ARRAYSIZE(items)); // used in material, mesh and evt. entity
+
+static float col2[4] = { 0.4f, 0.7f, 0.0f, 0.5f };
+ImGui::ColorEdit4("color 1", col2); // used in uniform
+int item = 3;
+ImGui::TextColored(ImVec4(1, 1, 0, 1), "WARNING");
+ImGui::TextColored(ImVec4(1, 0, 0, 1), "ERROR");
+*/

@@ -1,8 +1,8 @@
 #include "SceneVisuals.h"
+#include "SelectionVisuals.h"
 #include "Entity.h"
 #include "Collider.h"
 #include "Gizmo.h"
-#include "SelectionVisuals.h"
 
 using namespace Editor;
 Shorts;
