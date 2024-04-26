@@ -8,10 +8,8 @@
 #include "GlmTools.h"
 #include "Selector.h"
 #include "SceneCamera.h"
-#include "SelectionVisuals.h"
 #include "SelectionMover.h"
-#include "GeoDrawing.h" // temp
-#include "NewGizmo.h"
+#include "SceneVisuals.h"
 
 
 using namespace Editor;
@@ -25,8 +23,7 @@ void SceneEditor::Update() // should be called update
 
     Selector::Update();
     DrawScene();
-    SelectionVisuals::Update();
-    NewGizmo::Update();
+    SceneVisuals::Update();
     SceneCamera::UpdateCamera(ImGui::GetItemRectMin(), ImGui::GetItemRectMax());
     SelectionMover::Update();
 

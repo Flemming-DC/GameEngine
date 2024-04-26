@@ -13,8 +13,6 @@
 #include "Screen.h"
 
 Shorts
-uuid Renderer::horizontalGridID;
-uuid Renderer::verticalGridID;
 FrameBuffer Renderer::frameBuffer;
 
 

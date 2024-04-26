@@ -3,13 +3,14 @@
 
 namespace Editor
 {
-	class NewGizmo
+	class SceneVisuals
 	{
 	public:
 		static void Update();
 	private:
 
 		static void DrawGrid();
+		static void DrawColliders();
 	};
 
 }

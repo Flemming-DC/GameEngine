@@ -9,13 +9,11 @@ public:
 	struct RenderResult { unsigned int textureOpenGlid; int width; int height; };
 
 	static RenderResult DrawToFrameBuffer(vec3 cameraPos, quat cameraRot, vec3 cameraScale);
-	static RenderResult DrawToFrameBuffer();
+	static RenderResult DrawToFrameBuffer(); // not used by engine
 	static void DrawToScreen();
 	static void ShutDown();
-	//static void ToggleGameWindow() { OpenGlSetup::ToggleGlfwWindow(); }
 	static void ShowWindow(bool show);
 	static bool IsWindowVisible();
-
 
 private:
 	static bool showBlackScreenDebugInfo;
