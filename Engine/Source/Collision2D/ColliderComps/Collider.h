@@ -24,7 +24,6 @@ public:
 
 
 protected:
-	//uuids::uuid gizmoID;
 	virtual void OnStart() override;
 
 protected:

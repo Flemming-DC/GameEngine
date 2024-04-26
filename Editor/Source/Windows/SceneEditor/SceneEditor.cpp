@@ -39,7 +39,7 @@ void SceneEditor::DrawScene()
 {
     bool drawGizmos = true;
     auto renderResult = Renderer::DrawToFrameBuffer(
-        SceneCamera::Position(), SceneCamera::Rotation(), SceneCamera::Scale(), drawGizmos);
+        SceneCamera::Position(), SceneCamera::Rotation(), SceneCamera::Scale());
 
     ImVec2 renderSize = { (float)renderResult.width, (float)renderResult.height };
     ImVec2 windowSize = ImGui::GetWindowSize();

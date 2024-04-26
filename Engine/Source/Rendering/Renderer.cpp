@@ -3,7 +3,6 @@
 #include "Camera.h"
 #include "OpenGlSetup.h"
 #include "Renderable.h"
-#include "Gizmo.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "IndexBuffer.h"
@@ -19,14 +18,14 @@ uuid Renderer::verticalGridID;
 FrameBuffer Renderer::frameBuffer;
 
 
-Renderer::RenderResult Renderer::DrawToFrameBuffer(vec3 cameraPos, quat cameraRot, vec3 cameraScale, bool drawGizmos)
+Renderer::RenderResult Renderer::DrawToFrameBuffer(vec3 cameraPos, quat cameraRot, vec3 cameraScale)
 { 
     mat4 projView = Camera::ProjectionView(cameraPos, cameraRot, cameraScale);
-    return DrawToFrameBuffer(projView, drawGizmos); 
+    return DrawToFrameBuffer(projView); 
 }
 Renderer::RenderResult Renderer::DrawToFrameBuffer() 
 { 
-    return DrawToFrameBuffer(Camera::Current().ProjectionView(), false); 
+    return DrawToFrameBuffer(Camera::Current().ProjectionView()); 
 }
 void Renderer::DrawToScreen() 
 { 
@@ -34,7 +33,7 @@ void Renderer::DrawToScreen()
 }
 
 
-Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView, bool drawGizmos)
+Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView)
 {
     if (!UuidCreator::IsInitialized(frameBuffer.GetID()))
         frameBuffer = FrameBuffer::register_.Add(OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight());
@@ -46,56 +45,22 @@ Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView, bool dra
 
     frameBuffer.Bind();
     glCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-    Renderer::DrawToScreen(projectionView, drawGizmos);
+    Renderer::DrawToScreen(projectionView);
     frameBuffer.UnBind();
     return { frameBuffer.GetTextureOpenGLid(), OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight() };
 }
 
 
-void Renderer::DrawToScreen(mat4 projectionView, bool drawGizmos)
+void Renderer::DrawToScreen(mat4 projectionView)
 {
     glCall(glClear(GL_COLOR_BUFFER_BIT)); // same as renderer.Clear()
     Renderable::UnBind(); //  evt. add framebuffer unbind
-    Gizmo::CleanupDeadGizmos();
 
     for (const uuids::uuid& renderableID : Renderable::allRenderables)
         Entity::GetComponent<Renderable>(renderableID).Draw(projectionView);
-    if (drawGizmos)
-    {
-        for (Gizmo& gizmo : Gizmo::GetData())
-            gizmo.Draw(projectionView);
-    }
     Screen::ApplyCursorState();
 }
 
-
-void Renderer::SetupGrid2D_(float gridScale)
-{
-    float brightness = 0.2f;
-    vec4 color = vec4(brightness, brightness, brightness, 1);
-    
-    float gridSize = 50;
-    vector<vec2> horizontallyOrganizedPosition2Ds;
-    vector<vec2> verticallyOrganizedPosition2Ds;
-
-    for (float y = -gridSize; y < gridSize; y += gridScale)
-    {
-        horizontallyOrganizedPosition2Ds.push_back({ -gridSize, y });
-        horizontallyOrganizedPosition2Ds.push_back({  gridSize, y });
-    }
-    for (float x = -gridSize; x < gridSize; x += gridScale)
-    {
-        verticallyOrganizedPosition2Ds.push_back({ x, -gridSize });
-        verticallyOrganizedPosition2Ds.push_back({ x,  gridSize });
-    }
-
-    /*
-    horizontalGridID = Gizmo::Make(
-        horizontallyOrganizedPosition2Ds, nullptr, color, false, false);
-    verticalGridID = Gizmo::Make(
-        verticallyOrganizedPosition2Ds, nullptr, color, false, false);
-    */
-}
 
 
 void Renderer::ShutDown()

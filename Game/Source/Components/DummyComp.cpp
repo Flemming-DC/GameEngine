@@ -22,7 +22,6 @@ void DummyComp::OnStart()
 		{ halfSize.x, -halfSize.y }, // RD
 	};
 
-	//gizmoID = Gizmo::Make(position2Ds, &GetTransform());
 	/*
 	for (const auto& g : InputKey::GamepadIDs())
 		logger::print("DummyComp.OnStart: connected at startup ", g);

@@ -6,7 +6,6 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "glm/glm.hpp"
-#include "Gizmo.h"
 #include "Scene.h"
 #include "Register.h"
 #include "Delay.h"

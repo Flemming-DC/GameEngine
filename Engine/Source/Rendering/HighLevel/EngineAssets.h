@@ -9,13 +9,11 @@ class EngineAssets
 public:
 	static void Setup();
 	static Shader& SolidColorShader() { return solidColorShader; }
-	static Material& GizmoMaterial() { return gizmoMaterial; }
 	static Material& DefaultMaterial() { return defaultMaterial; }
 	static Mesh& SquareMesh() { return squareMesh; }
 
 private:
 	static Shader& solidColorShader; // used by gizmo
-	static Material& gizmoMaterial;
 	static Material& defaultMaterial;
 	static Mesh& squareMesh;
 };
