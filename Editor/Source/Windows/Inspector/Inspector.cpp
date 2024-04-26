@@ -70,17 +70,18 @@ void Inspector::DrawComponent(Component& comp)
         // node["mesh"] = mesh.GetID();
         // node["material"] = material.GetID();
 
-        optional<uuid> meshID = Mesh::naming.Show("mesh");
+        optional<uuid> meshID = Mesh::naming.Show("mesh", renderable.GetMesh().GetID());
         if (meshID)
         {
             Mesh& mesh = Mesh::register_.Get(*meshID);
+            renderable.SetMesh(mesh);
             //P(mesh);
         }
-        optional<uuid> matID = Material::naming.Show("material");
+        optional<uuid> matID = Material::naming.Show("material", renderable.GetMaterial().GetID());
         if (matID)
         {
             Material& mat = Material::register_.Get(*matID);
-            //renderable.m
+            renderable.SetMaterial(mat);
             //P(mat);
         }
         /*

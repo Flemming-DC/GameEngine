@@ -6,11 +6,14 @@
 #include "SceneCamera.h"
 #include "EditorInputs.h"
 #include "imgui/imgui.h"
+#include "GeoDrawing.h"
 
 
 Shorts;
 using namespace Editor;
 static float minSize = 0.1f; // min Size of the display of a selected object
+static vec4 selectionColor = vec4(0.0f, 0.5f, 1.0f, 0.5f);
+static float lineThickness = 5.0f;
 
 void SelectionVisuals::Update()
 {
@@ -30,7 +33,7 @@ void SelectionVisuals::DrawSelectionBox(glm::vec2 selectionStartPosition, glm::v
         vec2(selectionEndPosition.x, selectionEndPosition.y),
         vec2(selectionStartPosition.x, selectionEndPosition.y),
     };
-    DrawPolygon(positions);
+    GeoDrawing::DrawPolygon(positions, selectionColor, lineThickness);
 }
 
 void SelectionVisuals::DrawSelection()
@@ -48,6 +51,7 @@ void SelectionVisuals::Display(const Entity& entity)
     Renderable* renderable = entity.TryGet<Renderable>();
     Collider* collider = entity.TryGet<Collider>();
     Transform& transform = entity.Get<Transform>();
+    
     if (renderable)
     {
         auto localPositions2D = renderable->GetMesh().FindPositions2D();
@@ -57,7 +61,7 @@ void SelectionVisuals::Display(const Entity& entity)
     else if (collider)
     {
         positions = collider->Bare().Positions();
-    }
+    } 
     else
     {
         float minHalfSize = minSize / 2.0f;
@@ -70,9 +74,11 @@ void SelectionVisuals::Display(const Entity& entity)
         };
     }
 
-    DrawPolygon(positions);
+    GeoDrawing::DrawPolygon(positions, selectionColor, lineThickness);
 }
 
+
+/*
 void SelectionVisuals::DrawPolygon(vector<vec2> positions)
 {
     ImU32 selectionColor = IM_COL32(0, 125, 255, 125); // blue with alpha = 50%
@@ -90,8 +96,6 @@ void SelectionVisuals::DrawPolygon(vector<vec2> positions)
         drawList->AddLine(ImGui::FromGlm(screenPositions[i]), ImGui::FromGlm(screenPositions[j]), selectionColor, thickness);
     }
 }
-
-/*
 void DrawRect(ImVec2 topLeft, ImVec2 bottomRight, ImU32 color)
 {
     ImDrawList* drawList = ImGui::GetWindowDrawList();

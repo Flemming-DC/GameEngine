@@ -22,7 +22,7 @@ void DummyComp::OnStart()
 		{ halfSize.x, -halfSize.y }, // RD
 	};
 
-	gizmoID = Gizmo::Make(position2Ds, &GetTransform());
+	//gizmoID = Gizmo::Make(position2Ds, &GetTransform());
 	/*
 	for (const auto& g : InputKey::GamepadIDs())
 		logger::print("DummyComp.OnStart: connected at startup ", g);
@@ -41,6 +41,7 @@ void DummyComp::OnDestroy()
 
 void DummyComp::OnUpdate()
 {
+	/*
 	TestInputActions();
 
 	if (InputKey::BecomesPressed(Keyboard::G))
@@ -51,6 +52,7 @@ void DummyComp::OnUpdate()
 
 	if (InputKey::BecomesPressed(Keyboard::F))
 		Core::StopRunningGame();
+	*/
 
 }
 

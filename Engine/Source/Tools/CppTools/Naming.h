@@ -13,7 +13,7 @@ public:
 	string at(uuid name);
 	
 	vector<string> Names() { return Tools::GetKeys(idByName); } // copying
-	optional<uuid> Show(const char* label);
+	optional<uuid> Show(const char* label, uuid currentID); // returns the new uuid, if it differs from the old
 
 private:
 	map_uo<string, uuid> idByName;

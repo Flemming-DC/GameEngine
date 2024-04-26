@@ -12,6 +12,7 @@
 #include "Inspector.h"
 #include "Delay.h"
 
+
 using namespace Editor;
 
 
@@ -33,7 +34,13 @@ void EditorLoop::OnEditorUpdate()
     //AssetFolder::Update();
     //Hierarchy::Update
 
-    ImGui::ShowDemoWindow();
+    //ImGui::ShowDemoWindow();
+
+    HandleOpenClose();
+}
+
+void EditorLoop::HandleOpenClose()
+{
 
     if (InputKey::BecomesPressed(Key::Keyboard::R))
     {
@@ -46,7 +53,5 @@ void EditorLoop::OnEditorUpdate()
 
     if (InputKey::BecomesPressed(Key::Keyboard::exc))
         EngineMode::ExitEditor(); // save first
-
 }
-
 

@@ -12,7 +12,6 @@ class Renderable : public Component
 public:
 	static std::vector<uuids::uuid> allRenderables;
 
-	void Setup(const Material& material, const Mesh& mesh);
 	void Draw(const glm::mat4& projectionView);
 	static void UnBind();
 

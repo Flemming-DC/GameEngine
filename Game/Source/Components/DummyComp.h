@@ -9,7 +9,7 @@ class DummyComp : public Component
 public:
 
 private:
-	uuids::uuid gizmoID;
+	//uuids::uuid gizmoID;
 	unsigned int onConnectedChangedIndex = -1;
 	std::vector<DemoScene> demoScenes;
 	std::vector<SecondScene> secondScene;

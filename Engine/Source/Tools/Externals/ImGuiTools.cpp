@@ -1,12 +1,28 @@
 #include "ImGuiTools.h"
+#include "ShortHands.h"
+Shorts;
 
 namespace ImGui
 {
-	glm::vec2 ToGlm(ImVec2 vec) { return glm::vec2(vec.x, vec.y); }
-	ImVec2 FromGlm(glm::vec2 vec) { return ImVec2(vec.x, vec.y); }
+
+	vec2 ToGlm(ImVec2 vec) { return vec2(vec.x, vec.y); }
+	ImVec2 FromGlm(vec2 vec) { return ImVec2(vec.x, vec.y); }
+    vec4 ToGlm(ImU32 color)
+    {
+        return { 
+            (color & 0xFF) / 255.0f,
+            ((color >> 8) & 0xFF) / 255.0f,
+            ((color >> 16) & 0xFF) / 255.0f,
+            ((color >> 24) & 0xFF) / 255.0f,
+            };
+    }
+    ImU32 FromGlm(vec4 color)
+    {
+        return IM_COL32(color.r * 255, color.g * 255, color.b * 255, color.a * 255);
+    }
 
 
-	bool Combo(const char* label, int* currentIndex, std::vector<std::string>& items, ImGuiComboFlags flags)
+	bool Combo(const char* label, int* currentIndex, vector<string>& items, ImGuiComboFlags flags)
 	{
         int lastIndex = *currentIndex;
         const char* combo_preview_value = items.empty() ? "No options" : items[*currentIndex].c_str();
@@ -27,12 +43,15 @@ namespace ImGui
         }
         return *currentIndex != lastIndex;
 	}
+
+
+
 };
 
 
 namespace logger
 {
-	std::string to_string(ImVec2 vec)
+	string to_string(ImVec2 vec)
 	{
 		return "ImVec2(" + std::to_string(vec.x) + ", " + std::to_string(vec.y) + ")";
 	}

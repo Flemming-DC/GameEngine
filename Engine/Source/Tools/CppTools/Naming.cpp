@@ -1,6 +1,7 @@
 #include "Naming.h"
 #include "StringTools.h"
 #include "ImGuiTools.h"
+#include "UuidCreator.h"
 #include <regex>
 Shorts;
 
@@ -77,16 +78,19 @@ string Naming::at(uuid id)
 		if (id_ == id)
 			return name_;
 	}
-	RaiseError("Failed to find id ", id, ". in Naming ", idByName);
+	RaiseError("Failed to find id ", id, " in Naming ", idByName);
 }
 
-optional<uuid> Naming::Show(const char* label)
+optional<uuid> Naming::Show(const char* label, uuid currentID)
 {
-	static int currentIndex = 0;
 	auto& names = Names();
-	ImGui::Combo(label, &currentIndex, names); // return bool changed
-	if (names.empty()) // || !changed
-		return std::nullopt;
-	else
+	string name = at(currentID);
+	int currentIndex = Tools::FindIndex(names, name);
+
+	//static int currentIndex = 0;
+	bool changed = ImGui::Combo(label, &currentIndex, names);
+	if (changed && !names.empty())
 		return at(names[currentIndex]);
+	else
+		return std::nullopt;
 }

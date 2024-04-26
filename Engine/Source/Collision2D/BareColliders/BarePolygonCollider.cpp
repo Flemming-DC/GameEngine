@@ -68,7 +68,8 @@ void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> l
 			localNormals[i] *= -1;
 	}
 	if (glm::isnan(divergence))
-		RaiseError("divergence is NAN", divergence);
+		RaiseError("Divergence is ", divergence, " on ", Tools::TypeName(*this), ".\n", 
+			"localPosition2Ds = ", localPosition2Ds);
 }
 
 
@@ -105,7 +106,7 @@ std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(vec2 normal) cons
 				max_ = coordinateAlongNormal;
 		}
 
-		RaiseError("min should be less than max. But found min = ", min, " and max = ", max, 
+		RaiseError(Tools::TypeName(*this) + " min should be less than max. But found min = ", min, " and max = ", max,
 			"\n localPosition2Ds: ", localPosition2Ds, "\n normal:", normal);
 	}
 	return { min, max };
@@ -120,7 +121,7 @@ std::vector<glm::vec2> BarePolygonCollider::Positions() const
 }
 
 
-void BarePolygonCollider::PruneEquivalentPositions(vector<vec2> localPosition2Ds_)
+void BarePolygonCollider::PruneEquivalentPositions(vector<vec2>& localPosition2Ds_)
 {
 	int indexToEliminate = -1;
 	int count = (int)localPosition2Ds_.size();
@@ -131,20 +132,22 @@ void BarePolygonCollider::PruneEquivalentPositions(vector<vec2> localPosition2Ds
 		if (glm::LessThan(vectorAlongEdge, minPositionSeperation))
 		{
 			indexToEliminate = nextIndex;
-			Warning("Eliminating positions in polygon, since they are too close.");
 			break;
 		}
 	}
 	bool found = (indexToEliminate != -1);
 	if (found)
 	{
-		Tools::Remove(localPosition2Ds_, localPosition2Ds_[indexToEliminate]);
+		Warning("Eliminating position ", localPosition2Ds_[indexToEliminate], " in ", Tools::TypeName(*this),
+			", since it is too close to another position.\n",
+			"localPosition2Ds = ", localPosition2Ds_);
+		Tools::RemoveIndex(localPosition2Ds_, indexToEliminate);
 		PruneEquivalentPositions(localPosition2Ds_);
 	}
 	else
 	{
 		if (localPosition2Ds_.size() < 3)
-			RaiseError("localPosition2Ds.size() is below 3. This is not a valid polygon");
+			RaiseError("localPosition2Ds.size() is below 3. This is not a valid " + Tools::TypeName(*this));
 
 		// find max and min coordinates so as to check if the points are one a line
 		float minX = -INFINITY;

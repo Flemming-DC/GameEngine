@@ -24,6 +24,6 @@ private:
 	vec2 centerOfMass; // same as average position2D, since we assume uniform density
 
 
-	void PruneEquivalentPositions(vector<vec2> localPosition2Ds_);
+	void PruneEquivalentPositions(vector<vec2>& localPosition2Ds_);
 };
 

@@ -12,6 +12,7 @@ void Mesh::Setup(string name, const vector<float>& vertices_, const vector<unsig
     if (UuidCreator::IsInitialized(id))
         RaiseError("Mesh is already initialized");
     id = UuidCreator::MakeID();
+    P(name, id);
     naming.AddWithSuffix(name, id);
 
     indexBuffer = IndexBuffer::register_.Add(indices_.data(), indices_.size());

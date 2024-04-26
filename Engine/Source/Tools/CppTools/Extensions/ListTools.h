@@ -16,6 +16,9 @@ namespace Tools
 	//uint i = 0;
 
 	template<typename T>
+	inline void RemoveIndex(vector<T>& vec, int i) { vec.erase(vec.begin() + i); }
+
+	template<typename T>
 	bool Remove(vector<T>& vec, const T& t)
 	{
 		auto iterator = std::find(vec.begin(), vec.end(), t);
@@ -132,6 +135,18 @@ namespace Tools
 			return default_;
 		return dict.at(key);
 	};
+
+	template<typename T>
+	inline int FindIndex(const vector<T>& vec, const T& t)
+	{
+		for (int i = 0; i < (int)vec.size(); i++)
+		{
+			if (vec[i] == t)
+				return i;
+		}
+		return -1;
+	};
+
 
 }
 

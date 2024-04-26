@@ -11,6 +11,7 @@ namespace Editor
 	private:
 		void OnEditorStart() override;
 		void OnEditorUpdate() override;
+		void HandleOpenClose();
 
 	};
 }

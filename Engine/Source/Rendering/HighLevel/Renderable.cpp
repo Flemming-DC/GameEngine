@@ -23,11 +23,6 @@ void Renderable::OnDestroy()
         RaiseError("RenderableID has been removed from allRenderables prematurely");
 }
 
-void Renderable::Setup(const Material& material_, const Mesh& mesh_)
-{
-    material = material_; // copy, not ref
-    mesh = mesh_; // copy, not ref
-}
 
 
 

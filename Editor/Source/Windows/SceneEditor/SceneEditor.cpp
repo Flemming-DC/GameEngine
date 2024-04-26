@@ -10,6 +10,9 @@
 #include "SceneCamera.h"
 #include "SelectionVisuals.h"
 #include "SelectionMover.h"
+#include "GeoDrawing.h" // temp
+#include "NewGizmo.h"
+
 
 using namespace Editor;
 
@@ -20,14 +23,15 @@ void SceneEditor::Update() // should be called update
 {
     ImGui::Begin("ViewPort", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar); // NoMove disables drag & drop
 
-    
     Selector::Update();
     DrawScene();
     SelectionVisuals::Update();
+    NewGizmo::Update();
     SceneCamera::UpdateCamera(ImGui::GetItemRectMin(), ImGui::GetItemRectMax());
     SelectionMover::Update();
 
     ImGui::End();
+    // bad
 }
 
 

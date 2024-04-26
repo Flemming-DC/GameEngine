@@ -16,10 +16,11 @@ void CircleCollider::Setup(float radius_)
 	bare.Setup(MakeTransformInterface(), radius_);
 
 	glm::vec2 center = glm::vec2(0.0f); // evt. make this a variable
-
+	/*
 	if (UuidCreator::IsInitialized(gizmoID))
 		Gizmo::Remove(gizmoID);
 	gizmoID = Gizmo::MakeCircle(center, radius_, GetTransform());
+	*/
 }
 
 
