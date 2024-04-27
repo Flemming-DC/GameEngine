@@ -105,6 +105,8 @@ void Inspector::DrawComponent(Component& comp)
                 break;
             }
 
+            if (positions.size() <= 3)
+                continue;
             ImGui::SameLine();
             ImGui::PushID(-1 - i);
             bool removeClicked = ImGui::Button("-");
