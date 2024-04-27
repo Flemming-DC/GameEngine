@@ -1,7 +1,8 @@
 #include "BarePolygonCollider.h"
 #include "ErrorChecker.h"
+#include "GlmCheck.h"
 
-static const inline float minPositionSeperation = glm::pow(10.0f, -5.0f);
+static const inline float minPositionSeparation = glm::pow(10.0f, -5.0f);
 
 BarePolygonCollider BarePolygonCollider::MakeRectangle(vec2 center, quat rot, vec2 size)
 {
@@ -38,7 +39,7 @@ void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> l
 		int nextIndex = i + 1 < count ? i + 1 : 0;
 		auto vectorAlongEdge = localPosition2Ds[nextIndex] - localPosition2Ds[i];
 		/*
-		if (glm::LessThan(vectorAlongEdge, minPositionSeperation))
+		if (glm::LessThan(vectorAlongEdge, minPositionSeparation))
 		{
 			// evt. replace with a warning and a hacky fix
 			RaiseError("localPosition2Ds contains the elements ", localPosition2Ds[nextIndex], ", ", localPosition2Ds[i],
@@ -129,7 +130,7 @@ void BarePolygonCollider::PruneEquivalentPositions(vector<vec2>& localPosition2D
 	{
 		int nextIndex = i + 1 < count ? i + 1 : 0;
 		auto vectorAlongEdge = localPosition2Ds_[nextIndex] - localPosition2Ds_[i];
-		if (glm::LessThan(vectorAlongEdge, minPositionSeperation))
+		if (glm::LessThan(vectorAlongEdge, minPositionSeparation))
 		{
 			indexToEliminate = nextIndex;
 			break;
@@ -150,10 +151,10 @@ void BarePolygonCollider::PruneEquivalentPositions(vector<vec2>& localPosition2D
 			RaiseError("localPosition2Ds.size() is below 3. This is not a valid " + Tools::TypeName(*this));
 
 		// find max and min coordinates so as to check if the points are one a line
-		float minX = -INFINITY;
-		float minY = -INFINITY;
-		float maxX = INFINITY;
-		float maxY = INFINITY;
+		float minX = +INFINITY;
+		float minY = +INFINITY;
+		float maxX = -INFINITY;
+		float maxY = -INFINITY;
 		for (const vec2& pos : localPosition2Ds_)
 		{
 			if (pos.x < minX)
@@ -168,7 +169,7 @@ void BarePolygonCollider::PruneEquivalentPositions(vector<vec2>& localPosition2D
 		}
 		float width = std::abs(maxX - minX);
 		float height = std::abs(maxY - minY);
-		if (width < minPositionSeperation || height < minPositionSeperation)
+		if (Check_p(width) < minPositionSeparation || Check_p(height) < minPositionSeparation)
 			RaiseError("The points are all on a single line. This is not a valid polygon.");
 	}
 }

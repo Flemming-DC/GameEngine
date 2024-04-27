@@ -11,6 +11,7 @@
 #include "CircleCollider.h" // evt temp
 #include <glm/gtc/type_ptr.hpp> // evt temp
 #include "imGuiTools.h" 
+#include "GlmCheck.h"
 
 using namespace Editor;
 Shorts
@@ -55,7 +56,7 @@ void Inspector::DrawComponent(Component& comp)
 
         vec3 scale = transform.LocalScale();
         if (transform.requireUniformScale)
-            ImGui::DragFloat("scale", glm::value_ptr(scale), dragSensitivity);
+            ImGui::DragFloat("scale", glm::value_ptr(scale), 0.5f * dragSensitivity);
         else
             ImGui::DragFloat2("scale", glm::value_ptr(scale), dragSensitivity);
         transform.SetLocalScale(scale);
@@ -107,8 +108,8 @@ void Inspector::DrawComponent(Component& comp)
         CircleCollider& circle = *static_cast<CircleCollider*>(&comp);
      
         float radius = circle.bare.GetLocalRadius();
-        ImGui::DragFloat("radius", &radius, dragSensitivity);
-        circle.Setup(radius);
+        ImGui::DragFloat("radius", &radius, 0.5f * dragSensitivity);
+        circle.Setup(Realistic_p(radius));
     }
 
 }

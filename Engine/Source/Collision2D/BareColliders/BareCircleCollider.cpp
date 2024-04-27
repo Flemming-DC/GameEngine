@@ -1,14 +1,13 @@
 #include "BareCircleCollider.h"
 #include "glm/glm.hpp"
 #include <algorithm> 
-#include <glm/gtc/epsilon.hpp> // temp
 #include "GlmCheck.h"
 
 
 
 BareCircleCollider BareCircleCollider::MakePoint(vec2 pos)
 {
-	return Make(pos, GlmCheck::moderatelySmall);
+	return Make(pos, Realistic_p(0));
 }
 
 BareCircleCollider BareCircleCollider::Make(vec2 center, float radius_)
@@ -20,7 +19,6 @@ BareCircleCollider BareCircleCollider::Make(vec2 center, float radius_)
 
 void BareCircleCollider::Setup(ITransform iTransform_, float radius_)
 {
-	//Check_p(radius_);
 	iTransform = iTransform_,
 	localRadius = Check_p(radius_);
 }

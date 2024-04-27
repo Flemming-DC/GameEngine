@@ -3,10 +3,10 @@
 #include "ShortHands.h"
 
 #ifdef _DEBUG
-#define Check_z(toCheck)  GlmCheck::_Check(toCheck, true, true)
-#define Check_nz(toCheck) GlmCheck::_Check(toCheck, false, true)
-#define Check_u(toCheck)  GlmCheck::_Check(toCheck, true, false)
-#define Check_p(toCheck)  GlmCheck::_Check(toCheck, false, false)
+#define Check_z(toCheck)  GlmCheck::_Check(#toCheck, toCheck, true, true)   // zeroable
+#define Check_nz(toCheck) GlmCheck::_Check(#toCheck, toCheck, false, true)  // non-zero
+#define Check_u(toCheck)  GlmCheck::_Check(#toCheck, toCheck, true, false)  // unsgined
+#define Check_p(toCheck)  GlmCheck::_Check(#toCheck, toCheck, false, false) // positive
 #else
 #define Check_z(toCheck)  toCheck
 #define Check_nz(toCheck) toCheck
@@ -14,14 +14,16 @@
 #define Check_p(toCheck)  toCheck
 #endif // _DEBUG
 
+#define Realistic_nz(toMakeSafe) GlmCheck::_Realistic(toMakeSafe, true)
+#define Realistic_p(toMakeSafe) GlmCheck::_Realistic(toMakeSafe, false)
+
+
 namespace GlmCheck
 {
-	Shorts;
-	const float moderatelySmall = glm::pow(10.0f, -6.0f);
-	const float moderatelyLarge = glm::pow(10.0f, 6.0f);
+	//Shorts;
 
-
-	float _Check(float toCheck, bool zeroable, bool signed_);
+	float _Realistic(float toMakeSafe, bool signed_);
+	float _Check(std::string variableName, float toCheck, bool zeroable, bool signed_);
 	/*
 	vec2 _Check(vec2 toCheck, bool zeroable, bool signed_);
 	vec3 _Check(vec3 toCheck, bool zeroable, bool signed_);
