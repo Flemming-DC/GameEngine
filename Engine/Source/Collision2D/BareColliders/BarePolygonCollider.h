@@ -17,13 +17,19 @@ public:
 	pair<float, float> ShadowAlongNormal(vec2 normal) const override;
 	const vec2 GetNormalByIndex(int i) const { return iTransform.ToWorldSpace(localNormals[i], false); };
 	vector<vec2> Positions() const override;
-	
+	//static bool Check(vector<vec2> localPosition2Ds_);
+	void SetPosition(int index, vec2 newPosition); // used by inspector
+	void AddPositionAfter(int priorPositionIndex); // used by inspector
+	void RemovePosition(int index); // used by inspector
+
 private:
 	vector<vec2> localPosition2Ds; // positions in local space i.e. relative to transform.GetPosition()
 	vector<vec2> localNormals;
 	vec2 centerOfMass; // same as average position2D, since we assume uniform density
 
 
+	void CalculateNormalsAndCenterOfMass(const vector<vec2>& localPosition2Ds_);
 	void PruneEquivalentPositions(vector<vec2>& localPosition2Ds_);
+	//void CheckConvexity(vector<vec2>& localPosition2Ds_)
 };
 

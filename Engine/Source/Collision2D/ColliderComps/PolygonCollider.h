@@ -12,6 +12,9 @@ public:
 
 	void Setup(std::vector<glm::vec2> localPosition2Ds);
 	// add position and remove position would be useful in an editor
+	void SetPosition(int index, glm::vec2 newPosition) { bare.SetPosition(index, newPosition); }
+	void AddPositionAfter(int priorPositionIndex) { bare.AddPositionAfter(priorPositionIndex); }
+	void RemovePosition(int index) { bare.RemovePosition(index); }
 
 	//inline std::pair<float, float> ShadowAlongNormal(glm::vec2 normal) const override { return bare.ShadowAlongNormal(normal); };
 	void Save(YAML::Node& node) const override;

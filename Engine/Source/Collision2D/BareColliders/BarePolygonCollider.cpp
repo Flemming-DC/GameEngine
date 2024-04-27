@@ -30,7 +30,11 @@ void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> l
 	PruneEquivalentPositions(localPosition2Ds_);
 	iTransform = iTransform_,
 	localPosition2Ds = localPosition2Ds_;
+	CalculateNormalsAndCenterOfMass(localPosition2Ds_);
+}
 
+void BarePolygonCollider::CalculateNormalsAndCenterOfMass(const vector<vec2>& localPosition2Ds_)
+{
 	// calculate additional data
 	localNormals.clear();
 	int count = (int)localPosition2Ds.size();
@@ -60,7 +64,7 @@ void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> l
 	float divergence = 0;
 	for (int i = 0; i < count; i++)
 	{
-		glm::vec2 radialvector = glm::normalize(localPosition2Ds[i] - centerOfMass);
+		glm::vec2 radialvector = Check_vec(glm::normalize(localPosition2Ds[i] - centerOfMass));
 		divergence += glm::dot(localNormals[i], radialvector);
 	}
 	if (divergence < 0)
@@ -69,11 +73,9 @@ void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> l
 			localNormals[i] *= -1;
 	}
 	if (glm::isnan(divergence))
-		RaiseError("Divergence is ", divergence, " on ", Tools::TypeName(*this), ".\n", 
+		RaiseError("Divergence is ", divergence, " on ", Tools::TypeName(*this), ".\n",
 			"localPosition2Ds = ", localPosition2Ds);
 }
-
-
 
 
 std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(vec2 normal) const
@@ -124,6 +126,7 @@ std::vector<glm::vec2> BarePolygonCollider::Positions() const
 
 void BarePolygonCollider::PruneEquivalentPositions(vector<vec2>& localPosition2Ds_)
 {
+	// try to find a pair of ækvivalent positions
 	int indexToEliminate = -1;
 	int count = (int)localPosition2Ds_.size();
 	for (int i = 0; i < count; i++)
@@ -173,3 +176,74 @@ void BarePolygonCollider::PruneEquivalentPositions(vector<vec2>& localPosition2D
 			RaiseError("The points are all on a single line. This is not a valid polygon.");
 	}
 }
+
+
+//void BarePolygonCollider::CheckConvexity(vector<vec2>& localPosition2Ds_)
+
+void BarePolygonCollider::SetPosition(int index, vec2 newPosition)
+{
+	// check if points are too close or if collider is becoming non-convex or non-simple
+	int count = localPosition2Ds.size();
+	for (int i = 0; i < count; i++)
+	{
+		if (i == index)
+			continue;
+		auto lineToOldPosition = localPosition2Ds[index] - localPosition2Ds[i];
+		auto lineToNewPosition = newPosition - localPosition2Ds[i];
+
+		if (glm::Magnitude(lineToNewPosition) < GlmCheck::realisticallySmall)
+		{
+			Warning("Point nr ", index, " and ", i, " are getting too close.");
+			return;
+		}
+
+		for (int j = i + 1; j < count; j++)
+		{
+			if (j == index)
+				continue;
+			// this line can either be an edge or an internal line
+			vec2 line = localPosition2Ds[j] - localPosition2Ds[i];
+			float crossProductOld = lineToOldPosition.x * line.y - lineToOldPosition.y * line.x;
+			float crossProductNew = lineToNewPosition.x * line.y - lineToNewPosition.y * line.x;
+			
+			// check if the point crosses the line
+			if (crossProductOld >= 0 != crossProductNew >= 0)
+			{
+				Warning(
+					"Point would be crossing line, if updated. Therefore update is cancelled "
+					"in order to prevent non-convex and non-simple polygons.",
+					"\nnewPosition = ", newPosition, 
+					"\nline goes from", localPosition2Ds[i], " to ", localPosition2Ds[j]);
+				return;
+			}
+		}
+
+
+	}
+
+	localPosition2Ds[index] = newPosition;
+	CalculateNormalsAndCenterOfMass(localPosition2Ds);
+}
+void BarePolygonCollider::AddPositionAfter(int priorPositionIndex)
+{
+	int count = localPosition2Ds.size();
+	int nextIndex = priorPositionIndex + 1 % count;
+	vec2 priorPos = localPosition2Ds[priorPositionIndex];
+	vec2 nextPos = localPosition2Ds[nextIndex];
+	vec2 pos = (nextPos + priorPos) / 2.0f;
+	localPosition2Ds.insert(localPosition2Ds.begin() + nextIndex, pos);
+	CalculateNormalsAndCenterOfMass(localPosition2Ds);
+}
+void BarePolygonCollider::RemovePosition(int index)
+{
+	if (localPosition2Ds.size() <= 3)
+		RaiseError("A polygon must have at least 3 corners");
+	Tools::RemoveIndex(localPosition2Ds, index);
+	CalculateNormalsAndCenterOfMass(localPosition2Ds);
+}
+
+
+
+
+
+

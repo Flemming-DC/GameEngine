@@ -8,8 +8,6 @@ namespace GlmCheck
 	// numbers outside [unRealisticallySmall, unRealisticallyLarge] are deemed unrealistic and assumed to be caused by bugs
 	const float unRealisticallySmall = glm::pow(10.0f, -10.0f);
 	const float unRealisticallyLarge = glm::pow(10.0f, 10.0f);
-	const float realisticallySmall = glm::pow(10.0f, -6.0f);
-	const float realisticallyLarge = glm::pow(10.0f, 6.0f);
 
 	float _Realistic(float toMakeSafe, bool signed_)
 	{
@@ -38,5 +36,13 @@ namespace GlmCheck
 	}
 
 
+	glm::vec2 _CheckVec(std::string variableName, glm::vec2 toCheck)
+	{
+		_Check(variableName, glm::Magnitude(toCheck), false, false);
+		return glm::vec2(
+			_Check(variableName, toCheck.x, true, true),
+			_Check(variableName, toCheck.y, true, true)
+			);
+	}
 
 };

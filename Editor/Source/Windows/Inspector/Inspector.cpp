@@ -16,7 +16,7 @@
 using namespace Editor;
 Shorts
 uuid currentEntityID;
-float dragSensitivity = 0.1f;
+float dragSensitivity = 0.003f;
 
 
 void Inspector::Start()
@@ -90,9 +90,31 @@ void Inspector::DrawComponent(Component& comp)
 
         vector<vec2> positions = poly.bare.GetLocalPosition2Ds();
         ImGui::Text("positions");
-        for (int i=0; i<(int)positions.size(); i++)
+        for (int i = 0; i < (int)positions.size(); i++)
+        {
             ImGui::DragFloat2(std::to_string(i).c_str(), glm::value_ptr(positions[i]), dragSensitivity);
-        poly.Setup(positions);
+            poly.SetPosition(i, positions[i]);
+
+            ImGui::SameLine();
+            ImGui::PushID(i);
+            bool addClicked = ImGui::Button("+");
+            ImGui::PopID();
+            if (addClicked)
+            {
+                poly.AddPositionAfter(i);
+                break;
+            }
+
+            ImGui::SameLine();
+            ImGui::PushID(-1 - i);
+            bool removeClicked = ImGui::Button("-");
+            ImGui::PopID();
+            if (removeClicked)
+            {
+                poly.RemovePosition(i);
+                break;
+            }
+        }
 
     }
     else if (typeid(comp) == typeid(RectangleCollider))
