@@ -21,5 +21,9 @@ namespace Editor::EditorInputs
 	InputAction<bool>& ControlScale();
 	InputAction<bool>& ControlUniformScale();
 
+	// EditorLoop
+	bool ToggleRuntime();
+	bool Exit();
+	bool Save();
 
 }

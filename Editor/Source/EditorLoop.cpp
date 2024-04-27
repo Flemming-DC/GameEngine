@@ -1,10 +1,9 @@
 #include "EditorLoop.h"
 #include "imgui/imgui.h"
 #include "Renderer.h"
-#include "InputKey.h"
+#include "EditorInputs.h"
 #include "Core.h"
 #include "EngineMode.h"
-//#include "Temp_Inspector.h"
 #include "Hierarchy.h"
 #include "SceneEditor.h"
 #include "Selector.h"
@@ -41,8 +40,7 @@ void EditorLoop::OnEditorUpdate()
 
 void EditorLoop::HandleOpenClose()
 {
-
-    if (InputKey::BecomesPressed(Key::Keyboard::R))
+    if (EditorInputs::ToggleRuntime())
     {
         logger::print("R");
         if (EngineMode::GameIsRunning())
@@ -51,7 +49,12 @@ void EditorLoop::HandleOpenClose()
             Core::StartRunningGame();
     }
 
-    if (InputKey::BecomesPressed(Key::Keyboard::exc))
-        EngineMode::ExitEditor(); // save first
+    if (EditorInputs::Save())
+        Scene::Save();
+    if (EditorInputs::Exit())
+    {
+        // Scene::Save(); popup(er du sikker) ?
+        EngineMode::ExitEditor();
+    }
 }
 

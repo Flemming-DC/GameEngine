@@ -12,6 +12,7 @@ namespace Editor
 
 	private:
 		static void DrawComponent(Component& comp);
+
 	};
 }
 

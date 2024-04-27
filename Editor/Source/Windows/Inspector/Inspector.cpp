@@ -13,8 +13,8 @@
 #include "imGuiTools.h" 
 #include "GlmCheck.h"
 
-using namespace Editor;
 Shorts
+using namespace Editor;
 uuid currentEntityID;
 float dragSensitivity = 0.003f;
 
@@ -40,101 +40,111 @@ void Inspector::Update()
 }
 
 
+void DrawTransform(Transform& transform)
+{
+    ImGui::DragFloat2("position", glm::value_ptr(transform.localPosition), dragSensitivity);
+
+    float angle = transform.LocalAngle();
+    ImGui::SliderFloat("rotation", &angle, 0.0f, 2.0f * 3.14159265359f);
+    transform.SetLocalAngle(angle);
+
+    vec3 scale = transform.LocalScale();
+    if (transform.requireUniformScale)
+        ImGui::DragFloat("scale", glm::value_ptr(scale), 0.5f * dragSensitivity);
+    else
+        ImGui::DragFloat2("scale", glm::value_ptr(scale), dragSensitivity);
+    transform.SetLocalScale(scale);
+
+    ImGui::SameLine();
+    ImGui::Checkbox("uniform ", &transform.requireUniformScale);
+
+}
+//void DrawCamera(Camera& camera) {}
+void DrawRenderable(Renderable& renderable)
+{
+    static uuid lastMeshID, lastMatID;
+
+    optional<uuid> meshID = Mesh::naming.Show("mesh", renderable.GetMesh().GetID());
+    if (meshID && *meshID != lastMeshID)
+    {
+        Mesh& mesh = Mesh::register_.Get(*meshID);
+        renderable.SetMesh(mesh);
+        //mesh.Save();
+        lastMeshID = *meshID;
+    }
+    optional<uuid> matID = Material::naming.Show("material", renderable.GetMaterial().GetID());
+    if (matID && *matID != lastMatID)
+    {
+        Material& mat = Material::register_.Get(*matID);
+        renderable.SetMaterial(mat);
+        mat.Save();
+        lastMatID = *matID;
+    }
+}
+void DrawPolygonCollider(PolygonCollider& poly)
+{
+    vector<vec2> positions = poly.bare.GetLocalPosition2Ds();
+    ImGui::Text("positions");
+    for (int i = 0; i < (int)positions.size(); i++)
+    {
+        ImGui::DragFloat2(std::to_string(i).c_str(), glm::value_ptr(positions[i]), dragSensitivity);
+        poly.SetPosition(i, positions[i]);
+
+        ImGui::SameLine();
+        ImGui::PushID(i);
+        bool addClicked = ImGui::Button("+");
+        ImGui::PopID();
+        if (addClicked)
+        {
+            poly.AddPositionAfter(i);
+            break;
+        }
+
+        if (positions.size() <= 3)
+            continue;
+        ImGui::SameLine();
+        ImGui::PushID(-1 - i);
+        bool removeClicked = ImGui::Button("-");
+        ImGui::PopID();
+        if (removeClicked)
+        {
+            poly.RemovePosition(i);
+            break;
+        }
+    }
+
+}
+void DrawRectangleCollider(RectangleCollider& rect)
+{
+    vec2 size = rect.Size();
+    ImGui::DragFloat2("size", glm::value_ptr(size), dragSensitivity, 0.001f, 1000.0f);
+    rect.SetSize(size);
+}
+void DrawCircleCollider(CircleCollider& circle)
+{
+    float radius = circle.bare.GetLocalRadius();
+    ImGui::DragFloat("radius", &radius, 0.5f * dragSensitivity);
+    circle.Setup(Realistic_p(radius));
+}
+
+
 void Inspector::DrawComponent(Component& comp)
 {
     if (!ImGui::CollapsingHeader(Tools::TypeName(comp).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
         return;
 
     if (typeid(comp) == typeid(Transform))
-    {
-        Transform& transform = *static_cast<Transform*>(&comp);
-        ImGui::DragFloat2("position", glm::value_ptr(transform.localPosition), dragSensitivity);
-
-        float angle = transform.LocalAngle();
-        ImGui::SliderFloat("rotation", &angle, 0.0f, 2.0f * 3.14159265359f);
-        transform.SetLocalAngle(angle);
-
-        vec3 scale = transform.LocalScale();
-        if (transform.requireUniformScale)
-            ImGui::DragFloat("scale", glm::value_ptr(scale), 0.5f * dragSensitivity);
-        else
-            ImGui::DragFloat2("scale", glm::value_ptr(scale), dragSensitivity);
-        transform.SetLocalScale(scale);
-        
-        ImGui::SameLine();
-        ImGui::Checkbox("uniform ", &transform.requireUniformScale);
-    }
-    else if (typeid(comp) == typeid(Camera)) {}
+        DrawTransform(*static_cast<Transform*>(&comp));
+    else if (typeid(comp) == typeid(Camera))
+        ; // no-op
     else if (typeid(comp) == typeid(Renderable))
-    {
-        Renderable& renderable = *static_cast<Renderable*>(&comp);
-        // node["mesh"] = mesh.GetID();
-        // node["material"] = material.GetID();
-        
-        optional<uuid> meshID = Mesh::naming.Show("mesh", renderable.GetMesh().GetID());
-        if (meshID)
-        {
-            Mesh& mesh = Mesh::register_.Get(*meshID);
-            renderable.SetMesh(mesh);
-        }
-        optional<uuid> matID = Material::naming.Show("material", renderable.GetMaterial().GetID());
-        if (matID)
-        {
-            Material& mat = Material::register_.Get(*matID);
-            renderable.SetMaterial(mat);
-        }
-    }
+        DrawRenderable(*static_cast<Renderable*>(&comp));
     else if (typeid(comp) == typeid(PolygonCollider))
-    {
-        PolygonCollider& poly = *static_cast<PolygonCollider*>(&comp);
-
-        vector<vec2> positions = poly.bare.GetLocalPosition2Ds();
-        ImGui::Text("positions");
-        for (int i = 0; i < (int)positions.size(); i++)
-        {
-            ImGui::DragFloat2(std::to_string(i).c_str(), glm::value_ptr(positions[i]), dragSensitivity);
-            poly.SetPosition(i, positions[i]);
-
-            ImGui::SameLine();
-            ImGui::PushID(i);
-            bool addClicked = ImGui::Button("+");
-            ImGui::PopID();
-            if (addClicked)
-            {
-                poly.AddPositionAfter(i);
-                break;
-            }
-
-            if (positions.size() <= 3)
-                continue;
-            ImGui::SameLine();
-            ImGui::PushID(-1 - i);
-            bool removeClicked = ImGui::Button("-");
-            ImGui::PopID();
-            if (removeClicked)
-            {
-                poly.RemovePosition(i);
-                break;
-            }
-        }
-
-    }
+        DrawPolygonCollider(*static_cast<PolygonCollider*>(&comp));
     else if (typeid(comp) == typeid(RectangleCollider))
-    {
-        RectangleCollider& rect = *static_cast<RectangleCollider*>(&comp);
-        
-        vec2 size = rect.Size();
-        ImGui::DragFloat2("size", glm::value_ptr(size), dragSensitivity, 0.001f, 1000.0f);
-        rect.SetSize(size);
-    }
+        DrawRectangleCollider(*static_cast<RectangleCollider*>(&comp));
     else if (typeid(comp) == typeid(CircleCollider))
-    {
-        CircleCollider& circle = *static_cast<CircleCollider*>(&comp);
-     
-        float radius = circle.bare.GetLocalRadius();
-        ImGui::DragFloat("radius", &radius, 0.5f * dragSensitivity);
-        circle.Setup(Realistic_p(radius));
-    }
+        DrawCircleCollider(*static_cast<CircleCollider*>(&comp));
 
 }
 

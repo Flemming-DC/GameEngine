@@ -21,10 +21,10 @@ public:
 	static Naming naming;
 
 	Material() { }
-	Material(string name, const Shader& shader_, const map_uo<string, std::any>& uniformValuesByName_)
-		{ Setup(name, shader_, uniformValuesByName_); }
+	Material(string name, const Shader& shader_, const map_uo<string, std::any>& uniformValuesByName_, optional<uuid> id = std::nullopt)
+		{ Setup(name, shader_, uniformValuesByName_, id); }
 
-	void Setup(string name, const Shader& shader_, const map_uo<string, std::any>& uniformValuesByName_);
+	void Setup(string name, const Shader& shader_, const map_uo<string, std::any>& uniformValuesByName_, optional<uuid> id = std::nullopt);
 
 	void Bind(bool allowMissingUniforms = false);
 	static void UnBind();
@@ -36,6 +36,7 @@ public:
 
 	template <typename T> inline T GetUniform(const std::string& uniformName);
 	string to_string() const;
+	void Save();
 
 private:
 	Shader shader;

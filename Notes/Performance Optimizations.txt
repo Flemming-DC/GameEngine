@@ -16,3 +16,5 @@ optimizations:
 	destroy<ComponentType>() looper igennem componentsByEntity[id] to gange, men kun en er nødvendig
 	destroy the doomed looper over alle components, men det er kun de doomed, som man egentlig er interesseret i.
 	compile yml to binary when exporting the game
+	texture atlasses
+	use gpu compressed textures

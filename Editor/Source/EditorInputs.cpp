@@ -50,7 +50,8 @@ namespace Editor::EditorInputs
 	InputAction<float>& Zoom() { return zoom; };
 	vec2 MoveCamera() { return moveSelectionsNotCamera.IsPressed() ? vec2() : directional.State(); };
 	InputAction<bool>& DragCamera() { return dragCamera; };
-	
+
+	// selection
 	InputAction<bool>& Select() { return select; };
 	InputAction<vec2>& ScreenPosition() { return screenPosition; };
 	InputAction<bool>& KeepSelection() { return keepSelection; };
@@ -60,6 +61,13 @@ namespace Editor::EditorInputs
 	InputAction<bool>& ControlRotation() { return controlRotation; };
 	InputAction<bool>& ControlScale() { return controlScale; };
 	InputAction<bool>& ControlUniformScale() { return controlUniformScale; };
+
+
+	// EditorLoop
+	bool ToggleRuntime() { return InputKey::BecomesPressed(Key::Keyboard::R); }
+	bool Exit() { return InputKey::BecomesPressed(Key::Keyboard::exc); }
+	bool Save() {  return InputKey::BecomesPressed(Key::Keyboard::S) 
+						&& InputKey::IsPressed(Key::Keyboard::ctrl); }
 
 	/*
 	vec2 SelectionMoveDirection()

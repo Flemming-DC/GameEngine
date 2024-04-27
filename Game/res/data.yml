@@ -1,8 +1,22 @@
-name: John
-age: 40
-seq:
-  - first element
-  - second element
-subNode:
-  subName: Jo
-  subAge: 10
+
+hardcoded:
+    # - name: id
+    # engine
+    - default: id
+    # editor
+    # game
+    - mat: id
+
+
+id: uuid
+name: string
+Shader: filepath # or id
+uniformValuesByName:
+    # name: value (what about type)
+    - u_textureSampler: ---
+    - u_color: ---
+
+# Shader: uuid? filepath?
+# uniformValuesByName:
+
+

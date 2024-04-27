@@ -6,17 +6,20 @@
 #include "StringTools.h"
 #include "ListTools.h"
 #include "OpenGlSetup.h"
+#include "YAML.h"
+
+using YAML::Node;
 
 Register<Material> Material::register_;
 Naming Material::naming;
 
-void Material::Setup(string name, const Shader& shader_, const map_uo<string, std::any>& uniformValuesByName_)
+void Material::Setup(string name, const Shader& shader_, const map_uo<string, std::any>& uniformValuesByName_, optional<uuid> id_)
 {
     if (!OpenGlSetup::Initialized())
         RaiseError("Material cannot be setup before OpenGlSetup::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("Material is already initialized");
-    id = UuidCreator::MakeID();
+    id = id_.has_value() ? *id_ : UuidCreator::MakeID();
     shader = shader_;
     uniformValuesByName = uniformValuesByName_;
     naming.AddWithSuffix(name, id);
@@ -133,4 +136,44 @@ std::string Material::to_string() const
             out += "non-texture uniform: " + pair.first + newline;
     }
     return out;
+}
+
+
+void Material::Save()
+{
+    /*
+    P(1);
+    if (!UuidCreator::IsInitialized(id))
+        RaiseError("You are trying to save a material with an uninitialized id");
+    string path = "res/Material.yml";
+
+    Node sceneYML;
+    sceneYML["id"] = scene.id;
+    Node entitiesYML;
+    for (const auto& entity : Entity::register_.GetData())
+    {
+        Node entityYML;
+        entityYML["id"] = entity.GetID();
+        for (auto& comp : entity.GetComponents())
+        {
+            Node compYML;
+            compYML["id"] = comp->GetID();
+            comp->Save(compYML); // component-type dependent data
+            entityYML[Tools::TypeName(*comp)] = compYML;
+        }
+        entitiesYML[entity.GetName()] = entityYML;
+    }
+    sceneYML["Entities"] = entitiesYML;
+
+    // configure yaml file using emitter
+    YAML::Emitter emitter;
+    emitter.SetIndent(4);
+    emitter.SetSeqFormat(YAML::Flow); // write lists horizontally, not vertically
+    emitter << sceneYML;
+
+    // write yaml data to output stream
+    std::ofstream outStream(scene.Path());
+    outStream << emitter.c_str();
+    outStream.close();
+    */
 }
