@@ -6,8 +6,18 @@
 #include "glm/glm.hpp"
 #include <glm/gtc/quaternion.hpp>
 
+
+namespace YmlTools
+{
+    YAML::Node Load(std::string path);
+    void Save(YAML::Node yml, std::string path, bool overwrite, bool horizontalLists);
+}
+
+
+// ----- conversion extensions ----- 
 namespace YAML
 {
+
     template<>
     struct convert<uuids::uuid>
     {

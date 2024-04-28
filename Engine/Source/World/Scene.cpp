@@ -4,7 +4,7 @@
 #include "Component.h"
 #include "StringTools.h"
 #include "ListTools.h"
-#include "YAML.h"
+#include "YmlTools.h"
 #include "Transform.h" 
 #include "Camera.h" 
 #include "Renderable.h" 
@@ -67,9 +67,6 @@ void Scene::ReloadImmediately()
 
 void Scene::MakeBlankSceneFile(string name)
 {
-    string path = "res/Scenes/" + name + ".yml";
-    if (std::filesystem::exists(path))
-        RaiseError("Cannot create Scene at " + path + ", since there is already a Scene there.");
 
     // building a scene with a single entity with a transform and a camera
     Node transformYML;
@@ -93,25 +90,13 @@ void Scene::MakeBlankSceneFile(string name)
     sceneYML["id"] = UuidCreator::MakeID();
     sceneYML["Entities"] = entitiesYML;
 
-
-    // configure yaml file using emitter
-    YAML::Emitter emitter;
-    emitter.SetIndent(4);
-    emitter.SetSeqFormat(YAML::Flow); // write lists horizontally, not vertically
-    emitter << sceneYML;
-
-    // write yaml data to output stream
-    std::ofstream outStream(path);
-    outStream << emitter.c_str();
-    outStream.close();
+    string path = "res/Scenes/" + name + ".yml";
+    YmlTools::Save(sceneYML, path, false, true);
 }
 
 void Scene::Load()
 {
-    if (!std::filesystem::exists(Path()))
-        RaiseError("Cannot load Scene at " + Path() + ", since there is no Scene there.");
-
-    Node sceneYML = YAML::LoadFile(Path());
+    Node sceneYML = YmlTools::Load(Path());
     id = sceneYML["id"].as<uuid>();
 
     auto entitiesMap = sceneYML["Entities"].as<map<string, Node>>();
@@ -176,16 +161,7 @@ void Scene::Save()
     }
     sceneYML["Entities"] = entitiesYML;
 
-    // configure yaml file using emitter
-    YAML::Emitter emitter;
-    emitter.SetIndent(4);
-    emitter.SetSeqFormat(YAML::Flow); // write lists horizontally, not vertically
-    emitter << sceneYML; 
-
-    // write yaml data to output stream
-    std::ofstream outStream(scene.Path());
-    outStream << emitter.c_str();
-    outStream.close();
+    YmlTools::Save(sceneYML, scene.Path(), true, true);
 
 }
 

@@ -5,7 +5,7 @@
 #include <memory>
 #include <stduuid/uuid.h>
 #include "Register.h"
-#include "YAML.h"
+#include "YmlTools.h"
 #include "Event.h"
 
 class Component; // forward declaration

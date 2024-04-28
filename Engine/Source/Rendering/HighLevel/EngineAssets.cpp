@@ -1,5 +1,6 @@
 #include "EngineAssets.h"
 #include "UuidCreator.h"
+#include "EngineFiles.h"
 
 Shorts;
 Shader& EngineAssets::solidColorShader = Shader();
@@ -8,7 +9,7 @@ Mesh& EngineAssets::squareMesh = Mesh();
 
 void EngineAssets::Setup()
 {
-	solidColorShader = Shader::register_.Add("res/shaders/SolidColor.shader");
+    solidColorShader = Shader::register_.Add(EngineFiles::colorShader);
 
     map_uo<string, std::any> uniformsByName = { {"u_color", vec4(0.5f, 0.5f, 0.5f, 1.0f)} };
     defaultMaterial = Material::register_.Add("default", EngineAssets::SolidColorShader(), uniformsByName);

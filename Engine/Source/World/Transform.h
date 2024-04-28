@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include "Component.h"
-#include "YAML.h"
+#include "YmlTools.h"
 
 // evt. use local model as the authoritative parameter with model cached and everything else generated from those two.
 // evt. apply to caching in self and ancestors. use set local / glocal parameters instead of direct exposure of local

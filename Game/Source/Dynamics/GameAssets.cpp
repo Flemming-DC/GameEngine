@@ -1,5 +1,6 @@
 #include "GameAssets.h"
 #include "Engine.h"
+#include "GameFiles.h"
 
 Shorts;
 Shader& GameAssets::shader = Shader();
@@ -16,8 +17,8 @@ void GameAssets::Setup()
     };
 
     // assets
-    shader = Shader::register_.Add("res/shaders/Image.shader");
-    texture = Texture::register_.Add("res/textures/blizzard attacking fans.png");
+    shader = Shader::register_.Add(EngineFiles::imageShader);
+    texture = Texture::register_.Add(GameFiles::blizzardAttackingFans);
     material = Material::register_.Add("mat", shader, uniformsByName);
 
 }
