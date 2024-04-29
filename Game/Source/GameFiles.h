@@ -7,7 +7,7 @@ namespace GameFiles
 	using std::string;
 
     // string _ = EngineFiles::shaders + ".";
-    static string blizzardAttackingFans = EngineFiles::textures + "blizzard attacking fans.png";
+    static string blizzardAttackingFans = EngineFiles::Textures + "blizzard attacking fans.png";
 
 
 }

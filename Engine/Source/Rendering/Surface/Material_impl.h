@@ -5,7 +5,7 @@
 
 
 template <typename T>
-inline T Material::GetUniform(const std::string& uniformName)
+inline T Material::GetUniform(const std::string& uniformName) const
 {
 	if (!Tools::ContainsKey(uniformValuesByName, uniformName))
 		RaiseError(
@@ -14,7 +14,7 @@ inline T Material::GetUniform(const std::string& uniformName)
 			logger::to_string(Tools::GetKeys(uniformValuesByName))
 		);
 	
-	if (uniformValuesByName[uniformName].type() != typeid(T))
+	if (uniformValuesByName.at(uniformName).type() != typeid(T))
 		RaiseError(
 			"The uniform " + uniformName + " exists, but it doesn't have "
 			"the type specified by the caller of GetUniform.\n"
@@ -22,7 +22,7 @@ inline T Material::GetUniform(const std::string& uniformName)
 			logger::to_string(Tools::GetKeys(uniformValuesByName))
 		);
 
-	T uniform = std::any_cast<T>(uniformValuesByName[uniformName]);
+	T uniform = std::any_cast<T>(uniformValuesByName.at(uniformName));
 	return uniform;
 }
 

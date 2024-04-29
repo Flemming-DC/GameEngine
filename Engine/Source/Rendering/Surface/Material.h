@@ -21,22 +21,22 @@ public:
 	static Naming naming;
 
 	Material() { }
-	Material(string name, const Shader& shader_, const map_uo<string, std::any>& uniformValuesByName_, optional<uuid> id = std::nullopt)
-		{ Setup(name, shader_, uniformValuesByName_, id); }
+	Material(string name, const Shader& shader_, const map_uo<string, std::any>& uniformValuesByName_)
+		{ Setup(name, shader_, uniformValuesByName_); }
 
-	void Setup(string name, const Shader& shader_, const map_uo<string, std::any>& uniformValuesByName_, optional<uuid> id = std::nullopt);
+	void Setup(string name, const Shader& shader_, const map_uo<string, std::any>& uniformValuesByName_);
 
 	void Bind(bool allowMissingUniforms = false);
 	static void UnBind();
 	// Sets the uniform internally in the material. 
 	// nb: it wont be sent to the GPU until the renderer issues a draw call.
 	void SetUniform(const string& name, std::any value);
+	void SetTexture(const string& name, string filePath);
 	inline uuid GetID() const { return id; }
 	inline static vector<string> Names() { return naming.Names(); }
 
-	template <typename T> inline T GetUniform(const std::string& uniformName);
+	template <typename T> inline T GetUniform(const std::string& uniformName) const;
 	string to_string() const;
-	void Save();
 
 private:
 	Shader shader;

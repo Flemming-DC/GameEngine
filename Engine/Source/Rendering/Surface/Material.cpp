@@ -6,20 +6,20 @@
 #include "StringTools.h"
 #include "ListTools.h"
 #include "OpenGlSetup.h"
-#include "YAML.h"
+#include "YmlTools.h"
 
 using YAML::Node;
 
 Register<Material> Material::register_;
 Naming Material::naming;
 
-void Material::Setup(string name, const Shader& shader_, const map_uo<string, std::any>& uniformValuesByName_, optional<uuid> id_)
+void Material::Setup(string name, const Shader& shader_, const map_uo<string, std::any>& uniformValuesByName_)
 {
     if (!OpenGlSetup::Initialized())
         RaiseError("Material cannot be setup before OpenGlSetup::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("Material is already initialized");
-    id = id_.has_value() ? *id_ : UuidCreator::MakeID();
+    id = UuidCreator::MakeID();
     shader = shader_;
     uniformValuesByName = uniformValuesByName_;
     naming.AddWithSuffix(name, id);
@@ -40,6 +40,14 @@ void Material::SetUniform(const string& name, std::any value)
             logger::to_string(Tools::GetKeys(uniformValuesByName))
             );
     uniformValuesByName[name] = value;
+    SetupTexturesByName();
+}
+
+void Material::SetTexture(const string& uniformName, string filePath)
+{
+    uuid texID = Texture::naming.at(filePath);
+    Texture& tex = Texture::register_.Get(texID);
+    SetUniform(uniformName, &tex);
 }
 
 void Material::Bind(bool allowMissingUniforms)
@@ -107,6 +115,7 @@ void Material::CheckUniforms()
 
 void Material::SetupTexturesByName()
 {
+    texturesByName.clear();
     for (const auto& pair : uniformValuesByName)
     {
         if (pair.second.type() == typeid(Texture*))
@@ -115,7 +124,6 @@ void Material::SetupTexturesByName()
             if (texturePtr)
                 texturesByName[pair.first] = texturePtr;
         }
-
     }
 }
 
@@ -138,42 +146,3 @@ std::string Material::to_string() const
     return out;
 }
 
-
-void Material::Save()
-{
-    /*
-    P(1);
-    if (!UuidCreator::IsInitialized(id))
-        RaiseError("You are trying to save a material with an uninitialized id");
-    string path = "res/Material.yml";
-
-    Node sceneYML;
-    sceneYML["id"] = scene.id;
-    Node entitiesYML;
-    for (const auto& entity : Entity::register_.GetData())
-    {
-        Node entityYML;
-        entityYML["id"] = entity.GetID();
-        for (auto& comp : entity.GetComponents())
-        {
-            Node compYML;
-            compYML["id"] = comp->GetID();
-            comp->Save(compYML); // component-type dependent data
-            entityYML[Tools::TypeName(*comp)] = compYML;
-        }
-        entitiesYML[entity.GetName()] = entityYML;
-    }
-    sceneYML["Entities"] = entitiesYML;
-
-    // configure yaml file using emitter
-    YAML::Emitter emitter;
-    emitter.SetIndent(4);
-    emitter.SetSeqFormat(YAML::Flow); // write lists horizontally, not vertically
-    emitter << sceneYML;
-
-    // write yaml data to output stream
-    std::ofstream outStream(scene.Path());
-    outStream << emitter.c_str();
-    outStream.close();
-    */
-}

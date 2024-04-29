@@ -5,15 +5,18 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-
+Shorts;
+using YAML::Node;
 // static variables must be initialized in the cpp file not the header file
 std::vector<uuids::uuid> Renderable::allRenderables;
 
 void Renderable::OnStart()
 {
     allRenderables.push_back(GetID());
-    material = EngineAssets::DefaultMaterial(); // copy, not ref
-    mesh = EngineAssets::SquareMesh(); // copy, not ref
+    if (!UuidCreator::IsInitialized(material.GetID()))
+        material = EngineAssets::DefaultMaterial(); // copy, not ref
+    if (!UuidCreator::IsInitialized(mesh.GetID()))
+        mesh = EngineAssets::SquareMesh(); // copy, not ref
 }
 
 void Renderable::OnDestroy()
@@ -51,25 +54,40 @@ void Renderable::UnBind()
 
 void Renderable::Save(YAML::Node& node) const
 {
-    if (mesh.GetID() != EngineAssets::SquareMesh().GetID())
-        node["mesh"] = mesh.GetID();
-    node["material"] = material.GetID();
-
+    node["mesh"] = Mesh::naming.at(mesh.GetID());
+    //node["material"] = Material::naming.at(material.GetID());
+    
+    Node materialNode;
+    auto& name = Material::naming.at(material.GetID());
+    materialNode["name"] = name; // evt. save id too
+    if (name == "image")
+    {
+        materialNode["u_color"] = material.GetUniform<vec4>("u_color");
+        uuid texID = material.GetUniform<Texture*>("u_textureSampler")->GetID();
+        materialNode["u_textureSampler"] = Texture::naming.at(texID);
+    }
+    node["material"] = materialNode;
+    
 }
 
 void Renderable::Load(const YAML::Node& node)
 {
-    //auto materialID = node["material"].as<uuids::uuid>(); // material cannot yet be loaded, since it aren't saved (in the current version)
-    //material = Material::register_.Get(materialID); // copy, not ref
-
+    // if nodes don't exist, then we initialize via OnStart
+    if (node["material"])
+    {
+        auto materialNode = node["material"];
+        uuid materialID = Material::naming.at(materialNode["name"].as<string>());
+        material = Material::register_.Get(materialID); // copy, not ref
+        if (materialNode["u_color"])
+            material.SetUniform("u_color", materialNode["u_color"].as<vec4>());
+        if (materialNode["u_textureSampler"])
+            material.SetTexture("u_textureSampler", materialNode["u_textureSampler"].as<string>());
+    }
     if (node["mesh"])
     {
-        auto meshID = node["mesh"].as<uuids::uuid>();
+        uuid meshID = Mesh::naming.at(node["mesh"].as<string>());
         mesh = Mesh::register_.Get(meshID); // copy, not ref
     }
-    else
-    {
-        mesh = EngineAssets::SquareMesh(); // copy, not ref
-    }
+
 }
 

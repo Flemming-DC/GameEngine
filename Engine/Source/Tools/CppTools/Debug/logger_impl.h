@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
+#include <optional>
 #include "StringTools.h"
 #include "GlmTools.h" // this contains some overloads of to_string that might otherwise be counterintuitively absent
 #include "ListTools.h" // this contains some overloads of to_string that might otherwise be counterintuitively absent
@@ -70,6 +71,8 @@ namespace logger
 	template<typename T> string inline to_string(T* value) { return "raw_ptr to " + (value ? to_string(*value) : "null"); } // raw pointer
 	template<typename T> string inline to_string(std::unique_ptr<T> value) { return "unique_ptr to " + (value ? to_string(*value) : "null"); } // unique pointer
 	template<typename T> string inline to_string(std::shared_ptr<T> value) { return "shared_ptr to " + (value ? to_string(*value) : "null"); } // shared pointer
+	template<typename T> string inline to_string(std::optional<T> value) { return "optional " + (value ? to_string(*value) : "null"); } // optional
+
 	string inline to_string(const string& value) { return value; }
 	string inline to_string(const char* value) { return string(value); }
 	string inline to_string(const char value) { return string(&value); }

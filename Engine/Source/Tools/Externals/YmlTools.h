@@ -38,6 +38,31 @@ namespace YAML
     };
 
     template<>
+    struct convert<glm::vec4>
+    {
+        static Node encode(const glm::vec4& in) // save
+        {
+            Node node;
+            node.push_back(in.r);
+            node.push_back(in.g);
+            node.push_back(in.b);
+            node.push_back(in.a);
+            return node;
+        }
+
+        static bool decode(const Node& node, glm::vec4& out) // load
+        {
+            if (!node.IsSequence())
+                return false;
+            auto vec = (node.as<std::vector<float>>());
+            if (vec.size() != 4)
+                return false;
+            out = { vec[0], vec[1], vec[2], vec[3] };
+            return true;
+        }
+    };
+
+    template<>
     struct convert<glm::vec3>
     {
         static Node encode(const glm::vec3& in) // save

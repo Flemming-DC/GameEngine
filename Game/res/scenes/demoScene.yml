@@ -33,7 +33,11 @@ Entities:
         id: 62b4da63-0610-4eff-9820-3e1f073c9cff
         Renderable:
             id: 2f87723c-ab25-4817-ae12-c92b26d5aa42
-            material: 7408e60f-e975-497a-8850-4cb70e672845
+            mesh: squareMesh
+            material:
+                name: image
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: res/Textures/defaultImage.png
         Transform:
             id: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
             localPosition: [-0.490543664, -0.673846841, 0]
@@ -46,7 +50,9 @@ Entities:
             localPosition2Ds: [[-0.5, -0.5], [-0.5, 0.5], [0.5, 0.5], [0.5, -0.5]]
         Renderable:
             id: 7cb23b0c-f684-4b93-98bb-6ff3d2290336
-            material: 7408e60f-e975-497a-8850-4cb70e672845
+            mesh: squareMesh
+            material:
+                name: mat
         Transform:
             id: a5be3ef9-f754-42ca-af89-8842ab357ab7
             localPosition: [1.11217606, 0.485314727, 0]
@@ -54,6 +60,6 @@ Entities:
             localScale: [1, 1, 1]
             parent: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
         GameLogic:
-            id: 6fc2eeb3-280e-4c21-83fb-2dcdd9d95c1f
+            id: b847bc4a-d986-475e-b797-24bed5fcdda9
         DummyComp:
-            id: 59278a56-4594-42e1-ac2a-cdc638569753
+            id: 3052952c-e089-485e-a811-70ef870f0bcd

@@ -90,7 +90,7 @@ void Scene::MakeBlankSceneFile(string name)
     sceneYML["id"] = UuidCreator::MakeID();
     sceneYML["Entities"] = entitiesYML;
 
-    string path = "res/Scenes/" + name + ".yml";
+    string path = EngineFiles::Scenes + name + ".yml";
     YmlTools::Save(sceneYML, path, false, true);
 }
 

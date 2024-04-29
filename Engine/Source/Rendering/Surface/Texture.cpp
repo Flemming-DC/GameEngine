@@ -5,6 +5,7 @@
 #include "OpenGLidChecker.h"
 
 Register<Texture> Texture::register_;
+Naming Texture::naming;
 
 void Texture::Setup(const std::string& filePath_)
 {
@@ -14,6 +15,7 @@ void Texture::Setup(const std::string& filePath_)
 		RaiseError("Texture is already initialized");
 	id = UuidCreator::MakeID();
 	filePath = filePath_;
+	naming.Add(filePath, id);
 	stbi_set_flip_vertically_on_load(1);
 	unsigned char* localBuffer = stbi_load(filePath.c_str(), &width, &height, &bytesPerPixel, 4); // 4 = channel count
 	if (!localBuffer)

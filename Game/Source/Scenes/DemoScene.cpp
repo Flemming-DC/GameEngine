@@ -63,8 +63,8 @@ void DemoScene::ManualSetup()
     Entity& picture2 = Entity::GetEntity("picture 2");
 
     // ------------ setup components ------------
-    picture1.Get<Renderable>().SetMaterial(material);
-    picture2.Get<Renderable>().SetMaterial(material);
+    picture1.Get<Renderable>();//.SetMaterial(material);
+    picture2.Get<Renderable>();//.SetMaterial(material);
     //picture2.Add<GameLogic>();
     //picture2.Add<DummyComp>();
 

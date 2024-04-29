@@ -10,6 +10,9 @@ Material& GameAssets::material = Material();
 
 void GameAssets::Setup()
 {
+    if (UuidCreator::IsInitialized(material.GetID()))
+        return; // if material is init, then the others are so too.
+
     // parameters
     map_uo<string, std::any> uniformsByName = {
         {"u_textureSampler", &texture},

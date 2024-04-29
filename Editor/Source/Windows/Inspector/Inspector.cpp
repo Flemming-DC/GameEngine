@@ -12,6 +12,7 @@
 #include <glm/gtc/type_ptr.hpp> // evt temp
 #include "imGuiTools.h" 
 #include "GlmCheck.h"
+#include "EngineAssets.h"
 
 Shorts
 using namespace Editor;
@@ -69,7 +70,6 @@ void DrawRenderable(Renderable& renderable)
     {
         Mesh& mesh = Mesh::register_.Get(*meshID);
         renderable.SetMesh(mesh);
-        //mesh.Save();
         lastMeshID = *meshID;
     }
     optional<uuid> matID = Material::naming.Show("material", renderable.GetMaterial().GetID());
@@ -77,8 +77,26 @@ void DrawRenderable(Renderable& renderable)
     {
         Material& mat = Material::register_.Get(*matID);
         renderable.SetMaterial(mat);
-        mat.Save();
         lastMatID = *matID;
+    }
+    // show uniforms for builtin materials
+    Material& mat = renderable.GetMaterial();
+    if (mat.GetID() == EngineAssets::DefaultMaterial().GetID())
+    {
+        vec4 color = mat.GetUniform<vec4>("u_color");
+        ImGui::ColorEdit4("u_color", glm::value_ptr(color));
+        mat.SetUniform("u_color", color);
+    }
+    else if (mat.GetID() == EngineAssets::ImageMaterial().GetID())
+    {
+        vec4 color = mat.GetUniform<vec4>("u_color");
+        ImGui::ColorEdit4("color", glm::value_ptr(color));
+        mat.SetUniform("u_color", color);
+        
+        Texture& oldTex = *mat.GetUniform<Texture*>("u_textureSampler");
+        optional<uuid> changedTexID = Texture::naming.Show("texture", oldTex.GetID());
+        if (changedTexID && *changedTexID != oldTex.GetID())
+            mat.SetTexture("u_textureSampler", Texture::naming.at(*changedTexID));
     }
 }
 void DrawPolygonCollider(PolygonCollider& poly)
