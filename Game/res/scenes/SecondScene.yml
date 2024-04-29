@@ -32,7 +32,9 @@ Entities:
             parent: b2cd4db8-e561-488d-b630-1db280aaccdf
         Renderable:
             id: 4a9aad54-3376-466b-a29a-bfcae1a9b32c
-            material: 4c893b60-5501-4daa-9fcb-4773b553c98e
+            mesh: squareMesh
+            material:
+                name: mat
         PolygonCollider:
             id: d0dae862-9843-46ad-9d12-02ce196cab6d
             localPosition2Ds: [

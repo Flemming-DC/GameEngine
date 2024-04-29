@@ -54,6 +54,12 @@ void DemoScene::PurelyManualSetup()
 
 void DemoScene::ManualSetup()
 {
+    Entity& picture2 = Entity::GetEntity("picture 2");
+    picture2.AddMultiple<GameLogic, DummyComp>();
+
+
+
+    /*
     // ------------ get assets ------------
     Mesh& mesh = EngineAssets::SquareMesh();
     Material& material = GameAssets::GetMaterial();
@@ -68,7 +74,7 @@ void DemoScene::ManualSetup()
     //picture2.Add<GameLogic>();
     //picture2.Add<DummyComp>();
 
-    picture2.AddMultiple<GameLogic, DummyComp>();
+    */
 
     /*
     // ------------ get entities ------------

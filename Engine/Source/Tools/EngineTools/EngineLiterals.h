@@ -21,7 +21,7 @@ namespace Literals
 	static string defaultImage = Textures + "defaultImage.png";
 	
 	// ------- renderObjects ------- //
-	static string colorMaterialName = "default";
+	static string colorMaterialName = "color";
 	static string imageMaterialName = "image";
 	static string squareMeshName = "squareMesh";
 
