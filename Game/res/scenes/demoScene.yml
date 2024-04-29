@@ -37,7 +37,7 @@ Entities:
             material:
                 name: image
                 u_color: [1, 1, 1, 1]
-                u_textureSampler: res/Textures/defaultImage.png
+                u_textureSampler: defaultImage.png
         Transform:
             id: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
             localPosition: [-0.490543664, -0.673846841, 0]
@@ -60,6 +60,6 @@ Entities:
             localScale: [1, 1, 1]
             parent: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
         GameLogic:
-            id: b847bc4a-d986-475e-b797-24bed5fcdda9
+            id: 2e0dcd41-7d19-4b61-814b-0420c76adf38
         DummyComp:
-            id: 3052952c-e089-485e-a811-70ef870f0bcd
+            id: 4ce506e4-7bf7-4a03-9d82-ca88b316d969

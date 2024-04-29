@@ -6,7 +6,7 @@
 #include "Event.h"
 #include "Delay.h"
 #include "StringTools.h"
-#include "EngineFiles.h"
+#include "EngineLiterals.h"
 
 class Scene
 {
@@ -33,7 +33,7 @@ private:
 	uuids::uuid id;
 
 	void Load(); // load from file
-	std::string Path() { return EngineFiles::Scenes + Tools::TypeName(*this) + ".yml"; } // evt. store path rather than name
+	std::string Path() { return Literals::Scenes + Tools::TypeName(*this) + ".yml"; } // evt. store path rather than name
 };
 
 

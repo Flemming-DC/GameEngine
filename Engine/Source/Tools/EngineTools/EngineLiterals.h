@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace EngineFiles
+namespace Literals
 {
 	using std::string;
 
@@ -20,6 +20,15 @@ namespace EngineFiles
 	static string imageShader = Shaders + "Image.shader";
 	static string defaultImage = Textures + "defaultImage.png";
 	
+	// ------- renderObjects ------- //
+	static string colorMaterialName = "default";
+	static string imageMaterialName = "image";
+	static string squareMeshName = "squareMesh";
+
+	// ------- uniforms ------- //
+	static string u_color = "u_color";
+	static string u_textureSampler = "u_textureSampler";
+
 }
 
 
