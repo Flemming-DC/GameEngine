@@ -30,10 +30,10 @@ void EditorLoop::OnEditorUpdate()
 
     SceneEditor::Update();
     Inspector::Update();
+    Hierarchy::Update();
     //AssetFolder::Update();
-    //Hierarchy::Update
 
-    //ImGui::ShowDemoWindow();
+    ImGui::ShowDemoWindow();
 
     HandleOpenClose();
 }

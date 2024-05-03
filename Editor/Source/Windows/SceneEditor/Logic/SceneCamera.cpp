@@ -18,6 +18,8 @@ void SceneCamera::UpdateCamera(ImVec2 minSceneCorner_, ImVec2 maxSceneCorner_)
 {
     //if (!ImGui::IsWindowHovered())
     //    return;
+    if (!ImGui::IsWindowFocused())
+        return;
     minSceneCorner = { minSceneCorner_.x, minSceneCorner_.y };
     maxSceneCorner = { maxSceneCorner_.x, maxSceneCorner_.y };
 
