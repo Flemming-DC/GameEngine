@@ -159,12 +159,12 @@ void Scene::Save()
             comp->Save(compYML); // component-type dependent data
             entityYML[Tools::TypeName(*comp)] = compYML;
         }
-        entitiesYML[entity.GetName()] = entityYML;
+        entitiesYML[entity.Name()] = entityYML;
     }
     sceneYML["Entities"] = entitiesYML;
 
     YmlTools::Save(sceneYML, scene.Path(), true, true);
-
+    logger::print("Saved");
 }
 
 

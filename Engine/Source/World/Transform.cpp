@@ -143,9 +143,9 @@ vector<Transform*> Transform::GetChildren() const
 string Transform::GetPath() const
 {
 	if (GetParent() == nullptr)
-		return GetEntity().GetName();
+		return Entity().Name();
 	else
-		return parent->GetPath() + "/" + GetEntity().GetName();
+		return parent->GetPath() + "/" + Entity().Name();
 }
 
 bool Transform::IsDescendantOf(const Transform& putativeAncestor) const

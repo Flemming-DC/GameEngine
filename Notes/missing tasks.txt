@@ -3,15 +3,19 @@ diverse
 	buy old used mac, linux, xbox and playstation
 	update view-area on window resize
 	error handling ved uninitialized material / mesh (the !UuidCreator::IsInitialized(id) check didn't catch missing setup call) (probably due to trying to read material from disk)
-	input keyPressed and keyReleased bools and events.
 	copy res automatically to build folder, and provide a better error messages if res is missing. 
 	cleanup Get prefixes
 	store all special folders in some const variables
-	closing game by X in right cornr, shouldn't also close editor
 	2D lighting
 	apply standard math checks everywhere in debug collision2D
 	prune away super close cornes in polygon collider and then check that positionCount in polygon collider is at least 3. 
-	evt. let renderable start out with a square mesh and a dummy material
+	evt. add material types
+	destroying an object can chrash the manual setup. 
+	possible bug: openGL only have 32 textureIDs at the same time (texture atlasses can help)
+	evt. move entity name into the transform class and apply uniqueness of entity-names inside a given parent. (and in root)
+	bug: sceneCamera move speed and scrolling got out of sync
+	provide valid default state for colliders
+	
 
 
 components & gameobjects
@@ -28,33 +32,12 @@ dynamics
 	onRareUpdate, OnTimedStart/OnStart overload with int parameter
 
 Editor
-	ctrl input for saving
-	save changes automatically and/or on ctrl+s
-	seperate core loop into editor vs game and evt. also seperate game-in-editor from game-in-build
-	turn Renderer::SetupGrid2D(0.25f); off in gameView (nb: this line is inside Scene::ActivateImmediately)
-
-	Inspector
-	SceneEditor / Viewport
-		run button width shortcut
-		resize
-		selection: single, box, evt. type
-		move camera and objects by wasd/arrows and by mouse click+drag (without conflict)
-		pause game in viewport
-		save scene automatically
-	GameView
-		bring default window up in front of ImGUI and put in focus 
-		run game on play and reload scene on stop
-	AssetFolder
 	Hierarchy	
-	viewport
 
 collision
-	use constrained proportions for circleCollider. this proporty is set on transform and used by circleCollider and Gizmo renderer
-	edit colliders
 	broad phase: boundingbox trees
 	collision solving (aka. interaction)
 	evt. drag & friction
-	easy spawning for testing
 
 	components
 		rigidbody
@@ -71,15 +54,11 @@ input:
 	evt. scale input by passing a float to InputAction.AddKey
 
 
-headers
-	common, tools, rendering
-profiler
+profiler 
+	libery (I think there is one called optic)
 
 make 2d game
 
-
-flaws (wont fix)
-	creating a collider Gizmo before the grid Gizmo causes the former to show up incorrectly. 
-
+particle systems ?
 
 

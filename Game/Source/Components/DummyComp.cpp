@@ -109,28 +109,28 @@ void DummyComp::OldTests()
 
 	if (InputKey::BecomesPressed(Keyboard::J))
 	{
-		logger::print("J: try destroy gamelogic from ", this->GetEntity());
+		logger::print("J: try destroy gamelogic from ", this->Entity());
 		if (TryGet<GameLogic>())
-			GetEntity().Destroy<GameLogic>();
+			Entity().Destroy<GameLogic>();
 	}
 	if (InputKey::BecomesPressed(Keyboard::H))
 	{
-		logger::print("H: try add gamelogic to ", this->GetEntity());
+		logger::print("H: try add gamelogic to ", this->Entity());
 		if (!TryGet<GameLogic>() && TryGet<Renderable>() && TryGet<RectangleCollider>())
-			GetEntity().Add<GameLogic>();
+			Entity().Add<GameLogic>();
 	}
 
 	if (InputKey::BecomesPressed(Keyboard::I))
 	{
 		logger::print("I: try destroy picture 1 RectangleCollider");
-		if (Entity::GetEntity("picture 1").TryGet<RectangleCollider>())
-			Entity::GetEntity("picture 1").Destroy<RectangleCollider>();
+		if (Entity::Entity("picture 1").TryGet<RectangleCollider>())
+			Entity::Entity("picture 1").Destroy<RectangleCollider>();
 	}
 	if (InputKey::BecomesPressed(Keyboard::U))
 	{
 		logger::print("U: try destroy circle 1");
 		if (Entity::TryGetID("circle 1"))
-			Entity::GetEntity("circle 1").Destroy();
+			Entity::Entity("circle 1").Destroy();
 	}
 	if (InputKey::BecomesPressed(Keyboard::Y))
 	{

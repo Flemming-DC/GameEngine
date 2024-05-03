@@ -92,7 +92,7 @@ void Entity::CheckConsistency()
 		Entity& entity = register_.Get(entityID);
 		if (entity.GetID() != entityID)
 			RaiseError("inconsistent data");
-		auto& _1 = EntitiesByName.at(entity.GetName()); // .at() fails if the key is not present. This constistutes a consistency check.
+		auto& _1 = EntitiesByName.at(entity.Name()); // .at() fails if the key is not present. This constistutes a consistency check.
 		for (const auto& compPtr : components)
 			auto& _2 = componentByID.at(compPtr.get()->GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
 	}
@@ -163,7 +163,7 @@ void Entity::Destroy()
 	// doom children
 	Transform* transform = TryGetComponent<Transform>();
 	for (const auto& child : transform->GetChildren())
-		child->GetEntity().Destroy();
+		child->Entity().Destroy();
 
 	// doom components
 	for (const auto& comp : GetComponents())
@@ -212,7 +212,7 @@ bool Entity::Destroy(Component& comp)
 
 void Entity::ClearData(const unique_ptr<Component>& compPtr)
 {
-	auto& entityID = compPtr->GetEntity().GetID();
+	auto& entityID = compPtr->Entity().GetID();
 
 	Tools::RemoveKey(componentByID, compPtr->GetID());
 

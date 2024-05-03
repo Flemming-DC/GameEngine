@@ -15,7 +15,6 @@ class Entity
 { 
 public: 
 	Shorts;
-	string name;
 	static Register<Entity> register_;
 	static Event<Entity&> OnCreated;
 	static Event<Entity&> OnDestroy;
@@ -51,7 +50,7 @@ public:
 	static uuid* Entity::TryGetID(string name_);
 	inline void SetID(uuid id_) { id = id_; }
 	string to_string() const;
-	string GetName() const { return name; }
+	string Name() const { return name; }
 	static Entity& GetEntity(string name) { return register_.Get(GetID(name)); }
 	static Entity& GetEntity(uuid id_) { return register_.Get(id_); }
 	static bool Exists(uuid id_) { return register_.Contains(id_); }
@@ -61,6 +60,7 @@ private:
 	static map_uo<string, vector<uuid>> EntitiesByName;
 	static map_uo<uuid, Component*> componentByID;
 	uuid id;
+	string name;
 	bool isDoomed = false; // this is destined to be destroyed at the end of the component update calls
 
 	template <typename ComponentType> ComponentType* TryGetComponent() const;

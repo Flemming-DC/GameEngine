@@ -81,6 +81,7 @@ void DrawRenderable(Renderable& renderable)
         lastMatID = *matID;
     }
     // show uniforms for builtin materials
+    ImGui::Indent();
     Material& mat = renderable.GetMaterial();
     if (mat.GetID() == EngineAssets::DefaultMaterial().GetID())
     {
@@ -99,6 +100,7 @@ void DrawRenderable(Renderable& renderable)
         if (changedTexID && *changedTexID != oldTex.GetID())
             mat.SetTexture(Literals::u_textureSampler, *changedTexID);
     }
+    ImGui::Unindent();
 }
 void DrawPolygonCollider(PolygonCollider& poly)
 {

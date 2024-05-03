@@ -16,6 +16,8 @@ static vec3 lastMouseWorldPosition = vec3();
 
 void SceneCamera::UpdateCamera(ImVec2 minSceneCorner_, ImVec2 maxSceneCorner_)
 {
+    //if (!ImGui::IsWindowHovered())
+    //    return;
     minSceneCorner = { minSceneCorner_.x, minSceneCorner_.y };
     maxSceneCorner = { maxSceneCorner_.x, maxSceneCorner_.y };
 
