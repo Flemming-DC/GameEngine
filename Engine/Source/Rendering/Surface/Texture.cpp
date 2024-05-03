@@ -3,7 +3,7 @@
 #include "stb_image/stb_image.h"
 #include "OpenGlSetup.h"
 #include "OpenGLidChecker.h"
-#include "EngineFiles.h"
+#include "EngineLiterals.h"
 
 Register<Texture> Texture::register_;
 Naming Texture::naming;
@@ -14,11 +14,11 @@ void Texture::Setup(const std::string& filePath_)
 		RaiseError("Texture cannot be setup before OpenGlSetup::Setup() is called.");
 	if (UuidCreator::IsInitialized(id))
 		RaiseError("Texture is already initialized");
-	id = UuidCreator::MakeID();
-	//Tools::SplitString(filePath_, )
+	auto name = Tools::RemovePrefix(filePath_, Literals::Textures); // we assume that all textures are in the texture folder
+	if (!naming.Contains(name))
+		naming.AddWithSuffix(name, UuidCreator::MakeID());
+	id = naming.at(name);
 	filePath = filePath_;
-	auto name = Tools::RemovePrefix(filePath_, EngineFiles::Textures); // we assume that all textures are in the texture folder
-	naming.Add(name, id);
 	stbi_set_flip_vertically_on_load(1);
 	unsigned char* localBuffer = stbi_load(filePath.c_str(), &width, &height, &bytesPerPixel, 4); // 4 = channel count
 	if (!localBuffer)

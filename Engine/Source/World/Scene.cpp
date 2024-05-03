@@ -13,6 +13,7 @@
 #include "CircleCollider.h" 
 #include "Register.h"
 #include "Renderer.h"
+#include "RenderSaver.h"
 #include <fstream>
 #include <filesystem>
 #include <sstream>
@@ -67,7 +68,6 @@ void Scene::ReloadImmediately()
 
 void Scene::MakeBlankSceneFile(string name)
 {
-
     // building a scene with a single entity with a transform and a camera
     Node transformYML;
     transformYML["id"] = UuidCreator::MakeID();
@@ -96,6 +96,7 @@ void Scene::MakeBlankSceneFile(string name)
 
 void Scene::Load()
 {
+    //RenderSaver::Load();
     Node sceneYML = YmlTools::Load(Path());
     id = sceneYML["id"].as<uuid>();
 
@@ -143,6 +144,7 @@ void Scene::Save()
         RaiseError("You are trying to save a scene with an uninitialized id");
         //scene.id = UuidCreator::MakeID();
 
+    RenderSaver::Save();
     Node sceneYML;
     sceneYML["id"] = scene.id;
     Node entitiesYML;

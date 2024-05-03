@@ -9,7 +9,7 @@
 #include "ImGuiSetup.h"
 #include "EngineMode.h"
 #include "OpenGlSetup.h"
-
+#include "RenderSaver.h"
 
 
 void Core::Run(std::unique_ptr<Scene> firstScene)
@@ -37,6 +37,7 @@ void Core::Setup()
     InputLoop::GlfwSetup();
     ImGuiSetup::Setup();
     // engine setup
+    RenderSaver::Load();
     Time::Setup();
     CollisionLoop::Setup();
     EngineAssets::Setup();

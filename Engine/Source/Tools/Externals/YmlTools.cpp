@@ -1,15 +1,27 @@
 #include "YmlTools.h"
 #include "ErrorChecker.h"
+#include "StringTools.h"
 #include <fstream>
 #include <filesystem>
 #include <sstream>
 
 namespace YmlTools
 {
-    YAML::Node Load(std::string path)
+
+    YAML::Node Load(std::string path, bool createFileIfAbsent)
     {
         if (!std::filesystem::exists(path))
-            RaiseError("Cannot load yml at " + path + ", since there is no file there.");
+        {
+            if (createFileIfAbsent)
+            {
+                if (!Tools::EndsWith(path, ".yml") && !Tools::EndsWith(path, ".yaml"))
+                    RaiseError("The socalled yml file " + path + ", should end on .yml or .yaml");
+                std::ofstream file(path);
+                file.close();
+            }
+            else
+                RaiseError("Cannot load yml at " + path + ", since there is no file there.");
+        }
         return YAML::LoadFile(path);
     }
 

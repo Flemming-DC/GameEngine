@@ -11,8 +11,9 @@ void Mesh::Setup(string name, const vector<float>& vertices_, const vector<unsig
         RaiseError("Mesh cannot be setup before OpenGlSetup::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("Mesh is already initialized");
-    id = UuidCreator::MakeID();
-    naming.AddWithSuffix(name, id);
+    if (!naming.Contains(name))
+        naming.AddWithSuffix(name, UuidCreator::MakeID());
+    id = naming.at(name);
 
     indexBuffer = IndexBuffer::register_.Add(indices_.data(), indices_.size());
     vertexBuffer = VertexBuffer::register_.Add(vertices_.data(), vertices_.size() * sizeof(float));

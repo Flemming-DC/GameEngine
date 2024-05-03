@@ -55,20 +55,22 @@ void Renderable::UnBind()
 
 void Renderable::Save(Node& node) const
 {
-    node["mesh"] = Mesh::naming.at(mesh.GetID());
-    //node["material"] = Material::naming.at(material.GetID());
+    node["mesh"] = mesh.GetID();
     
     Node materialNode;
+    materialNode["id"] = material.GetID();
+    // put properties of builtin materials into node
     auto& name = Material::naming.at(material.GetID());
-    materialNode["name"] = name; // evt. save id too
-    if (name == "image")
+    if (name == Literals::imageMaterialName)
     {
         materialNode[Literals::u_color] = material.GetUniform<vec4>(Literals::u_color);
         uuid texID = material.GetUniform<Texture*>(Literals::u_textureSampler)->GetID();
-        materialNode[Literals::u_textureSampler] = Texture::naming.at(texID);
-    }
+        materialNode[Literals::u_textureSampler] = texID;
+    } 
+    else if (name == Literals::colorMaterialName)
+        materialNode[Literals::u_color] = material.GetUniform<vec4>(Literals::u_color);
+    // save the node
     node["material"] = materialNode;
-    
 }
 
 void Renderable::Load(const Node& node)
@@ -77,16 +79,22 @@ void Renderable::Load(const Node& node)
     if (node["material"])
     {
         auto materialNode = node["material"];
-        uuid materialID = Material::naming.at(materialNode["name"].as<string>());
+        uuid materialID = materialNode["id"].as<uuid>();
         material = Material::register_.Get(materialID); // copy, not ref
-        if (materialNode[Literals::u_color])
+        // load properties of builtin materials
+        string name = Material::naming.at(materialNode["id"].as<uuid>());
+        if (name == Literals::imageMaterialName)
+        {
             material.SetUniform(Literals::u_color, materialNode[Literals::u_color].as<vec4>());
-        if (materialNode[Literals::u_textureSampler])
-            material.SetTexture(Literals::u_textureSampler, materialNode[Literals::u_textureSampler].as<string>());
+            material.SetTexture(Literals::u_textureSampler, materialNode[Literals::u_textureSampler].as<uuid>());
+        }
+        else if (name == Literals::colorMaterialName)
+            material.SetUniform(Literals::u_color, materialNode[Literals::u_color].as<vec4>());
+        
     }
     if (node["mesh"])
     {
-        uuid meshID = Mesh::naming.at(node["mesh"].as<string>());
+        uuid meshID = node["mesh"].as<uuid>();
         mesh = Mesh::register_.Get(meshID); // copy, not ref
     }
 

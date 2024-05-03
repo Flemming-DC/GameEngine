@@ -15,6 +15,7 @@ namespace Tools
 	std::string RemovePrefix(const std::string& str, const std::string& prefix);
 	std::string RemoveSuffix(const std::string& str, const std::string& suffix);
 	std::string Replace(std::string str, const std::string& toBeReplaced, const std::string& replacement);
+	bool EndsWith(const std::string& str, const std::string& suffix);
 
 	// if used on A deriving from B, then this prints A. However, if used on a pointer to A that is declared as B*, this print B*.
 	template<typename T>

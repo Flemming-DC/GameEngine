@@ -12,8 +12,13 @@ public:
 	inline uuid at(string name) { return idByName.at(name); }
 	string at(uuid name);
 	
+	bool Contains(string name) const;
+	bool Contains(uuid id) const;
 	vector<string> Names() { return Tools::GetKeys(idByName); } // copying
 	optional<uuid> Show(const char* label, uuid currentID); // returns the new uuid, if it differs from the old
+
+	void Save(string fileName);
+	void Load(string fileName);
 
 private:
 	map_uo<string, uuid> idByName;

@@ -9,7 +9,7 @@
 
 namespace YmlTools
 {
-    YAML::Node Load(std::string path);
+    YAML::Node Load(std::string path, bool createFileIfAbsent = true);
     void Save(YAML::Node yml, std::string path, bool overwrite, bool horizontalLists);
 }
 

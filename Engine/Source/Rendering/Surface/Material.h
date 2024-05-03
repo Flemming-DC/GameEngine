@@ -31,7 +31,7 @@ public:
 	// Sets the uniform internally in the material. 
 	// nb: it wont be sent to the GPU until the renderer issues a draw call.
 	void SetUniform(const string& name, std::any value);
-	void SetTexture(const string& name, string filePath);
+	void SetTexture(const string& name, uuid id);
 	inline uuid GetID() const { return id; }
 	inline static vector<string> Names() { return naming.Names(); }
 

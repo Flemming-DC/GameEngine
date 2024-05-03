@@ -97,7 +97,7 @@ void DrawRenderable(Renderable& renderable)
         Texture& oldTex = *mat.GetUniform<Texture*>(Literals::u_textureSampler);
         optional<uuid> changedTexID = Texture::naming.Show("texture", oldTex.GetID());
         if (changedTexID && *changedTexID != oldTex.GetID())
-            mat.SetTexture(Literals::u_textureSampler, Texture::naming.at(*changedTexID));
+            mat.SetTexture(Literals::u_textureSampler, *changedTexID);
     }
 }
 void DrawPolygonCollider(PolygonCollider& poly)

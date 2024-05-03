@@ -19,10 +19,11 @@ void Material::Setup(string name, const Shader& shader_, const map_uo<string, st
         RaiseError("Material cannot be setup before OpenGlSetup::Setup() is called.");
     if (UuidCreator::IsInitialized(id))
         RaiseError("Material is already initialized");
-    id = UuidCreator::MakeID();
+    if (!naming.Contains(name))
+        naming.AddWithSuffix(name, UuidCreator::MakeID());
+    id = naming.at(name);
     shader = shader_;
     uniformValuesByName = uniformValuesByName_;
-    naming.AddWithSuffix(name, id);
     CheckUniforms();
     SetupTexturesByName();
     Bind(true);
@@ -43,9 +44,8 @@ void Material::SetUniform(const string& name, std::any value)
     SetupTexturesByName();
 }
 
-void Material::SetTexture(const string& uniformName, string filePath)
+void Material::SetTexture(const string& uniformName, uuid texID)
 {
-    uuid texID = Texture::naming.at(filePath);
     Texture& tex = Texture::register_.Get(texID);
     SetUniform(uniformName, &tex);
 }
