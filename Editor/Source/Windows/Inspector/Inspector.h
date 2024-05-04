@@ -3,7 +3,6 @@
 
 namespace Editor
 {
-
 	class Inspector
 	{
 	public:

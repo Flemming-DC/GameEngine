@@ -12,8 +12,7 @@ map_uo<uuid, Component*> Entity::componentByID;
 Register<Entity> Entity::register_;
 Event<Entity&> Entity::OnCreated;
 Event<Entity&> Entity::OnDestroy;
-
-
+map_uo<string, std::function<void(uuid)>> Entity::AddComponentByName;
 
 Entity::Entity(string name, uuid* id_) : name(name)
 {
@@ -21,8 +20,6 @@ Entity::Entity(string name, uuid* id_) : name(name)
 	EntitiesByName[name].push_back(id); // [] initializes if the key is not present
 	OnCreated.Invoke(*this);
 }
-
-
 
 
 uuid Entity::GetID(string name_)

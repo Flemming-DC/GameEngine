@@ -11,6 +11,8 @@
 class Transform;
 class Entity;
 
+
+
 // evt. make updatable a subclass of component to avoid updating to many
 // evt. add an extra index for dynamics / updatables, which indicates there component type
 class Component
@@ -34,12 +36,12 @@ public:
 	void OnSceneLoaded();
 
 
-
 protected:
 	bool unique = false; // if unique, then the entity can only contain a single component of this type.
 
 	Component() {}; // called by Entity
 	virtual void Load(const YAML::Node& node) {}
+
 
 private:
 	uuids::uuid entityID;
@@ -56,4 +58,3 @@ private:
 
 
 };
-

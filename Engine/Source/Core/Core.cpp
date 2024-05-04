@@ -41,6 +41,7 @@ void Core::Setup()
     Time::Setup();
     CollisionLoop::Setup();
     EngineAssets::Setup();
+    Entity::DeclareComps<Transform, Renderable, Camera, CircleCollider, RectangleCollider, PolygonCollider>();
     // editor / game setup
     if (EngineMode::InEditor())
         Dynamic::CallOnEditorStart();

@@ -9,7 +9,6 @@
 #include "Event.h"
 
 class Component; // forward declaration
-	
 
 class Entity
 { 
@@ -18,6 +17,7 @@ public:
 	static Register<Entity> register_;
 	static Event<Entity&> OnCreated;
 	static Event<Entity&> OnDestroy;
+	static map_uo<string, std::function<void(uuid)>> AddComponentByName; // rename and evt. hide
 
 	Entity(string name = "Entity", uuid* id = nullptr); // id bruges hvis entiteten loades fra disk
 	static void Update();
@@ -34,12 +34,15 @@ public:
 	template <typename ComponentType> static ComponentType& GetComponent(uuid componentID);
 	template <typename ComponentType> static ComponentType* TryGetComponent(uuid componentID);
 
+	template <typename ComponentType> static void DeclareComp();
 	template <typename... Args> static Entity& Make(string name = "Entity");
+	template <typename... Args> static void DeclareComps() { (..., DeclareComp<Args>()); };
 	template <typename... Args> void AddMultiple() { (..., AddComponent<Args>()); };
 	template <typename ComponentType> inline ComponentType* TryGet() const { return TryGetComponent<ComponentType>(); };
 	template <typename ComponentType> inline ComponentType& Get() const { return GetComponent<ComponentType>(); };
 	template <typename ComponentType> inline ComponentType& Add() { return AddComponent<ComponentType>(); };
 	template <typename ComponentType> bool Destroy() { return Destroy(GetComponent<ComponentType>()); }
+
 
 	// evt. get component in children, parent, siblings etc.
 
@@ -54,6 +57,7 @@ public:
 	static Entity& GetEntity(string name) { return register_.Get(GetID(name)); }
 	static Entity& GetEntity(uuid id_) { return register_.Get(id_); }
 	static bool Exists(uuid id_) { return register_.Contains(id_); }
+	bool Destroy(Component& comp); // destroys the component at the end of the component update calls
 
 private:
 	static map_uo<uuid, vector<unique_ptr<Component>>> componentsByEntity;
@@ -68,10 +72,11 @@ private:
 	template <typename ComponentType> ComponentType& AddComponent(YAML::Node* node = nullptr); // id is only used by load
 	void ClearData(); // Engine-only
 	static void ClearData(const unique_ptr<Component>& compPtr); // Engine-only
-	bool Destroy(Component& comp); // destroys the entity at the end of the component update calls
 	static void CheckConsistency();
 
 };
 
-
 #include "Entity_impl.h"
+
+
+

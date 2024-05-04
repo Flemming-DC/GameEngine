@@ -13,7 +13,7 @@ public:
 	template <typename... Args>
 	static void Setup()
 	{
-		(..., Setup_Internal<Args>());
+		(..., Setup_Internal<Args>()); // (..., expr) expands to a repetition of expr for each arg
 	}
 
 	

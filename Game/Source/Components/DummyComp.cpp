@@ -7,12 +7,14 @@
 #include "GameInputs.h"
 #include "OpenGlExternal.h"
 #include "Core.h"
+#include "Entity.h" 
 
+Shorts;
 using namespace Key;
+
 
 void DummyComp::OnStart()
 {
-
 	glm::vec2 halfSize = glm::vec2(0.5f, 0.5f);
 	std::vector<glm::vec2> position2Ds =
 	{
@@ -40,7 +42,16 @@ void DummyComp::OnDestroy()
 
 void DummyComp::OnUpdate()
 {
+
+
 	/*
+	if (InputKey::BecomesPressed(Key::Keyboard::F))
+	{
+		P("F");
+		auto& func = Entity::AddComponentByName[Tools::TypeName(*this)];
+		func(Entity().GetID());
+	}
+
 	TestInputActions();
 
 	if (InputKey::BecomesPressed(Keyboard::G))

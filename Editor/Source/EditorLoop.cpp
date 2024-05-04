@@ -10,8 +10,6 @@
 #include "OpenGlSetup.h"
 #include "Inspector.h"
 #include "Delay.h"
-
-
 using namespace Editor;
 
 
@@ -25,13 +23,11 @@ void EditorLoop::OnEditorStart()
 
 void EditorLoop::OnEditorUpdate()
 {
-    //for (const auto& entity : Entity::register_.GetData())
-    //    Temp_Inspector::TransformGUI2D(entity);
-
     SceneEditor::Update();
     Inspector::Update();
     Hierarchy::Update();
     //AssetFolder::Update();
+    //Console::Update();
 
     ImGui::ShowDemoWindow();
 

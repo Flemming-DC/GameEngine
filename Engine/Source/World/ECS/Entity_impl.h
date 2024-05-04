@@ -108,3 +108,22 @@ Entity& Entity::Make(std::string name)
 	return entity;
 }
 
+template <typename ComponentType> 
+void Entity::DeclareComp()
+{
+	std::function<void(uuid)> func = [](uuid id) { Entity::Add<ComponentType>(id); };
+	Entity::AddComponentByName[Tools::TypeName<ComponentType>()] = func;
+};
+
+/*
+template <typename... Args> void Entity::DeclareComps()
+{ 
+	// (..., expr) expands to a repetition of expr for each arg
+	
+	(
+		..., 
+		Entity::AddComponentByName[Tools::TypeName<Args>()] = [] (uuid id) {
+			Entity::Add<Args>(id); };
+	);
+};
+*/ 

@@ -14,8 +14,8 @@ diverse
 	possible bug: openGL only have 32 textureIDs at the same time (texture atlasses can help)
 	evt. move entity name into the transform class and apply uniqueness of entity-names inside a given parent. (and in root)
 	bug: sceneCamera move speed and scrolling got out of sync
-	provide valid default state for colliders
-	
+	provide valid default state for colliders	
+	bug: read access violation when dummyComp makes more dummyComp in Update. happens in Entity loop over comp for (const auto& compPtr : components) compPtr->OnUpdate();
 
 
 components & gameobjects

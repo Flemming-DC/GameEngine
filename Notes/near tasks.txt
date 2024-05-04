@@ -2,24 +2,25 @@
 diverse:
 	
 
-Editor
-	save changes automatically and/or on ctrl+s
-	close editor by cross in lower windows bar and by cross in upper right corner. 
+Editor 
 	create and destroy objects
 	
 	Inspector
-		assign mesh and material (reuires an identifier and a save/load funcitonality)
-		assign anythin with a uuid via drag & drop. Particularly other entities and components
-		edit polygon positions in scene by dragging.
+		attach components
+		evt. edit polygon positions in scene by dragging.
 	SceneEditor
 		evt. run button
 		evt. show clidren of selection
+		evt. click + move in one action by clicking on entity and moving it
+		evt. selection priority (evt. automated by picking parents over children)
 	GameView
 		allow fullscreen mode
-	AssetFolder
 	Hierarchy	
-
-
+		evt. allow selection of entities in hierachy
+		evt. show selected entities in hierachy
+		evt. show entities with errors in hierachy (provided that components have some way of reporting errors)
+	evt. AssetFolder
+	evt. Console
 	
 
 

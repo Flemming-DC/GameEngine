@@ -10,13 +10,17 @@
     #include "EditorCore.h"
 #endif // InEditor
 
+#include "DummyComp.h"
+#include "GameLogic.h"
+#include "Entity.h"
 
 int main()
 {
 #ifdef InEditor
     Editor::EditorCore::MarkAsEditor();
 #endif // InEditor
-    
+
+    Entity::DeclareComps<DummyComp, GameLogic>();
     Dynamic::Setup<GameAssets, GameInputs, Settings>();
     Core::Run(std::make_unique<DemoScene>());
 }
