@@ -8,7 +8,7 @@ class SecondScene : public Scene
 public:
 
 	void PurelyManualSetup() override;
-	void ManualSetup() override;
+	void OnStart() override;
 
 };
 

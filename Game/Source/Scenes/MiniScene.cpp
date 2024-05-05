@@ -11,7 +11,7 @@ void MiniScene::PurelyManualSetup()
 }
 
 
-void MiniScene::ManualSetup()
+void MiniScene::OnStart()
 {
     // ------------ get assets ------------
     Mesh& mesh = EngineAssets::SquareMesh();

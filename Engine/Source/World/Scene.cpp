@@ -42,7 +42,7 @@ void Scene::ActivateImmediately(Scene* scenePtr)
     activeScene.reset(scenePtr);
 
     activeScene->Load();
-    activeScene->ManualSetup();
+    activeScene->OnStart();
     onStart.Invoke(*activeScene);
 }
 
@@ -54,7 +54,7 @@ void Scene::ReloadImmediately()
     //activeScene = std::move(activeScene);
 
     activeScene->Load();
-    activeScene->ManualSetup();
+    activeScene->OnStart();
     onStart.Invoke(*activeScene);
 }
 

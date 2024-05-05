@@ -25,7 +25,7 @@ public:
 	static void ReloadImmediately();
 	static void SetFirstScene(std::unique_ptr<Scene> firstScene);
 protected:
-	virtual void ManualSetup() = 0;
+	virtual void OnStart() {};
 
 private:
 	static uuids::uuid activeSceneID;

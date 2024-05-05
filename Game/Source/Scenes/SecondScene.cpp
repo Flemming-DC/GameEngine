@@ -46,7 +46,7 @@ void SecondScene::PurelyManualSetup()
 }
 
 
-void SecondScene::ManualSetup()
+void SecondScene::OnStart()
 {
     // ------------ get assets ------------
     Mesh& mesh = EngineAssets::SquareMesh();

@@ -8,7 +8,7 @@ class DemoScene : public Scene
 public:
 	
 	void PurelyManualSetup() override;
-	void ManualSetup() override;
+	//void OnStart() override;
 
 private:
 	//void DemoScene::HelloEnter(Collider* other);
