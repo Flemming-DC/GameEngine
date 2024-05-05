@@ -92,7 +92,7 @@ void EditorSandbox::OnEditorStart()
 void EditorSandbox::OnEditorUpdate()
 {
     //TestMousePosition();
-	TestDestruction();
+	//TestDestruction();
 }
 
 

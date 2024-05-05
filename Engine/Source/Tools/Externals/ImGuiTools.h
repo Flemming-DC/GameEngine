@@ -1,6 +1,7 @@
 #pragma once
 #include "GlmTools.h"
 #include "imgui/imgui.h"
+#include "AutoCompletor.h"
 #include <vector>
 #include <string>
 

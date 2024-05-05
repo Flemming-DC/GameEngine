@@ -10,7 +10,6 @@ Shorts
 using namespace Editor;
 uuid currentEntityID;
 
-
 void Inspector::Start()
 {
     Selector::onSelected.Add([](vector<uuid> selection) {
@@ -42,7 +41,26 @@ void Inspector::Update()
         }
         //P(Entity::AddComponentByName);
     }
+    static int selected_fish = -1;
+    const char* names[] = { "Bream", "Haddock", "Mackerel", "Pollock", "Tilefish" };
+    if (ImGui::Button("Select.."))
+        ImGui::OpenPopup("my_select_popup");
+    ImGui::SameLine();
+    ImGui::TextUnformatted(selected_fish == -1 ? "<None>" : names[selected_fish]);
+    if (ImGui::BeginPopup("my_select_popup"))
+    {
+        ImGui::SeparatorText("Aquarium");
+        for (int i = 0; i < IM_ARRAYSIZE(names); i++)
+            if (ImGui::Selectable(names[i]))
+                selected_fish = i;
+        ImGui::EndPopup();
+    }
     ImGui::Unindent();
+
+    static string compName;
+    vector<string> completionOptions = {"hejsa", "hello", "bim", "hip", "hap", "hup"};
+    ImGui::AutoCompletor("Completion custom", &compName, completionOptions);
+
     
     ImGui::End();
 }

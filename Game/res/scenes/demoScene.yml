@@ -62,6 +62,6 @@ Entities:
             localScale: [1, 1, 1]
             parent: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
         GameLogic:
-            id: fa0591c1-1542-42b7-80b1-5c00f490b4cb
+            id: 62d80066-9369-4e3c-8e7a-ff1717a9f0f6
         DummyComp:
-            id: 781eb62c-234b-4b45-8f14-a437a46f4029
+            id: 480be80d-da90-4c9c-8cee-9a658123b98c
