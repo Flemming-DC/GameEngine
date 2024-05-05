@@ -34,35 +34,18 @@ void Inspector::Update()
     
     // attach component
     ImGui::Spacing();
-    ImGui::Text("Add Component");
-    //static char compName[256];
-    string compName;
-    //compName.reserve(1000);
+    ImGui::SeparatorText("Add Component");
+
+    //ImGui::Text("Add Component");
+    static string compName;
     vector<string> completionOptions = Tools::GetKeys(Entity::AddComponentByName);
     Tools::Remove(completionOptions, Tools::TypeName<Transform>());
-    //P(currentEntityID);
-    if (ImGui::AutoCompletor("Completion custom", &compName, completionOptions))
+    if (ImGui::AutoCompletor(" ", &compName, completionOptions))
     {
-        
-        P("chosen ", compName);
-        //string compNameStr = compName;
         if (!Tools::ContainsKey(Entity::AddComponentByName, compName))
             RaiseError("Unrecognized component ", compName);
         Entity::AddComponentByName.at(compName)(currentEntityID);
-
-        for (int i = 0; i < (int)compName.size(); i++)
-        {
-            compName[i] = '\0';
-        }
-        compName.clear();// = "";
-        ImGui::SetKeyboardFocusHere(-1);
-        //compName = "\0";
-        // compName.shrink_to_fit();
-        //strncpy(compName.c_str(), "", 2048);
-
-        //compName
-        //std::memset(compName, '\0', sizeof(compName)); // Clear the char array
-        //ImGui::SetKeyboardFocusHere(-1);
+        compName.clear();
     }
     
     
@@ -81,30 +64,7 @@ void Inspector::DrawComponent(Component& comp)
     if (!open)
         return;
 
-
-    // -----------
-    /*
-    if (typeid(comp) == typeid(Transform))
-    {
-        Transform& tr = *static_cast<Transform*>(&comp);
-        string cStr = comp.to_string();
-        string trStr = tr.to_string();
-        P(cStr, " ", trStr);
-    }
-    DownCast(ComponentDrawer::Draw(comp));
-
-    if (typeid(comp) == typeid(Transform))
-        ComponentDrawer::Draw(*static_cast<Transform*>(&comp));
-    else if ...
-    else
-        RaiseError("unrecognized componentType");
-
-    //ComponentDrawer::Draw(DownCast(comp));
-    */
-    // -----------
-
-
-    
+    ImGui::Indent();
     if (typeid(comp) == typeid(Transform))
         ComponentDrawer::DrawTransform(*static_cast<Transform*>(&comp));
     else if (typeid(comp) == typeid(Camera))
@@ -117,7 +77,7 @@ void Inspector::DrawComponent(Component& comp)
         ComponentDrawer::DrawRectangleCollider(*static_cast<RectangleCollider*>(&comp));
     else if (typeid(comp) == typeid(CircleCollider))
         ComponentDrawer::DrawCircleCollider(*static_cast<CircleCollider*>(&comp));
-
+    ImGui::Unindent();
 }
 
 

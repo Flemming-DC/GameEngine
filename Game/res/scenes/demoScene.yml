@@ -40,11 +40,9 @@ Entities:
                 u_textureSampler: efa1504b-71ac-4350-9092-bc0263287bb5
         Transform:
             id: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
-            localPosition: [-0.490543664, -0.673846841, 0]
+            localPosition: [-0.399380714, -0.673846841, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
-        DummyComp:
-            id: 3244cc11-c618-40f2-a5c3-6da758425aab
     picture 2:
         id: 9f90ac2c-01c1-439a-b75e-98acd00255e4
         PolygonCollider:
@@ -64,6 +62,6 @@ Entities:
             localScale: [1, 1, 1]
             parent: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
         GameLogic:
-            id: 6bc1d392-0111-4d02-a543-2c433ef3a368
+            id: 1084af96-d176-4bc5-a816-41b3dc653483
         DummyComp:
-            id: 78300c0e-4c46-49ab-9d90-407584815f79
+            id: 9f956e5b-72c8-4389-8777-9c3f77acd69b

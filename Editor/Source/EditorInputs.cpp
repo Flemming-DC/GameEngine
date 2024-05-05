@@ -60,7 +60,7 @@ namespace Editor::EditorInputs
 	InputAction<bool>& ControlUniformScale() { return controlUniformScale; }; // evt. add shift condition
 
 	// EditorLoop
-	bool ToggleRuntime() { return InputKey::BecomesPressed(Key::Keyboard::R); }
+	bool ToggleRuntime() { return Shift() && InputKey::BecomesPressed(Key::Keyboard::R); }
 	bool Exit() { return InputKey::BecomesPressed(Key::Keyboard::exc); }
 	bool Save() {  return  Ctrl() && InputKey::BecomesPressed(Key::Keyboard::S); }
 

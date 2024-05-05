@@ -11,9 +11,8 @@ namespace ImGui
     static vector<string> uninitialized; // this is only used to provide completionOptions with a invalid startup value.
     static vector<string>& completionOptions = uninitialized;
     static vector<string> candidates;
-    static int selected = -1;
     static bool openPopup = false;
-    static int i = 0;
+    static string suffix = "";
 
     static int _CompareFirstNCharecters(const char* s1, const char* s2, int n)
     {
@@ -101,7 +100,6 @@ namespace ImGui
         {
             for (int i = 0; i < (int)candidates.size(); i++)
             {
-                bool isSelected = (selected == i);
                 if (ImGui::Selectable(candidates[i].c_str()))
                 {
                     *strInput = candidates[i];
@@ -117,10 +115,9 @@ namespace ImGui
     bool AutoCompletor(const char* label, string* strInput, vector<string>& completionOptions_)
     {
         completionOptions = completionOptions_;
-        string labelStr = string(label) + " " + std::to_string(i); // changing label name is required to avoid bug
+        string labelStr = string(label) + suffix; // changing label name is required to avoid bug
         ImGui::InputText(labelStr.c_str(), strInput, ImGuiInputTextFlags_CallbackCompletion, _TextEditCallback);
         _UpdateCandidates(strInput->c_str(), strInput->size());
-
         
         if (*strInput != "")
             ImGui::LabelText("matches", logger::make_string(candidates).c_str());
@@ -136,6 +133,8 @@ namespace ImGui
         {
             if (InputKey::BecomesPressed(Key::Keyboard::tab) && candidates.size() > 0)
                 openPopup = true;
+            if (!ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow) && InputKey::BecomesPressed(Key::Mouse::left))
+                openPopup = false;
             if (openPopup)
                 hasChosen = CompletionPopup(strInput);
         }
@@ -143,7 +142,7 @@ namespace ImGui
         {
             // changing i and thereby label name is required to prevent ImGui from remembering the 
             // old value of strInput even after it has been cleared.
-            i++;
+            suffix += " ";
             openPopup = false;
         }
 
