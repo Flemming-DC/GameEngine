@@ -4,7 +4,6 @@
 #include "Entity.h"
 #include "imGuiTools.h" 
 #include "ComponentDrawer.h"
-#include "InputKey.h" // temp
 
 Shorts
 using namespace Editor;
@@ -35,8 +34,6 @@ void Inspector::Update()
     // attach component
     ImGui::Spacing();
     ImGui::SeparatorText("Add Component");
-
-    //ImGui::Text("Add Component");
     static string compName;
     vector<string> completionOptions = Tools::GetKeys(Entity::AddComponentByName);
     Tools::Remove(completionOptions, Tools::TypeName<Transform>());

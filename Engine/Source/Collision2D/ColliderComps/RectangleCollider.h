@@ -15,7 +15,7 @@ public:
 	int InitOrder() override { return -1000; }
 
 private:
-	glm::vec2 size;
+	glm::vec2 size = glm::vec2(1.0f);
 
 
 };

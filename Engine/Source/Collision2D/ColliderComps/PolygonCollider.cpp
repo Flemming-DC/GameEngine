@@ -1,6 +1,22 @@
 #include "PolygonCollider.h"
 #include "ErrorChecker.h"
+#include "logger.h"
 
+void PolygonCollider::OnStart()
+{
+	Collider::OnStart();
+	if (!bare.GetLocalPosition2Ds().empty())
+		return;
+	glm::vec2 halfSize = glm::vec2(0.5f);
+	std::vector<glm::vec2> position2Ds =
+	{
+		{-halfSize.x, -halfSize.y }, // LD
+		{-halfSize.x,  halfSize.y }, // LU
+		{ halfSize.x,  halfSize.y }, // RU
+		{ halfSize.x, -halfSize.y }, // RD
+	};
+	Setup(position2Ds);
+}
 
 void PolygonCollider::Setup(std::vector<glm::vec2> localPosition2Ds_)
 {

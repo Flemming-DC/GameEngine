@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "Collider.h"
 #include "Gizmo.h"
+#include "CircleCollider.h" // temp
 
 using namespace Editor;
 Shorts;

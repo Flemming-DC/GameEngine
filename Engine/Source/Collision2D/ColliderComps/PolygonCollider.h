@@ -23,5 +23,6 @@ public:
 	int InitOrder() override { return -1000; }
 
 private:
+	void OnStart() override;
 };
 
