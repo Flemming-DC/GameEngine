@@ -111,19 +111,9 @@ Entity& Entity::Make(std::string name)
 template <typename ComponentType> 
 void Entity::DeclareComp()
 {
-	std::function<void(uuid)> func = [](uuid id) { Entity::Add<ComponentType>(id); };
+	//std::function<void(uuid)> func = [](uuid entityID) { Entity::Add<ComponentType>(entityID); };
+	std::function<void(uuid, YAML::Node*)> func = [](uuid entityID, YAML::Node* node) {
+		Entity::GetEntity(entityID).AddComponent<ComponentType>(node); };
+	
 	Entity::AddComponentByName[Tools::TypeName<ComponentType>()] = func;
 };
-
-/*
-template <typename... Args> void Entity::DeclareComps()
-{ 
-	// (..., expr) expands to a repetition of expr for each arg
-	
-	(
-		..., 
-		Entity::AddComponentByName[Tools::TypeName<Args>()] = [] (uuid id) {
-			Entity::Add<Args>(id); };
-	);
-};
-*/ 

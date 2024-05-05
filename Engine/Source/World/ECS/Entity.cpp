@@ -12,7 +12,7 @@ map_uo<uuid, Component*> Entity::componentByID;
 Register<Entity> Entity::register_;
 Event<Entity&> Entity::OnCreated;
 Event<Entity&> Entity::OnDestroy;
-map_uo<string, std::function<void(uuid)>> Entity::AddComponentByName;
+map_uo<string, std::function<void(uuid, YAML::Node*)>> Entity::AddComponentByName;
 
 Entity::Entity(string name, uuid* id_) : name(name)
 {

@@ -44,7 +44,7 @@ void Inspector::Update()
     {
         if (!Tools::ContainsKey(Entity::AddComponentByName, compName))
             RaiseError("Unrecognized component ", compName);
-        Entity::AddComponentByName.at(compName)(currentEntityID);
+        Entity::AddComponentByName.at(compName)(currentEntityID, nullptr);
         compName.clear();
     }
     

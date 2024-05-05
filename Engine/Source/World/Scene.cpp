@@ -112,7 +112,38 @@ void Scene::Load()
         {
             string compTypeName = pair_.first;
             Node compYML = pair_.second;
+            if (compTypeName == "id")
+                continue;
+            //if (Tools::TypeName(compTypeName) == "GameLogic")
+            //    continue;
+            //if (Tools::TypeName(compTypeName) == "DummyComp")
+            //    continue;
 
+            auto AddComponent = Entity::AddComponentByName.at(compTypeName);
+            AddComponent(entityID, &compYML);
+
+
+
+            /*
+            if (compTypeName == "Transform")
+                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
+            else if (compTypeName == "Camera")
+                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
+            else if (compTypeName == "Renderable")
+                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
+            else if (compTypeName == "PolygonCollider")
+                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
+            else if (compTypeName == "RectangleCollider")
+                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
+            else if (compTypeName == "CircleCollider")
+                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
+            else if (compTypeName == "GameLogic")
+                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
+            else if (compTypeName == "DummyComp")
+                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
+            
+            */
+            /*
             if (compTypeName == "Transform")
                 entity.LoadComponent<Transform>(compYML);
             else if (compTypeName == "Camera")
@@ -125,7 +156,7 @@ void Scene::Load()
                 entity.LoadComponent<RectangleCollider>(compYML);
             else if (compTypeName == "CircleCollider")
                 entity.LoadComponent<CircleCollider>(compYML);
-
+            */
         }
     }
     for (const auto& entity : Entity::register_.GetData())

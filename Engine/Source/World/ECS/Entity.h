@@ -17,7 +17,7 @@ public:
 	static Register<Entity> register_;
 	static Event<Entity&> OnCreated;
 	static Event<Entity&> OnDestroy;
-	static map_uo<string, std::function<void(uuid)>> AddComponentByName; // rename and evt. hide
+	static map_uo<string, std::function<void(uuid, YAML::Node*)>> AddComponentByName; // rename and evt. hide
 
 	Entity(string name = "Entity", uuid* id = nullptr); // id bruges hvis entiteten loades fra disk
 	static void Update();

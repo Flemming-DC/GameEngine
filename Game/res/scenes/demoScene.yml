@@ -45,6 +45,10 @@ Entities:
             localScale: [1, 1, 1]
     picture 2:
         id: 9f90ac2c-01c1-439a-b75e-98acd00255e4
+        DummyComp:
+            id: 56a97465-b157-4b48-b56c-e8abef29ff56
+        GameLogic:
+            id: c7a5a75e-353b-435e-b93b-dcf990af8bc7
         PolygonCollider:
             id: e4cf93a6-af2c-4bab-a22f-7a2dd7561c36
             localPosition2Ds: [[-0.5, -0.5], [-0.5, 0.5], [0.5, 0.5], [0.5, -0.5]]
@@ -61,7 +65,3 @@ Entities:
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
             parent: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
-        GameLogic:
-            id: 1084af96-d176-4bc5-a816-41b3dc653483
-        DummyComp:
-            id: 9f956e5b-72c8-4389-8777-9c3f77acd69b
