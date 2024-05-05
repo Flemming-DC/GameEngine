@@ -114,6 +114,7 @@ void Scene::Load()
             if (compTypeName == "id")
                 continue; // this isnt really a component, so we skip it
             auto AddComponent = Entity::AddComponentByName.at(compTypeName);
+            P(AddComponent);
             AddComponent(entityID, &compYML);
         }
     }

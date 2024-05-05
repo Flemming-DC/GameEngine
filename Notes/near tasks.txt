@@ -1,5 +1,9 @@
 
+
 diverse:
+	evt. add name -> show in inspector
+	
+
 	
 
 Editor 

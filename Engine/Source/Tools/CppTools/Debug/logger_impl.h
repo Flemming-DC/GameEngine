@@ -2,6 +2,7 @@
 #include <string>
 #include <memory>
 #include <optional>
+#include <functional>
 #include "StringTools.h"
 #include "GlmTools.h" // this contains some overloads of to_string that might otherwise be counterintuitively absent
 #include "ListTools.h" // this contains some overloads of to_string that might otherwise be counterintuitively absent
@@ -72,7 +73,7 @@ namespace logger
 	template<typename T> string inline to_string(std::unique_ptr<T> value) { return "unique_ptr to " + (value ? to_string(*value) : "null"); } // unique pointer
 	template<typename T> string inline to_string(std::shared_ptr<T> value) { return "shared_ptr to " + (value ? to_string(*value) : "null"); } // shared pointer
 	template<typename T> string inline to_string(std::optional<T> value) { return "optional " + (value ? to_string(*value) : "null"); } // optional
-
+	
 	string inline to_string(const string& value) { return value; }
 	string inline to_string(const char* value) { return string(value); }
 	string inline to_string(const char value) { return string(&value); }
@@ -86,6 +87,16 @@ namespace logger
 	string inline to_string(float value) { return std::to_string(value); }
 	string inline to_string(double value) { return std::to_string(value); }
 	string inline to_string(long double value) { return std::to_string(value); }
+
+	template<typename T, typename... Args> string inline to_string(std::function<T(Args...)> value)
+	{
+		string out = Tools::TypeName(value);
+		out = Tools::RemovePrefix(out, "std::function");
+		out = Tools::Replace(out, " __cdecl", " ");
+		out = Tools::Replace(out, ",class ", ", ");
+		out = Tools::Replace(out, "(class ", "(");
+		return "function " + out;
+	}
 
 	/*
 	template<typename EnumType>
