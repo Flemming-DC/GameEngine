@@ -12,11 +12,9 @@ Shorts;
 
 void GameLogic::OnStart()
 {
-    Delay::ToFrameEnd([this]()
-        {
-            material = &Get<Renderable>().GetMaterial();
-            color = material->GetUniform<glm::vec4>("u_color");
-        });
+    material = &Get<Renderable>().GetMaterial();
+    color = material->GetUniform<glm::vec4>("u_color");
+    
     /*
     onEnterIndex = Get<RectangleCollider>().onEnter.Add([this](Collider& other)
         { 
@@ -40,9 +38,7 @@ void GameLogic::OnDestroy()
 
 void GameLogic::OnUpdate()
 {
-    if (material == nullptr)
-        return;
-    material->SetUniform("u_color", color);
+    material->SetUniform(Literals::u_color, color);
 
     if (color.r > 1)
         increment = -6.0f * Time::Delta();

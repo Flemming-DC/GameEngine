@@ -94,6 +94,14 @@ void Scene::MakeBlankSceneFile(string name)
     YmlTools::Save(sceneYML, path, false, true);
 }
 
+struct SortByOrder
+{
+    bool operator()(Component* lhs, Component* rhs) const
+    {
+        return lhs->InitOrder() < rhs->InitOrder();
+    }
+};
+
 void Scene::Load()
 {
     //RenderSaver::Load();
@@ -108,60 +116,21 @@ void Scene::Load()
         Entity& entity = Entity::register_.Add(entityName, &entityID);
 
         auto componentsMap = pair.second.as<map<string, Node>>();
-        for (auto& pair_ : componentsMap)
+        for (auto& [compTypeName, compYML] : componentsMap)
         {
-            string compTypeName = pair_.first;
-            Node compYML = pair_.second;
             if (compTypeName == "id")
-                continue;
-            //if (Tools::TypeName(compTypeName) == "GameLogic")
-            //    continue;
-            //if (Tools::TypeName(compTypeName) == "DummyComp")
-            //    continue;
-
+                continue; // this isnt really a component, so we skip it
             auto AddComponent = Entity::AddComponentByName.at(compTypeName);
             AddComponent(entityID, &compYML);
-
-
-
-            /*
-            if (compTypeName == "Transform")
-                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
-            else if (compTypeName == "Camera")
-                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
-            else if (compTypeName == "Renderable")
-                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
-            else if (compTypeName == "PolygonCollider")
-                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
-            else if (compTypeName == "RectangleCollider")
-                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
-            else if (compTypeName == "CircleCollider")
-                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
-            else if (compTypeName == "GameLogic")
-                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
-            else if (compTypeName == "DummyComp")
-                Entity::AddComponentByName.at(compTypeName)(entityID, &compYML);
-            
-            */
-            /*
-            if (compTypeName == "Transform")
-                entity.LoadComponent<Transform>(compYML);
-            else if (compTypeName == "Camera")
-                entity.LoadComponent<Camera>(compYML);
-            else if (compTypeName == "Renderable")
-                entity.LoadComponent<Renderable>(compYML);
-            else if (compTypeName == "PolygonCollider")
-                entity.LoadComponent<PolygonCollider>(compYML);
-            else if (compTypeName == "RectangleCollider")
-                entity.LoadComponent<RectangleCollider>(compYML);
-            else if (compTypeName == "CircleCollider")
-                entity.LoadComponent<CircleCollider>(compYML);
-            */
         }
     }
     for (const auto& entity : Entity::register_.GetData())
     {
+        vector<Component*> comps;
         for (const auto& comp : entity.GetComponents())
+            comps.push_back(comp.get());
+        std::sort(comps.begin(), comps.end(), SortByOrder());
+        for (const auto& comp : comps)
             comp->OnSceneLoaded();
     }
 

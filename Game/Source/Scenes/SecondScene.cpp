@@ -58,8 +58,8 @@ void SecondScene::ManualSetup()
 
     // ------------ setup components ------------
     //Entity::Get<Renderable>(picture1ID).Setup(material);
-    Entity::Get<Renderable>(picture2ID).SetMaterial(material);
-    Entity::Add<GameLogic>(picture2ID);
+    //Entity::Get<Renderable>(picture2ID).SetMaterial(material);
+    //Entity::Add<GameLogic>(picture2ID);
 
 
 }

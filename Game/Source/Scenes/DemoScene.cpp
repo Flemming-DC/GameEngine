@@ -54,8 +54,8 @@ void DemoScene::PurelyManualSetup()
 
 void DemoScene::ManualSetup()
 {
-    Entity& picture2 = Entity::GetEntity("picture 2");
-    picture2.AddMultiple<GameLogic, DummyComp>();
+    //Entity& picture2 = Entity::GetEntity("picture 2");
+    //picture2.AddMultiple<GameLogic, DummyComp>();
 
 
 

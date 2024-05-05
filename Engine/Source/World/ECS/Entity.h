@@ -30,7 +30,6 @@ public:
 	template <typename ComponentType> inline static ComponentType* TryGet(uuid entityID);
 	template <typename ComponentType> inline static ComponentType& Get(uuid entityID);
 	template <typename ComponentType> inline static ComponentType& Add(uuid entityID);
-	template <typename ComponentType> ComponentType& LoadComponent(YAML::Node& node);
 	template <typename ComponentType> static ComponentType& GetComponent(uuid componentID);
 	template <typename ComponentType> static ComponentType* TryGetComponent(uuid componentID);
 

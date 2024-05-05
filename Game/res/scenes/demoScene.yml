@@ -46,9 +46,9 @@ Entities:
     picture 2:
         id: 9f90ac2c-01c1-439a-b75e-98acd00255e4
         DummyComp:
-            id: 56a97465-b157-4b48-b56c-e8abef29ff56
+            id: 3659b305-cf7c-4b56-a9af-b1bb871c1fca
         GameLogic:
-            id: c7a5a75e-353b-435e-b93b-dcf990af8bc7
+            id: b28ec757-b2da-4212-8820-c9ee5cfa32a2
         PolygonCollider:
             id: e4cf93a6-af2c-4bab-a22f-7a2dd7561c36
             localPosition2Ds: [[-0.5, -0.5], [-0.5, 0.5], [0.5, 0.5], [0.5, -0.5]]

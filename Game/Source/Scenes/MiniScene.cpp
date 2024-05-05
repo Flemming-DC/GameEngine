@@ -21,7 +21,7 @@ void MiniScene::ManualSetup()
     auto cameraID = Entity::GetID("camera");
 
     // ------------ setup components ------------
-    Entity::Add<DummyComp>(cameraID);
+    //Entity::Add<DummyComp>(cameraID);
 
 }
 

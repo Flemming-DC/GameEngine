@@ -54,13 +54,6 @@ ComponentType& Entity::AddComponent(YAML::Node* node)
 }
 
 
-template <typename ComponentType> 
-ComponentType& Entity::LoadComponent(YAML::Node& node)
-{
-	return AddComponent<ComponentType>(&node);
-}
-
-
 template <typename ComponentType>
 ComponentType* Entity::TryGet(uuids::uuid entityID)
 {

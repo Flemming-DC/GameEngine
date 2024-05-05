@@ -20,6 +20,8 @@ class Component
 	// entity must access InternalConstructor and OnUpdate and it must notify component about entity being dead
 	friend class Entity; 
 public:
+	//int initOrder = 0;
+
 	std::string to_string() const;
 
 	template <typename ComponentType> inline 
@@ -34,7 +36,7 @@ public:
 	inline uuids::uuid GetID() const { return id; }
 	virtual void Save(YAML::Node& node) const {}
 	void OnSceneLoaded();
-
+	virtual int InitOrder() { return 0; }
 
 protected:
 	bool unique = false; // if unique, then the entity can only contain a single component of this type.
