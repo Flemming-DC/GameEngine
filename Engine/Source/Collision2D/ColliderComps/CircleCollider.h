@@ -16,6 +16,7 @@ public:
 	void Load(const YAML::Node& node) override;
 	const BareCollider& Bare() const override { return bare; };
 	//BareCollider& Bare() { return bare; };
+	int InitOrder() override { return -1000; }
 
 private:
 	void OnStart() override;

@@ -17,6 +17,7 @@ public:
 	mat4 View() const; 
 	static Camera& Current();
 	void SetCameraAsCurrent() { currentCamera = this; }
+	int InitOrder() override { return -1200; }
 
 private:
 	static Camera* currentCamera;

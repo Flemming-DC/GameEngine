@@ -5,14 +5,7 @@
 #include "StringTools.h"
 #include "ListTools.h"
 #include "YmlTools.h"
-#include "Transform.h" 
-#include "Camera.h" 
-#include "Renderable.h" 
-#include "PolygonCollider.h" 
-#include "RectangleCollider.h" 
-#include "CircleCollider.h" 
 #include "Register.h"
-#include "Renderer.h"
 #include "RenderSaver.h"
 #include <fstream>
 #include <filesystem>

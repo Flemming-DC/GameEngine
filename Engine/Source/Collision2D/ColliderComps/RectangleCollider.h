@@ -12,6 +12,7 @@ public:
 	void SetSize(glm::vec2 size);
 	void Save(YAML::Node& node) const override;
 	void Load(const YAML::Node& node) override;
+	int InitOrder() override { return -1000; }
 
 private:
 	glm::vec2 size;

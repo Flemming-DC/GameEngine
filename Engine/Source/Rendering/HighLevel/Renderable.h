@@ -21,6 +21,7 @@ public:
 	inline Mesh& GetMesh() { return mesh; } // not used in engine
 	void Save(YAML::Node& node) const override;
 	void Load(const YAML::Node& node) override;
+	int InitOrder() override { return -1200; }
 	
 private:
 	Mesh mesh;

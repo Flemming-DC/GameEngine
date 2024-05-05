@@ -58,6 +58,7 @@ public:
 
 	void Save(YAML::Node& node) const override;
 	void Load(const YAML::Node& node) override;
+	int InitOrder() override { return -2000; }
 
 private:
 	//uuids::uuid parentID;

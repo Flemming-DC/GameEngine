@@ -20,6 +20,7 @@ public:
 	void Save(YAML::Node& node) const override;
 	void Load(const YAML::Node& node) override;
 	const BareCollider& Bare() const override { return bare; };
+	int InitOrder() override { return -1000; }
 
 private:
 };

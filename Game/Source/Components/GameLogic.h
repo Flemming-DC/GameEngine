@@ -5,7 +5,7 @@
 class GameLogic : public Component
 {
 public:
-	int InitOrder() override { return 1; }
+	//int InitOrder() override { return 1; }
 
 private:
 	float increment = 0.01f;
