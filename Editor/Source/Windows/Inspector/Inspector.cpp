@@ -21,23 +21,50 @@ void Inspector::Start()
 void Inspector::Update()
 {
     ImGui::Begin("Inspector");
-    if (Entity::Exists(currentEntityID))
+    if (!Entity::Exists(currentEntityID))
     {
-        Entity& entity = Entity::GetEntity(currentEntityID);
-        for (const unique_ptr<Component>& compPtr : entity.GetComponents())
-            DrawComponent(*compPtr);
+        ImGui::End();
+        return;
     }
+
+    // draw components
+    Entity& entity = Entity::GetEntity(currentEntityID);
+    for (const unique_ptr<Component>& compPtr : entity.GetComponents())
+        DrawComponent(*compPtr);
     
     // attach component
     ImGui::Spacing();
-    static string compName;
+    ImGui::Text("Add Component");
+    //static char compName[256];
+    string compName;
+    //compName.reserve(1000);
     vector<string> completionOptions = Tools::GetKeys(Entity::AddComponentByName);
+    Tools::Remove(completionOptions, Tools::TypeName<Transform>());
+    //P(currentEntityID);
     if (ImGui::AutoCompletor("Completion custom", &compName, completionOptions))
     {
+        
         P("chosen ", compName);
+        //string compNameStr = compName;
+        if (!Tools::ContainsKey(Entity::AddComponentByName, compName))
+            RaiseError("Unrecognized component ", compName);
+        Entity::AddComponentByName.at(compName)(currentEntityID);
 
+        for (int i = 0; i < (int)compName.size(); i++)
+        {
+            compName[i] = '\0';
+        }
+        compName.clear();// = "";
+        ImGui::SetKeyboardFocusHere(-1);
+        //compName = "\0";
+        // compName.shrink_to_fit();
+        //strncpy(compName.c_str(), "", 2048);
+
+        //compName
+        //std::memset(compName, '\0', sizeof(compName)); // Clear the char array
+        //ImGui::SetKeyboardFocusHere(-1);
     }
-
+    
     
     ImGui::End();
 }

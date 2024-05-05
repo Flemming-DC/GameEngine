@@ -13,6 +13,7 @@ namespace ImGui
     static vector<string> candidates;
     static int selected = -1;
     static bool openPopup = false;
+    static int i = 0;
 
     static int _CompareFirstNCharecters(const char* s1, const char* s2, int n)
     {
@@ -116,16 +117,19 @@ namespace ImGui
     bool AutoCompletor(const char* label, string* strInput, vector<string>& completionOptions_)
     {
         completionOptions = completionOptions_;
-        ImGui::InputText(label, strInput, ImGuiInputTextFlags_CallbackCompletion, _TextEditCallback);
+        string labelStr = string(label) + " " + std::to_string(i); // changing label name is required to avoid bug
+        ImGui::InputText(labelStr.c_str(), strInput, ImGuiInputTextFlags_CallbackCompletion, _TextEditCallback);
         _UpdateCandidates(strInput->c_str(), strInput->size());
 
-        P(candidates, strInput);
+        
         if (*strInput != "")
             ImGui::LabelText("matches", logger::make_string(candidates).c_str());
         else
             ImGui::LabelText("", "");
         
         static bool hasChosen = false;
+        if (*strInput == "")
+            hasChosen = false;
         if (candidates.size() == 1 && *strInput == candidates[0])
             hasChosen = true;
         else
@@ -136,9 +140,15 @@ namespace ImGui
                 hasChosen = CompletionPopup(strInput);
         }
         if (hasChosen)
+        {
+            // changing i and thereby label name is required to prevent ImGui from remembering the 
+            // old value of strInput even after it has been cleared.
+            i++;
             openPopup = false;
-        
+        }
+
         return hasChosen;
+        
     }
 }
 
