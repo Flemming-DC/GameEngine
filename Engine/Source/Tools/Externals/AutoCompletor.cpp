@@ -27,11 +27,8 @@ namespace ImGui
         return d;
     }
 
-    static void _UpdateCandidates(string* strInput)
+    static void _UpdateCandidates(const char* word_start, int word_length)
     {
-        const char* word_start = strInput->c_str();
-        int word_length = strInput->size();
-        // Build a list of candidates
         candidates.clear();
         for (int i = 0; i < (int)completionOptions.size(); i++)
             if (_CompareFirstNCharecters(completionOptions[i].c_str(), word_start, word_length) == 0)
@@ -44,18 +41,15 @@ namespace ImGui
         const char* word_start = data->Buf;
         int word_length = data->CursorPos;
         const char* word_end = word_start + word_length;
+        _UpdateCandidates(word_start, word_length);
 
-        if (candidates.size() == 0) // no match
-        {
-            P("No match for \"%.*s\"!\n", word_length, word_start);
-        }
-        else if (candidates.size() == 1) // Single match.
+        if (candidates.size() == 1) // Single match.
         {
             // Delete the beginning of the word and replace it entirely so we've got nice casing.
             data->DeleteChars(0, word_length);
             data->InsertChars(data->CursorPos, candidates[0].c_str());
         }
-        else // Multiple matches. Complete as much as we can.
+        else if (candidates.size() > 1) // Multiple matches. Complete as much as we can.
         {
             // find the length for which all_candidates_matches
             int match_len = word_length;
@@ -80,10 +74,6 @@ namespace ImGui
             }
 
 
-            // List matches
-            P("Possible matches:\n");
-            for (int i = 0; i < (int)candidates.size(); i++)
-                P("- %s\n", candidates[i]);
         }
 
     }
@@ -126,9 +116,10 @@ namespace ImGui
     bool AutoCompletor(const char* label, string* strInput, vector<string>& completionOptions_)
     {
         completionOptions = completionOptions_;
-        _UpdateCandidates(strInput);
         ImGui::InputText(label, strInput, ImGuiInputTextFlags_CallbackCompletion, _TextEditCallback);
+        _UpdateCandidates(strInput->c_str(), strInput->size());
 
+        P(candidates, strInput);
         if (*strInput != "")
             ImGui::LabelText("matches", logger::make_string(candidates).c_str());
         else
@@ -139,7 +130,7 @@ namespace ImGui
             hasChosen = true;
         else
         {
-            if (InputKey::BecomesPressed(Key::Keyboard::tab))
+            if (InputKey::BecomesPressed(Key::Keyboard::tab) && candidates.size() > 0)
                 openPopup = true;
             if (openPopup)
                 hasChosen = CompletionPopup(strInput);

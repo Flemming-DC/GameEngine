@@ -30,36 +30,13 @@ void Inspector::Update()
     
     // attach component
     ImGui::Spacing();
-    ImGui::Indent();
-    if (ImGui::Button("Add Component"))
-    {
-        ImGui::Text("clicked");
-        P(Entity::AddComponentByName.size());
-        for (const auto& [name, func] : Entity::AddComponentByName)
-        {
-            P(name);
-        }
-        //P(Entity::AddComponentByName);
-    }
-    static int selected_fish = -1;
-    const char* names[] = { "Bream", "Haddock", "Mackerel", "Pollock", "Tilefish" };
-    if (ImGui::Button("Select.."))
-        ImGui::OpenPopup("my_select_popup");
-    ImGui::SameLine();
-    ImGui::TextUnformatted(selected_fish == -1 ? "<None>" : names[selected_fish]);
-    if (ImGui::BeginPopup("my_select_popup"))
-    {
-        ImGui::SeparatorText("Aquarium");
-        for (int i = 0; i < IM_ARRAYSIZE(names); i++)
-            if (ImGui::Selectable(names[i]))
-                selected_fish = i;
-        ImGui::EndPopup();
-    }
-    ImGui::Unindent();
-
     static string compName;
-    vector<string> completionOptions = {"hejsa", "hello", "bim", "hip", "hap", "hup"};
-    ImGui::AutoCompletor("Completion custom", &compName, completionOptions);
+    vector<string> completionOptions = Tools::GetKeys(Entity::AddComponentByName);
+    if (ImGui::AutoCompletor("Completion custom", &compName, completionOptions))
+    {
+        P("chosen ", compName);
+
+    }
 
     
     ImGui::End();
