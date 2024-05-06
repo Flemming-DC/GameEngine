@@ -76,6 +76,15 @@ namespace Tools
 		return str;
 	}
 
+	bool StartsWith(const std::string& str, const std::string& prefix)
+	{
+		if (str.length() < prefix.length())
+		{
+			return false;
+		}
+		return str.substr(0, prefix.length()) == prefix;
+	}
+
 	bool EndsWith(const std::string& str, const std::string& suffix)
 	{
 		if (str.length() < suffix.length())

@@ -1,4 +1,7 @@
 id: 78d15a43-766b-4116-b27b-b0071816ac8e
+StoredEntities:
+    4789b406-c67b-4951-a05b-8ea4af7126ff:
+        # evt. overrides
 Entities:
     camera:
         id: 2eb9bf85-5117-4757-96c6-92a99bbb0f49
@@ -9,16 +12,16 @@ Entities:
             localPosition: [0, 0, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
-    circle 1: 
-        id: 465e6f11-1daa-46ed-9eab-ada19408dd94
-        Transform: 
-            id: c8f4574c-079a-48f7-9055-6b2fd37e023c
+    circle 1:
+        id: 9f5200c9-8a5a-4f6e-9cf1-0d478ccf3c82
+        CircleCollider:
+            id: 37c2492b-4254-4028-a2d8-764690180715
+            localRadius: 0.5
+        Transform:
+            id: 75811620-a2a2-455e-91d3-881ca9c70e1c
             localPosition: [-0.5, 0.5, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
-        CircleCollider:
-          id: 7a2121ba-cb58-4a14-bc42-c907070a6d94
-          localRadius: 0.5
     circle 2:
         id: 16aaa607-4e7a-465b-bef0-141127983c85
         CircleCollider:
@@ -32,26 +35,36 @@ Entities:
     picture 1:
         id: 62b4da63-0610-4eff-9820-3e1f073c9cff
         Renderable:
-            id: 8f2e1e26-e6d6-4917-ad9e-61e1e3c81791
-            material: 18ead38c-bb49-4692-a840-4246b2ac1b86
+            id: 2f87723c-ab25-4817-ae12-c92b26d5aa42
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: efa1504b-71ac-4350-9092-bc0263287bb5
         Transform:
             id: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
-            localPosition: [-0.5, -0.5, 0]
+            localPosition: [-0.399380714, -0.673846841, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
     picture 2:
         id: 9f90ac2c-01c1-439a-b75e-98acd00255e4
-        RectangleCollider:
+        DummyComp:
+            id: 3659b305-cf7c-4b56-a9af-b1bb871c1fca
+        GameLogic:
+            id: b28ec757-b2da-4212-8820-c9ee5cfa32a2
+        PolygonCollider:
             id: e4cf93a6-af2c-4bab-a22f-7a2dd7561c36
-            size: [1, 1]
+            localPosition2Ds: [[-0.5, -0.5], [-0.5, 0.5], [0.5, 0.5], [0.5, -0.5]]
         Renderable:
             id: 7cb23b0c-f684-4b93-98bb-6ff3d2290336
-            material: 18ead38c-bb49-4692-a840-4246b2ac1b86
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 5813263f-20bb-41da-a2c2-12654532478e
         Transform:
             id: a5be3ef9-f754-42ca-af89-8842ab357ab7
-            localPosition: [1.25, 0, 0]
+            localPosition: [1.10763717, 0.102203608, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
             parent: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
-        DummyComp:
-            id: 5799e560-ffe1-4834-adf9-de269c0d98af

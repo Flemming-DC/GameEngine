@@ -11,6 +11,8 @@ namespace Literals
 	static string Shaders = Res + "Shaders/";
 	static string Textures = Res + "Textures/";
 	static string Namings = Res + "Namings/";
+	static string Entities = Res + "Entities/";
+	
 	// string idByName = res + "IdByName";
 	// evt. Materials
 	// evt. Meshes

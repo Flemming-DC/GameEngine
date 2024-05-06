@@ -6,7 +6,8 @@
 #include "ListTools.h"
 #include "YmlTools.h"
 #include "Register.h"
-#include "RenderSaver.h"
+#include "NamingSaver.h"
+#include "StoredEntity.h"
 #include <fstream>
 #include <filesystem>
 #include <sstream>
@@ -51,7 +52,6 @@ void Scene::ReloadImmediately()
     if (activeScene)
         activeScene->ShutDown();
 
-    //activeScene = std::move(activeScene);
 
     activeScene->Load();
     activeScene->OnStart();
@@ -97,26 +97,21 @@ struct SortByOrder
 
 void Scene::Load()
 {
-    //RenderSaver::Load();
     Node sceneYML = YmlTools::Load(Path());
     id = sceneYML["id"].as<uuid>();
 
-    auto entitiesMap = sceneYML["Entities"].as<map<string, Node>>();
-    for (auto& pair : entitiesMap)
-    {
-        string entityName = pair.first;
-        uuid entityID = pair.second["id"].as<uuid>();
-        Entity& entity = Entity::register_.Add(entityName, &entityID);
+    auto storedEntitiesMap = sceneYML["StoredEntities"].IsMap() ? sceneYML["StoredEntities"].as<map<uuid, Node>>() : map<uuid, Node>();
+    auto entitiesMap = sceneYML["Entities"].IsMap() ? sceneYML["Entities"].as<map<string, Node>>() : map<string, Node>();
 
-        auto componentsMap = pair.second.as<map<string, Node>>();
-        for (auto& [compTypeName, compYML] : componentsMap)
-        {
-            if (compTypeName == "id")
-                continue; // this isnt really a component, so we skip it
-            auto AddComponent = Entity::AddComponentByName.at(compTypeName);
-            P(AddComponent);
-            AddComponent(entityID, &compYML);
-        }
+    for (auto& [entityID, entityYML] : storedEntitiesMap)
+    {
+        StoredEntity::Load(StoredEntity::naming.at(entityID));
+        // apply overrides
+    }
+
+    for (auto& [entityName, entityYML] : entitiesMap)
+    {
+        StoredEntity::FromNode(entityYML, entityName);
     }
     for (const auto& entity : Entity::register_.GetData())
     {
@@ -124,6 +119,7 @@ void Scene::Load()
         for (const auto& comp : entity.GetComponents())
             comps.push_back(comp.get());
         std::sort(comps.begin(), comps.end(), SortByOrder());
+
         for (const auto& comp : comps)
             comp->OnSceneLoaded();
     }
@@ -136,25 +132,21 @@ void Scene::Save()
     Scene& scene = *activeScene;
     if (!UuidCreator::IsInitialized(scene.id))
         RaiseError("You are trying to save a scene with an uninitialized id");
-        //scene.id = UuidCreator::MakeID();
 
-    RenderSaver::Save();
+    NamingSaver::Save();
     Node sceneYML;
     sceneYML["id"] = scene.id;
+    Node storedEntitiesYML;
     Node entitiesYML;
     for (const auto& entity : Entity::register_.GetData())
     {
-        Node entityYML;
-        entityYML["id"] = entity.GetID();
-        for (auto& comp : entity.GetComponents())
-        {
-            Node compYML;
-            compYML["id"] = comp->GetID();
-            comp->Save(compYML); // component-type dependent data
-            entityYML[Tools::TypeName(*comp)] = compYML;
-        }
-        entitiesYML[entity.Name()] = entityYML;
+        if (StoredEntity::naming.Contains(entity.GetID()))
+            storedEntitiesYML[entity.GetID()] = Node(); // apply overrides
+        else
+            entitiesYML[entity.Name()] = StoredEntity::ToNode(entity);
+        
     }
+    sceneYML["StoredEntities"] = storedEntitiesYML;
     sceneYML["Entities"] = entitiesYML;
 
     YmlTools::Save(sceneYML, scene.Path(), true, true);

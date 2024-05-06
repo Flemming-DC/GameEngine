@@ -8,6 +8,7 @@ public:
 	void AddWithSuffix(string& name, uuid id); // gives name a suffix " (number)" to avoid naming collision
 	bool TryAdd(const string& name, uuid id);
 	void Add(const string& name, uuid id);
+	inline void Overwrite(const string& name, uuid id) { idByName[name] = id; }
 	void Remove(const string& name);
 	inline uuid at(string name) { return idByName.at(name); }
 	string at(uuid name);

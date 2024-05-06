@@ -1,6 +1,6 @@
 #pragma once
 
-namespace RenderSaver
+namespace NamingSaver
 {
 	void Save();
 	void Load();

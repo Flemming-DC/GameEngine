@@ -1,18 +1,23 @@
-#include "RenderSaver.h"
+#include "NamingSaver.h"
 #include "Texture.h"
 #include "Material.h"
 #include "Mesh.h"
+#include "StoredEntity.h"
 
-void RenderSaver::Save()
+
+void NamingSaver::Save()
 {
 	Texture::naming.Save("textureNames.yml");
 	Material::naming.Save("materialNames.yml");
 	Mesh::naming.Save("meshNames.yml");
+	StoredEntity::naming.Save("entityNames.yml");
 }
 
-void RenderSaver::Load()
+void NamingSaver::Load()
 {
 	Texture::naming.Load("textureNames.yml");
 	Material::naming.Load("materialNames.yml");
 	Mesh::naming.Load("meshNames.yml");
+	StoredEntity::naming.Load("entityNames.yml");
+
 }

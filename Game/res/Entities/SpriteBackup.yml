@@ -1,0 +1,13 @@
+id: 92d6ac02-7ec1-4f9e-8d12-61930c18b7bc
+Renderable:
+    id: 47e7725f-c87e-480a-9d48-aa2317518b5e
+    mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+    material:
+        id: b456a101-6f11-459e-8080-de7bd7deae4a
+        u_color: [1, 1, 1, 1]
+        u_textureSampler: efa1504b-71ac-4350-9092-bc0263287bb5
+Transform:
+    id: 6d776cb3-8243-467c-8424-fb1c1aaa7c2b
+    localPosition: [-0.399380714, -0.673846841, 0]
+    localRotation: [1, 0, 0, 0]
+    localScale: [1, 1, 1]
