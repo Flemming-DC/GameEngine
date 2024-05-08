@@ -1,6 +1,12 @@
 id: 78d15a43-766b-4116-b27b-b0071816ac8e
 StoredEntities:
-    4789b406-c67b-4951-a05b-8ea4af7126ff: ~
+    4789b406-c67b-4951-a05b-8ea4af7126ff:
+        Renderable:
+            material:
+                u_color: [0.767642021, 0.374572307, 0.374572307, 1]
+        Transform:
+            localPosition: [-0.399380714, -0.124504223, 0]
+            localRotation: [0.419326842, 0, -0, -0.907835364]
 Entities:
     camera:
         id: 2eb9bf85-5117-4757-96c6-92a99bbb0f49

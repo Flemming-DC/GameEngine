@@ -14,7 +14,6 @@
 
 
 Shorts;
-using YAML::Node;
 
 unique_ptr<Scene> Scene::activeScene = nullptr;
 Event<Scene&> Scene::onStart;
@@ -103,16 +102,18 @@ void Scene::Load()
     auto storedEntitiesMap = sceneYML["StoredEntities"].IsMap() ? sceneYML["StoredEntities"].as<map<uuid, Node>>() : map<uuid, Node>();
     auto entitiesMap = sceneYML["Entities"].IsMap() ? sceneYML["Entities"].as<map<string, Node>>() : map<string, Node>();
 
-    for (auto& [entityID, entityYML] : storedEntitiesMap)
+    for (auto& [entityID, overriderYML] : storedEntitiesMap)
     {
-        StoredEntity::Load(StoredEntity::naming.at(entityID));
-        // apply overrides
+        string name = StoredEntity::naming.at(entityID);
+        Node stored = StoredEntity::LoadToNode(name);
+        Node combined = StoredEntity::Override(stored, overriderYML);
+        StoredEntity::FromNode(combined, name);
     }
-
     for (auto& [entityName, entityYML] : entitiesMap)
     {
         StoredEntity::FromNode(entityYML, entityName);
     }
+
     for (const auto& entity : Entity::register_.GetData())
     {
         vector<Component*> comps;
@@ -140,8 +141,13 @@ void Scene::Save()
     Node entitiesYML;
     for (const auto& entity : Entity::register_.GetData())
     {
-        if (StoredEntity::naming.Contains(entity.GetID()))
-            storedEntitiesYML[entity.GetID()] = Node(); // apply overrides
+        bool isStored = StoredEntity::naming.Contains(entity.GetID());
+        if (isStored)
+        {
+            Node stored = StoredEntity::LoadToNode(entity.Name()); // this is the unchanged / stored part of entity
+            Node combined = StoredEntity::ToNode(entity); // this is the runtime version of the entity
+            storedEntitiesYML[entity.GetID()] = StoredEntity::GetOverrider(stored, combined); // runtime minus stored = overrider
+        }
         else
             entitiesYML[entity.Name()] = StoredEntity::ToNode(entity);
         

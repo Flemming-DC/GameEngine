@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <stduuid/uuid.h>
 #include "glm/glm.hpp"
+#include "YmlTools.h"
 
 #define Shorts \
 using uint	 = unsigned int;\
@@ -15,6 +16,7 @@ using quat	 = glm::quat;\
 using mat4	 = glm::mat4;\
 using uuid	 = uuids::uuid;\
 using string = std::string;\
+using Node = YAML::Node;\
 template<typename T> using vector	  = std::vector<T>;\
 template<typename T> using unique_ptr = std::unique_ptr<T>;\
 template<typename T> using optional	  = std::optional<T>;\

@@ -6,9 +6,11 @@
 #include <filesystem>
 #include <sstream>
 
+Shorts;
+
 namespace YmlTools
 {
-    void _EnsureYMLsuffix(std::string& path)
+    void _EnsureYMLsuffix(string& path)
     {
         auto parts = Tools::SplitString(path, ".");
         bool hasExtension = parts.size() > 1;
@@ -21,14 +23,14 @@ namespace YmlTools
         path += ".yml";
     }
 
-    void _CheckThatValidLocation(const std::string& path)
+    void _CheckThatValidLocation(const string& path)
     {
         if (!Tools::StartsWith(path, Literals::Res))
             RaiseError("path is expected to start with '" + Literals::Res + "' received '" + path + "'");
     }
 
 
-    YAML::Node Load(std::string path, bool createFileIfAbsent)
+    Node Load(string path, bool createFileIfAbsent)
     {
         _CheckThatValidLocation(path);
         _EnsureYMLsuffix(path);
@@ -47,7 +49,7 @@ namespace YmlTools
         return YAML::LoadFile(path);
     }
 
-    void Save(YAML::Node yml, std::string path, bool overwrite, bool horizontalLists)
+    void Save(Node yml, string path, bool overwrite, bool horizontalLists)
     {
         _CheckThatValidLocation(path);
         _EnsureYMLsuffix(path);
@@ -66,4 +68,78 @@ namespace YmlTools
         outStream << emitter.c_str();
         outStream.close();
     }
+
+    // equality test
+
+
+    bool _AreEqualSequences(Node n1, Node n2)
+    {
+        if (n1.size() != n2.size())
+            return false;
+        for (int i = 0; i < (int)n1.size(); i++)
+        {
+            if (!IsEqual(n1[i], n2[i]))
+                return false;
+        }
+        return true;
+    }
+
+    bool _AreEqualMaps(Node n1, Node n2)
+    {
+        if (n1.size() != n2.size())
+            return false;
+
+        // check if keys are different
+        for (auto& pair2 : n2)
+        {
+            bool key2IsInKeys1 = false;
+            for (auto& pair1 : n1)
+            {
+                if (IsEqual(pair2.first, pair1.first))
+                {
+                    key2IsInKeys1 = true;
+                    break;
+                }
+            }
+            if (!key2IsInKeys1)
+                return false;
+        }
+
+        vector<Node*> keys;
+        for (auto& pair : n1)
+            keys.push_back(&pair.first);
+
+        for (Node* k : keys)
+        {
+            if (!IsEqual(n1[*k], n2[*k]))
+                return false;
+        }
+
+        return true;
+    }
+
+    bool IsEqual(Node n1, Node n2)
+    {
+        if (n1.Type() != n2.Type())
+            return false;
+        auto type = n1.Type();
+        
+        switch (type)
+        {
+        case YAML::NodeType::Undefined:
+            return true;
+        case YAML::NodeType::Null:
+            return true;
+        case YAML::NodeType::Scalar:
+            return n1.Scalar() == n2.Scalar();
+        case YAML::NodeType::Sequence:
+            return _AreEqualSequences(n1, n2);
+        case YAML::NodeType::Map:
+            return _AreEqualMaps(n1, n2);
+        default:
+            RaiseError("UnRecognized nodeType ", type, " for node:\n", n1);
+        }
+
+    }
+
 }

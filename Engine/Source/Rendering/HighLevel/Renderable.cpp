@@ -7,7 +7,6 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 Shorts;
-using YAML::Node;
 // static variables must be initialized in the cpp file not the header file
 vector<uuid> Renderable::allRenderables;
 

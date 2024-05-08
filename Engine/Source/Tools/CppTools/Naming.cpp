@@ -6,7 +6,6 @@
 #include "EngineLiterals.h"
 #include <regex>
 Shorts;
-using YAML::Node;
 
 void Naming::AddWithSuffix(string& name, uuid id)
 {

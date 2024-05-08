@@ -8,8 +8,6 @@
 #include "OpenGlSetup.h"
 #include "YmlTools.h"
 
-using YAML::Node;
-
 Register<Material> Material::register_;
 Naming Material::naming;
 

@@ -3,7 +3,6 @@
 #include "EngineLiterals.h"
 
 Shorts;
-using YAML::Node;
 
 Naming StoredEntity::naming;
 
@@ -14,14 +13,63 @@ void StoredEntity::Save(const Entity& entity)
     YmlTools::Save(ToNode(entity), entity.Name(), true, true);
 }
 
-Entity& StoredEntity::Load(const string& entityName)
+Entity& StoredEntity::Load(const string& entityName) {
+    return FromNode(LoadToNode(entityName), entityName); }
+
+Node StoredEntity::LoadToNode(const string& entityName) { 
+    return YmlTools::Load(Literals::Entities + entityName + ".yml"); }
+
+
+Node StoredEntity::Override(const Node& stored, const Node& overrider)
 {
-    P(entityName);
-    string path = Literals::Entities + entityName + ".yml";
-    Node node = YmlTools::Load(path);
-    //P(node.as)
-    Entity& entity = FromNode(node, entityName);
-    return entity;
+    if (!overrider.IsDefined() || overrider.IsNull())
+        return stored;
+    if (!overrider.IsMap())
+        RaiseError("Node is defined, not null and not a map. This is unexpected.");
+
+    Node combined = stored;
+    auto overriderMap = overrider.as<map<string, Node>>();
+    for (const auto& [key, value] : overriderMap)
+    {
+        if (value.IsMap())
+            combined[key] = Override(stored[key], value);
+        else
+            combined[key] = value;
+    }
+    P("-------- combined --------\n");
+    P(combined);
+    return combined;
+}
+
+// combined is the result of applying overrider to stored
+Node StoredEntity::GetOverrider(const Node& stored, const Node& combined)
+{
+    if (!stored.IsMap() || !combined.IsMap())
+        RaiseError("Both nodes are expected to be maps.");
+
+    Node overrider;
+    auto combinedMap = combined.as<map<string, Node>>();
+    for (const auto& pair : combinedMap)
+    {
+        const string& key = pair.first;
+        const Node& value = pair.second;
+
+        if (!stored[key])
+            overrider[key] = value;
+        else if (YmlTools::IsEqual(stored[key], value))
+            continue;
+        else if (!value.IsMap())
+            overrider[key] = value;
+        else
+        {
+            Node n = GetOverrider(stored[key], value);
+            if (!n.IsNull())
+                overrider[key] = n;
+        }
+
+    }
+    return overrider;
+
 }
 
 

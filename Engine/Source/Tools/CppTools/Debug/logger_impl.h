@@ -6,7 +6,7 @@
 #include "StringTools.h"
 #include "GlmTools.h" // this contains some overloads of to_string that might otherwise be counterintuitively absent
 #include "ListTools.h" // this contains some overloads of to_string that might otherwise be counterintuitively absent
-
+#include "YmlTools.h"
 
 namespace logger
 {
@@ -29,7 +29,7 @@ namespace logger
 	string inline make_string() { return ""; } // handle end of recursion
 
 
-	string inline file_name(std::string path)
+	string inline file_name(string path)
 	{
 		string file_name = Tools::SplitString(path, "\\").back(); // works on windows which uses folder\file.ext
 		file_name = Tools::SplitString(file_name, "/").back(); // works on those who use folder/file.ext
@@ -96,6 +96,15 @@ namespace logger
 		out = Tools::Replace(out, ",class ", ", ");
 		out = Tools::Replace(out, "(class ", "(");
 		return "function " + out;
+	}
+
+	string inline to_string(YAML::Node node)
+	{
+		YAML::Emitter emitter;
+		emitter.SetIndent(4);
+		emitter.SetSeqFormat(YAML::Flow); // write lists horizontally, not vertically
+		emitter << node;
+		return emitter.c_str();
 	}
 
 	/*
