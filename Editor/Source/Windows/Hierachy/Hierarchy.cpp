@@ -1,18 +1,22 @@
 #include "Hierarchy.h"
 #include "ImGuiTools.h"
+#include "EditorInputs.h"
 #include "Entity.h"
 #include <string>
 using namespace Editor;
 Shorts;
-
+static const char* dragDrop = "change parent";
+static bool dropped = false; // gets updated by DragDrop inside DrawTreeNode and gets used by DropToRoot
 
 void Hierarchy::Update()
 {
     ImGui::Begin("Hierarchy");
 
-    for (const Transform* tr : FindRoots())
-        DrawTreeNode(*tr);
-
+    dropped = false;
+    for (Transform* tr : FindRoots())
+        DrawTreeNode(*tr); // Transform isn't const, since it can change parent
+    
+    DropToRoot();
 
     ImGui::End();
 }
@@ -28,9 +32,25 @@ vector<Transform*> Hierarchy::FindRoots()
             roots.push_back(&tr);
     }
     return roots;
+}    
+
+void Hierarchy::DropToRoot()
+{
+    if (!dropped && ImGui::GetDragDropPayload() && EditorInputs::FinishDragDrop())
+    {
+        const ImGuiPayload* payload = ImGui::GetDragDropPayload();
+
+        if (payload->DataSize <= 0)
+            RaiseError("expected some data from DragDrop");
+        uuid childID = *static_cast<uuid*>(payload->Data);
+        Transform& child = Entity::GetComponent<Transform>(childID);
+        child.SetParent(nullptr);
+
+        ImGui::SetDragDropPayload(dragDrop, nullptr, 0); // remove payload
+    }
 }
 
-void Hierarchy::DrawTreeNode(const Transform& transform)
+void Hierarchy::DrawTreeNode(Transform& transform)
 {
     static map_uo<uuid, bool> bib;
     uuid id = transform.GetID();
@@ -44,13 +64,9 @@ void Hierarchy::DrawTreeNode(const Transform& transform)
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
     bool open = ImGui::TreeNodeEx(name.c_str(), flag);
 
-    if (ImGui::BeginDragDropSource())
-    {
-        ImGui::SetDragDropPayload("_TREENODE", NULL, 0);
-        ImGui::Text("This is a drag and drop source ", name);
-        ImGui::EndDragDropSource();
-    }
 
+    if (DragDrop(transform))
+        dropped = true;
 
     if (ImGui::IsItemClicked())
     {
@@ -59,12 +75,46 @@ void Hierarchy::DrawTreeNode(const Transform& transform)
 
     if (open)
     {
-        for (const Transform* child : transform.GetChildren())
+        for (Transform* child : transform.GetChildren())
             DrawTreeNode(*child);
         ImGui::TreePop();
     }
 
 
+
+}
+
+bool Hierarchy::DragDrop(Transform& transform)
+{
+    if (ImGui::BeginDragDropSource())
+    {
+        uuid transformID = transform.GetID();
+        ImGui::SetDragDropPayload(dragDrop, &transformID, sizeof(transformID));
+        ImGui::EndDragDropSource();
+    }
+
+
+    if (ImGui::BeginDragDropTarget())
+    {
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(dragDrop))
+        {
+            if (payload->DataSize <= 0)
+                RaiseError("expected some data from DragDrop");
+            uuid childID = *static_cast<uuid*>(payload->Data);
+            Transform& child = Entity::GetComponent<Transform>(childID);
+            child.SetParent(&transform);
+        }
+        ImGui::EndDragDropTarget();
+        return true;
+    }
+    return false;
+    /*
+    else if (const ImGuiPayload* payload = ImGui::GetDragDropPayload())
+    {
+        //const ImGuiPayload* payload = ImGui::GetDragDropPayload();
+        P(payload != nullptr);
+    }
+    */
 
 }
 
@@ -78,7 +128,7 @@ void Hierarchy::DrawTreeNode_old(const Transform& transform)
 
     if (ImGui::TreeNodeEx(name.c_str(), flag))
     {
-        for (const Transform* child : transform.GetChildren())
+        for (Transform* child : transform.GetChildren())
             DrawTreeNode(*child);
         ImGui::TreePop();
     }

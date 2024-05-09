@@ -27,6 +27,9 @@ namespace Editor::EditorInputs
 	bool DeleteSelection();
 	bool DublicateSelection();
 
+	// hierachy
+	bool FinishDragDrop();
+
 	// EditorLoop
 	bool ToggleRuntime();
 	bool Exit();

@@ -10,8 +10,11 @@ namespace Editor
 
 	private:
 		static vector<Transform*> FindRoots(); // if stored across frames, then switch to uuid
-		static void DrawTreeNode(const Transform& transform);
+		static void DropToRoot();
+		static void DrawTreeNode(Transform& transform);
+		static bool DragDrop(Transform& transform); // used to edit parenthood
 		static void DrawTreeNode_old(const Transform& transform);
+
 	};
 
 }

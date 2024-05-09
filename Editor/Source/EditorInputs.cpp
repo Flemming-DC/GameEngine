@@ -64,6 +64,9 @@ namespace Editor::EditorInputs
 	bool CreateStoredEntity() { return InputKey::BecomesPressed(Key::Mouse::right); }
 	bool DeleteSelection() { return InputKey::BecomesPressed(Key::Keyboard::_delete); }
 	bool DublicateSelection() { return  Ctrl() && InputKey::BecomesPressed(Key::Keyboard::D); }
+	
+	// hierachy
+	bool FinishDragDrop() { return InputKey::BecomesReleased(Key::Mouse::left); } // this only counts if you have a payload
 
 	// EditorLoop
 	bool ToggleRuntime() { return Shift() && InputKey::BecomesPressed(Key::Keyboard::R); }
