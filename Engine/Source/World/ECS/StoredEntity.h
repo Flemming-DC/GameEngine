@@ -11,7 +11,7 @@ public:
 
 	static void Save(const Entity& entity);
 	static Entity& Load(const string& entityName); // filename = entityName + .yml
-    static Node LoadToNode(const string& entityName);
+    static Node LoadToNode(uuid storedID);
     //static Entity& Load(uuid id) { return Load(naming.at(id)); }
     //static Node Override(Node overridden, Node overrider);
     //static Node ApplyDifferences(Node node, Node additions, Node removals);
@@ -22,7 +22,7 @@ public:
 
 
     static Node ToNode(const Entity& in);
-    static Entity& FromNode(const Node& node, const string& name);
+    static Entity& FromNode(const Node& node, optional<uuid> instanceID = std::nullopt, optional<uuid> storedID = std::nullopt);
 
 
 };
@@ -38,7 +38,7 @@ template<> struct YAML::convert<Entity>
 
     static bool decode(const YAML::Node& node, Entity& out) // load
     {
-        out = StoredEntity::FromNode(node, "Entity");
+        out = StoredEntity::FromNode(node);
         return true;
     }
 };

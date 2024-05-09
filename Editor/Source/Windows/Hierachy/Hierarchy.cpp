@@ -13,6 +13,7 @@ void Hierarchy::Update()
     for (const Transform* tr : FindRoots())
         DrawTreeNode(*tr);
 
+
     ImGui::End();
 }
 
@@ -23,18 +24,59 @@ vector<Transform*> Hierarchy::FindRoots()
     for (const Entity& entity : Entity::register_.GetData()) // slow loop
     {
         Transform& tr = entity.Get<Transform>();
-        //P(1, " ", tr, " ", tr.GetParent());
         if (tr.GetParent() == nullptr)
-        {
-            //P(2, " ", tr);
             roots.push_back(&tr);
-        }
     }
     return roots;
 }
 
 void Hierarchy::DrawTreeNode(const Transform& transform)
 {
+    static map_uo<uuid, bool> bib;
+    uuid id = transform.GetID();
+    if (!Tools::ContainsKey(bib, id))
+        bib[id] = false;
+
+    string name = transform.Entity().Name();
+    int flag = transform.GetChildren().empty() ? ImGuiTreeNodeFlags_Leaf : ImGuiTreeNodeFlags_None;
+    if (bib[id])
+        flag |= ImGuiTreeNodeFlags_Selected;
+    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+    bool open = ImGui::TreeNodeEx(name.c_str(), flag);
+
+    if (ImGui::IsItemToggledOpen())
+        P("ImGui::IsItemToggledOpen() ", name);
+    if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
+        P("ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen() ", name);
+    if (ImGui::BeginDragDropSource())
+    {
+        ImGui::SetDragDropPayload("_TREENODE", NULL, 0);
+        ImGui::Text("This is a drag and drop source ", name);
+        ImGui::EndDragDropSource();
+    }
+
+
+    if (ImGui::IsItemClicked())
+    {
+        P("clicked ", transform.Entity().Name());
+        bib[id] = !bib[id];
+    }
+
+    if (open)
+    {
+        for (const Transform* child : transform.GetChildren())
+            DrawTreeNode(*child);
+        ImGui::TreePop();
+    }
+
+
+
+}
+
+
+void Hierarchy::DrawTreeNode_old(const Transform& transform)
+{
+
     string name = transform.Entity().Name();
     auto flag = transform.GetChildren().empty() ? ImGuiTreeNodeFlags_Leaf : ImGuiTreeNodeFlags_None;
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
@@ -45,6 +87,5 @@ void Hierarchy::DrawTreeNode(const Transform& transform)
             DrawTreeNode(*child);
         ImGui::TreePop();
     }
+
 }
-
-

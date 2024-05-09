@@ -39,7 +39,10 @@ ComponentType& Entity::AddComponent(YAML::Node* node)
 	static_assert(std::is_base_of<Component, ComponentType>::value,
 		"AddComponent can only add components, not other types");
 	bool hasComponent = (TryGet<ComponentType>() != nullptr);
-	
+	/*
+	if (storedID && node && (*node)["id"])
+		(*node)["id"] = UuidCreator::MakeID();
+		*/
 	componentsByEntity[id].push_back(std::make_unique<ComponentType>());
 	Component* ptr = componentsByEntity[id].back().get();
 	ComponentType* afterCast = dynamic_cast<ComponentType*>(ptr);

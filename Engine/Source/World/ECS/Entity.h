@@ -19,7 +19,7 @@ public:
 	static Event<Entity&> OnDestroy;
 	static map_uo<string, std::function<void(uuid, YAML::Node*)>> AddComponentByName; // rename and evt. hide
 
-	Entity(string name = "Entity", uuid* id = nullptr); // id bruges hvis entiteten loades fra disk
+	Entity(string name = "Entity", optional<uuid> id_ = std::nullopt, optional<uuid> storedID_ = std::nullopt); // id bruges hvis entiteten loades fra disk
 	static void Update();
 	const vector<unique_ptr<Component>>& GetComponents() const { return componentsByEntity.at(id); }
 
@@ -49,6 +49,7 @@ public:
 	bool has_equal_id(const Entity& other) { return this->id == other.id; }
 	static uuid GetID(string name);
 	inline uuid GetID() const { return id; }
+	inline optional<uuid> GetStoredID() const { return storedID; }
 	static uuid* Entity::TryGetID(string name_);
 	inline void SetID(uuid id_) { id = id_; }
 	string to_string() const;
@@ -65,6 +66,7 @@ private:
 	uuid id;
 	string name;
 	bool isDoomed = false; // this is destined to be destroyed at the end of the component update calls
+	optional<uuid> storedID = std::nullopt;
 
 	template <typename ComponentType> ComponentType* TryGetComponent() const;
 	template <typename ComponentType> inline ComponentType& GetComponent() const;

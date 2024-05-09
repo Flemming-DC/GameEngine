@@ -1,20 +1,38 @@
 id: 78d15a43-766b-4116-b27b-b0071816ac8e
 StoredEntities:
     4789b406-c67b-4951-a05b-8ea4af7126ff:
-        RectangleCollider:
-            id: 5f3a622f-7142-42e4-9d7b-db0c167c3a11
-        Renderable:
-            id: 3f198938-2bda-412a-a2da-257713ffa179
-        Transform:
-            id: 01a7599c-fefd-4774-8592-d51e738e1d32
-            localPosition: [-0.576832116, 0.235460758, 0]
-            localRotation: [0.623566329, 0, 0, 0.781770408]
         name: Sprite 1
         storedID: 4789b406-c67b-4951-a05b-8ea4af7126ff
+        RectangleCollider:
+            id: e916ca6d-f69d-4ff0-a974-ec73e347aef9
+        Renderable:
+            id: 1aa10992-992d-4759-ac84-02bbd341cd29
+        Transform:
+            id: 73d96e39-ee40-4dcc-a8cb-710d4f268a90
+            localPosition: [-1.08747053, 0.502600312, 0]
+        id: f0eb9e21-69df-47fe-98f9-0cb4c7b6623d
 Entities:
+    2eb9bf85-5117-4757-96c6-92a99bbb0f49:
+        name: camera
+        Camera:
+            id: b07698b9-f912-4a39-8a9e-158405c47088
+        Transform:
+            id: 8041bbf2-e0ed-408c-8836-0db47cc5a0ef
+            localPosition: [0, 0, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+    9f5200c9-8a5a-4f6e-9cf1-0d478ccf3c82:
+        name: circle 1
+        CircleCollider:
+            id: 37c2492b-4254-4028-a2d8-764690180715
+            localRadius: 0.5
+        Transform:
+            id: 75811620-a2a2-455e-91d3-881ca9c70e1c
+            localPosition: [-0.5, 0.5, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
     16aaa607-4e7a-465b-bef0-141127983c85:
         name: circle 2
-        storedID: ~
         CircleCollider:
             id: a61bc6e3-6caf-4b28-870a-3dbd0754d585
             localRadius: 0.5
@@ -23,19 +41,8 @@ Entities:
             localPosition: [0.699999988, 0.5, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
-    2eb9bf85-5117-4757-96c6-92a99bbb0f49:
-        name: camera
-        storedID: ~
-        Camera:
-            id: b07698b9-f912-4a39-8a9e-158405c47088
-        Transform:
-            id: 8041bbf2-e0ed-408c-8836-0db47cc5a0ef
-            localPosition: [0, 0, 0]
-            localRotation: [1, 0, 0, 0]
-            localScale: [1, 1, 1]
     62b4da63-0610-4eff-9820-3e1f073c9cff:
         name: picture 1
-        storedID: ~
         Renderable:
             id: 2f87723c-ab25-4817-ae12-c92b26d5aa42
             mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
@@ -48,20 +55,8 @@ Entities:
             localPosition: [-0.399380714, -0.673846841, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
-    9f5200c9-8a5a-4f6e-9cf1-0d478ccf3c82:
-        name: circle 1
-        storedID: ~
-        CircleCollider:
-            id: 37c2492b-4254-4028-a2d8-764690180715
-            localRadius: 0.5
-        Transform:
-            id: 75811620-a2a2-455e-91d3-881ca9c70e1c
-            localPosition: [-0.5, 0.5, 0]
-            localRotation: [1, 0, 0, 0]
-            localScale: [1, 1, 1]
     9f90ac2c-01c1-439a-b75e-98acd00255e4:
         name: picture 2
-        storedID: ~
         DummyComp:
             id: 3659b305-cf7c-4b56-a9af-b1bb871c1fca
         GameLogic:

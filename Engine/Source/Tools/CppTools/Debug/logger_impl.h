@@ -104,7 +104,7 @@ namespace logger
 		emitter.SetIndent(4);
 		emitter.SetSeqFormat(YAML::Flow); // write lists horizontally, not vertically
 		emitter << node;
-		return emitter.c_str();
+		return string("Node:\n") + emitter.c_str();
 	}
 
 	/*

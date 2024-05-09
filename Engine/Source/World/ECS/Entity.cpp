@@ -14,9 +14,25 @@ Event<Entity&> Entity::OnCreated;
 Event<Entity&> Entity::OnDestroy;
 map_uo<string, std::function<void(uuid, YAML::Node*)>> Entity::AddComponentByName;
 
-Entity::Entity(string name, uuid* id_) : name(name)
+Entity::Entity(string name, optional<uuid> id_, optional<uuid> storedID_) : name(name), storedID(storedID_)
 {
-	id = id_ == nullptr ? UuidCreator::MakeID() : *id_; // you get an input id_ iff it is loaded as an asset.
+	/*
+	if (isStored && id_)
+		storedID = *id_;
+	else if (isStored && !id_)
+		RaiseError("No id found for stored Entity");
+	else if (!isStored && id_)
+		id = *id_;
+	else if (!isStored && !id_)
+		; // no-op
+
+	if (!UuidCreator::IsInitialized(id))
+		id = UuidCreator::MakeID();
+	*/
+	if (!storedID_.has_value() && !id_.has_value())
+		RaiseError("The entity constructor must receive a stored entity id or a normal id. ",
+			name, " received ", id_, " and ", storedID_);
+	id = id_.has_value() ? *id_ : UuidCreator::MakeID(); // you get an input id_ iff it is loaded as an asset.
 	EntitiesByName[name].push_back(id); // [] initializes if the key is not present
 	OnCreated.Invoke(*this);
 }

@@ -3,21 +3,35 @@
 #include "EngineLiterals.h"
 
 Shorts;
-
 Naming StoredEntity::naming;
+struct SortByOrder
+{
+    bool operator()(Component* lhs, Component* rhs) const { return lhs->InitOrder() < rhs->InitOrder(); }
+};
+
 
 void StoredEntity::Save(const Entity& entity)
 {
     string path = Literals::Entities + entity.Name() + ".yml";
-    naming.Overwrite(path, entity.GetID());
+    naming.Overwrite(path, *entity.GetStoredID());
     YmlTools::Save(ToNode(entity), entity.Name(), true, true);
 }
 
-Entity& StoredEntity::Load(const string& entityName) {
-    return FromNode(LoadToNode(entityName), entityName); }
+Entity& StoredEntity::Load(const string& entityName) 
+{
+    uuid storedID = naming.at(entityName);
+    Node& node = LoadToNode(storedID);
+    if (node["name"] && node["name"].as<string>() != entityName)
+        RaiseError("inconsistent naming.");
+    node["name"] = entityName;
+    return FromNode(node, std::nullopt, storedID);
+}
 
-Node StoredEntity::LoadToNode(const string& entityName) { 
-    return YmlTools::Load(Literals::Entities + entityName + ".yml"); }
+Node StoredEntity::LoadToNode(uuid storedID)
+{
+    const string& entityName = naming.at(storedID);
+    return YmlTools::Load(Literals::Entities + entityName + ".yml"); 
+}
 
 
 Node StoredEntity::Override(const Node& stored, const Node& overrider)
@@ -36,8 +50,6 @@ Node StoredEntity::Override(const Node& stored, const Node& overrider)
         else
             combined[key] = value;
     }
-    P("-------- combined --------\n");
-    P(combined);
     return combined;
 }
 
@@ -45,7 +57,8 @@ Node StoredEntity::Override(const Node& stored, const Node& overrider)
 Node StoredEntity::GetOverrider(const Node& stored, const Node& combined)
 {
     if (!stored.IsMap() || !combined.IsMap())
-        RaiseError("Both nodes are expected to be maps.");
+        RaiseError("Both nodes are expected to be maps.\n",
+            "\nstored ", stored, "\ncombined ", combined);
 
     Node overrider;
     auto combinedMap = combined.as<map<string, Node>>();
@@ -76,7 +89,8 @@ Node StoredEntity::GetOverrider(const Node& stored, const Node& combined)
 Node StoredEntity::ToNode(const Entity& in)
 {
     Node node;
-    node["id"] = in.GetID();
+    node["name"] = in.Name();
+    node["storedID"] = in.GetStoredID();// ? in.GetStoredID() : std::nullopt;
     for (auto& comp : in.GetComponents())
     {
         Node compNode;
@@ -87,19 +101,32 @@ Node StoredEntity::ToNode(const Entity& in)
     return node;
 }
 
-Entity& StoredEntity::FromNode(const Node& node, const string& name)
+Entity& StoredEntity::FromNode(const Node& node, optional<uuid> instanceID, optional<uuid> storedID)
 {
-    uuid entityID = node["id"].as<uuid>();
-    Entity& entity = Entity::register_.Add(name, &entityID);
+    string name = node["name"].as<string>();
+    Entity& entity = Entity::register_.Add(name, instanceID, storedID);
 
     auto componentsMap = node.as<map<string, Node>>();
     for (auto& [compTypeName, compYML] : componentsMap)
     {
-        if (compTypeName == "id")
-            continue; // this isnt really a component, so we skip it
+        if (!compYML.IsMap())
+            continue; // this isnt a component, so we skip it
+        if (storedID)
+            compYML["id"] = UuidCreator::MakeID(); // do we need this?
+
         auto AddComponent = Entity::AddComponentByName.at(compTypeName);
-        AddComponent(entityID, &compYML);
+        AddComponent(entity.GetID(), &compYML);
     }
+
+    // initialize components
+    vector<Component*> comps;
+    for (const auto& comp : entity.GetComponents())
+        comps.push_back(comp.get());
+    std::sort(comps.begin(), comps.end(), SortByOrder());
+
+    for (const auto& comp : comps)
+        comp->OnSceneLoaded();
+
     return entity;
 }
 

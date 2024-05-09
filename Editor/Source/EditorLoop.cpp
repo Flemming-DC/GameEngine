@@ -29,7 +29,7 @@ void EditorLoop::OnEditorUpdate()
     //AssetFolder::Update();
     //Console::Update();
 
-    //ImGui::ShowDemoWindow();
+    ImGui::ShowDemoWindow();
 
     HandleOpenClose();
 }

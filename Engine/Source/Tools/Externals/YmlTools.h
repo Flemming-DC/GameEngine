@@ -17,6 +17,24 @@ namespace YmlTools
 
 // ----- conversion extensions ----- 
 
+template<typename T> struct YAML::convert<std::optional<T>>
+{
+    static Node encode(const std::optional<T>& in) // save
+    {
+        Node node;
+        if (in)
+            node = *in;
+        return node;
+    }
+
+    static bool decode(const Node& node, std::optional<T>& out) // load
+    {
+        if (!node.IsScalar())
+            return false;
+        out = node.IsNull() ? std::nullopt : node.as<T>();
+        return true;
+    }
+};
 
 template<> struct YAML::convert<uuids::uuid>
 {

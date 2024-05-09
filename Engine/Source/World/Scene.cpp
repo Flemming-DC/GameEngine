@@ -85,7 +85,7 @@ void Scene::MakeBlankSceneFile(string name)
     string path = Literals::Scenes + name + ".yml";
     YmlTools::Save(sceneYML, path, false, true);
 }
-
+/*
 struct SortByOrder
 {
     bool operator()(Component* lhs, Component* rhs) const
@@ -93,27 +93,28 @@ struct SortByOrder
         return lhs->InitOrder() < rhs->InitOrder();
     }
 };
-
+*/
 void Scene::Load()
 {
     Node sceneYML = YmlTools::Load(Path());
     id = sceneYML["id"].as<uuid>();
 
     auto storedEntitiesMap = sceneYML["StoredEntities"].IsMap() ? sceneYML["StoredEntities"].as<map<uuid, Node>>() : map<uuid, Node>();
-    auto entitiesMap = sceneYML["Entities"].IsMap() ? sceneYML["Entities"].as<map<string, Node>>() : map<string, Node>();
+    auto entitiesMap = sceneYML["Entities"].IsMap() ? sceneYML["Entities"].as<map<uuid, Node>>() : map<uuid, Node>();
 
     for (auto& [entityID, overriderYML] : storedEntitiesMap)
     {
-        string name = StoredEntity::naming.at(entityID);
-        Node stored = StoredEntity::LoadToNode(name);
+        uuid storedID = overriderYML["storedID"].as<uuid>();
+        string name = StoredEntity::naming.at(storedID);
+        Node stored = StoredEntity::LoadToNode(storedID);
         Node combined = StoredEntity::Override(stored, overriderYML);
-        StoredEntity::FromNode(combined, name);
+        StoredEntity::FromNode(combined, entityID, storedID);
     }
-    for (auto& [entityName, entityYML] : entitiesMap)
+    for (auto& [entityID, entityYML] : entitiesMap)
     {
-        StoredEntity::FromNode(entityYML, entityName);
+        StoredEntity::FromNode(entityYML, entityID);
     }
-
+    /*
     for (const auto& entity : Entity::register_.GetData())
     {
         vector<Component*> comps;
@@ -124,7 +125,7 @@ void Scene::Load()
         for (const auto& comp : comps)
             comp->OnSceneLoaded();
     }
-
+    */
 }
 
 
@@ -141,15 +142,15 @@ void Scene::Save()
     Node entitiesYML;
     for (const auto& entity : Entity::register_.GetData())
     {
-        bool isStored = StoredEntity::naming.Contains(entity.GetID());
+        bool isStored = entity.GetStoredID().has_value(); //StoredEntity::naming.Contains(entity.GetID());
         if (isStored)
         {
-            Node stored = StoredEntity::LoadToNode(entity.Name()); // this is the unchanged / stored part of entity
+            Node stored = StoredEntity::LoadToNode(*entity.GetStoredID()); // this is the unchanged / stored part of entity
             Node combined = StoredEntity::ToNode(entity); // this is the runtime version of the entity
             storedEntitiesYML[entity.GetID()] = StoredEntity::GetOverrider(stored, combined); // runtime minus stored = overrider
         }
         else
-            entitiesYML[entity.Name()] = StoredEntity::ToNode(entity);
+            entitiesYML[entity.GetID()] = StoredEntity::ToNode(entity);
         
     }
     sceneYML["StoredEntities"] = storedEntitiesYML;

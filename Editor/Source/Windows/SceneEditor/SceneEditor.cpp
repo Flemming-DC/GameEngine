@@ -10,6 +10,7 @@
 #include "SceneCamera.h"
 #include "SelectionMover.h"
 #include "SceneVisuals.h"
+#include "EntityMaker.h"
 
 
 using namespace Editor;
@@ -21,6 +22,7 @@ void SceneEditor::Update() // should be called update
 {
     ImGui::Begin("ViewPort", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar); // NoMove disables drag & drop
 
+    EntityMaker::Update();
     Selector::Update();
     DrawScene();
     SceneVisuals::Update();
