@@ -9,7 +9,7 @@ public:
 	Shorts;
     static Naming naming;
 
-	static void Save(const Entity& entity);
+	static void Save(const Entity& entity, string storedName);
 	static Entity& Load(const string& entityName); // filename = entityName + .yml
     static Node LoadToNode(uuid storedID);
     //static Entity& Load(uuid id) { return Load(naming.at(id)); }
@@ -22,7 +22,8 @@ public:
 
 
     static Node ToNode(const Entity& in);
-    static Entity& FromNode(const Node& node, optional<uuid> instanceID = std::nullopt, optional<uuid> storedID = std::nullopt);
+    static Entity& FromNode(const Node& node, optional<uuid> instanceID = std::nullopt, 
+                            optional<uuid> storedID = std::nullopt, bool _new = false);
 
 
 };

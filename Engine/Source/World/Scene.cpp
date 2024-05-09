@@ -108,11 +108,11 @@ void Scene::Load()
         string name = StoredEntity::naming.at(storedID);
         Node stored = StoredEntity::LoadToNode(storedID);
         Node combined = StoredEntity::Override(stored, overriderYML);
-        StoredEntity::FromNode(combined, entityID, storedID);
+        StoredEntity::FromNode(combined, entityID, storedID, true);
     }
     for (auto& [entityID, entityYML] : entitiesMap)
     {
-        StoredEntity::FromNode(entityYML, entityID);
+        StoredEntity::FromNode(entityYML, entityID, std::nullopt, false);
     }
     /*
     for (const auto& entity : Entity::register_.GetData())

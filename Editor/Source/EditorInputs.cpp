@@ -60,6 +60,12 @@ namespace Editor::EditorInputs
 	InputAction<bool>& ControlUniformScale() { return controlUniformScale; }; // evt. add shift condition
 
 	// EditorLoop
+	bool SaveStoredEntity() {return Ctrl() && InputKey::BecomesPressed(Key::Keyboard::enter); }
+	bool CreateStoredEntity() { return InputKey::BecomesPressed(Key::Mouse::right); }
+	bool DeleteSelection() { return InputKey::BecomesPressed(Key::Keyboard::_delete); }
+	bool DublicateSelection() { return  Ctrl() && InputKey::BecomesPressed(Key::Keyboard::D); }
+
+	// EditorLoop
 	bool ToggleRuntime() { return Shift() && InputKey::BecomesPressed(Key::Keyboard::R); }
 	bool Exit() { return InputKey::BecomesPressed(Key::Keyboard::exc); }
 	bool Save() {  return  Ctrl() && InputKey::BecomesPressed(Key::Keyboard::S); }

@@ -1,0 +1,15 @@
+RectangleCollider:
+    id: 57361dc7-b5aa-4358-a128-d3c0ed6eee7c
+    size: [1, 1]
+Renderable:
+    id: 45465c52-66e9-4319-9f00-2e94a445cb15
+    mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+    material:
+        id: b456a101-6f11-459e-8080-de7bd7deae4a
+        u_color: [0.728915691, 0.161214545, 0.161214545, 1]
+        u_textureSampler: efa1504b-71ac-4350-9092-bc0263287bb5
+Transform:
+    id: 49e6872b-5751-44af-bc28-da326b6bf5e6
+    localPosition: [-0.576832116, 0.235460758, 0]
+    localRotation: [0.623566329, 0, 0, 0.781770408]
+    localScale: [1, 1, 1]

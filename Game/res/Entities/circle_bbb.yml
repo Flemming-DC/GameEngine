@@ -1,0 +1,8 @@
+CircleCollider:
+    id: 37c2492b-4254-4028-a2d8-764690180715
+    localRadius: 0.5
+Transform:
+    id: 75811620-a2a2-455e-91d3-881ca9c70e1c
+    localPosition: [-0.5, 0.5, 0]
+    localRotation: [1, 0, 0, 0]
+    localScale: [1, 1, 1]

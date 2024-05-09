@@ -44,10 +44,6 @@ void Hierarchy::DrawTreeNode(const Transform& transform)
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
     bool open = ImGui::TreeNodeEx(name.c_str(), flag);
 
-    if (ImGui::IsItemToggledOpen())
-        P("ImGui::IsItemToggledOpen() ", name);
-    if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
-        P("ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen() ", name);
     if (ImGui::BeginDragDropSource())
     {
         ImGui::SetDragDropPayload("_TREENODE", NULL, 0);
@@ -58,7 +54,6 @@ void Hierarchy::DrawTreeNode(const Transform& transform)
 
     if (ImGui::IsItemClicked())
     {
-        P("clicked ", transform.Entity().Name());
         bib[id] = !bib[id];
     }
 

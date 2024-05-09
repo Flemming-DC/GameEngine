@@ -12,8 +12,6 @@ vector<uuid> Renderable::allRenderables;
 
 void Renderable::OnStart()
 {
-    if (Entity().GetStoredID())
-        P(Entity().Name(), " ", GetID());
     allRenderables.push_back(GetID());
     if (!UuidCreator::IsInitialized(material.GetID()))
         material = EngineAssets::DefaultMaterial(); // copy, not ref

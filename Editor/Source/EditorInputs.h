@@ -21,6 +21,12 @@ namespace Editor::EditorInputs
 	InputAction<bool>& ControlScale();
 	InputAction<bool>& ControlUniformScale();
 
+	// creation & deletion
+	bool SaveStoredEntity();
+	bool CreateStoredEntity();
+	bool DeleteSelection();
+	bool DublicateSelection();
+
 	// EditorLoop
 	bool ToggleRuntime();
 	bool Exit();
