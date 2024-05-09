@@ -117,13 +117,16 @@ namespace ImGui
         completionOptions = completionOptions_;
         string labelStr = string(label) + suffix; // changing label name is required to avoid bug
         ImGui::InputText(labelStr.c_str(), strInput, ImGuiInputTextFlags_CallbackCompletion, _TextEditCallback);
+        bool focused = ImGui::IsItemActive();
         _UpdateCandidates(strInput->c_str(), strInput->size());
-        
+
+        ImGui::TextWrapped(logger::make_string(candidates).c_str());
+        /*
         if (*strInput != "")
             ImGui::LabelText("matches", logger::make_string(candidates).c_str());
         else
             ImGui::LabelText("", "");
-        
+        */
         static bool hasChosen = false;
         if (*strInput == "")
             hasChosen = false;
@@ -131,7 +134,7 @@ namespace ImGui
             hasChosen = true;
         else
         {
-            if (InputKey::BecomesPressed(Key::Keyboard::tab) && candidates.size() > 0)
+            if (InputKey::BecomesPressed(Key::Keyboard::tab) && candidates.size() > 0 && focused)
                 openPopup = true;
             if (!ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow) && InputKey::BecomesPressed(Key::Mouse::left))
                 openPopup = false;

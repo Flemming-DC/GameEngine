@@ -22,7 +22,7 @@ void EntityMaker::Update()
 
 void EntityMaker::CreationMenu()
 {
-    if (InputKey::BecomesPressed(Key::Mouse::right)) 
+    if (InputKey::BecomesPressed(Key::Mouse::right))
         ImGui::OpenPopup(CreationMenuName);
     if (ImGui::BeginPopup(CreationMenuName))
     {
@@ -37,6 +37,7 @@ void EntityMaker::CreationMenu()
             vec2 pos = SceneCamera::MouseWorldPosition2D();
             StoredEntity::Load(entityName).Get<Transform>().SetPosition2D(pos);
             entityName.clear();
+            ImGui::CloseCurrentPopup();
         }
         ImGui::EndPopup();
     }

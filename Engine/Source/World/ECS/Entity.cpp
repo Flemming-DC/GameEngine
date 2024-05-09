@@ -16,19 +16,6 @@ map_uo<string, std::function<void(uuid, YAML::Node*)>> Entity::AddComponentByNam
 
 Entity::Entity(string name, optional<uuid> id_, optional<uuid> storedID_) : name(name), storedID(storedID_)
 {
-	/*
-	if (isStored && id_)
-		storedID = *id_;
-	else if (isStored && !id_)
-		RaiseError("No id found for stored Entity");
-	else if (!isStored && id_)
-		id = *id_;
-	else if (!isStored && !id_)
-		; // no-op
-
-	if (!UuidCreator::IsInitialized(id))
-		id = UuidCreator::MakeID();
-	*/
 	if (!storedID_.has_value() && !id_.has_value())
 		RaiseError("The entity constructor must receive a stored entity id or a normal id. ",
 			name, " received ", id_, " and ", storedID_);
