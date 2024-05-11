@@ -29,7 +29,7 @@ void EditorLoop::OnEditorUpdate()
     Hierarchy::Update();
     //AssetFolder::Update();
     //Console::Update();
-    MenuBar::ShowExampleAppMainMenuBar();
+    MenuBar::Update();
 
     ImGui::ShowDemoWindow();
 

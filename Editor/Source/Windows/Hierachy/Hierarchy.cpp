@@ -124,19 +124,3 @@ bool Hierarchy::DragDrop(Transform& transform)
 
 }
 
-
-void Hierarchy::DrawTreeNode_old(const Transform& transform)
-{
-
-    string name = transform.Entity().Name();
-    auto flag = transform.GetChildren().empty() ? ImGuiTreeNodeFlags_Leaf : ImGuiTreeNodeFlags_None;
-    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-
-    if (ImGui::TreeNodeEx(name.c_str(), flag))
-    {
-        for (Transform* child : transform.GetChildren())
-            DrawTreeNode(*child);
-        ImGui::TreePop();
-    }
-
-}

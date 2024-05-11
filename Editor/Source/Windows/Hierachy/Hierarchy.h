@@ -13,7 +13,6 @@ namespace Editor
 		static void DropToRoot();
 		static void DrawTreeNode(Transform& transform);
 		static bool DragDrop(Transform& transform); // used to edit parenthood
-		static void DrawTreeNode_old(const Transform& transform);
 
 	};
 
