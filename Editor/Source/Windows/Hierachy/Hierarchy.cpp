@@ -65,12 +65,12 @@ void Hierarchy::DrawTreeNode(Transform& transform)
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
     bool open = ImGui::TreeNodeEx(transform.Entity().Name().c_str(), flags);
 
+    if (ImGui::IsItemClicked())
+        Selector::SetSelected(id, !Selector::IsSelected(id));
 
     if (DragDrop(transform))
         dropped = true;
 
-    if (ImGui::IsItemClicked())
-        Selector::SetSelected(id, !Selector::IsSelected(id));
 
     if (open)
     {
@@ -78,8 +78,6 @@ void Hierarchy::DrawTreeNode(Transform& transform)
             DrawTreeNode(*child);
         ImGui::TreePop();
     }
-
-
 
 }
 
