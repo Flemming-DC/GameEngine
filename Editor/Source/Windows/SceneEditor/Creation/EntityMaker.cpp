@@ -5,7 +5,6 @@
 #include "Transform.h"
 #include "Selector.h"
 #include "EditorInputs.h" 
-#include "InputKey.h" // temp
 
 Shorts;
 using namespace Editor;
@@ -18,14 +17,14 @@ void EntityMaker::Update()
     if (!ImGui::IsWindowHovered() && !ImGui::IsPopupOpen(PopupCreateEntity) && !ImGui::IsPopupOpen(PopupSaveEntity))
         return;
 
-    SaveEntity();
+    Saving();
     CreationMenu();
     Dublication();
     Deletion();
 }
 
 
-void EntityMaker::SaveEntity()
+void EntityMaker::Saving() // given user input: save a single selected entity to file (i.e. make it stored)
 {
     if (EditorInputs::SaveStoredEntity())
     {
@@ -58,7 +57,7 @@ void EntityMaker::SaveEntity()
     }
 }
 
-void EntityMaker::CreationMenu()
+void EntityMaker::CreationMenu() // given user input: show popup and create entity from storage
 {
     if (EditorInputs::CreateStoredEntity())
         ImGui::OpenPopup(PopupCreateEntity);
@@ -79,7 +78,7 @@ void EntityMaker::CreationMenu()
     }
 }
 
-void EntityMaker::Dublication()
+void EntityMaker::Dublication() // given user input: dublicate selection
 {
     if (!EditorInputs::DublicateSelection())
         return;
@@ -91,7 +90,7 @@ void EntityMaker::Dublication()
     }
 }
 
-void EntityMaker::Deletion()
+void EntityMaker::Deletion() // given user input: delete selection
 {
     if (!EditorInputs::DeleteSelection())
         return;

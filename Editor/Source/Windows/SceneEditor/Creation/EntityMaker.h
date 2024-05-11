@@ -8,7 +8,7 @@ namespace Editor
 		static void Update();
 
 	private:
-		static void SaveEntity();
+		static void Saving();
 		static void CreationMenu();
 		static void Dublication();
 		static void Deletion();

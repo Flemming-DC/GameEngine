@@ -7,8 +7,9 @@
 #include "Hierarchy.h"
 #include "SceneEditor.h"
 #include "Selector.h"
-#include "OpenGlSetup.h"
 #include "Inspector.h"
+#include "MenuBar.h"
+#include "OpenGlSetup.h"
 #include "Delay.h"
 using namespace Editor;
 
@@ -28,6 +29,7 @@ void EditorLoop::OnEditorUpdate()
     Hierarchy::Update();
     //AssetFolder::Update();
     //Console::Update();
+    MenuBar::ShowExampleAppMainMenuBar();
 
     ImGui::ShowDemoWindow();
 

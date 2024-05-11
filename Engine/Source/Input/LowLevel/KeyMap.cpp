@@ -91,7 +91,7 @@ int KeyMap::ToGlfw(Keyboard key)
     case Keyboard::rightArrow: return GLFW_KEY_RIGHT;
     case Keyboard::numpad_0: return GLFW_KEY_KP_0;
     case Keyboard::tab: return GLFW_KEY_TAB;
-    //case Keyboard::numpad_del: return GLFW_KEY_KP_DECIMAL;
+    case Keyboard::_delete: return GLFW_KEY_DELETE;
     case Keyboard::ctrl: 
         // RaiseError("KeyMap::ToGlfw() returns GLFW_KEY_LEFT_CONTROL, which ignores GLFW_KEY_RIGHT_CONTROL");
         return GLFW_KEY_LEFT_CONTROL; //GLFW_KEY_LEFT_CONTROL || GLFW_KEY_RIGHT_CONTROL;

@@ -2,7 +2,6 @@
 #include "Event.h"
 #include "GlmTools.h"
 #include "Entity.h"
-//#include "Collider.h"
 
 namespace Editor
 {

@@ -37,18 +37,27 @@ vector<Transform*> Hierarchy::FindRoots()
 
 void Hierarchy::DropToRoot()
 {
-    if (!dropped && ImGui::GetDragDropPayload() && EditorInputs::FinishDragDrop())
-    {
-        const ImGuiPayload* payload = ImGui::GetDragDropPayload();
+    if (dropped)
+        return;
+    if (!ImGui::GetDragDropPayload())
+        return;
+    if (!EditorInputs::FinishDragDrop())
+        return;
+    if (!ImGui::IsWindowFocused())
+        return;
 
-        if (payload->DataSize <= 0)
-            RaiseError("expected some data from DragDrop");
-        uuid childID = *static_cast<uuid*>(payload->Data);
-        Transform& child = Entity::GetComponent<Transform>(childID);
-        child.SetParent(nullptr);
+    const ImGuiPayload* payload = ImGui::GetDragDropPayload();
 
-        ImGui::SetDragDropPayload(dragDrop, nullptr, 0); // remove payload
-    }
+    if (payload->DataSize <= 0)
+        RaiseError("expected some data from DragDrop");
+    uuid childID = *static_cast<uuid*>(payload->Data);
+    Transform* child = Entity::TryGetComponent<Transform>(childID);
+    ImGui::SetDragDropPayload(dragDrop, nullptr, 0); // remove payload
+    if (child)
+        child->SetParent(nullptr);
+    else
+        Warning("The id ", childID, " doesnt correspond to any transform. Failed to set parent.");
+
 }
 
 void Hierarchy::DrawTreeNode(Transform& transform)
@@ -65,10 +74,10 @@ void Hierarchy::DrawTreeNode(Transform& transform)
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
     bool open = ImGui::TreeNodeEx(transform.Entity().Name().c_str(), flags);
 
-    if (ImGui::IsItemClicked())
+    if (ImGui::IsItemClicked()) // nb: this line must come between [bool open =...] and [if (open) ...]
         Selector::SetSelected(id, !Selector::IsSelected(id));
 
-    if (DragDrop(transform))
+    if (DragDrop(transform)) // nb: this line must come between [bool open =...] and [if (open) ...]
         dropped = true;
 
 
