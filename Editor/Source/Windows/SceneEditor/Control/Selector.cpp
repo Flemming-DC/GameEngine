@@ -159,3 +159,15 @@ vector<uuid> Selector::Selection() { return selection; }
 vec2 Selector::SelectionStartPosition() { return selectionStartPosition; }
 
 bool Selector::IsSelecting() { return isSelecting; }
+
+
+void Selector::SetSelected(uuid id, bool selected)
+{
+    if (selected)
+        selection.push_back(id);
+    else 
+        Tools::Remove(selection, id);
+    onSelected.Invoke(selection);
+}
+
+bool Selector::IsSelected(uuid id) { return Tools::Contains(selection, id); }

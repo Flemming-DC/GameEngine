@@ -1,10 +1,12 @@
 #include "Hierarchy.h"
 #include "ImGuiTools.h"
 #include "EditorInputs.h"
+#include "Selector.h"
 #include "Entity.h"
 #include <string>
 using namespace Editor;
 Shorts;
+
 static const char* dragDrop = "change parent";
 static bool dropped = false; // gets updated by DragDrop inside DrawTreeNode and gets used by DropToRoot
 
@@ -14,8 +16,7 @@ void Hierarchy::Update()
 
     dropped = false;
     for (Transform* tr : FindRoots())
-        DrawTreeNode(*tr); // Transform isn't const, since it can change parent
-    
+        DrawTreeNode(*tr);
     DropToRoot();
 
     ImGui::End();
@@ -52,26 +53,24 @@ void Hierarchy::DropToRoot()
 
 void Hierarchy::DrawTreeNode(Transform& transform)
 {
-    static map_uo<uuid, bool> bib;
-    uuid id = transform.GetID();
-    if (!Tools::ContainsKey(bib, id))
-        bib[id] = false;
+    uuid id = transform.Entity().GetID();
+    
+    int flags = ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow
+        | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_NavLeftJumpsBackHere;
+    if (transform.GetChildren().empty())
+        flags |= ImGuiTreeNodeFlags_Leaf;
+    if (Selector::IsSelected(id))
+        flags |= ImGuiTreeNodeFlags_Selected;
 
-    string name = transform.Entity().Name();
-    int flag = transform.GetChildren().empty() ? ImGuiTreeNodeFlags_Leaf : ImGuiTreeNodeFlags_None;
-    if (bib[id])
-        flag |= ImGuiTreeNodeFlags_Selected;
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-    bool open = ImGui::TreeNodeEx(name.c_str(), flag);
+    bool open = ImGui::TreeNodeEx(transform.Entity().Name().c_str(), flags);
 
 
     if (DragDrop(transform))
         dropped = true;
 
     if (ImGui::IsItemClicked())
-    {
-        bib[id] = !bib[id];
-    }
+        Selector::SetSelected(id, !Selector::IsSelected(id));
 
     if (open)
     {

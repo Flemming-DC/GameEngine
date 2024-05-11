@@ -8,14 +8,18 @@ namespace Editor
 {
 	class Selector
 	{
+		Shorts;
 	public:
-		static Event<std::vector<uuids::uuid>> onSelected; // < selection >
+		static Event<vector<uuid>> onSelected; // < selection >
 		static void Start();
 		static void Update();
-		static std::vector<uuids::uuid> Selection();
-		static glm::vec2 SelectionStartPosition(); // or dragStartPosition
+		static vector<uuid> Selection();
+		static vec2 SelectionStartPosition(); // or dragStartPosition
 		static bool IsDraggingSelection();
 		static bool IsSelecting();
+
+		static void SetSelected(uuid id, bool selected); // only used by Hierachy, not by Selector itself
+		static bool IsSelected(uuid id);
 
 	private:
 		static void StartSelecting();
@@ -25,7 +29,7 @@ namespace Editor
 		static void BoxSelect();
 		static void ClickSelect();
 
-		static std::vector<Entity*> GetOverlaps(glm::vec2 selectionBoxCenter, glm::vec2 selectionBoxSize);
+		static vector<Entity*> GetOverlaps(vec2 selectionBoxCenter, vec2 selectionBoxSize);
 		static bool ClickedOnSelection();
 	};
 }
