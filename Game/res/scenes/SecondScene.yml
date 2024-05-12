@@ -1,7 +1,8 @@
 id: be40d063-33a4-4118-9063-09b278b1fd96
+StoredEntities:
 Entities:
-    camera:
-        id: 68c60e26-6941-4bdb-bfeb-e851e77a1701
+    68c60e26-6941-4bdb-bfeb-e851e77a1701:
+        name: camera
         Camera:
             id: 78476f23-16d7-43c8-abd8-2c5ad3b96bfd
         Transform:
@@ -9,8 +10,8 @@ Entities:
             localPosition: [0, 0, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
-    picture 1:
-        id: 17518d64-c1d2-4c70-a9ff-c7e1c3f31dc6
+    17518d64-c1d2-4c70-a9ff-c7e1c3f31dc6:
+        name: picture 1
         Transform:
             id: b2cd4db8-e561-488d-b630-1db280aaccdf
             localPosition: [-0.5, -0.5, 0]
@@ -19,8 +20,8 @@ Entities:
         RectangleCollider:
             id: fb5733f1-42bc-433e-9dc5-0f847911ef42
             size: [1, 1]
-    picture 2:
-        id: 16c0b97d-8500-4050-b412-0bb084ebe3b2
+    16c0b97d-8500-4050-b412-0bb084ebe3b2:
+        name: picture 2
         Transform:
             id: 8f9a4988-7c98-414b-9931-6f9e45c08811
             localPosition: [1.5, -0.5, 0]

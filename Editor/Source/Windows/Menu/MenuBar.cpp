@@ -2,6 +2,7 @@
 #include "ImGuiTools.h"
 #include "EditorInputs.h" 
 #include "EngineMode.h" 
+#include "Scene.h" 
 using namespace Editor;
 Shorts;
 
@@ -48,9 +49,36 @@ void MenuBar::SceneMenu()
     if (!ImGui::BeginMenu("Scenes"))
         return;
 
-    if (ImGui::MenuItem("New")) {}
-    if (ImGui::MenuItem("Open", "Ctrl+O")) {}
-    if (ImGui::MenuItem("Save", "Ctrl+S")) {}
+    if (ImGui::BeginMenu("New"))
+    {
+        static string name;
+        ImGui::InputText("##", &name);
+        ImGui::SameLine();
+        if (ImGui::Button("Create Scene"))
+        {
+            if (name != "")
+            {
+                Scene::MakeBlankSceneFile(name); // only makes the yml, not the subclass.
+                ImGui::CloseCurrentPopup();
+                logger::print("Create Scene ", name);
+            }
+            else
+                Warning("Entity name mustn't be blank.");
+        }
+        ImGui::EndMenu();
+    }
+
+    if (ImGui::MenuItem("Open", "Ctrl+O"))
+    {
+        // evt. save current file first
+        // choose from naming via completor
+        // Scene::Activate(chosenScene); activate via string is missing
+    }
+
+    if (ImGui::MenuItem("Save", "Ctrl+S"))
+    {
+        Scene::Save();
+    }
 
 
     ImGui::EndMenu();

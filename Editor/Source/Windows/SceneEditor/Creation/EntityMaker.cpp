@@ -48,10 +48,15 @@ void EntityMaker::Saving() // given user input: save a single selected entity to
             ImGui::SetItemDefaultFocus();
         if (ImGui::Button("save"))
         {
-            StoredEntity::Save(entity, name);
-            ImGui::CloseCurrentPopup();
-            logger::print("saved entity ", name, " to file");
-            isEditingName = false;
+            if (name != "")
+            {
+                StoredEntity::Save(entity, name);
+                ImGui::CloseCurrentPopup();
+                logger::print("saved entity ", name, " to file");
+                isEditingName = false;
+            }
+            else
+                Warning("Entity name mustn't be blank.");
         }
         ImGui::EndPopup();
     }
@@ -86,7 +91,7 @@ void EntityMaker::Dublication() // given user input: dublicate selection
     {
         Entity& entityIn = Entity::GetEntity(id);
         Node node = StoredEntity::ToNode(entityIn);
-        Entity& entityOut = StoredEntity::FromNode(node, UuidCreator::MakeID(), std::nullopt, true);
+        Entity& entityOut = StoredEntity::FromNode(node, UuidCreator::MakeID(), std::nullopt, true, true);
     }
 }
 

@@ -2,14 +2,11 @@
 #include "Dynamic.h"
 #include "GameAssets.h"
 #include "GameInputs.h"
-#include "DemoScene.h"
-#include "SecondScene.h"
-#include "MiniScene.h"
 #include "Settings.h"
 #ifdef InEditor
     #include "EditorCore.h"
 #endif // InEditor
-
+#include "GameLiterals.h"
 #include "DummyComp.h"
 #include "GameLogic.h"
 #include "Entity.h"
@@ -22,7 +19,7 @@ int main()
 
     Entity::DeclareComps<DummyComp, GameLogic>();
     Dynamic::Setup<GameAssets, GameInputs, Settings>();
-    Core::Run(std::make_unique<DemoScene>());
+    Core::Run(std::make_unique<Scene>(Literals::demoScene));
 }
 
 /*

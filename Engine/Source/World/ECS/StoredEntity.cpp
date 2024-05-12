@@ -5,10 +5,6 @@
 
 Shorts;
 Naming StoredEntity::naming;
-struct SortByOrder
-{
-    bool operator()(Component* lhs, Component* rhs) const { return lhs->InitOrder() < rhs->InitOrder(); }
-};
 
 
 void StoredEntity::Save(const Entity& entity, string storedName)
@@ -30,7 +26,7 @@ Entity& StoredEntity::Load(const string& entityName)
     if (node["name"] && node["name"].as<string>() != entityName)
         RaiseError("inconsistent naming.");
     node["name"] = entityName;
-    return FromNode(node, std::nullopt, storedID, true);
+    return FromNode(node, std::nullopt, storedID, true, true);
 }
 
 Node StoredEntity::LoadToNode(uuid storedID)
@@ -107,10 +103,11 @@ Node StoredEntity::ToNode(const Entity& in)
     return node;
 }
 
-Entity& StoredEntity::FromNode(const Node& node, optional<uuid> instanceID, optional<uuid> storedID, bool new_)
+Entity& StoredEntity::FromNode(const Node& node, optional<uuid> instanceID, 
+                               optional<uuid> storedID, bool breakIdentity, bool initialize)
 {
-    if (storedID && !new_)
-        RaiseError("A storedEntity must yield a new Instance when put cast from Node to Entity.");
+    if (storedID && !breakIdentity)
+        RaiseError("A storedEntity must yield a new Instance when put from Node to Entity.");
     string name = node["name"].as<string>();
     Entity& entity = Entity::register_.Add(name, instanceID, storedID);
 
@@ -119,7 +116,7 @@ Entity& StoredEntity::FromNode(const Node& node, optional<uuid> instanceID, opti
     {
         if (!compYML.IsMap())
             continue; // this isnt a component, so we skip it
-        if (new_)
+        if (breakIdentity)
             compYML["id"] = UuidCreator::MakeID(); // this breaks the indentity and makes it a new object
 
         auto AddComponent = Entity::AddComponentByName.at(compTypeName);
@@ -127,13 +124,20 @@ Entity& StoredEntity::FromNode(const Node& node, optional<uuid> instanceID, opti
     }
 
     // initialize components
-    vector<Component*> comps;
-    for (const auto& comp : entity.GetComponents())
-        comps.push_back(comp.get());
-    std::sort(comps.begin(), comps.end(), SortByOrder());
+    if (initialize)
+    {
+        struct SortByOrder {
+            bool operator() (Component* lhs, Component* rhs) const 
+                { return lhs->InitOrder() < rhs->InitOrder(); } };
 
-    for (const auto& comp : comps)
-        comp->OnSceneLoaded();
+        vector<Component*> comps;
+        for (const auto& comp : entity.GetComponents())
+            comps.push_back(comp.get());
+        std::sort(comps.begin(), comps.end(), SortByOrder());
+
+        for (const auto& comp : comps)
+            comp->OnSceneLoaded();
+    }
 
     return entity;
 }

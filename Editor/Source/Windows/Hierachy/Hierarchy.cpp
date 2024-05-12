@@ -29,7 +29,7 @@ vector<Transform*> Hierarchy::FindRoots()
     for (const Entity& entity : Entity::register_.GetData()) // slow loop
     {
         Transform& tr = entity.Get<Transform>();
-        if (tr.GetParent() == nullptr)
+        if (tr.Parent() == nullptr)
             roots.push_back(&tr);
     }
     return roots;

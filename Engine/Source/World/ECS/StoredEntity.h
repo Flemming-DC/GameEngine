@@ -23,7 +23,7 @@ public:
 
     static Node ToNode(const Entity& in);
     static Entity& FromNode(const Node& node, optional<uuid> instanceID = std::nullopt, 
-                            optional<uuid> storedID = std::nullopt, bool _new = false);
+                            optional<uuid> storedID = std::nullopt, bool breakIdentity = false, bool initialize = true);
 
 
 };

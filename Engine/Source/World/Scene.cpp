@@ -26,6 +26,26 @@ void Scene::Activate(Scene* scenePtr)
 }
 */
 
+void Scene::Activate(std::string path)
+{
+    Delay::ToFrameEnd([path]()
+        {
+            ActivateImmediately(path);
+        });
+}
+
+void Scene::ActivateImmediately(std::string path)
+{
+    if (activeScene)
+        activeScene->ShutDown();
+
+    activeScene.reset(new Scene(path));
+
+    activeScene->Load();
+    activeScene->OnStart();
+    onStart.Invoke(*activeScene);
+
+}
 
 void Scene::SetFirstScene(std::unique_ptr<Scene> firstScene)
 { 
@@ -108,13 +128,19 @@ void Scene::Load()
         string name = StoredEntity::naming.at(storedID);
         Node stored = StoredEntity::LoadToNode(storedID);
         Node combined = StoredEntity::Override(stored, overriderYML);
-        StoredEntity::FromNode(combined, entityID, storedID, true);
+        StoredEntity::FromNode(combined, entityID, storedID, true, false);
     }
     for (auto& [entityID, entityYML] : entitiesMap)
     {
-        StoredEntity::FromNode(entityYML, entityID, std::nullopt, false);
+        StoredEntity::FromNode(entityYML, entityID, std::nullopt, false, false);
     }
-    /*
+
+    // ------- initialize components -------
+    
+    struct SortByOrder {
+        bool operator() (Component* lhs, Component* rhs) const 
+            { return lhs->InitOrder() < rhs->InitOrder(); } };
+    
     for (const auto& entity : Entity::register_.GetData())
     {
         vector<Component*> comps;
@@ -125,7 +151,7 @@ void Scene::Load()
         for (const auto& comp : comps)
             comp->OnSceneLoaded();
     }
-    */
+    
 }
 
 

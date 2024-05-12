@@ -1,8 +1,6 @@
 #pragma once
 #include "Engine.h"
 #include "InputAction.h"
-#include "DemoScene.h"
-#include "SecondScene.h"
 #include "Entity.h"
 //#include "CompYML.h"
 
@@ -13,8 +11,8 @@ public:
 
 private:
 	unsigned int onConnectedChangedIndex = -1;
-	std::vector<DemoScene> demoScenes;
-	std::vector<SecondScene> secondScene;
+	//std::vector<DemoScene> demoScenes;
+	//std::vector<SecondScene> secondScene;
 
 	void OnStart() override;
 	void OnUpdate() override;

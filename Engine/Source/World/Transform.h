@@ -41,7 +41,7 @@ public:
 	vec3 GetScale() const;
 	mat4 GetModel() const;
 	mat4 GetInverseModel() const; // probably only used by camera
-	Transform* GetParent() const;
+	Transform* Parent() const;
 	void SetParent(Transform* newParent);
 	vector<Transform*> GetChildren() const;
 	string GetPath() const; // could also be called to_string
@@ -61,8 +61,7 @@ public:
 	int InitOrder() override { return -2000; }
 
 private:
-	//uuids::uuid parentID;
-	Transform* parent = nullptr;
+	uuid parentID;
 	bool isUpToDate = false; // i.e. caches are up to data
 	//glm::mat4 model = glm::mat4(1.0f); // cached value
 	vector<Transform*> children;

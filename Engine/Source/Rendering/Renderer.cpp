@@ -56,6 +56,7 @@ void Renderer::DrawToScreen(mat4 projectionView)
 
     for (const uuids::uuid& renderableID : Renderable::allRenderables)
         Entity::GetComponent<Renderable>(renderableID).Draw(projectionView);
+    
     Screen::ApplyCursorState();
 }
 

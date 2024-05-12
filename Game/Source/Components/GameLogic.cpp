@@ -2,10 +2,9 @@
 #include "InputKey.h"
 #include "ColQuery.h"
 #include "Renderer.h"
-#include "DemoScene.h"
-#include "SecondScene.h"
 #include "Time_.h"
 #include "InputVectorizer.h"
+#include "GameLiterals.h"
 
 using namespace Key;
 Shorts;
@@ -47,19 +46,22 @@ void GameLogic::OnUpdate()
     color.r += increment;
 
 
-
+    
     if (InputKey::BecomesPressed(Keyboard::M))
     {
         logger::print("M");
-        Scene::Activate<DemoScene>();
+        Scene::Activate(Literals::demoScene);
+        //Scene::Activate<DemoScene>();
         //Scene::Activate(new DemoScene());
     }
     if (InputKey::BecomesPressed(Keyboard::N))
     {
         logger::print("N");
-        Scene::Activate<SecondScene>();
+        Scene::Activate(Literals::secondScene);
+        //Scene::Activate<SecondScene>();
         //Scene::Activate(new SecondScene());
     }
+    
     //CollisionTests();
     //CollisionTests();
 }

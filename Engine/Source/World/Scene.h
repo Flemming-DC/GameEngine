@@ -14,6 +14,9 @@ public:
 	static Event<Scene&> onStart;
 	static Event<Scene&> onEnd; 
 
+	Scene(std::string path) : path(path) {}
+	static void Activate(std::string path);
+	static void ActivateImmediately(std::string path);
 	template <typename SceneType> static void Activate();
 	//static void Activate(Scene* scenePtr);
 	static void ActivateImmediately(Scene* scenePtr);
@@ -31,9 +34,10 @@ private:
 	static uuids::uuid activeSceneID;
 	static std::unique_ptr<Scene> activeScene;
 	uuids::uuid id;
+	std::string path;
 
 	void Load(); // load from file
-	std::string Path() { return Literals::Scenes + Tools::TypeName(*this) + ".yml"; } // evt. store path rather than name
+	std::string Path() { return path; };// { return Literals::Scenes + name + ".yml"; } // evt. store path rather than name
 };
 
 
@@ -42,6 +46,9 @@ template <typename SceneType> static void Scene::Activate()
 	static_assert(std::is_base_of<Scene, SceneType>::value,
 		"Scene::Activate can only activate Scenes, not other types");
 
-	Delay::ToFrameEnd([]() { ActivateImmediately(new SceneType()); });
+	Delay::ToFrameEnd([]() { 
+		std::string name = Tools::TypeName<SceneType>();
+		ActivateImmediately(new SceneType(name)); 
+		});
 }
 

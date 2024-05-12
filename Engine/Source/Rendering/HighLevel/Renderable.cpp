@@ -33,13 +33,10 @@ void Renderable::Draw(const mat4& projectionView)
 {
     if (!UuidCreator::IsInitialized(material.GetID()) || !UuidCreator::IsInitialized(mesh.GetID()))
         RaiseError("you must setup the mesh and material on the renderable, before drawing it.");
-        
     mat4 model = GetTransform().GetModel(); // this is inefficient
     material.SetUniform("u_MVP", projectionView * model);
-
     material.Bind();
     mesh.Bind();
-
     // GL_TRIANGLES should be soft coded if we want to support other things.
     glCall(glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr));
 }
