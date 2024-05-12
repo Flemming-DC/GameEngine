@@ -17,16 +17,14 @@ public:
 	Scene(std::string path) : path(path) {}
 	static void Activate(std::string path);
 	static void ActivateImmediately(std::string path);
-	template <typename SceneType> static void Activate();
-	//static void Activate(Scene* scenePtr);
-	static void ActivateImmediately(Scene* scenePtr);
 	static void MakeBlankSceneFile(std::string name); // evt. temp
 	void ShutDown();
 	static void Save(); // save activeScene to file
 	static Scene& GetActiveScene() { return *activeScene; }
 	virtual void PurelyManualSetup() { RaiseError("not implemented"); };
 	static void ReloadImmediately();
-	static void SetFirstScene(std::unique_ptr<Scene> firstScene);
+	static void SetFirstScene(std::string firstScenePath);
+
 protected:
 	virtual void OnStart() {};
 
@@ -39,16 +37,4 @@ private:
 	void Load(); // load from file
 	std::string Path() { return path; };// { return Literals::Scenes + name + ".yml"; } // evt. store path rather than name
 };
-
-
-template <typename SceneType> static void Scene::Activate()
-{
-	static_assert(std::is_base_of<Scene, SceneType>::value,
-		"Scene::Activate can only activate Scenes, not other types");
-
-	Delay::ToFrameEnd([]() { 
-		std::string name = Tools::TypeName<SceneType>();
-		ActivateImmediately(new SceneType(name)); 
-		});
-}
 

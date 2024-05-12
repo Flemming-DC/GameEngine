@@ -11,30 +11,27 @@
 #include <fstream>
 #include <filesystem>
 #include <sstream>
-
-
 Shorts;
 
 unique_ptr<Scene> Scene::activeScene = nullptr;
 Event<Scene&> Scene::onStart;
 Event<Scene&> Scene::onEnd;
 
-/*
-void Scene::Activate(Scene* scenePtr)
-{
-    Delay::ToFrameEnd([scenePtr]() { ActivateImmediately(scenePtr); });
-}
-*/
 
-void Scene::Activate(std::string path)
+void Scene::SetFirstScene(string path)
 {
-    Delay::ToFrameEnd([path]()
-        {
-            ActivateImmediately(path);
-        });
+    if (activeScene)
+        RaiseError("activeScene is already initialized");
+    activeScene = std::make_unique<Scene>(path);
 }
 
-void Scene::ActivateImmediately(std::string path)
+void Scene::Activate(string path)
+{
+    Delay::ToFrameEnd([path]() { 
+        ActivateImmediately(path); });
+}
+
+void Scene::ActivateImmediately(string path)
 {
     if (activeScene)
         activeScene->ShutDown();
@@ -47,30 +44,10 @@ void Scene::ActivateImmediately(std::string path)
 
 }
 
-void Scene::SetFirstScene(std::unique_ptr<Scene> firstScene)
-{ 
-    if (activeScene)
-        RaiseError("activeScene is already initialized");
-    activeScene = std::move(firstScene);
-}
-
-void Scene::ActivateImmediately(Scene* scenePtr)
-{
-    if (activeScene)
-        activeScene->ShutDown();
-
-    activeScene.reset(scenePtr);
-
-    activeScene->Load();
-    activeScene->OnStart();
-    onStart.Invoke(*activeScene);
-}
-
 void Scene::ReloadImmediately()
 {
     if (activeScene)
         activeScene->ShutDown();
-
 
     activeScene->Load();
     activeScene->OnStart();

@@ -19,7 +19,8 @@ int main()
 
     Entity::DeclareComps<DummyComp, GameLogic>();
     Dynamic::Setup<GameAssets, GameInputs, Settings>();
-    Core::Run(std::make_unique<Scene>(Literals::demoScene));
+    //Core::Run(std::make_unique<Scene>(Literals::demoScene));
+    Core::Run(Literals::demoScene);
 }
 
 /*

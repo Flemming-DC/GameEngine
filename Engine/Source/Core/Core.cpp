@@ -12,11 +12,10 @@
 #include "NamingSaver.h"
 
 
-void Core::Run(std::unique_ptr<Scene> firstScene)
+void Core::Run(std::string firstScenePath)
 {
     logger::print("------- Setup --------");
-    Scene::SetFirstScene(std::move(firstScene));
-    Setup();
+    Setup(firstScenePath);
 
     logger::print("------- Loop --------");
     while (!EngineMode::ShouldClose())
@@ -30,7 +29,7 @@ void Core::Run(std::unique_ptr<Scene> firstScene)
 
 // ------------------ setup, Update, Shutdown --------------------
 
-void Core::Setup()
+void Core::Setup(std::string firstScenePath)
 {
     // externals setup
     OpenGlSetup::Setup();
@@ -46,7 +45,7 @@ void Core::Setup()
     if (EngineMode::InEditor())
         Dynamic::CallOnEditorStart();
     Dynamic::CallOnGameStart(); // this must be called even if (gameIsRunning == false). Thats a bit messy.
-    Scene::ReloadImmediately();
+    Scene::ActivateImmediately(firstScenePath);
 }
 
 
