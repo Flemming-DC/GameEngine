@@ -1,0 +1,12 @@
+StoredEntities: ~
+Entities:
+    f064ed88-950a-49d9-83a9-3f813e69c250:
+        name: camera
+        storedID: ~
+        Camera:
+            id: 850a0467-98e2-46e5-83dd-d169dbd464e1
+        Transform:
+            id: 954cd116-a93c-4a85-8874-bc2e04f3bbc4
+            localPosition: [0, 0, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]

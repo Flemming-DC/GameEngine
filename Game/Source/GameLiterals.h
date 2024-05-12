@@ -7,9 +7,8 @@ namespace Literals
     // ------- files ------- //
     static string blizzardAttackingFans = Literals::Textures + "blizzard attacking fans.png";
 
-    static string demoScene = Literals::Scenes + "demoScene.yml";
-    static string secondScene = Literals::Scenes + "SecondScene.yml";
-    static string miniScene = Literals::Scenes + "MiniScene.yml";
+    static string demoScene = "demoScene";
+    static string secondScene = "SecondScene";
 
     // ------- renderObjects ------- //
     static string dummyMat = "mat";

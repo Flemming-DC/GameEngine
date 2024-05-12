@@ -16,27 +16,24 @@ Shorts;
 unique_ptr<Scene> Scene::activeScene = nullptr;
 Event<Scene&> Scene::onStart;
 Event<Scene&> Scene::onEnd;
+Naming Scene::naming;
 
 
-void Scene::SetFirstScene(string path)
+void Scene::Activate(string name)
 {
-    if (activeScene)
-        RaiseError("activeScene is already initialized");
-    activeScene = std::make_unique<Scene>(path);
+    Delay::ToFrameEnd([name]() {
+        ActivateImmediately(name); });
 }
 
-void Scene::Activate(string path)
-{
-    Delay::ToFrameEnd([path]() { 
-        ActivateImmediately(path); });
-}
-
-void Scene::ActivateImmediately(string path)
+void Scene::ActivateImmediately(string name)
 {
     if (activeScene)
         activeScene->ShutDown();
 
-    activeScene.reset(new Scene(path));
+    naming.TryAdd(name, UuidCreator::MakeID());
+    uuid id = naming.at(name);
+    //naming.Save("sceneNames.yml");
+    activeScene.reset(new Scene(id));
 
     activeScene->Load();
     activeScene->OnStart();
@@ -57,6 +54,11 @@ void Scene::ReloadImmediately()
 
 void Scene::MakeBlankSceneFile(string name)
 {
+    // handling naming first
+    naming.TryAdd(name, UuidCreator::MakeID());
+    uuid id = naming.at(name);
+    //naming.Save("sceneNames.yml");
+
     // building a scene with a single entity with a transform and a camera
     Node transformYML;
     transformYML["id"] = UuidCreator::MakeID();
@@ -68,33 +70,25 @@ void Scene::MakeBlankSceneFile(string name)
     cameraYML["id"] = UuidCreator::MakeID();
 
     Node cameraEntityYML;
-    cameraEntityYML["id"] = UuidCreator::MakeID();
+    cameraEntityYML["name"] = "camera";// = UuidCreator::MakeID();
     cameraEntityYML["Transform"] = transformYML;
     cameraEntityYML["Camera"] = cameraYML;
 
     Node entitiesYML;
-    entitiesYML["camera"] = cameraEntityYML;
+    entitiesYML[naming.at(name)] = cameraEntityYML;
 
     Node sceneYML;
-    sceneYML["id"] = UuidCreator::MakeID();
     sceneYML["Entities"] = entitiesYML;
 
     string path = Literals::Scenes + name + ".yml";
     YmlTools::Save(sceneYML, path, false, true);
 }
-/*
-struct SortByOrder
-{
-    bool operator()(Component* lhs, Component* rhs) const
-    {
-        return lhs->InitOrder() < rhs->InitOrder();
-    }
-};
-*/
+
+
 void Scene::Load()
 {
-    Node sceneYML = YmlTools::Load(Path());
-    id = sceneYML["id"].as<uuid>();
+    string path = Literals::Scenes + naming.at(id) + ".yml";
+    Node sceneYML = YmlTools::Load(path);
 
     auto storedEntitiesMap = sceneYML["StoredEntities"].IsMap() ? sceneYML["StoredEntities"].as<map<uuid, Node>>() : map<uuid, Node>();
     auto entitiesMap = sceneYML["Entities"].IsMap() ? sceneYML["Entities"].as<map<uuid, Node>>() : map<uuid, Node>();
@@ -140,7 +134,6 @@ void Scene::Save()
 
     NamingSaver::Save();
     Node sceneYML;
-    sceneYML["id"] = scene.id;
     Node storedEntitiesYML;
     Node entitiesYML;
     for (const auto& entity : Entity::register_.GetData())
@@ -159,7 +152,8 @@ void Scene::Save()
     sceneYML["StoredEntities"] = storedEntitiesYML;
     sceneYML["Entities"] = entitiesYML;
 
-    YmlTools::Save(sceneYML, scene.Path(), true, true);
+    string path = Literals::Scenes + scene.naming.at(scene.id); + ".yml";
+    YmlTools::Save(sceneYML, path, true, true);
     logger::print("Saved");
 }
 

@@ -9,6 +9,9 @@ namespace Editor
 
 	private:
 		static void SceneMenu();
+
+		static void New();
+		static void Open();
 	};
 }
 

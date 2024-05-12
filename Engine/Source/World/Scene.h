@@ -5,36 +5,34 @@
 #include <memory>
 #include "Event.h"
 #include "Delay.h"
+#include "Naming.h"
 #include "StringTools.h"
 #include "EngineLiterals.h"
 
 class Scene
 {
 public:
+	Shorts;
 	static Event<Scene&> onStart;
-	static Event<Scene&> onEnd; 
+	static Event<Scene&> onEnd;
+	static Naming naming;
 
-	Scene(std::string path) : path(path) {}
-	static void Activate(std::string path);
-	static void ActivateImmediately(std::string path);
-	static void MakeBlankSceneFile(std::string name); // evt. temp
-	void ShutDown();
+	static void Activate(string name); // used by game, not engine
+	static void ActivateImmediately(string name); // engine only
+	static void MakeBlankSceneFile(string name); 
+	void ShutDown(); // engine only
 	static void Save(); // save activeScene to file
+	static void ReloadImmediately(); // engine only
 	static Scene& GetActiveScene() { return *activeScene; }
-	virtual void PurelyManualSetup() { RaiseError("not implemented"); };
-	static void ReloadImmediately();
-	static void SetFirstScene(std::string firstScenePath);
 
 protected:
 	virtual void OnStart() {};
 
 private:
-	static uuids::uuid activeSceneID;
-	static std::unique_ptr<Scene> activeScene;
-	uuids::uuid id;
-	std::string path;
+	static unique_ptr<Scene> activeScene;
+	uuid id;
 
+	Scene(uuid id) : id(id) {}
 	void Load(); // load from file
-	std::string Path() { return path; };// { return Literals::Scenes + name + ".yml"; } // evt. store path rather than name
 };
 

@@ -13,10 +13,6 @@ namespace Literals
 	static string Namings = Res + "Namings/";
 	static string Entities = Res + "Entities/";
 	
-	// string idByName = res + "IdByName";
-	// evt. Materials
-	// evt. Meshes
-	// evt. Prefabs / Entities (aka. stored entities)
 
 	// ------- files ------- //
 	static string colorShader = Shaders + "SolidColor.shader";

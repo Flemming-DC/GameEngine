@@ -7,7 +7,7 @@ class UuidCreator
 {
 public:
 	static uuids::uuid MakeID();
-	static uuids::uuid from_string(std::string str) { return uuids::uuid::from_string(str).value(); }
+	static uuids::uuid from_string(std::string str);
 	static bool IsInitialized(uuids::uuid id) { return id != unInitializedID; }
 
 private:

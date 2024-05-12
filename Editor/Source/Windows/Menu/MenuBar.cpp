@@ -11,7 +11,7 @@ static bool open = true;
 
 void MenuBar::Update()
 {
-    if (!ImGui::Begin("bim", &open, ImGuiWindowFlags_MenuBar))
+    if (!ImGui::Begin("MenuBar", &open, ImGuiWindowFlags_MenuBar))
     {
         ImGui::End();
         // Scene::Save(); popup(er du sikker) ?
@@ -51,38 +51,67 @@ void MenuBar::SceneMenu()
 
     if (ImGui::BeginMenu("New"))
     {
-        static string name;
-        ImGui::InputText("##", &name);
-        ImGui::SameLine();
-        if (ImGui::Button("Create Scene"))
-        {
-            if (name != "")
-            {
-                Scene::MakeBlankSceneFile(name); // only makes the yml, not the subclass.
-                ImGui::CloseCurrentPopup();
-                logger::print("Create Scene ", name);
-            }
-            else
-                Warning("Entity name mustn't be blank.");
-        }
+        New();
         ImGui::EndMenu();
     }
-
-    if (ImGui::MenuItem("Open", "Ctrl+O"))
+    if (ImGui::BeginMenu("Open", "Ctrl+O"))
     {
-        // evt. save current file first
-        // choose from naming via completor
-        // Scene::Activate(chosenScene); activate via string is missing
+        Open();
+        ImGui::EndMenu();
     }
-
     if (ImGui::MenuItem("Save", "Ctrl+S"))
-    {
         Scene::Save();
-    }
-
 
     ImGui::EndMenu();
 }
+
+
+void MenuBar::New()
+{
+    static string name;
+    static string errorMessage;
+    static bool editted = false;
+    if (ImGui::InputText("##", &name))
+        editted = true;
+
+    if (name == "" && editted)
+        errorMessage = "Scene name mustn't be blank.";
+    else if (Scene::naming.Contains(name))
+        errorMessage = "Scene name is already used.";
+    else
+        errorMessage = "";
+
+    ImGui::SameLine();
+    if (ImGui::Button("Create Scene"))
+    {
+        if (errorMessage == "" && editted)
+        {
+            Scene::MakeBlankSceneFile(name); // only makes the yml, not the subclass.
+            ImGui::CloseCurrentPopup();
+            logger::print("Create Scene ", name);
+            editted = false;
+        }
+        else
+            editted = true;
+    }
+    ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), errorMessage.c_str());
+}
+
+void MenuBar::Open()
+{
+    static string sceneName;
+    if (ImGui::AutoCompletor("Choose scene", &sceneName, Scene::naming.Names()))
+    {
+        if (!Tools::Contains(Scene::naming.Names(), sceneName))
+            RaiseError("Unrecognized scene ", sceneName);
+        Scene::Save();
+        Scene::Activate(sceneName);
+        sceneName.clear();
+        ImGui::CloseCurrentPopup();
+    }
+}
+
+
 
 void _ShowExampleMenuFile()
 {

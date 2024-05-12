@@ -3,6 +3,7 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "StoredEntity.h"
+#include "Scene.h"
 
 
 void NamingSaver::Save()
@@ -11,6 +12,8 @@ void NamingSaver::Save()
 	Material::naming.Save("materialNames.yml");
 	Mesh::naming.Save("meshNames.yml");
 	StoredEntity::naming.Save("entityNames.yml");
+	Scene::naming.Save("sceneNames.yml");
+	
 }
 
 void NamingSaver::Load()
@@ -19,5 +22,6 @@ void NamingSaver::Load()
 	Material::naming.Load("materialNames.yml");
 	Mesh::naming.Load("meshNames.yml");
 	StoredEntity::naming.Load("entityNames.yml");
+	Scene::naming.Load("sceneNames.yml");
 
 }

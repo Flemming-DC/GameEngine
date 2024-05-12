@@ -88,6 +88,8 @@ void Core::Shutdown()
     // engine shutdown
     Renderer::ShutDown();
     Dynamic::Clear();
+    if (EngineMode::InEditor())
+        NamingSaver::Save(); // namings cant change at playtime
     // externals
     ImGuiSetup::Shutdown();
     OpenGlSetup::Shutdown();

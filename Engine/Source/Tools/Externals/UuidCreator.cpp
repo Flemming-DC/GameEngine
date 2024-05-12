@@ -1,8 +1,10 @@
 #include "UuidCreator.h"
+#include "Errorchecker.h"
 #include <stduuid/uuid.h>
 
+using uuids::uuid;
 
-uuids::uuid UuidCreator::unInitializedID;// = from_string("dcb8bd08-84c2-45e5-bb8b-07a5fd5bd52b");
+uuid UuidCreator::unInitializedID;// = from_string("dcb8bd08-84c2-45e5-bb8b-07a5fd5bd52b");
 
 /*
 uuids::uuid_random_generator* UuidCreator::generator = nullptr;
@@ -20,7 +22,7 @@ void UuidCreator::Setup()
 }
 */
 
-uuids::uuid UuidCreator::MakeID()
+uuid UuidCreator::MakeID()
 {
     std::random_device rd;
     auto seed_data = std::array<int, std::mt19937::state_size> {};
@@ -32,3 +34,11 @@ uuids::uuid UuidCreator::MakeID()
     return generator();
 }
 
+
+uuid UuidCreator::from_string(std::string str) 
+{ 
+    if (auto id = uuid::from_string(str))
+        return id.value();
+    else
+        RaiseError("cannot interpret '", str, "' as a uuid.");
+}
