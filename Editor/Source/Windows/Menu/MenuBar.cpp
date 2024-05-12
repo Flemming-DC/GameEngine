@@ -18,28 +18,11 @@ void MenuBar::Update()
         EngineMode::ExitEditor();
         return;
     }
-    //ImGui::End();
+    //ImGui::End(); hvis ImGuiWindowFlags_MenuBar fjernes, så skal End() kaldes her.
     if (!ImGui::BeginMenuBar())
         return;
 
     MenuBar::SceneMenu();
-    /*
-    if (ImGui::BeginMenu("File"))
-    {
-        MenuBar::ShowExampleMenuFile();
-        ImGui::EndMenu();
-    }
-    if (ImGui::BeginMenu("Edit"))
-    {
-        if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
-        if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
-        ImGui::Separator();
-        if (ImGui::MenuItem("Cut", "CTRL+X")) {}
-        if (ImGui::MenuItem("Copy", "CTRL+C")) {}
-        if (ImGui::MenuItem("Paste", "CTRL+V")) {}
-        ImGui::EndMenu();
-    }
-    */
     ImGui::EndMainMenuBar();
 
 }
@@ -54,7 +37,7 @@ void MenuBar::SceneMenu()
         New();
         ImGui::EndMenu();
     }
-    if (ImGui::BeginMenu("Open", "Ctrl+O"))
+    if (ImGui::BeginMenu("Open"))
     {
         Open();
         ImGui::EndMenu();
@@ -112,18 +95,3 @@ void MenuBar::Open()
 }
 
 
-
-void _ShowExampleMenuFile()
-{
-    //ImGui::MenuItem("(dummy menu)", NULL, false, false);
-    if (ImGui::MenuItem("New")) {}
-    if (ImGui::MenuItem("Open", "Ctrl+O")) {}
-    if (ImGui::BeginMenu("Open Recent"))
-    {
-        ImGui::MenuItem("fish_hat.c");
-        ImGui::MenuItem("fish_hat.inl");
-        ImGui::MenuItem("fish_hat.h");
-        ImGui::EndMenu();
-    }
-
-}

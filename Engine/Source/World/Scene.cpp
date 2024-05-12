@@ -152,7 +152,7 @@ void Scene::Save()
     sceneYML["StoredEntities"] = storedEntitiesYML;
     sceneYML["Entities"] = entitiesYML;
 
-    string path = Literals::Scenes + scene.naming.at(scene.id); + ".yml";
+    string path = Literals::Scenes + scene.naming.at(scene.id) + ".yml";
     YmlTools::Save(sceneYML, path, true, true);
     logger::print("Saved");
 }

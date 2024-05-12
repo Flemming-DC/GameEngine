@@ -16,9 +16,9 @@ static vec3 lastMouseWorldPosition = vec3();
 
 void SceneCamera::UpdateCamera(ImVec2 minSceneCorner_, ImVec2 maxSceneCorner_)
 {
-    //if (!ImGui::IsWindowHovered()) 
-    //    return;
-    if (!ImGui::IsWindowFocused())
+    // we use ImGui::IsMouseDragging here, because it has to fit with ImGui's builtin 
+    // docker dragging mechanism. As such it is independent of our choice of EditorInputs.
+    if (!ImGui::IsWindowFocused() && !ImGui::IsMouseDragging(ImGuiMouseButton_Left))
         return;
     minSceneCorner = { minSceneCorner_.x, minSceneCorner_.y };
     maxSceneCorner = { maxSceneCorner_.x, maxSceneCorner_.y };

@@ -19,7 +19,7 @@ int main()
 
     Entity::DeclareComps<DummyComp, GameLogic>();
     Dynamic::Setup<GameAssets, GameInputs, Settings>();
-    Core::Run("hipsa");//Literals::demoScene);
+    Core::Run(Literals::demoScene);
 }
 
 /*
