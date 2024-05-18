@@ -16,7 +16,10 @@ void Texture::Setup(const std::string& filePath_)
 		RaiseError("Texture is already initialized");
 	auto name = Tools::RemovePrefix(filePath_, Literals::Textures); // we assume that all textures are in the texture folder
 	if (!naming.Contains(name))
+	{
+		logger::print("Making new textureID");
 		naming.AddWithSuffix(name, UuidCreator::MakeID());
+	}
 	id = naming.at(name);
 	filePath = filePath_;
 	stbi_set_flip_vertically_on_load(1);

@@ -18,5 +18,3 @@ optimizations:
 	compile yml to binary when exporting the game
 	texture atlasses
 	use gpu compressed textures
-	make memory tracker: https://www.youtube.com/watch?v=sLlGEUO_EGE
-	

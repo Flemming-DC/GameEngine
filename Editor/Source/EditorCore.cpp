@@ -37,7 +37,6 @@ void EditorCore::OnEditorUpdate()
     //Console::Update();
     MenuBar::Update();
 
-    ImGui::ShowDemoWindow();
 
     HandleOpenClose();
 }

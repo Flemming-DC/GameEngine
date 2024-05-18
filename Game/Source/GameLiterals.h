@@ -5,13 +5,13 @@
 namespace Literals
 {
     // ------- files ------- //
-    static string blizzardAttackingFans = Literals::Textures + "blizzard attacking fans.png";
+    //static string blizzardAttackingFans = Literals::Textures + "blizzard attacking fans.png";
 
     static string demoScene = "demoScene";
     static string secondScene = "SecondScene";
 
     // ------- renderObjects ------- //
-    static string dummyMat = "mat";
+    //static string dummyMat = "mat";
     
 
 }

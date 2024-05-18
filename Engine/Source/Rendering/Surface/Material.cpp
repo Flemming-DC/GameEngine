@@ -44,6 +44,9 @@ void Material::SetUniform(const string& name, std::any value)
 
 void Material::SetTexture(const string& uniformName, uuid texID)
 {
+    if (!Texture::register_.Contains(texID))
+        RaiseError("Trying to set uniform ", uniformName, " with a textureID ", texID, 
+            " that does exist in the register. The textue name is ", Texture::naming.at(texID));
     Texture& tex = Texture::register_.Get(texID);
     SetUniform(uniformName, &tex);
 }

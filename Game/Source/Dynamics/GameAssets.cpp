@@ -3,15 +3,18 @@
 #include "GameLiterals.h"
 
 Shorts;
-Shader& GameAssets::shader = Shader();
-Texture& GameAssets::texture = Texture();
-Material& GameAssets::material = Material();
+static bool isInitialized = false;
+static Shader& shader = Shader();
+static Texture& texture = Texture();
+static Texture& rocketTex = Texture();
+static Material& material = Material();
 
 
-void GameAssets::Setup()
+void GameAssets::OnGameStart()
 {
-    if (UuidCreator::IsInitialized(material.GetID()))
-        return; // if material is init, then the others are so too.
+    if (isInitialized)
+        return;
+    isInitialized = true;
 
     // parameters
     map_uo<string, std::any> uniformsByName = {
@@ -21,8 +24,9 @@ void GameAssets::Setup()
 
     // assets
     shader = Shader::register_.Add(Literals::imageShader);
-    texture = Texture::register_.Add(Literals::blizzardAttackingFans);
-    material = Material::register_.Add(Literals::dummyMat, shader, uniformsByName);
+    texture = Texture::register_.Add(Literals::Textures + "blizzard attacking fans.png");
+    rocketTex = Texture::register_.Add(Literals::Textures + "rocket.png");
+    material = Material::register_.Add("mat", shader, uniformsByName);
 
 }
 

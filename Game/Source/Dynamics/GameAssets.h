@@ -6,17 +6,17 @@
 class GameAssets : public Dynamic
 {
 public:
-	static void Setup(); // static OnGameStart
-	static Shader& GetShader() { return shader; }
-	static Texture& GetTexture() { return texture; }
-	static Material& GetMaterial() { return material; }
 
 private:
-	static Shader& shader;
-	static Texture& texture;
-	static Material& material;
+	//static Shader& shader;
+	//static Texture& texture;
+	//static Material& material;
 
-	void OnGameStart() { Setup(); }
+	void OnGameStart();// { Setup(); }
+
+	//static Shader& GetShader() { return shader; }
+	//static Texture& GetTexture() { return texture; }
+	//static Material& GetMaterial() { return material; }
 
 };
 

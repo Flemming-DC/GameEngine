@@ -6,11 +6,19 @@ bool OpenGlSetup::openGLInitialized = false;
 GLFWwindow* OpenGlSetup::window = nullptr;
 std::pair<int, int> OpenGlSetup::lastWindowSize = { 960, 720 };
 
+void glfwErrorCallback(int errorCode, const char* errorMessage)
+{
+    std::cout << "errorCode [" << errorCode << "] message: " << errorMessage << std::endl;
+}
+
 void OpenGlSetup::Setup()
 {
+    glfwSetErrorCallback(glfwErrorCallback);
+
     // glfw setup
     if (!glfwInit())
-        RaiseError("glfwInit failed");
+        RaiseError("glfwInit failed"); 
+    // 4.6
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // locking version
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);

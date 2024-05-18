@@ -61,6 +61,9 @@ void Renderable::Save(Node& node) const
     {
         materialNode[Literals::u_color] = material.GetUniform<vec4>(Literals::u_color);
         uuid texID = material.GetUniform<Texture*>(Literals::u_textureSampler)->GetID();
+        if (!Texture::register_.Contains(texID))
+            RaiseError("Trying to save material ", name, " on ", to_string(), " with textureID ", texID,
+                " that does not exist in the register.");// The textue name is ", Texture::naming.at(texID));
         materialNode[Literals::u_textureSampler] = texID;
     } 
     else if (name == Literals::colorMaterialName)
