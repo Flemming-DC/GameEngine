@@ -23,5 +23,4 @@ void NamingSaver::Load()
 	Mesh::naming.Load("meshNames.yml");
 	StoredEntity::naming.Load("entityNames.yml");
 	Scene::naming.Load("sceneNames.yml");
-
 }

@@ -9,7 +9,9 @@
 #include "GameLiterals.h"
 #include "DummyComp.h"
 #include "GameLogic.h"
+#include "RocketEngine.h"
 #include "Entity.h"
+
 
 int main()
 {
@@ -17,9 +19,9 @@ int main()
     Editor::EditorCore::MarkAsEditor();
 #endif // InEditor
 
-    Entity::DeclareComps<DummyComp, GameLogic>();
+    Entity::DeclareComps<DummyComp, GameLogic, RocketEngine>();
     Dynamic::Setup<GameAssets, Settings>();
-    Core::Run(Literals::demoScene);
+    Core::Run(Literals::stroidalDevScene);
 }
 
 /*

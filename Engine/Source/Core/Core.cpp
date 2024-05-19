@@ -10,6 +10,7 @@
 #include "EngineMode.h"
 #include "OpenGlSetup.h"
 #include "NamingSaver.h"
+#include "StoredEntity.h" // temp
 
 
 void Core::Run(std::string firstScenePath)
@@ -46,6 +47,7 @@ void Core::Setup(std::string firstScenePath)
         Dynamic::CallOnEditorStart();
     Dynamic::CallOnGameStart(); // this must be called even if (gameIsRunning == false). Thats a bit messy.
     Scene::ActivateImmediately(firstScenePath);
+
 }
 
 

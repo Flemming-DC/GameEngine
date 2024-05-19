@@ -94,7 +94,7 @@ void DummyComp::TestInputActions()
 		logger::print("fire BecomesPressed");
 	if (GameInputs::Fire().BecomesReleased())
 		logger::print("fire BecomesReleased");
-
+	/*
 	if (InputKey::BecomesPressed(Keyboard::J))
 	{
 		logger::print("J");
@@ -113,6 +113,7 @@ void DummyComp::TestInputActions()
 		logger::print("H");
 		GameInputs::Walk().enabled = !GameInputs::Walk().enabled;
 	}
+	*/
 }
 
 void DummyComp::OldTests()

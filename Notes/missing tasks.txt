@@ -17,6 +17,7 @@ diverse
 	provide valid default state for colliders	
 	bug: read access violation when dummyComp makes more dummyComp in Update. happens in Entity loop over comp for (const auto& compPtr : components) compPtr->OnUpdate();
 
+	bug: attach & detech child to parent changes position.
 
 components & gameobjects
 	handle activation

@@ -15,14 +15,14 @@ namespace GameInputs
 		.AddKey(Key::FloatKey::mouseScrollVelocity)
 		.AddKey(Key::FloatKey::leftTrigger);
 
-	static auto& walk = InputAction<glm::vec2>::Create()
+	static auto& move = InputAction<glm::vec2>::Create()
 		.AddKey(Key::VectorKey::WASD)
 		.AddKey(Key::VectorKey::leftStick);
 	//walk.gamepadID = 1; // second gamepad
 
 	InputAction<bool>& Jump() { return jump; };
 	InputAction<float>& Fire() { return fire; };
-	InputAction<glm::vec2>& Walk() { return walk; };
+	InputAction<glm::vec2>& Move() { return move; };
 
 }
 

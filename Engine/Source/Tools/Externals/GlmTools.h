@@ -7,6 +7,7 @@
 
 namespace glm
 {
+	const float PI = glm::pi<float>();
 	
 	bool HasNAN(glm::vec2 vec);
 	bool HasNAN(glm::vec3 vec);
@@ -45,6 +46,9 @@ namespace glm
 	inline float OrientedAngle(glm::vec2 v1, glm::vec2 v2) { return glm::orientedAngle(glm::normalize(v1), glm::normalize(v2)); }
 	//inline float OrientedAngle(glm::vec3 v1, glm::vec3 v2) { return glm::orientedAngle(glm::normalize(v1), glm::normalize(v2)); }
 	//inline float OrientedAngle(glm::vec4 v1, glm::vec4 v2) { return glm::orientedAngle(glm::normalize(v1), glm::normalize(v2)); }
+
+	float SmoothAngle(float currentAngle, float targetAngle, float step);
+	vec2 SmoothVec(vec2 currentVec, vec2 targetVec, float step);
 
 }
 

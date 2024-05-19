@@ -1,0 +1,17 @@
+Transform:
+    id: c614c044-ffd1-41ef-a3a8-d7eadaf63a94
+    localPosition: [-0.728530049, 0.333187878, 0]
+    localRotation: [1, 0, 0, 0]
+    localScale: [1, 1, 1]
+Renderable:
+    id: 29459a6d-f12e-4074-b31f-4482644d2f88
+    mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+    material:
+        id: b456a101-6f11-459e-8080-de7bd7deae4a
+        u_color: [1, 1, 1, 1]
+        u_textureSampler: dbadd572-ceb3-4d20-adf8-baa182959aa8
+RectangleCollider:
+    id: 1fbc1ac0-a787-49af-b4b5-009c3a467995
+    size: [1, 1]
+RocketEngine:
+    id: cdf26bca-10a5-46ea-a062-e5de80f68204

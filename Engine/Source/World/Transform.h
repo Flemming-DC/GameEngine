@@ -26,6 +26,7 @@ public:
 	void SetLocalScale(vec3 localScale);
 
 	void IncrementLocalAngle(float deltaAngle);
+	void IncrementPosition2D(vec2 deltaPos) { SetPosition2D(Position2D() + deltaPos); };
 	void SetPosition2D(vec2 pos);
 	void SetAngle(float angle);
 	void SetScale2D(vec2 scale);

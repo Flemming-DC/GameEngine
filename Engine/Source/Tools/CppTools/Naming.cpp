@@ -85,7 +85,6 @@ string Naming::at(uuid id)
 
 bool Naming::Contains(uuid id) const
 {
-
 	for (const auto& [name_, id_] : idByName)
 	{
 		if (id_ == id)
@@ -127,7 +126,11 @@ void Naming::Load(string fileName)
 		return;
 	auto idByName_ = node.as<map<string, uuid>>();
 	for (auto& [name, id] : idByName_)
-		TryAdd(name, id); // O(n^2) growth
+	{
+		bool wasAdded = TryAdd(name, id); // O(n^2) growth
+		if (!wasAdded)
+			Warning("Failed to add ", name, " to naming. It or its id is already present.");
+	}
 	/*
 	* // unsafe, but linear growth
 	idByName.clear();

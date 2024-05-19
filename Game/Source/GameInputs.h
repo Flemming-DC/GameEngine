@@ -6,5 +6,5 @@ namespace GameInputs
 {
 	InputAction<bool>& Jump();
 	InputAction<float>& Fire();
-	InputAction<glm::vec2>& Walk();
+	InputAction<glm::vec2>& Move();
 };

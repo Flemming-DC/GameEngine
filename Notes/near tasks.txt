@@ -1,28 +1,40 @@
 
+flaw during mini game dev:
+	bug: attach & detach child to parent changes position.
+	cant edit entity-name in editor
+	too zoomed in
+	lol - all entities are really stored entities
+	nasty error on attching component and saving it.
+	shift+R collides with typing capital R
+	saving entity to storage doesnt make it an instance to the new stored type
+	removing rocket from storage
+	got entity got its components reversed
 
 diverse:
-	evt. add name -> show in inspector
-	
-
-	
+	safety regarding deletion (er du sikker eller auto backups eller undo)
+	literals should evt. store uuids not names
+	colliders are not very visible when selected
 
 Editor 
-	create and destroy objects
 	
 	Inspector
-		attach components
+		evt. macros to show variables
 		evt. edit polygon positions in scene by dragging.
 	SceneEditor
 		evt. run button
 		evt. show clidren of selection
 		evt. click + move in one action by clicking on entity and moving it
 		evt. selection priority (evt. automated by picking parents over children)
+		evt. cut, copy, paste, by ctrl+(x, c, v)
+		evt. select children too by ctrl+a
+		goto selection by ctrl+F (steps through selection)
 	GameView
 		allow fullscreen mode
 	Hierarchy	
-		evt. allow selection of entities in hierachy
-		evt. show selected entities in hierachy
 		evt. show entities with errors in hierachy (provided that components have some way of reporting errors)
+		evt. select increment and select range by ctrl+click and shift+click
+		evt. open-close children too by alt-click or perhaps ctrl + double click
+		evt. reorder hierachy by ctrl + up/down
 	evt. AssetFolder
 	evt. Console
 	

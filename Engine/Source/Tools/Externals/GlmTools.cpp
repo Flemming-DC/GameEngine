@@ -43,6 +43,36 @@ namespace glm
 	{
 		return glm::identity<glm::quat>();
 	}
+
+	float SmoothAngle(float currentAngle, float targetAngle, float step)
+	{
+		// correct for discontinuity in angles
+		if (targetAngle - currentAngle > glm::PI)
+			targetAngle -= 2 * glm::PI;
+		else if (targetAngle - currentAngle < -glm::PI)
+			targetAngle += 2 * glm::PI;
+
+		float nextAngle = (1 - step) * currentAngle + step * targetAngle; // ignoring overshoot
+
+		// prevent overshoot
+		if (targetAngle > currentAngle)
+			return glm::min(nextAngle, targetAngle);
+		else
+			return glm::max(nextAngle, targetAngle);
+	}
+
+	vec2 SmoothVec(vec2 currentVec, vec2 targetVec, float step)
+	{
+		vec2 nextVec = (1 - step) * currentVec + step * targetVec; // ignoring overshoot
+		// prevent overshoot
+		return glm::vec2(
+			targetVec.x > currentVec.x ? glm::min(nextVec.x, targetVec.x) : glm::max(nextVec.x, targetVec.x),
+			targetVec.y > currentVec.y ? glm::min(nextVec.y, targetVec.y) : glm::max(nextVec.y, targetVec.y)
+			);
+	}
+
+
+
 }
 
 

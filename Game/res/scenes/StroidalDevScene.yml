@@ -1,0 +1,24 @@
+StoredEntities:
+    5d38bec5-3ca1-4b8d-afb6-5898026d0b96:
+        RectangleCollider:
+            id: af5a3e5e-53ce-4230-8e0f-31a39bcb5737
+        Renderable:
+            id: 4f981448-1785-42a8-86bd-c6457af25ec5
+        RocketEngine:
+            id: f7be3566-fe49-4f92-8c2b-ba718819445c
+        Transform:
+            id: 546ae67a-bbcc-4ab3-b2ae-b2bdcb976e74
+            localPosition: [-0.46870473, 0.571179092, 0]
+        name: rocket
+        storedID: 03e54f95-8af6-4430-b26c-9c87d3f8de82
+Entities:
+    955c33e9-7c9b-4169-938a-6430d573d55e:
+        name: camera
+        storedID: ~
+        Camera:
+            id: 0a73a2ca-d1f3-43f4-81c5-eeff68d3c774
+        Transform:
+            id: bfd2a852-ec3a-4d62-adea-9f452657b87b
+            localPosition: [0, 0, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]

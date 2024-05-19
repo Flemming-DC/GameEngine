@@ -9,6 +9,7 @@ namespace Literals
 
     static string demoScene = "demoScene";
     static string secondScene = "SecondScene";
+    static string stroidalDevScene = "stroidalDevScene";
 
     // ------- renderObjects ------- //
     //static string dummyMat = "mat";

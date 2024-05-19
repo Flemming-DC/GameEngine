@@ -1,13 +1,13 @@
 StoredEntities:
     4789b406-c67b-4951-a05b-8ea4af7126ff:
         RectangleCollider:
-            id: 77b52d22-1cb0-41a5-aacf-45687d263b08
+            id: 06bc1eba-ac23-417d-8e2b-ef241dcfdf58
         Renderable:
-            id: df7102c2-4ec0-495c-aee5-237dd606a05d
+            id: 6ba43fb9-eaa1-4c27-9340-025afce015f2
             material:
                 u_color: [0.728915691, 0.161214545, 0.161214545, 1]
         Transform:
-            id: 3759612c-a592-4071-a788-db4bbda7f5d4
+            id: 41ae4eec-e197-44c4-845b-2b5b8b8ea7ad
             localPosition: [-0.576832116, 0.235460758, 0]
             localRotation: [0.623566329, 0, 0, 0.781770408]
         name: Sprite 1
@@ -43,12 +43,14 @@ Entities:
             material:
                 id: b456a101-6f11-459e-8080-de7bd7deae4a
                 u_color: [1, 1, 1, 1]
-                u_textureSampler: c15e2fa8-78de-4670-b5ca-5185615884f7
+                u_textureSampler: dbadd572-ceb3-4d20-adf8-baa182959aa8
         Transform:
             id: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
             localPosition: [-0.399380714, -0.673846841, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
+        RocketEngine:
+            id: cf421260-8a6d-403e-9224-20ec1f5be68a
     9f5200c9-8a5a-4f6e-9cf1-0d478ccf3c82:
         name: circle 1
         storedID: ~
@@ -79,7 +81,6 @@ Entities:
                 u_textureSampler: 5813263f-20bb-41da-a2c2-12654532478e
         Transform:
             id: a5be3ef9-f754-42ca-af89-8842ab357ab7
-            localPosition: [1.10763717, 0.102203608, 0]
+            localPosition: [0.78011024, -0.820097923, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]
-            parent: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
