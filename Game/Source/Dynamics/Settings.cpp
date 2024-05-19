@@ -5,5 +5,5 @@
 
 void Settings::OnGameStart()
 {
-	Screen::SetTitle("demo game");
+	Screen::SetTitle("Stroidal");
 }

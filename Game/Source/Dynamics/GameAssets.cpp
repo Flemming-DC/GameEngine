@@ -4,9 +4,14 @@
 
 Shorts;
 static bool isInitialized = false;
-static Shader& shader = Shader();
 static Texture& texture = Texture();
 static Texture& rocketTex = Texture();
+static Texture& rocketFlamingTex = Texture();
+static Texture& asteroidTex = Texture();
+static Texture& asteroidMessyTex = Texture();
+
+
+static Shader& shader = Shader();
 static Material& material = Material();
 
 
@@ -23,9 +28,13 @@ void GameAssets::OnGameStart()
     };
 
     // assets
-    shader = Shader::register_.Add(Literals::imageShader);
     texture = Texture::register_.Add(Literals::Textures + "blizzard attacking fans.png");
     rocketTex = Texture::register_.Add(Literals::Textures + "rocket.png");
+    rocketFlamingTex = Texture::register_.Add(Literals::Textures + "rocketFlaming.png");
+    asteroidTex = Texture::register_.Add(Literals::Textures + "asteroid.png");
+    asteroidMessyTex = Texture::register_.Add(Literals::Textures + "asteroidMessy.png");
+
+    shader = Shader::register_.Add(Literals::imageShader);
     material = Material::register_.Add("mat", shader, uniformsByName);
 
 }

@@ -1,6 +1,6 @@
 #pragma once
-#include "Engine.h"
 #include "InputAction.h"
+// don't import engine.h here
 
 namespace GameInputs 
 {

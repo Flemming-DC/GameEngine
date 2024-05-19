@@ -1,13 +1,13 @@
 StoredEntities:
     4789b406-c67b-4951-a05b-8ea4af7126ff:
         RectangleCollider:
-            id: 5c3aa5f2-3670-406b-82c9-a9109e591af8
+            id: 77b52d22-1cb0-41a5-aacf-45687d263b08
         Renderable:
-            id: 5c8abaab-bf58-49b0-a614-c39fce965fa9
+            id: df7102c2-4ec0-495c-aee5-237dd606a05d
             material:
                 u_color: [0.728915691, 0.161214545, 0.161214545, 1]
         Transform:
-            id: 8dd66fef-16c1-4c13-937c-8eaee41e5b67
+            id: 3759612c-a592-4071-a788-db4bbda7f5d4
             localPosition: [-0.576832116, 0.235460758, 0]
             localRotation: [0.623566329, 0, 0, 0.781770408]
         name: Sprite 1
@@ -43,7 +43,7 @@ Entities:
             material:
                 id: b456a101-6f11-459e-8080-de7bd7deae4a
                 u_color: [1, 1, 1, 1]
-                u_textureSampler: efa1504b-71ac-4350-9092-bc0263287bb5
+                u_textureSampler: c15e2fa8-78de-4670-b5ca-5185615884f7
         Transform:
             id: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
             localPosition: [-0.399380714, -0.673846841, 0]

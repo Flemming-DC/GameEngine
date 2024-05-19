@@ -1,11 +1,11 @@
 #include "Core.h"
+#ifdef InEditor
+    #include "EditorCore.h"
+#endif // InEditor
 #include "Dynamic.h"
 #include "GameAssets.h"
 #include "GameInputs.h"
 #include "Settings.h"
-#ifdef InEditor
-    #include "EditorCore.h"
-#endif // InEditor
 #include "GameLiterals.h"
 #include "DummyComp.h"
 #include "GameLogic.h"
@@ -18,7 +18,7 @@ int main()
 #endif // InEditor
 
     Entity::DeclareComps<DummyComp, GameLogic>();
-    Dynamic::Setup<GameAssets, GameInputs, Settings>();
+    Dynamic::Setup<GameAssets, Settings>();
     Core::Run(Literals::demoScene);
 }
 
