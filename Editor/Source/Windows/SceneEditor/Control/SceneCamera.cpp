@@ -9,7 +9,7 @@ static const float scrollSpeed = 3.0f;
 static const float maxScale = 100;
 static vec3 cameraPos = vec3(0.0f);
 static const quat cameraRot = glm::NoRotation();
-static vec3 cameraScale = vec3(1.0f);
+static vec3 cameraScale = vec3(3.0f);
 static vec2 minSceneCorner;
 static vec2 maxSceneCorner;
 static vec3 lastMouseWorldPosition = vec3();

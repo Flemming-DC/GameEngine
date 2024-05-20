@@ -15,7 +15,7 @@
 #include "Impact.h"
 #include "Player.h"
 #include "AsteroidMotion.h"
-#include "AttachToPlayer.h"
+#include "FollowPlayer.h"
 
 
 int main()
@@ -24,7 +24,7 @@ int main()
     Editor::EditorCore::MarkAsEditor();
 #endif // InEditor
 
-    Entity::DeclareComps<DummyComp, GameLogic, RocketEngine, Impact, Player, AsteroidMotion, AttachToPlayer>();
+    Entity::DeclareComps<DummyComp, GameLogic, RocketEngine, Impact, Player, AsteroidMotion, FollowPlayer>();
     Dynamic::Setup<GameAssets, Settings, AsteroidSpawner>();
     Core::Run(Literals::stroidalDevScene);
 }

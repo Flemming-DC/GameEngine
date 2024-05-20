@@ -3,7 +3,6 @@
 #include "Entity.h"
 #include "Collider.h"
 #include "Gizmo.h"
-#include "CircleCollider.h" // temp
 
 using namespace Editor;
 Shorts;
@@ -20,7 +19,7 @@ void SceneVisuals::DrawGrid()
     vec4 gridColor = vec4(0.2f, 0.2f, 0.2f, 1); // feint grey
     float lineThickness = 0.2f;
     float gridSize = 50;
-    float gridScale = 0.25f;
+    float gridScale = 0.5f;
 
     vector<vec2> horizontallyOrganizedPosition2Ds;
     vector<vec2> verticallyOrganizedPosition2Ds;

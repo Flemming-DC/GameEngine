@@ -75,7 +75,7 @@ void Hierarchy::DrawTreeNode(Transform& transform)
     bool open = ImGui::TreeNodeEx(transform.Entity().Name().c_str(), flags);
 
     if (ImGui::IsItemClicked()) // nb: this line must come between [bool open =...] and [if (open) ...]
-        Selector::SetSelected(id, !Selector::IsSelected(id));
+        Selector::SelectFromHierachy(id);
 
     if (DragDrop(transform)) // nb: this line must come between [bool open =...] and [if (open) ...]
         dropped = true;

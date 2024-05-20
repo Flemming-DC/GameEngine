@@ -32,8 +32,10 @@ Entities:
         storedID: ~
         Camera:
             id: 0a73a2ca-d1f3-43f4-81c5-eeff68d3c774
+        FollowPlayer:
+            id: 0083755f-4dd5-4522-a509-ca916f18e537
         Transform:
             id: bfd2a852-ec3a-4d62-adea-9f452657b87b
             localPosition: [2.30858731, 0.363319188, 0]
             localRotation: [1, 0, 0, 0]
-            localScale: [1, 1, 1]
+            localScale: [3, 3, 3]

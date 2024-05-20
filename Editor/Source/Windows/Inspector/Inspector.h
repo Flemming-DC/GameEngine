@@ -10,7 +10,9 @@ namespace Editor
 		static void Update();
 
 	private:
+		static void DrawEntityHeader();
 		static void DrawComponent(Component& comp);
+		static void AttachComponent();
 
 	};
 }

@@ -20,33 +20,37 @@ void Inspector::Start()
 void Inspector::Update()
 {
     ImGui::Begin("Inspector");
-    if (!Entity::Exists(currentEntityID))
+    if (Entity::Exists(currentEntityID))
     {
-        ImGui::End();
-        return;
-    }
+        DrawEntityHeader();
 
-    // draw components
-    Entity& entity = Entity::GetEntity(currentEntityID);
-    for (const unique_ptr<Component>& compPtr : entity.GetComponents())
-        DrawComponent(*compPtr);
-    
-    // attach component
-    ImGui::Spacing();
-    ImGui::SeparatorText("Add Component");
-    static string compName;
-    vector<string> completionOptions = Tools::GetKeys(Entity::AddComponentByName);
-    Tools::Remove(completionOptions, Tools::TypeName<Transform>());
-    if (ImGui::AutoCompletor(" ", &compName, completionOptions))
-    {
-        if (!Tools::ContainsKey(Entity::AddComponentByName, compName))
-            RaiseError("Unrecognized component ", compName);
-        Entity::AddComponentByName.at(compName)(currentEntityID, nullptr);
-        compName.clear();
+        Entity& entity = Entity::GetEntity(currentEntityID);
+        for (const unique_ptr<Component>& compPtr : entity.GetComponents())
+            DrawComponent(*compPtr);
+
+        AttachComponent();
     }
-    
-    
     ImGui::End();
+}
+
+void Inspector::DrawEntityHeader()
+{
+    static string entityName;
+    static bool isEditingName = false;
+    if (!isEditingName)
+        entityName = Entity::GetEntity(currentEntityID).Name(); // starting choice
+    if (ImGui::InputText("name", &entityName))
+    {
+        if (entityName != "")
+        {
+            P("");
+            isEditingName = false;
+        }
+        else
+            Warning("Entity name mustn't be blank.");
+    }
+    ImGui::Separator();
+    ImGui::NewLine();
 }
 
 void Inspector::DrawComponent(Component& comp)
@@ -75,7 +79,35 @@ void Inspector::DrawComponent(Component& comp)
     else if (typeid(comp) == typeid(CircleCollider))
         ComponentDrawer::DrawCircleCollider(*static_cast<CircleCollider*>(&comp));
     ImGui::Unindent();
+
+    // super dirty way to check if it has exposed parameters. 
+    // fails if you choose to support such exposure for custom components.
+    bool hasExposedParameters = 
+           typeid(comp) == typeid(Transform)
+        || typeid(comp) == typeid(Renderable)
+        || typeid(comp) == typeid(PolygonCollider)
+        || typeid(comp) == typeid(RectangleCollider)
+        || typeid(comp) == typeid(CircleCollider);
+    if (hasExposedParameters)
+        ImGui::Spacing();
 }
 
 
+void Inspector::AttachComponent()
+{
+
+    ImGui::NewLine();
+    ImGui::SeparatorText("Add Component");
+    static string compName;
+    vector<string> completionOptions = Tools::GetKeys(Entity::AddComponentByName);
+    Tools::Remove(completionOptions, Tools::TypeName<Transform>());
+    if (ImGui::AutoCompletor(" ", &compName, completionOptions))
+    {
+        if (!Tools::ContainsKey(Entity::AddComponentByName, compName))
+            RaiseError("Unrecognized component ", compName);
+        Entity::AddComponentByName.at(compName)(currentEntityID, nullptr);
+        compName.clear();
+    }
+
+}
 

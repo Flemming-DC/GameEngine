@@ -17,7 +17,7 @@ namespace Editor
 		static bool IsDraggingSelection();
 		static bool IsSelecting();
 
-		static void SetSelected(uuid id, bool selected); // only used by Hierachy, not by Selector itself
+		static void SelectFromHierachy(uuid id); // only used by Hierachy, not by Selector itself
 		static bool IsSelected(uuid id);
 
 	private:

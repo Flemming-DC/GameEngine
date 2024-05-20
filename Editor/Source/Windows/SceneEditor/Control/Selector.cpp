@@ -161,13 +161,19 @@ vec2 Selector::SelectionStartPosition() { return selectionStartPosition; }
 bool Selector::IsSelecting() { return isSelecting; }
 
 
-void Selector::SetSelected(uuid id, bool selected)
+void Selector::SelectFromHierachy(uuid id)
 {
-    if (selected)
-        selection.push_back(id);
-    else 
+    bool wasSelected = IsSelected(id);
+    if (!EditorInputs::KeepSelection().IsPressed())
+        selection.clear();
+
+    if (wasSelected && EditorInputs::KeepSelection().IsPressed()) // we only toggle, when keeping selection
         Tools::Remove(selection, id);
+    else
+        selection.push_back(id);
     onSelected.Invoke(selection);
 }
+
+
 
 bool Selector::IsSelected(uuid id) { return Tools::Contains(selection, id); }
