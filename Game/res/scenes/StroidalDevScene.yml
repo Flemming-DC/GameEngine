@@ -9,7 +9,7 @@ StoredEntities:
         Transform:
             id: c5be765c-7669-471c-8b33-469575034ecf
             localPosition: [-0.811499536, 0.577851832, 0]
-        name: asteroid_2
+        name: asteroid_2d
         storedID: fdf794b1-34df-4517-b39f-cde04e15f831
     5d38bec5-3ca1-4b8d-afb6-5898026d0b96:
         Player:

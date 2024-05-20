@@ -223,3 +223,23 @@ void Entity::ClearData(const unique_ptr<Component>& compPtr)
 		componentsByEntity[entityID].erase(iterator);
 	
 }
+
+void Entity::SetName(const string& newName)
+{
+	// remove old name from EntitiesByName.
+	auto iterator2 = EntitiesByName.find(name);
+	if (iterator2 != EntitiesByName.end())
+	{
+		if (EntitiesByName.at(name).size() == 1)
+			EntitiesByName.erase(iterator2); // remove name and thereby also id
+		else
+			Tools::Remove(EntitiesByName.at(name), id); // remove id, but keep name
+	}
+
+	// change name
+	name = newName;
+	// add new name
+	EntitiesByName[name].push_back(id); // [] initializes if the key is not present
+}
+
+

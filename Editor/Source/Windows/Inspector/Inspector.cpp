@@ -39,11 +39,11 @@ void Inspector::DrawEntityHeader()
     static bool isEditingName = false;
     if (!isEditingName)
         entityName = Entity::GetEntity(currentEntityID).Name(); // starting choice
-    if (ImGui::InputText("name", &entityName))
+    if (ImGui::InputText("name", &entityName, ImGuiInputTextFlags_EnterReturnsTrue))
     {
         if (entityName != "")
         {
-            P("");
+            Entity::GetEntity(currentEntityID).SetName(entityName);
             isEditingName = false;
         }
         else

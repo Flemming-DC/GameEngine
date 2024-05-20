@@ -54,6 +54,7 @@ public:
 	inline void SetID(uuid id_) { id = id_; }
 	string to_string() const;
 	string Name() const { return name; }
+	void SetName(const string& newName);
 	static Entity& GetEntity(string name) { return register_.Get(GetID(name)); }
 	static Entity& GetEntity(uuid id_) { return register_.Get(id_); }
 	static bool Exists(uuid id_) { return register_.Contains(id_); }
