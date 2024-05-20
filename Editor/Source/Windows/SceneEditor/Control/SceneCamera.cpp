@@ -4,7 +4,7 @@
 using namespace Editor;
 Shorts;
 
-static float moveSpeed = 1.5f;
+static float moveSpeed = 4.5f;
 static const float scrollSpeed = 3.0f;
 static const float maxScale = 100;
 static vec3 cameraPos = vec3(0.0f);

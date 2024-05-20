@@ -1,17 +1,12 @@
 
 flaw during mini game dev:
-	bug: attach & detach child to parent changes position.
-	cant edit entity-name in editor
 	lol - all entities are really stored entities
-	shift+R collides with typing capital R
 	saving entity to storage doesnt make it an instance to the new stored type
 	removing rocket from storage
 	got entity got its components reversed
-	missing interpolate 2d angles & positions
 	activation / deactivation of components required for smoothing flames.
 	how to properly edit storedEntities?
 	collider lacks offset
-	clicking another object in hierachy should remove the old selection unless shift-clicking 
 	delay::ForSeconds(duration, function)
 	OnStart mixes OnGameStart with OnEngineStart
 	show errormessage when attempting to delete stored components on stored entity.

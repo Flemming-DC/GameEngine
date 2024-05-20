@@ -23,7 +23,7 @@ StoredEntities:
             id: 1cfc904e-c028-4e82-8884-9f2e76ed72f5
         Transform:
             id: 376b5921-dcdb-4a73-9545-f24af17d03de
-            localPosition: [0.577146828, 0.0908297971, 0]
+            localPosition: [0.577146828, 0.0908297896, 0]
         name: rocket
         storedID: 03e54f95-8af6-4430-b26c-9c87d3f8de82
 Entities:
@@ -36,6 +36,6 @@ Entities:
             id: 0083755f-4dd5-4522-a509-ca916f18e537
         Transform:
             id: bfd2a852-ec3a-4d62-adea-9f452657b87b
-            localPosition: [2.30858731, 0.363319188, 0]
+            localPosition: [0, 0, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [3, 3, 3]

@@ -127,6 +127,7 @@ Transform* Transform::Parent() const
 {
 	return Entity::TryGetComponent<Transform>(parentID);
 }
+
 void Transform::SetParent(Transform* newParent) 
 {
 	assert(newParent != this);
@@ -138,7 +139,7 @@ void Transform::SetParent(Transform* newParent)
 	Transform* oldParent = Parent();
 	mat4 oldParentModel = Parent() ? oldParent->GetModel() : mat4(1.0f);
 	mat4 newParentInverseModel = newParent ? newParent->GetInverseModel() : mat4(1.0f);
-	SetLocalDataUsingTransform(newParentInverseModel * oldParentModel * GetModel());
+	SetLocalDataUsingMatrix(newParentInverseModel * oldParentModel * GetLocalModel()); // oldParentModel * GetLocalModel() = GetModel()
 
 	if (oldParent)
 		Tools::Remove(oldParent->children, this);
@@ -146,6 +147,7 @@ void Transform::SetParent(Transform* newParent)
 	if (newParent)
 		newParent->children.push_back(this);
 }
+
 vector<Transform*> Transform::GetChildren() const
 {
 	#ifdef _DEBUG
@@ -156,6 +158,7 @@ vector<Transform*> Transform::GetChildren() const
 
 	return children;
 }
+
 string Transform::GetPath() const
 {
 	if (Parent() == nullptr)
@@ -198,15 +201,15 @@ vec2 Transform::ToLocalSpace(vec2 worldVector2D, bool isPosition) const
 	return matrix * vec4(worldVector2D.x, worldVector2D.y, 0, 1);
 }
 
-void Transform::SetLocalDataUsingTransform(const mat4& transform)
+void Transform::SetLocalDataUsingMatrix(const mat4& transformMatrix)
 {
-	localPosition = vec3(transform[3]);
+	localPosition = vec3(transformMatrix[3]);
 
-	localScale.x = glm::length(vec3(transform[0]));
-	localScale.y = glm::length(vec3(transform[1]));
-	localScale.z = glm::length(vec3(transform[2]));
+	localScale.x = glm::length(vec3(transformMatrix[0]));
+	localScale.y = glm::length(vec3(transformMatrix[1]));
+	localScale.z = glm::length(vec3(transformMatrix[2]));
 
-	glm::mat3 rotationMatrix(transform);
+	glm::mat3 rotationMatrix(transformMatrix);
 	localRotation = glm::quat_cast(rotationMatrix);
 }
 

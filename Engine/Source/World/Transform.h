@@ -74,7 +74,7 @@ private:
 	void OnDestroy() override;
 	mat4 GetLocalModel() const;
 	mat4 GetInverseLocalModel() const; // probably only used by camera
-	void SetLocalDataUsingTransform(const mat4& transform); 
+	void SetLocalDataUsingMatrix(const mat4& transform); 
 
 };
 

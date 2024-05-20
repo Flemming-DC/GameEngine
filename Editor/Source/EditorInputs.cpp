@@ -39,10 +39,9 @@ static auto& controlUniformScale = InputAction<bool>::Create()
 namespace Editor::EditorInputs
 {
 	// --------- modifiers --------- //
-	// used for saving
 	bool Ctrl() { return InputKey::IsPressed(Key::Keyboard::ctrl); };
-	// used to move selection instead of camera
 	bool Shift() { return InputKey::IsPressed(Key::Keyboard::leftShift) || InputKey::IsPressed(Key::Keyboard::rightShift); };
+	bool Spacebar() { return InputKey::IsPressed(Key::Keyboard::space); };
 
 	// --------- actions --------- //
 	InputAction<float>& Zoom() { return zoom; };
@@ -60,16 +59,16 @@ namespace Editor::EditorInputs
 	InputAction<bool>& ControlUniformScale() { return controlUniformScale; }; // evt. add shift condition
 
 	// EditorLoop
-	bool SaveStoredEntity() {return Ctrl() && InputKey::BecomesPressed(Key::Keyboard::enter); }
-	bool CreateStoredEntity() { return InputKey::BecomesPressed(Key::Mouse::right); }
-	bool DeleteSelection() { return InputKey::BecomesPressed(Key::Keyboard::_delete); }
-	bool DublicateSelection() { return  Ctrl() && InputKey::BecomesPressed(Key::Keyboard::D); }
+	bool SaveStoredEntity()	  { return Ctrl() && InputKey::BecomesPressed(Key::Keyboard::enter); }
+	bool CreateStoredEntity() { return Ctrl() && InputKey::BecomesPressed(Key::Keyboard::rightShift); }
+	bool DeleteSelection()	  { return Ctrl() && InputKey::BecomesPressed(Key::Keyboard::_delete); }
+	bool DublicateSelection() { return Ctrl() && InputKey::BecomesPressed(Key::Keyboard::D); }
 	
 	// hierachy
 	bool FinishDragDrop() { return InputKey::BecomesReleased(Key::Mouse::left); } // this only counts if you have a payload
 
 	// EditorLoop
-	bool ToggleRuntime() { return Shift() && InputKey::BecomesPressed(Key::Keyboard::R); }
+	bool ToggleRuntime() { return Spacebar() && InputKey::BecomesPressed(Key::Keyboard::R); }
 	bool Exit() { return InputKey::BecomesPressed(Key::Keyboard::exc); }
 	bool Save() {  return  Ctrl() && InputKey::BecomesPressed(Key::Keyboard::S); }
 
