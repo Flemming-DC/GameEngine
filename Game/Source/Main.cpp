@@ -11,6 +11,11 @@
 #include "GameLogic.h"
 #include "RocketEngine.h"
 #include "Entity.h"
+#include "AsteroidSpawner.h"
+#include "Impact.h"
+#include "Player.h"
+#include "AsteroidMotion.h"
+#include "AttachToPlayer.h"
 
 
 int main()
@@ -19,8 +24,8 @@ int main()
     Editor::EditorCore::MarkAsEditor();
 #endif // InEditor
 
-    Entity::DeclareComps<DummyComp, GameLogic, RocketEngine>();
-    Dynamic::Setup<GameAssets, Settings>();
+    Entity::DeclareComps<DummyComp, GameLogic, RocketEngine, Impact, Player, AsteroidMotion, AttachToPlayer>();
+    Dynamic::Setup<GameAssets, Settings, AsteroidSpawner>();
     Core::Run(Literals::stroidalDevScene);
 }
 

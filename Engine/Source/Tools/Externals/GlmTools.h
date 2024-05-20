@@ -51,7 +51,7 @@ namespace glm
 
 	float SmoothAngle(float currentAngle, float targetAngle, float step);
 	vec2 SmoothVec(vec2 currentVec, vec2 targetVec, float step);
-
+	vec2 PolarVec2(float radius, float angle);
 }
 
 namespace logger

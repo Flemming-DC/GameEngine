@@ -1,6 +1,6 @@
 #pragma once
-#include "Register.h"
-#include "Engine.h"
+#include "Dynamic.h"
+#include "Texture.h"
 
 class GameAssets : public Dynamic
 {
@@ -11,7 +11,7 @@ private:
 	static Texture& rocketTex;
 	static Texture& rocketFlamingTex;
 
-	void OnGameStart();// { Setup(); }
+	void OnGameStart();
 
 
 };

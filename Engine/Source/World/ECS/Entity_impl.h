@@ -79,6 +79,11 @@ ComponentType& Entity::Add(uuids::uuid entityID)
 template <typename ComponentType>
 ComponentType& Entity::GetComponent(uuids::uuid id_)
 {
+	if (!Tools::ContainsKey(componentByID, id_)) // a little bit slow
+	{
+		RaiseError("Failed to find ", Tools::TypeName<ComponentType>(),
+			" with id ", id_, ".\ncomponentByID = ", componentByID);
+	}
 	ComponentType* afterCast = dynamic_cast<ComponentType*>(componentByID.at(id_));
 	if (!afterCast)
 		RaiseError("Failed to find " + Tools::TypeName<ComponentType>()

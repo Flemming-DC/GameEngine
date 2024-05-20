@@ -71,7 +71,13 @@ namespace glm
 			);
 	}
 
-
+	vec2 PolarVec2(float radius, float angle)
+	{
+		return vec2(
+			radius * glm::cos(angle),
+			radius * glm::sin(angle)
+			);
+	}
 
 }
 

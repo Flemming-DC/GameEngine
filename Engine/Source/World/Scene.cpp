@@ -99,7 +99,7 @@ void Scene::Load()
         string name = StoredEntity::naming.at(storedID);
         Node stored = StoredEntity::LoadToNode(storedID);
         Node combined = StoredEntity::Override(stored, overriderYML);
-        StoredEntity::FromNode(combined, entityID, storedID, true, false);
+        StoredEntity::FromNode(combined, entityID, storedID, false, false);
     }
     for (auto& [entityID, entityYML] : entitiesMap)
     {
@@ -119,8 +119,11 @@ void Scene::Load()
             comps.push_back(comp.get());
         std::sort(comps.begin(), comps.end(), SortByOrder());
 
+
         for (const auto& comp : comps)
+        {
             comp->OnSceneLoaded();
+        }
     }
     
 }

@@ -82,11 +82,13 @@ void Entity::Update()
 
 void Entity::CheckConsistency()
 {
+	/*
 	for (const auto& [name, entitiesWithName] : EntitiesByName)
 	{
 		if (entitiesWithName.size() != 1)
 			Warning("entitiesWithName[", name, "] = ", entitiesWithName.size());
 	}
+	*/
 	for (const auto& [entityID, components] : componentsByEntity)
 	{
 		Entity& entity = register_.Get(entityID);

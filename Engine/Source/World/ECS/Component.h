@@ -20,7 +20,6 @@ class Component
 	// entity must access InternalConstructor and OnUpdate and it must notify component about entity being dead
 	friend class Entity; 
 public:
-	//int initOrder = 0;
 
 	std::string to_string() const;
 

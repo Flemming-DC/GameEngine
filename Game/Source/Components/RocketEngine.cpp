@@ -12,10 +12,10 @@ const float speed = 1.0f;
 const float angularSpeed = 10.0f;
 bool isIgnited = false;
 
+
 void RocketEngine::OnStart()
 {
 	material = &Get<Renderable>().GetMaterial();
-
 }
 
 

@@ -15,3 +15,5 @@ RectangleCollider:
     size: [1, 1]
 RocketEngine:
     id: cdf26bca-10a5-46ea-a062-e5de80f68204
+Player:
+    id: 96021ec5-6d34-47a9-969f-3d250f481d3a

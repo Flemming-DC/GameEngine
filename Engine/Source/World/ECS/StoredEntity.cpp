@@ -47,7 +47,9 @@ Node StoredEntity::Override(const Node& stored, const Node& overrider)
     auto overriderMap = overrider.as<map<string, Node>>();
     for (const auto& [key, value] : overriderMap)
     {
-        if (value.IsMap())
+        // We apply overrides recursively to the SubNodes aka. maps, if they already exist. 
+        // basic primitives and new nodes are simply added.
+        if (value.IsMap() && stored[key])
             combined[key] = Override(stored[key], value);
         else
             combined[key] = value;
@@ -106,8 +108,6 @@ Node StoredEntity::ToNode(const Entity& in)
 Entity& StoredEntity::FromNode(const Node& node, optional<uuid> instanceID, 
                                optional<uuid> storedID, bool breakIdentity, bool initialize)
 {
-    if (storedID && !breakIdentity)
-        RaiseError("A storedEntity must yield a new Instance when put from Node to Entity.");
     string name = node["name"].as<string>();
     Entity& entity = Entity::register_.Add(name, instanceID, storedID);
 

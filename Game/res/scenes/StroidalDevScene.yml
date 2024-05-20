@@ -1,14 +1,29 @@
 StoredEntities:
-    5d38bec5-3ca1-4b8d-afb6-5898026d0b96:
+    3e415bbf-9ef9-4cb6-895a-36350e010124:
+        Impact:
+            id: c6e7f9ed-957b-4fa4-974a-af111286abff
         RectangleCollider:
-            id: 91ab259c-b839-4254-8e29-9e931cd2fbba
+            id: e59af1c5-129d-4e1a-946b-235b008d2f46
         Renderable:
-            id: 82a007d7-fa12-4df0-b225-a5bfbd964c56
-        RocketEngine:
-            id: 8c07c1dd-f486-4fa6-a2d6-410120e76196
+            id: 1f788caa-a400-4a9f-acdc-8b8d33c51305
         Transform:
-            id: 9d333280-e590-4125-9eaf-d352d8f2cd4c
-            localPosition: [-0.46870473, 0.571179092, 0]
+            id: c5be765c-7669-471c-8b33-469575034ecf
+            localPosition: [-0.811499536, 0.577851832, 0]
+        name: asteroid_2
+        storedID: fdf794b1-34df-4517-b39f-cde04e15f831
+    5d38bec5-3ca1-4b8d-afb6-5898026d0b96:
+        Player:
+            id: 059170ac-1edb-4f81-8808-e6eb36470fc0
+        RectangleCollider:
+            id: 82530857-89be-491d-b724-42b003c99ff8
+            size: [0.777999997, 0.208000004]
+        Renderable:
+            id: c82de0df-babd-411f-949d-7893b23b28b1
+        RocketEngine:
+            id: 1cfc904e-c028-4e82-8884-9f2e76ed72f5
+        Transform:
+            id: 376b5921-dcdb-4a73-9545-f24af17d03de
+            localPosition: [0.577146828, 0.0908297971, 0]
         name: rocket
         storedID: 03e54f95-8af6-4430-b26c-9c87d3f8de82
 Entities:
@@ -19,6 +34,6 @@ Entities:
             id: 0a73a2ca-d1f3-43f4-81c5-eeff68d3c774
         Transform:
             id: bfd2a852-ec3a-4d62-adea-9f452657b87b
-            localPosition: [0, 0, 0]
+            localPosition: [2.30858731, 0.363319188, 0]
             localRotation: [1, 0, 0, 0]
             localScale: [1, 1, 1]

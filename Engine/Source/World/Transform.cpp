@@ -226,7 +226,6 @@ void Transform::Load(const YAML::Node& node)
 	if (node["parent"])
 	{
 		auto parentID = node["parent"].as<uuid>();
-		//P(parentID);
 		SetParent(&Entity::GetComponent<Transform>(parentID));
 	}
 	localPosition = node["localPosition"].as<vec3>();

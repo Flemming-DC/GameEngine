@@ -1,0 +1,19 @@
+Renderable:
+    id: f4a43915-37d5-4ed6-b031-265dfd155dff
+    mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+    material:
+        id: b456a101-6f11-459e-8080-de7bd7deae4a
+        u_color: [1, 1, 1, 1]
+        u_textureSampler: 5de4b726-018a-4146-a310-22a1a915b766
+Transform:
+    id: d49a4b08-d508-4af4-8ab3-bdd8d2c793e9
+    localPosition: [-0.68267864, 0.0558952764, 0]
+    localRotation: [1, 0, 0, 0]
+    localScale: [1, 1, 1]
+RectangleCollider:
+    id: 3860c29c-ae8b-4d3a-8ad2-9fc464f2ece5
+    size: [0.501999974, 0.841000021]
+Impact:
+    id: acdfd825-db8a-4d6e-82d2-ac44ddd443e7
+AsteroidMotion:
+    id: 96021ec5-6d34-47a9-969f-3d250f481d3a

@@ -1,5 +1,6 @@
 #include "GameAssets.h"
-#include "Engine.h"
+#include "Shader.h"
+#include "Material.h"
 #include "GameLiterals.h"
 
 Shorts;
