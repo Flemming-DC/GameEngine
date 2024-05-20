@@ -1,13 +1,13 @@
 StoredEntities:
     5d38bec5-3ca1-4b8d-afb6-5898026d0b96:
         RectangleCollider:
-            id: af5a3e5e-53ce-4230-8e0f-31a39bcb5737
+            id: 91ab259c-b839-4254-8e29-9e931cd2fbba
         Renderable:
-            id: 4f981448-1785-42a8-86bd-c6457af25ec5
+            id: 82a007d7-fa12-4df0-b225-a5bfbd964c56
         RocketEngine:
-            id: f7be3566-fe49-4f92-8c2b-ba718819445c
+            id: 8c07c1dd-f486-4fa6-a2d6-410120e76196
         Transform:
-            id: 546ae67a-bbcc-4ab3-b2ae-b2bdcb976e74
+            id: 9d333280-e590-4125-9eaf-d352d8f2cd4c
             localPosition: [-0.46870473, 0.571179092, 0]
         name: rocket
         storedID: 03e54f95-8af6-4430-b26c-9c87d3f8de82

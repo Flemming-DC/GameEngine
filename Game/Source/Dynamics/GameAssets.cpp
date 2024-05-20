@@ -5,11 +5,10 @@
 Shorts;
 static bool isInitialized = false;
 static Texture& texture = Texture();
-static Texture& rocketTex = Texture();
-static Texture& rocketFlamingTex = Texture();
 static Texture& asteroidTex = Texture();
 static Texture& asteroidMessyTex = Texture();
-
+Texture& GameAssets::rocketTex = Texture();
+Texture& GameAssets::rocketFlamingTex = Texture();
 
 static Shader& shader = Shader();
 static Material& material = Material();

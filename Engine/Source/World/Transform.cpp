@@ -26,6 +26,11 @@ void Transform::SetLocalScale(vec3 localScale_)
 	localScale = localScale_;
 }
 
+vec2 Transform::Forward2D()
+{
+	return (vec2) (GetRotation() * vec3(1.0f, 0.0f, 0.0f));
+}
+
 
 mat4 Transform::GetLocalModel() const
 {
@@ -40,7 +45,14 @@ mat4 Transform::GetInverseLocalModel() const
 		* glm::translate(mat4(1.0f), -localPosition);
 }
 
-void Transform::IncrementLocalAngle(float deltaAngle)
+void Transform::SmoothAngle(float targetAngle, float step)
+{
+	float nextAngle = glm::SmoothAngle(Angle(), targetAngle, step);
+	SetAngle(nextAngle);
+}
+
+
+void Transform::IncrementAngle(float deltaAngle)
 {
 	auto euler = glm::eulerAngles(localRotation);
 	float newLocalAngle = euler.z + deltaAngle;

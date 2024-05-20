@@ -4,10 +4,12 @@
 
 class GameAssets : public Dynamic
 {
-//public:
-	//static Shader& Shader() { return shader; }
+public:
+	static Texture& RocketTex() { return rocketTex; }
+	static Texture& RocketFlamingTex() { return rocketFlamingTex; }
 private:
-	//static Shader& shader;
+	static Texture& rocketTex;
+	static Texture& rocketFlamingTex;
 
 	void OnGameStart();// { Setup(); }
 

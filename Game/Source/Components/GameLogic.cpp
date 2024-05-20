@@ -5,6 +5,7 @@
 #include "Time_.h"
 #include "InputVectorizer.h"
 #include "GameLiterals.h"
+#include "GameAssets.h"
 
 using namespace Key;
 Shorts;
@@ -12,8 +13,13 @@ Shorts;
 void GameLogic::OnStart()
 {
     material = &Get<Renderable>().GetMaterial();
-    color = material->GetUniform<glm::vec4>("u_color");
+    color = material->GetUniform<glm::vec4>(Literals::u_color);
+
+    //uuid matID = Material::naming.at(Literals::);
+    //GameAssets::
+    //Material& mat = Material::register_.Get(*matID);
     
+
     /*
     onEnterIndex = Get<RectangleCollider>().onEnter.Add([this](Collider& other)
         { 

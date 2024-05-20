@@ -9,11 +9,14 @@ flaw during mini game dev:
 	saving entity to storage doesnt make it an instance to the new stored type
 	removing rocket from storage
 	got entity got its components reversed
+	missing interpolate 2d angles & positions
+	activation / deactivation of components required for smoothing flames.
 
 diverse:
 	safety regarding deletion (er du sikker eller auto backups eller undo)
 	literals should evt. store uuids not names
 	colliders are not very visible when selected
+	LargerThan / LessThen -> Longer / Shorter
 
 Editor 
 	
