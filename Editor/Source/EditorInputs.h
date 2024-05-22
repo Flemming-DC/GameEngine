@@ -28,6 +28,7 @@ namespace Editor::EditorInputs
 
 	// hierachy
 	bool FinishDragDrop();
+	bool Rename();
 
 	// EditorLoop
 	bool ToggleRuntime();

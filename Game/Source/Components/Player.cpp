@@ -8,7 +8,9 @@ static RocketEngine* rocketEnginePtr = nullptr;
 void Player::OnStart()
 {
 	// instance should not already be initialized, nor do we allow scramble data from previous playthroughs
-	assert(!transformPtr && !colliderPtr && !rocketEnginePtr); 
+	if (transformPtr || colliderPtr || rocketEnginePtr)
+		RaiseError("The player singleton already exists.");
+	//assert(!transformPtr && !colliderPtr && !rocketEnginePtr); 
 	transformPtr = &GetTransform();
 	colliderPtr = &Get<Collider>();
 	rocketEnginePtr = &Get<RocketEngine>();

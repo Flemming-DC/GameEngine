@@ -10,7 +10,9 @@ flaw during mini game dev:
 	delay::ForSeconds(duration, function)
 	OnStart mixes OnGameStart with OnEngineStart
 	show errormessage when attempting to delete stored components on stored entity.
-	
+	evt. HotKeyList
+	cant attach asteroid to asteroid
+	chrash upon dublicate rocket
 
 diverse:
 	safety regarding deletion (er du sikker eller auto backups eller undo)

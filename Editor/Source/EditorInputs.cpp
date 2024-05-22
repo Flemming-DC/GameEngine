@@ -66,6 +66,7 @@ namespace Editor::EditorInputs
 	
 	// hierachy
 	bool FinishDragDrop() { return InputKey::BecomesReleased(Key::Mouse::left); } // this only counts if you have a payload
+	bool Rename() { return InputKey::BecomesPressed(Key::Keyboard::F2); }
 
 	// EditorLoop
 	bool ToggleRuntime() { return Spacebar() && InputKey::BecomesPressed(Key::Keyboard::R); }

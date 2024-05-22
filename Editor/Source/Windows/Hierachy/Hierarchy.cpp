@@ -9,6 +9,7 @@ Shorts;
 
 static const char* dragDrop = "change parent";
 static bool dropped = false; // gets updated by DragDrop inside DrawTreeNode and gets used by DropToRoot
+static optional<uuid> renameID = std::nullopt; // id of transform that is currently being renamed
 
 void Hierarchy::Update()
 {
@@ -62,7 +63,7 @@ void Hierarchy::DropToRoot()
 
 void Hierarchy::DrawTreeNode(Transform& transform)
 {
-    uuid id = transform.Entity().GetID();
+    uuid& id = transform.Entity().GetID();
     
     int flags = ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow
         | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_NavLeftJumpsBackHere;
@@ -70,9 +71,16 @@ void Hierarchy::DrawTreeNode(Transform& transform)
         flags |= ImGuiTreeNodeFlags_Leaf;
     if (Selector::IsSelected(id))
         flags |= ImGuiTreeNodeFlags_Selected;
+    if (renameID == id)
+        flags |= ImGuiTreeNodeFlags_AllowOverlap; // allow us to put a text field on top of tree node label
+
+
 
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+    ImGui::PushID(uuids::to_string(id).c_str());
     bool open = ImGui::TreeNodeEx(transform.Entity().Name().c_str(), flags);
+
+    Rename(transform);
 
     if (ImGui::IsItemClicked()) // nb: this line must come between [bool open =...] and [if (open) ...]
         Selector::SelectFromHierachy(id);
@@ -87,7 +95,7 @@ void Hierarchy::DrawTreeNode(Transform& transform)
             DrawTreeNode(*child);
         ImGui::TreePop();
     }
-
+    ImGui::PopID();
 }
 
 bool Hierarchy::DragDrop(Transform& transform)
@@ -124,3 +132,26 @@ bool Hierarchy::DragDrop(Transform& transform)
 
 }
 
+void Hierarchy::Rename(Transform& transform)
+{
+    static string newName;
+    uuid& id = transform.Entity().GetID();
+
+    if (EditorInputs::Rename() && Selector::IsSelected(id))
+    {
+        renameID = id;
+        newName = transform.Entity().Name();
+    }
+    if (renameID == id)
+    {
+        ImGui::SameLine();
+        ImGui::SetKeyboardFocusHere();
+        if (ImGui::InputText(" ", &newName, ImGuiInputTextFlags_EnterReturnsTrue))
+        {
+            transform.Entity().SetName(newName);
+            renameID = std::nullopt;
+        }
+        else if (ImGui::IsItemDeactivated() || ImGui::IsItemDeactivatedAfterEdit())
+            renameID = std::nullopt;
+    }
+}
