@@ -4,18 +4,18 @@
 
 
 
-void RectangleCollider::SetSize(glm::vec2 size_)
+void RectangleCollider::SetupRect(glm::vec2 size_, glm::vec2 center)
 {
 	size = size_; // bruges til save / load;
 	glm::vec2 halfSize = 0.5f * size_;
 	std::vector<glm::vec2> position2Ds = 
 	{
-		{-halfSize.x, -halfSize.y }, // LD
-		{-halfSize.x,  halfSize.y }, // LU
-		{ halfSize.x,  halfSize.y }, // RU
-		{ halfSize.x, -halfSize.y }, // RD
+		center + glm::vec2(-halfSize.x, -halfSize.y), // LD
+		center + glm::vec2(-halfSize.x,  halfSize.y), // LU
+		center + glm::vec2( halfSize.x,  halfSize.y), // RU
+		center + glm::vec2( halfSize.x, -halfSize.y), // RD
 	};
-	Setup(position2Ds);
+	SetupPoly(position2Ds);
 }
 
 
@@ -23,11 +23,14 @@ void RectangleCollider::SetSize(glm::vec2 size_)
 void RectangleCollider::Save(YAML::Node& node) const
 {
 	node["size"] = size;
+	node["center"] = center;
 }
 
 void RectangleCollider::Load(const YAML::Node& node)
 {
-	SetSize(node["size"].as<glm::vec2>());
+	auto size_ = node["size"].as<glm::vec2>();
+	auto center_ = node["center"].as<glm::vec2>();
+	SetupRect(size_, center_);
 }
 
 

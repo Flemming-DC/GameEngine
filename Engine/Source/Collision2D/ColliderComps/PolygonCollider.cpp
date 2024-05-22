@@ -15,10 +15,10 @@ void PolygonCollider::OnStart()
 		{ halfSize.x,  halfSize.y }, // RU
 		{ halfSize.x, -halfSize.y }, // RD
 	};
-	Setup(position2Ds);
+	SetupPoly(position2Ds);
 }
 
-void PolygonCollider::Setup(std::vector<glm::vec2> localPosition2Ds_)
+void PolygonCollider::SetupPoly(std::vector<glm::vec2> localPosition2Ds_)
 {
 	bare.Setup(MakeTransformInterface(), localPosition2Ds_);
 }
@@ -33,7 +33,7 @@ void PolygonCollider::Save(YAML::Node& node) const
 
 void PolygonCollider::Load(const YAML::Node& node)
 {
-	Setup(node["localPosition2Ds"].as<std::vector<glm::vec2>>());
+	SetupPoly(node["localPosition2Ds"].as<std::vector<glm::vec2>>());
 }
 
 

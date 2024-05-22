@@ -13,6 +13,7 @@ Renderable:
 RectangleCollider:
     id: 1fbc1ac0-a787-49af-b4b5-009c3a467995
     size: [1, 1]
+    center: [0, 0]
 RocketEngine:
     id: cdf26bca-10a5-46ea-a062-e5de80f68204
 Player:

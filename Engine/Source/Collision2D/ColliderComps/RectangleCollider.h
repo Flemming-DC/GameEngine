@@ -9,12 +9,15 @@ class RectangleCollider : public PolygonCollider
 {
 public:
 	inline glm::vec2 Size() const { return size; }
-	void SetSize(glm::vec2 size);
+	inline glm::vec2 Center() const { return center; }
+	void SetupRect(glm::vec2 size, glm::vec2 center);
+
 	void Save(YAML::Node& node) const override;
 	void Load(const YAML::Node& node) override;
 	int InitOrder() override { return -1000; }
 
 private:
+	glm::vec2 center; // relative to transform.position2D
 	glm::vec2 size = glm::vec2(1.0f);
 
 

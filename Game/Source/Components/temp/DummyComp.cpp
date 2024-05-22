@@ -150,7 +150,7 @@ void DummyComp::OldTests()
 		if (!Entity::TryGetID("circle 1"))
 		{
 			Entity::Make<Transform, CircleCollider>("circle 1")
-				.Get<CircleCollider>().Setup(0.5);
+				.Get<CircleCollider>().Setup(0.5, vec2(0.0f));
 		}
 		if (!Entity::TryGetID("XX"))
 			Entity::Make<DummyComp, DummyComp>("XX");

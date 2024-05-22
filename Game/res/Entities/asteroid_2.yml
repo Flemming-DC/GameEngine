@@ -13,6 +13,7 @@ Transform:
 RectangleCollider:
     id: 3860c29c-ae8b-4d3a-8ad2-9fc464f2ece5
     size: [0.501999974, 0.841000021]
+    center: [0, 0]
 Impact:
     id: acdfd825-db8a-4d6e-82d2-ac44ddd443e7
 AsteroidMotion:

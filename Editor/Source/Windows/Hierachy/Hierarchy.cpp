@@ -75,10 +75,12 @@ void Hierarchy::DrawTreeNode(Transform& transform)
         flags |= ImGuiTreeNodeFlags_AllowOverlap; // allow us to put a text field on top of tree node label
 
 
-
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
     ImGui::PushID(uuids::to_string(id).c_str());
+    auto color = transform.Entity().GetStoredID().has_value() ? IM_COL32(100, 200, 255, 255) : IM_COL32(255, 255, 255, 255);
+    ImGui::PushStyleColor(ImGuiCol_Text, color);
     bool open = ImGui::TreeNodeEx(transform.Entity().Name().c_str(), flags);
+    ImGui::PopStyleColor();
 
     Rename(transform);
 

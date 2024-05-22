@@ -109,14 +109,22 @@ void ComponentDrawer::DrawRectangleCollider(RectangleCollider& rect)
 {
     vec2 size = rect.Size();
     ImGui::DragFloat2("size", glm::value_ptr(size), dragSensitivity, 0.001f, 1000.0f);
-    rect.SetSize(size);
+
+    vec2 center = rect.Center();
+    ImGui::DragFloat2("center", glm::value_ptr(center), dragSensitivity, 0.001f, 1000.0f);
+
+    rect.SetupRect(size, center);
 }
 
 void ComponentDrawer::DrawCircleCollider(CircleCollider& circle)
 {
     float radius = circle.bare.GetLocalRadius();
     ImGui::DragFloat("radius", &radius, 0.5f * dragSensitivity);
-    circle.Setup(Realistic_p(radius));
+
+    vec2 center = circle.Center();
+    ImGui::DragFloat2("center", glm::value_ptr(center), dragSensitivity, 0.001f, 1000.0f);
+
+    circle.Setup(Realistic_p(radius), center);
 }
 
 

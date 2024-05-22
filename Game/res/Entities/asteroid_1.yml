@@ -13,3 +13,4 @@ Transform:
 CircleCollider:
     id: ab8fc387-040b-41d1-bbcf-d98daec306c5
     localRadius: 0.5
+    center: [0, 0]

@@ -2,6 +2,7 @@ StoredEntities:
     4789b406-c67b-4951-a05b-8ea4af7126ff:
         RectangleCollider:
             id: 06bc1eba-ac23-417d-8e2b-ef241dcfdf58
+            center: [0, 0]
         Renderable:
             id: 6ba43fb9-eaa1-4c27-9340-025afce015f2
             material:
@@ -19,6 +20,7 @@ Entities:
         CircleCollider:
             id: a61bc6e3-6caf-4b28-870a-3dbd0754d585
             localRadius: 0.5
+            center: [0, 0]
         Transform:
             id: 2e002505-8cd3-4da6-8a61-332630b45a94
             localPosition: [0.699999988, 0.5, 0]
@@ -57,6 +59,7 @@ Entities:
         CircleCollider:
             id: 37c2492b-4254-4028-a2d8-764690180715
             localRadius: 0.5
+            center: [0, 0]
         Transform:
             id: 75811620-a2a2-455e-91d3-881ca9c70e1c
             localPosition: [-0.5, 0.5, 0]

@@ -19,10 +19,10 @@ void Collider::OnDestroy()
 		RaiseError("ColliderID has been removed from allColliders prematurely");
 }
 
-ITransform Collider::MakeTransformInterface()
+ITransform Collider::MakeTransformInterface(glm::vec2 center)
 {
 	return { 
-		[this]() { return GetTransform().GetPosition(); },
+		[this, center]() { return glm::ToVec3(center) + GetTransform().GetPosition(); },
 		[this]() { return GetTransform().GetScale(); },
 		[this](vec2 vec, bool isPos) { return GetTransform().ToWorldSpace(vec, isPos); },
 	};

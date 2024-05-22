@@ -18,7 +18,7 @@ public:
 	static std::vector<uuids::uuid>& GetAllColliders() { return allColliders; }
 	virtual std::pair<float, float> ShadowAlongNormal(glm::vec2 normal) const { return Bare().ShadowAlongNormal(normal); };
 	//Bounds GetBounds() { return bounds; }
-	ITransform MakeTransformInterface();
+	ITransform MakeTransformInterface(glm::vec2 center = glm::vec2(0.0f));
 	virtual const BareCollider& Bare() const = 0;
 
 
