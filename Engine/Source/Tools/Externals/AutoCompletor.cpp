@@ -95,6 +95,20 @@ namespace ImGui
     bool CompletionPopup(string* strInput)
     {
         bool hasChosen = false;
+
+        ImGui::Indent();
+        for (int i = 0; i < (int)candidates.size(); i++)
+        {
+            if (ImGui::Selectable((candidates[i] + " ").c_str()))
+            {
+                *strInput = Tools::Trim(candidates[i]);
+                candidates.clear();
+                hasChosen = true;
+            }
+        }
+        ImGui::Unindent();
+
+/*
         ImGui::OpenPopup("completion_popup");
         if (ImGui::BeginPopup("completion_popup"))
         {
@@ -109,18 +123,22 @@ namespace ImGui
             }
             ImGui::EndPopup();
         }
+*/
         return hasChosen;
     }
 
-    bool AutoCompletor(const char* label, string* strInput, vector<string>& completionOptions_)
+    bool AutoCompletor(const char* label, string* strInput, vector<string>& completionOptions_, bool focus)
     {
         completionOptions = completionOptions_;
         string labelStr = string(label) + suffix; // changing label name is required to avoid bug
+        if (focus && !openPopup)
+            ImGui::SetKeyboardFocusHere();
         ImGui::InputText(labelStr.c_str(), strInput, ImGuiInputTextFlags_CallbackCompletion, _TextEditCallback);
         bool focused = ImGui::IsItemActive();
         _UpdateCandidates(strInput->c_str(), strInput->size());
 
-        ImGui::TextWrapped(logger::make_string(candidates).c_str());
+        if (!openPopup)
+            ImGui::TextWrapped(logger::make_string(candidates).c_str());
         /*
         if (*strInput != "")
             ImGui::LabelText("matches", logger::make_string(candidates).c_str());

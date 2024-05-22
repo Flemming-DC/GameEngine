@@ -13,7 +13,7 @@ void NamingSaver::Save()
 	Mesh::naming.Save("meshNames.yml");
 	StoredEntity::naming.Save("entityNames.yml");
 	Scene::naming.Save("sceneNames.yml");
-	
+
 }
 
 void NamingSaver::Load()
@@ -23,4 +23,5 @@ void NamingSaver::Load()
 	Mesh::naming.Load("meshNames.yml");
 	StoredEntity::naming.Load("entityNames.yml");
 	Scene::naming.Load("sceneNames.yml");
+
 }

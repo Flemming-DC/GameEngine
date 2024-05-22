@@ -141,3 +141,8 @@ void Naming::Load(string fileName)
 }
 
 
+
+string Naming::to_string() const 
+{ 
+	return logger::to_string(idByName); 
+}

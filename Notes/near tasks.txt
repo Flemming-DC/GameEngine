@@ -2,17 +2,14 @@
 flaw during mini game dev:
 	lol - all entities are really stored entities
 	saving entity to storage doesnt make it an instance to the new stored type
-	removing rocket from storage
-	got entity got its components reversed
+	ignore: entity got its components reversed
 	activation / deactivation of components required for smoothing flames.
-	how to properly edit storedEntities?
-	collider lacks offset
 	delay::ForSeconds(duration, function)
 	OnStart mixes OnGameStart with OnEngineStart
 	show errormessage when attempting to delete stored components on stored entity.
-	evt. HotKeyList
-	cant attach asteroid to asteroid
-	chrash upon dublicate rocket
+	evt. HotKeyList (or action menu in hierachy)
+	make empty stored Entity
+	seperate builtins from optional ressources
 
 diverse:
 	safety regarding deletion (er du sikker eller auto backups eller undo)

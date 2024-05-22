@@ -64,13 +64,18 @@ void EntityMaker::Saving() // given user input: save a single selected entity to
 
 void EntityMaker::CreationMenu() // given user input: show popup and create entity from storage
 {
+    static ImVec2 mousePosition;
     if (EditorInputs::CreateStoredEntity())
+    {
+        mousePosition = ImGui::GetMousePos();
         ImGui::OpenPopup(PopupCreateEntity);
+    }
+    ImGui::SetNextWindowPos(mousePosition);
     if (ImGui::BeginPopup(PopupCreateEntity))
     {
         static string entityName;
         vector<string> completionOptions = StoredEntity::naming.Names();
-        if (ImGui::AutoCompletor("Choose entity", &entityName, completionOptions))
+        if (ImGui::AutoCompletor("Choose entity", &entityName, completionOptions, true))
         {
             if (!Tools::Contains(completionOptions, entityName))
                 RaiseError("Unrecognized entity ", entityName);

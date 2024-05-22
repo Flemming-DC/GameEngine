@@ -36,7 +36,7 @@ void EditorCore::OnEditorUpdate()
     //AssetFolder::Update();
     //Console::Update();
     MenuBar::Update();
-    //ImGui::ShowDemoWindow();
+    ImGui::ShowDemoWindow();
 
     HandleOpenClose();
 }

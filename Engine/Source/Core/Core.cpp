@@ -48,6 +48,8 @@ void Core::Setup(std::string firstScenePath)
     Dynamic::CallOnGameStart(); // this must be called even if (gameIsRunning == false). Thats a bit messy.
     Scene::ActivateImmediately(firstScenePath);
 
+
+
 }
 
 

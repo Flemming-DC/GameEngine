@@ -55,11 +55,16 @@ void Inspector::DrawEntityHeader()
 
 void Inspector::DrawComponent(Component& comp)
 {
+    ImGui::PushID(uuids::to_string(comp.GetID()).c_str());
     bool open = ImGui::CollapsingHeader(Tools::TypeName(comp).c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+    ImGui::PopID();
     if (typeid(comp) != typeid(Transform) && ImGui::BeginPopupContextItem())
     {
         if (ImGui::Button("Remove Component"))
+        {
             comp.Entity().Destroy(comp);
+            ImGui::CloseCurrentPopup();
+        }
         ImGui::EndPopup();
     }
     if (!open)

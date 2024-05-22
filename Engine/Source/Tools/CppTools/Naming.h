@@ -21,6 +21,8 @@ public:
 	void Save(string fileName);
 	void Load(string fileName);
 
+	string to_string() const;
+
 private:
 	map_uo<string, uuid> idByName;
 

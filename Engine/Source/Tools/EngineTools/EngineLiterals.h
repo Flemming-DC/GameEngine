@@ -15,9 +15,9 @@ namespace Literals
 	
 
 	// ------- files ------- //
-	static string colorShader = Shaders + "SolidColor.shader";
-	static string imageShader = Shaders + "Image.shader";
-	static string defaultImage = Textures + "defaultImage.png";
+	static string colorShader = Shaders + "Builtin/SolidColor.shader";
+	static string imageShader = Shaders + "Builtin/Image.shader";
+	static string defaultImage = Textures + "Builtin/defaultImage.png";
 	
 	// ------- renderObjects ------- //
 	static string colorMaterialName = "color";
