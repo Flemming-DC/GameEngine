@@ -1,20 +1,20 @@
-Transform:
-    id: c614c044-ffd1-41ef-a3a8-d7eadaf63a94
-    localPosition: [-0.728530049, 0.333187878, 0]
-    localRotation: [1, 0, 0, 0]
-    localScale: [1, 1, 1]
+Player:
+    id: 059170ac-1edb-4f81-8808-e6eb36470fc0
+RectangleCollider:
+    id: 82530857-89be-491d-b724-42b003c99ff8
+    size: [0.351999998, 0.142000005]
+    center: [0.224999994, 0.0359999985]
 Renderable:
-    id: 29459a6d-f12e-4074-b31f-4482644d2f88
+    id: c82de0df-babd-411f-949d-7893b23b28b1
     mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
     material:
         id: b456a101-6f11-459e-8080-de7bd7deae4a
         u_color: [1, 1, 1, 1]
         u_textureSampler: dbadd572-ceb3-4d20-adf8-baa182959aa8
-RectangleCollider:
-    id: 1fbc1ac0-a787-49af-b4b5-009c3a467995
-    size: [1, 1]
-    center: [0, 0]
 RocketEngine:
-    id: cdf26bca-10a5-46ea-a062-e5de80f68204
-Player:
-    id: 96021ec5-6d34-47a9-969f-3d250f481d3a
+    id: 1cfc904e-c028-4e82-8884-9f2e76ed72f5
+Transform:
+    id: 376b5921-dcdb-4a73-9545-f24af17d03de
+    localPosition: [0.577146828, 0.0908297896, 0]
+    localRotation: [1, 0, 0, 0]
+    localScale: [1, 1, 1]

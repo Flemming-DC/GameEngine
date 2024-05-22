@@ -4,9 +4,10 @@
 
 
 
-void RectangleCollider::SetupRect(glm::vec2 size_, glm::vec2 center)
+void RectangleCollider::SetupRect(glm::vec2 size_, glm::vec2 center_)
 {
 	size = size_; // bruges til save / load;
+	center = center_; // bruges til save / load;
 	glm::vec2 halfSize = 0.5f * size_;
 	std::vector<glm::vec2> position2Ds = 
 	{

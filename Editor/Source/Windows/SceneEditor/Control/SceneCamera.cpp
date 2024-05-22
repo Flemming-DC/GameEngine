@@ -23,8 +23,8 @@ void SceneCamera::UpdateCamera(ImVec2 minSceneCorner_, ImVec2 maxSceneCorner_)
     minSceneCorner = { minSceneCorner_.x, minSceneCorner_.y };
     maxSceneCorner = { maxSceneCorner_.x, maxSceneCorner_.y };
 
-    float scalingDelta = EditorInputs::Zoom().State() * scrollSpeed * Time::Delta(); // exp(x) = 1 + x + O(x^2) is used
-    float scaling = ImGui::IsWindowHovered() ? 1 + scalingDelta : 1;
+    float scalingDelta = -EditorInputs::Zoom().State() * scrollSpeed * Time::Delta(); 
+    float scaling = ImGui::IsWindowHovered() ? 1 + scalingDelta : 1; // exp(x) = 1 + x + O(x^2) is used
     cameraScale *= scaling;
     cameraScale = glm::clamp(cameraScale, vec3(1.0f) / maxScale, vec3(1.0f) * maxScale);
 

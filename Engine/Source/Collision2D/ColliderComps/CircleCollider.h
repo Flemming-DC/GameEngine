@@ -21,7 +21,7 @@ public:
 	int InitOrder() override { return -1000; }
 
 private:
-	glm::vec2 center; // relative to transform.position2D
+	glm::vec2 center = glm::vec2(0.0f); // relative to transform.position2D
 
 	void OnStart() override;
 

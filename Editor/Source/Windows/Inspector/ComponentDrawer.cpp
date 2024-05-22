@@ -122,7 +122,7 @@ void ComponentDrawer::DrawCircleCollider(CircleCollider& circle)
     ImGui::DragFloat("radius", &radius, 0.5f * dragSensitivity);
 
     vec2 center = circle.Center();
-    ImGui::DragFloat2("center", glm::value_ptr(center), dragSensitivity, 0.001f, 1000.0f);
+    ImGui::DragFloat2("##center", glm::value_ptr(center), dragSensitivity, 0.001f, 1000.0f);
 
     circle.Setup(Realistic_p(radius), center);
 }

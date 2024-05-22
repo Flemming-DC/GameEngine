@@ -12,18 +12,6 @@ StoredEntities:
         name: asteroid_2d
         storedID: fdf794b1-34df-4517-b39f-cde04e15f831
     5d38bec5-3ca1-4b8d-afb6-5898026d0b96:
-        Player:
-            id: 059170ac-1edb-4f81-8808-e6eb36470fc0
-        RectangleCollider:
-            id: 82530857-89be-491d-b724-42b003c99ff8
-            size: [0.777999997, 0.208000004]
-        Renderable:
-            id: c82de0df-babd-411f-949d-7893b23b28b1
-        RocketEngine:
-            id: 1cfc904e-c028-4e82-8884-9f2e76ed72f5
-        Transform:
-            id: 376b5921-dcdb-4a73-9545-f24af17d03de
-            localPosition: [0.577146828, 0.0908297896, 0]
         name: rocket
         storedID: 03e54f95-8af6-4430-b26c-9c87d3f8de82
 Entities:
