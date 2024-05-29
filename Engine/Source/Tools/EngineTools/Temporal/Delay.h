@@ -6,10 +6,10 @@
 class Delay
 {
 public:
-	static void ToFrameEnd(const std::function<void()>& function); // Delay a function call to end of frame
-	static void CallToFrameEnd(); // Calls the functions that where delayed to end of frame, and clears the list
+	static void Update();
 
-private:
-	static Event<> onFrameEnd;
+	static void ToFrameEnd(const std::function<void()>& function); // Delay a function call to end of frame
+	static void ForSeconds(float duration, const std::function<void()>& function);
+
 };
 

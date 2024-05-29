@@ -4,9 +4,9 @@
 std::vector<std::unique_ptr<Dynamic>> Dynamic::dynamics;
 
 
-bool Dynamic::ShutDown(Dynamic& dynamic)
+void Dynamic::ShutDown(Dynamic& dynamic)
 {
-    return Tools::Remove(dynamics,
+    Tools::Remove(dynamics,
         [&](const std::unique_ptr<Dynamic>& ptr) { return ptr.get() == &dynamic; });
 }
 

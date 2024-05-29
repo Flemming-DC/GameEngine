@@ -41,6 +41,11 @@ void Scene::ActivateImmediately(string name)
 
 }
 
+void Scene::Reload()
+{
+    Delay::ToFrameEnd([]() { ReloadImmediately(); });
+}
+
 void Scene::ReloadImmediately()
 {
     if (activeScene)

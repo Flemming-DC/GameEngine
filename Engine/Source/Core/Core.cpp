@@ -73,7 +73,7 @@ void Core::Update()
     Entity::DestroyTheDoomed();
     if (EngineMode::GameCloseButtonIsClicked())
         StopRunningGame();
-    Delay::CallToFrameEnd(); 
+    Delay::Update(); 
 
     // shutdown frame
     InputLoop::LateUpdate();

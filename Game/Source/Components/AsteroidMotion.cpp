@@ -6,7 +6,7 @@
 
 
 static float dispersion = 0.5f;
-static float speed = 0.5f;  // make editable
+static float speed = 1.0f;  // make editable
 static float angularSpeed = 0.5f; 
 
 static std::random_device rd;  // Non-deterministic generator

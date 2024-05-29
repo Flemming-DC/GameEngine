@@ -33,8 +33,11 @@ void CollisionLoop::HandleCollisionInfo(Overlaps newOverlaps)
 		if (!Tools::Contains(overlaps, pair))
 		{
 			if (pair.first == nullptr || pair.second == nullptr)
-				RaiseError("Collider is null");
+				RaiseError("Collider is null ", pair);
 			pair.first->onEnter.Invoke(*pair.second); // first enters second
+
+			if (pair.first == nullptr || pair.second == nullptr)
+				RaiseError("Collider became null during collision. ", pair);
 			pair.second->onEnter.Invoke(*pair.first); // second enters first
 		}
 	}
@@ -43,8 +46,11 @@ void CollisionLoop::HandleCollisionInfo(Overlaps newOverlaps)
 		if (!Tools::Contains(newOverlaps, pair))
 		{
 			if (pair.first == nullptr || pair.second == nullptr)
-				RaiseError("Collider is null");
+				RaiseError("Collider is null ", pair);
 			pair.first->onExit.Invoke(*pair.second); // first exits second
+
+			if (pair.first == nullptr || pair.second == nullptr)
+				RaiseError("Collider became null during collision. ", pair);
 			pair.second->onExit.Invoke(*pair.first); // second exits first
 		}
 	}

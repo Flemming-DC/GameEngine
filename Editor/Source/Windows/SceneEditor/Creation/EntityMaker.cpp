@@ -53,9 +53,9 @@ void EntityMaker::Saving() // given user input: save a single selected entity to
             {
                 Scene::Save();
                 StoredEntity::Save(entity, name);
-                uuid storedID = StoredEntity::naming.at(name);
-                entity.SetStoredID(storedID);
                 Scene::ReloadImmediately();
+                entity.SetStoredID(StoredEntity::naming.at(name));
+                Scene::Save();
 
                 ImGui::CloseCurrentPopup();
                 logger::print("saved entity ", name, " to file");
@@ -113,3 +113,4 @@ void EntityMaker::Deletion() // given user input: delete selection
     for (const uuid& id : Selector::Selection())
         Entity::GetEntity(id).Destroy();
 }
+

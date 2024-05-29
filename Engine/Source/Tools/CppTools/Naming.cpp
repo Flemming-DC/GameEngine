@@ -97,6 +97,26 @@ bool Naming::Contains(string name) const
 	return Tools::ContainsKey(idByName, name);
 }
 
+optional<uuid> Naming::TryGet(string name)
+{
+	for (const auto& [name_, id_] : idByName)
+	{
+		if (name_ == name)
+			return id_;
+	}
+	return std::nullopt;
+}
+optional<string> Naming::TryGet(uuid id)
+{
+	for (const auto& [name_, id_] : idByName)
+	{
+		if (id_ == id)
+			return name_;
+	}
+	return std::nullopt;
+}
+
+
 optional<uuid> Naming::Show(const char* label, uuid currentID)
 {
 	auto& names = Names();

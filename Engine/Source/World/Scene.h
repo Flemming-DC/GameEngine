@@ -22,7 +22,8 @@ public:
 	static void MakeBlankSceneFile(string name); 
 	void ShutDown(); // engine only
 	static void Save(); // save activeScene to file
-	static void ReloadImmediately(); // engine only
+	static void Reload();
+	static void ReloadImmediately(); // engine & editor only
 	static Scene& GetActiveScene() { return *activeScene; }
 
 protected:

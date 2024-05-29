@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "imGuiTools.h" 
 #include "ComponentDrawer.h"
+#include "StoredEntity.h"
 
 Shorts
 using namespace Editor;
@@ -37,18 +38,21 @@ void Inspector::DrawEntityHeader()
 {
     static string entityName;
     static bool isEditingName = false;
+    Entity& entity = Entity::GetEntity(currentEntityID);
     if (!isEditingName)
-        entityName = Entity::GetEntity(currentEntityID).Name(); // starting choice
+        entityName = entity.Name(); // starting choice
     if (ImGui::InputText("name", &entityName, ImGuiInputTextFlags_EnterReturnsTrue))
     {
         if (entityName != "")
         {
-            Entity::GetEntity(currentEntityID).SetName(entityName);
+            entity.SetName(entityName);
             isEditingName = false;
         }
         else
             Warning("Entity name mustn't be blank.");
     }
+    if (entity.GetStoredID().has_value())
+        ImGui::LabelText("storedEntity", StoredEntity::naming.at(entity.GetStoredID().value()).c_str());
     ImGui::Separator();
     ImGui::NewLine();
 }

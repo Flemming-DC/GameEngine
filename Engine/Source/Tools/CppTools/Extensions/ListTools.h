@@ -43,15 +43,10 @@ namespace Tools
 	}
 
 	template< class T, class UnaryPredicate > 
-	bool Remove(vector<T>& vec, const UnaryPredicate& condition)
+	void Remove(vector<T>& vec, const UnaryPredicate& condition)
 	{
 		auto iterator = std::find_if(vec.begin(), vec.end(), condition);
-		if (iterator != vec.end())
-		{
-			vec.erase(iterator);
-			return true;
-		}
-		return false;
+		vec.erase(iterator, vec.end());
 	}
 
 	// remove by index is simple myVector.erase(myVector.begin() + index);

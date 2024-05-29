@@ -8,7 +8,7 @@
 std::string asteroidName = "asteroid_2";
 static float minDuration = 0.0f;
 static float maxDuration = 3.0f;
-static float spawnDistance = 10.0f; // must be larger than viewport-half-width and viewport-half-height
+static float spawnDistance = 5.0f; // must be larger than viewport-half-width and viewport-half-height
 
 static float nextSpawnTime = 0.0f;
 static std::random_device rd;  // Non-deterministic generator

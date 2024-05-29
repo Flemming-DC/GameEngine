@@ -17,7 +17,7 @@ public:
 	}
 
 	
-	static bool ShutDown(Dynamic& dynamic);
+	static void ShutDown(Dynamic& dynamic);
 	static void Clear();
 
 	static void CallOnEditorStart();

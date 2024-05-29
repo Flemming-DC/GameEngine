@@ -10,7 +10,9 @@ Naming StoredEntity::naming;
 void StoredEntity::Save(const Entity& entity, string storedName)
 {
     string path = Literals::Entities + storedName + ".yml";
-    uuid storedID = entity.GetStoredID() ? *entity.GetStoredID() : UuidCreator::MakeID();
+    
+    uuid storedID = naming.TryGet(storedName) ? *naming.TryGet(storedName) : UuidCreator::MakeID();
+    //uuid storedID = entity.GetStoredID() ? *entity.GetStoredID() : UuidCreator::MakeID();
     naming.Overwrite(storedName, storedID);
     NamingSaver::Save();
     Node node = ToNode(entity);

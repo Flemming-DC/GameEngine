@@ -11,7 +11,9 @@ public:
 	inline void Overwrite(const string& name, uuid id) { idByName[name] = id; }
 	void Remove(const string& name);
 	inline uuid at(string name) { return idByName.at(name); }
-	string at(uuid name);
+	string at(uuid id);
+	optional<uuid> TryGet(string name);
+	optional<string >TryGet(uuid id);
 	
 	bool Contains(string name) const;
 	bool Contains(uuid id) const;
