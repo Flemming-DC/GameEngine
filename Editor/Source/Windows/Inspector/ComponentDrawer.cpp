@@ -108,10 +108,10 @@ void ComponentDrawer::DrawPolygonCollider(PolygonCollider& poly)
 void ComponentDrawer::DrawRectangleCollider(RectangleCollider& rect)
 {
     vec2 size = rect.Size();
-    ImGui::DragFloat2("size", glm::value_ptr(size), dragSensitivity, 0.001f, 1000.0f);
+    ImGui::DragFloat2("size", glm::value_ptr(size), dragSensitivity);
 
     vec2 center = rect.Center();
-    ImGui::DragFloat2("center", glm::value_ptr(center), dragSensitivity, 0.001f, 1000.0f);
+    ImGui::DragFloat2("center", glm::value_ptr(center), dragSensitivity);
 
     rect.SetupRect(size, center);
 }
@@ -119,10 +119,10 @@ void ComponentDrawer::DrawRectangleCollider(RectangleCollider& rect)
 void ComponentDrawer::DrawCircleCollider(CircleCollider& circle)
 {
     float radius = circle.bare.GetLocalRadius();
-    ImGui::DragFloat("radius", &radius, 0.5f * dragSensitivity);
+    ImGui::DragFloat("radius", &radius, 0.5f * dragSensitivity, 0.001f, 1000.0f);
 
     vec2 center = circle.Center();
-    ImGui::DragFloat2("##center", glm::value_ptr(center), dragSensitivity, 0.001f, 1000.0f);
+    ImGui::DragFloat2("##center", glm::value_ptr(center), dragSensitivity);
 
     circle.Setup(Realistic_p(radius), center);
 }

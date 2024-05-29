@@ -1,43 +1,33 @@
 StoredEntities:
-    3e415bbf-9ef9-4cb6-895a-36350e010124:
+    184a822d-ed4a-4c6f-9bec-65a35e1207e9:
+        AsteroidMotion:
+            id: b3e4ec58-4b5e-42ef-9aac-ab665789ef4f
         Impact:
-            id: c6e7f9ed-957b-4fa4-974a-af111286abff
+            id: 8c187bda-4061-419d-bd38-e5b5a39c9a6a
         RectangleCollider:
-            id: e59af1c5-129d-4e1a-946b-235b008d2f46
+            id: a053fb68-5f26-46ba-a096-88519981bbfa
         Renderable:
-            id: 1f788caa-a400-4a9f-acdc-8b8d33c51305
+            id: 3a93f47e-75dd-43e5-9cab-36fbc347d4c3
         Transform:
-            id: c5be765c-7669-471c-8b33-469575034ecf
-            localPosition: [-0.811499536, 0.577851832, 0]
+            id: c82d1225-675f-43f2-acc7-58b85891c7ad
+            localPosition: [-0.973799586, 0.436244726, 0]
         name: asteroid_2d
-        storedID: fdf794b1-34df-4517-b39f-cde04e15f831
+        storedID: c0ebea4e-14ab-479a-8c33-a66587dca8c3
+    331428e6-2dfc-4243-a53a-f470f08038ea:
+        RectangleCollider:
+            center: [0.372000009, 0.0299999993]
+        name: asteroid_2d
+        storedID: c0ebea4e-14ab-479a-8c33-a66587dca8c3
     5d38bec5-3ca1-4b8d-afb6-5898026d0b96:
         name: rocket
         storedID: 03e54f95-8af6-4430-b26c-9c87d3f8de82
-Entities:
-    331428e6-2dfc-4243-a53a-f470f08038ea:
-        name: asteroid_2d
-        storedID: ~
-        AsteroidMotion:
-            id: 623bd4e8-8984-4a33-9f25-74d14e1c4319
-        Impact:
-            id: a1b0d653-fc8b-4ca9-8f8e-b10380fa00a0
-        RectangleCollider:
-            id: d98d7763-ba4e-4e59-98b1-22f7d958f94f
-            size: [0.501999974, 0.841000021]
-            center: [0, 0]
-        Renderable:
-            id: ab2541e0-5cf6-4bee-808b-49853724d36c
-            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
-            material:
-                id: b456a101-6f11-459e-8080-de7bd7deae4a
-                u_color: [1, 1, 1, 1]
-                u_textureSampler: 5de4b726-018a-4146-a310-22a1a915b766
+    9aac4a6e-9e2a-4c45-ad94-572592e41fef:
         Transform:
-            id: d51f2bb4-9a10-4e01-b384-4621331d87d0
-            localPosition: [-0.556041121, 1.99924898, 0]
-            localRotation: [1, 0, 0, 0]
-            localScale: [1, 1, 1]
+            id: b07943af-a84d-49b8-9638-33853c54d040
+            localPosition: [-2.27729273, 1.87074244, 0]
+        name: Builtin/Empty
+        storedID: 60fb0c6a-b61f-4d03-9f6c-b34469c8170b
+Entities:
     955c33e9-7c9b-4169-938a-6430d573d55e:
         name: camera
         storedID: ~

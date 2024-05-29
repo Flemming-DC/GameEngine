@@ -1,0 +1,20 @@
+AsteroidMotion:
+    id: 623bd4e8-8984-4a33-9f25-74d14e1c4319
+Impact:
+    id: a1b0d653-fc8b-4ca9-8f8e-b10380fa00a0
+RectangleCollider:
+    id: d98d7763-ba4e-4e59-98b1-22f7d958f94f
+    size: [0.501999974, 0.841000021]
+    center: [0.372000009, 0.0299999993]
+Renderable:
+    id: ab2541e0-5cf6-4bee-808b-49853724d36c
+    mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+    material:
+        id: b456a101-6f11-459e-8080-de7bd7deae4a
+        u_color: [1, 1, 1, 1]
+        u_textureSampler: 5de4b726-018a-4146-a310-22a1a915b766
+Transform:
+    id: d51f2bb4-9a10-4e01-b384-4621331d87d0
+    localPosition: [-0.556041121, 1.99924898, 0]
+    localRotation: [1, 0, 0, 0]
+    localScale: [1, 1, 1]

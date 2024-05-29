@@ -4,7 +4,8 @@
 #include "StoredEntity.h"
 #include "Transform.h"
 #include "Selector.h"
-#include "EditorInputs.h" 
+#include "EditorInputs.h"
+#include "Scene.h" 
 
 Shorts;
 using namespace Editor;
@@ -50,7 +51,12 @@ void EntityMaker::Saving() // given user input: save a single selected entity to
         {
             if (name != "")
             {
+                Scene::Save();
                 StoredEntity::Save(entity, name);
+                uuid storedID = StoredEntity::naming.at(name);
+                entity.SetStoredID(storedID);
+                Scene::ReloadImmediately();
+
                 ImGui::CloseCurrentPopup();
                 logger::print("saved entity ", name, " to file");
                 isEditingName = false;

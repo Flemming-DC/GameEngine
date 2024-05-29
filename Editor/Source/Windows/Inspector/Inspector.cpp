@@ -60,7 +60,9 @@ void Inspector::DrawComponent(Component& comp)
     ImGui::PopID();
     if (typeid(comp) != typeid(Transform) && ImGui::BeginPopupContextItem())
     {
-        if (ImGui::Button("Remove Component"))
+        if (comp.Entity().GetStoredID().has_value())
+            ImGui::Text("Cannot Remove Component on stored entity in editor.");
+        else if (ImGui::Button("Remove Component"))
         {
             comp.Entity().Destroy(comp);
             ImGui::CloseCurrentPopup();

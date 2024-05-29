@@ -4,6 +4,7 @@
 #include "OpenGlSetup.h"
 #include "OpenGLidChecker.h"
 #include "EngineLiterals.h"
+#include <filesystem>
 
 Register<Texture> Texture::register_;
 Naming Texture::naming;
@@ -14,6 +15,9 @@ void Texture::Setup(const std::string& filePath_)
 		RaiseError("Texture cannot be setup before OpenGlSetup::Setup() is called.");
 	if (UuidCreator::IsInitialized(id))
 		RaiseError("Texture is already initialized");
+	if (!std::filesystem::exists(filePath_))
+		RaiseError("Cannot load texture at '" + filePath_ + "', since there is no file there.");
+
 	auto name = Tools::RemovePrefix(filePath_, Literals::Textures); // we assume that all textures are in the texture folder
 	if (!naming.Contains(name))
 	{
@@ -25,7 +29,7 @@ void Texture::Setup(const std::string& filePath_)
 	stbi_set_flip_vertically_on_load(1);
 	unsigned char* localBuffer = stbi_load(filePath.c_str(), &width, &height, &bytesPerPixel, 4); // 4 = channel count
 	if (!localBuffer)
-		RaiseError("Failed to load texture image " + filePath + "due to " + stbi_failure_reason());
+		RaiseError("Failed to load texture image " + filePath + " due to " + stbi_failure_reason());
 	glCall(glGenTextures(1, &openGLid));
 	glCall(glBindTexture(GL_TEXTURE_2D, openGLid));
 	

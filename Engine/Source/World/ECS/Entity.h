@@ -49,6 +49,7 @@ public:
 	bool has_equal_id(const Entity& other) { return this->id == other.id; }
 	static uuid GetID(string name);
 	inline uuid GetID() const { return id; }
+	void SetStoredID(uuid storedID_) { storedID = storedID_; }
 	inline optional<uuid> GetStoredID() const { return storedID; }
 	static uuid* Entity::TryGetID(string name_);
 	inline void SetID(uuid id_) { id = id_; }

@@ -23,7 +23,7 @@ namespace YmlTools
         path += ".yml";
     }
 
-    void _CheckThatValidLocation(const string& path)
+    void _CheckValidLocation(const string& path)
     {
         if (!Tools::StartsWith(path, Literals::Res))
             RaiseError("path is expected to start with '" + Literals::Res + "' received '" + path + "'");
@@ -32,7 +32,7 @@ namespace YmlTools
 
     Node Load(string path, bool createFileIfAbsent)
     {
-        _CheckThatValidLocation(path);
+        _CheckValidLocation(path);
         _EnsureYMLsuffix(path);
         if (!std::filesystem::exists(path))
         {
@@ -51,7 +51,7 @@ namespace YmlTools
 
     void Save(Node yml, string path, bool overwrite, bool horizontalLists)
     {
-        _CheckThatValidLocation(path);
+        _CheckValidLocation(path);
         _EnsureYMLsuffix(path);
         if (!overwrite && std::filesystem::exists(path))
             RaiseError("Cannot save yml to '" + path + "', since there is already a file there.");

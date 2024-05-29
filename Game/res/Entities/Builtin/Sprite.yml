@@ -1,6 +1,6 @@
 Transform:
     id: 6d776cb3-8243-467c-8424-fb1c1aaa7c2b
-    localPosition: [-0.399380714, -0.673846841, 0]
+    localPosition: [0, 0, 0]
     localRotation: [1, 0, 0, 0]
     localScale: [1, 1, 1]
 Renderable:
