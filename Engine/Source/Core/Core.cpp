@@ -10,7 +10,6 @@
 #include "EngineMode.h"
 #include "OpenGlSetup.h"
 #include "NamingSaver.h"
-#include "StoredEntity.h" // temp
 
 
 void Core::Run(std::string firstScenePath)

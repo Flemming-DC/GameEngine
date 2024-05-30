@@ -1,11 +1,9 @@
 
 flaw during mini game dev:
 	lol - all entities are really stored entities
-	saving entity to storage doesnt make it an instance to the new stored type
 	ignore: entity got its components reversed
 	activation / deactivation of components required for smoothing flames.
-	delay::ForSeconds(duration, function)
-	OnStart mixes OnGameStart with OnEngineStart
+	OnStart mixes OnStart, OnGameStart and OnEngineStart
 	show errormessage when attempting to delete stored components on stored entity.
 	evt. HotKeyList (or action menu in hierachy)
 	make empty stored Entity
@@ -18,6 +16,14 @@ diverse:
 	literals should evt. store uuids not names
 	colliders are not very visible when selected
 	LargerThan / LessThen -> Longer / Shorter
+
+game:
+	background
+	smooth transition to flames
+	death anim: explosion and rocks
+	steelbars
+	asteroid types
+
 
 Editor 
 	

@@ -25,6 +25,51 @@ Entity::Entity(string name, optional<uuid> id_, optional<uuid> storedID_) : name
 }
 
 
+void Entity::Update()
+{
+	#ifdef _DEBUG
+	CheckConsistency();
+	#endif // _DEBUG
+
+	for (const auto& [e, components] : componentsByEntity)
+	{
+		if (!components.empty() && !components[0]->GetTransform().IsFullyEnabled())
+			continue;
+
+		for (const auto& compPtr : components)
+		{
+			if (compPtr->enabled)
+				compPtr->OnUpdate();
+		}
+	}
+
+}
+
+void Entity::CheckConsistency()
+{
+	/*
+	for (const auto& [name, entitiesWithName] : EntitiesByName)
+	{
+		if (entitiesWithName.size() != 1)
+			Warning("entitiesWithName[", name, "] = ", entitiesWithName.size());
+	}
+	*/
+	for (const auto& [entityID, components] : componentsByEntity)
+	{
+		Entity& entity = register_.Get(entityID);
+		if (entity.GetID() != entityID)
+			RaiseError("inconsistent data");
+		auto& _1 = EntitiesByName.at(entity.Name()); // .at() fails if the key is not present. This constistutes a consistency check.
+		for (const auto& compPtr : components)
+			auto& _2 = componentByID.at(compPtr.get()->GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
+	}
+	for (const auto& entity : register_.GetData())
+		auto& _3 = componentsByEntity.at(entity.GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
+
+}
+
+
+
 uuid Entity::GetID(string name_)
 {
 	int count = Tools::ContainsKey(EntitiesByName, name_) ? EntitiesByName.at(name_).size() : 0;
@@ -65,43 +110,24 @@ string Entity::to_string() const
 		return transform->GetPath();
 }
 
-
-void Entity::Update()
+void Entity::SetName(const string& newName)
 {
-	#ifdef _DEBUG
-	CheckConsistency();
-	#endif // _DEBUG
-
-	for (const auto& [e, components] : componentsByEntity)
+	// remove old name from EntitiesByName.
+	auto iterator2 = EntitiesByName.find(name);
+	if (iterator2 != EntitiesByName.end())
 	{
-		for (const auto& compPtr : components)
-			compPtr->OnUpdate();
+		if (EntitiesByName.at(name).size() == 1)
+			EntitiesByName.erase(iterator2); // remove name and thereby also id
+		else
+			Tools::Remove(EntitiesByName.at(name), id); // remove id, but keep name
 	}
 
+	// change name
+	name = newName;
+	// add new name
+	EntitiesByName[name].push_back(id); // [] initializes if the key is not present
 }
 
-void Entity::CheckConsistency()
-{
-	/*
-	for (const auto& [name, entitiesWithName] : EntitiesByName)
-	{
-		if (entitiesWithName.size() != 1)
-			Warning("entitiesWithName[", name, "] = ", entitiesWithName.size());
-	}
-	*/
-	for (const auto& [entityID, components] : componentsByEntity)
-	{
-		Entity& entity = register_.Get(entityID);
-		if (entity.GetID() != entityID)
-			RaiseError("inconsistent data");
-		auto& _1 = EntitiesByName.at(entity.Name()); // .at() fails if the key is not present. This constistutes a consistency check.
-		for (const auto& compPtr : components)
-			auto& _2 = componentByID.at(compPtr.get()->GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
-	}
-	for (const auto& entity : register_.GetData())
-		auto& _3 = componentsByEntity.at(entity.GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
-
-}
 
 
 // ---------------------------------- Destruction -------------------------------------
@@ -223,23 +249,3 @@ void Entity::ClearData(const unique_ptr<Component>& compPtr)
 		componentsByEntity[entityID].erase(iterator);
 	
 }
-
-void Entity::SetName(const string& newName)
-{
-	// remove old name from EntitiesByName.
-	auto iterator2 = EntitiesByName.find(name);
-	if (iterator2 != EntitiesByName.end())
-	{
-		if (EntitiesByName.at(name).size() == 1)
-			EntitiesByName.erase(iterator2); // remove name and thereby also id
-		else
-			Tools::Remove(EntitiesByName.at(name), id); // remove id, but keep name
-	}
-
-	// change name
-	name = newName;
-	// add new name
-	EntitiesByName[name].push_back(id); // [] initializes if the key is not present
-}
-
-

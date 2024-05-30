@@ -14,6 +14,7 @@ public:
 private:
 	void OnStart() override;
 	void OnDestroy() override;
+
 	virtual int InitOrder() { return -10; }
 };
 

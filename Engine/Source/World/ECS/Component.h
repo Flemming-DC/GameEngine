@@ -36,6 +36,8 @@ public:
 	virtual void Save(YAML::Node& node) const {}
 	void OnSceneLoaded();
 	virtual int InitOrder() { return 0; }
+	inline bool Enabled() const { return enabled; }
+	void SetEnabled(bool enable);
 
 protected:
 	bool unique = false; // if unique, then the entity can only contain a single component of this type.
@@ -50,12 +52,15 @@ private:
 	uuids::uuid id;
 	YAML::Node node; // This is the node from which the component was loaded, if it was loaded at all
 	bool isDoomed = false; // accessed from Entity
+	bool enabled = true;
 
 	void OnAddComponent(uuids::uuid entityID_, YAML::Node* node = nullptr); // called by Entity
 
 	inline virtual void OnStart() {} // called when the component is created, activated and loaded, whichever happens last.
 	inline virtual void OnDestroy() {}
 	inline virtual void OnUpdate() {}
+	inline virtual void OnEnabled() {}
+	inline virtual void OnDisabled() {}
 
 
 };

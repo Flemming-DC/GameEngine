@@ -41,3 +41,13 @@ std::string Component::to_string() const
 }
 
 
+void Component::SetEnabled(bool enable)
+{
+	bool wasEnabled = enabled;
+	enabled = enable;
+
+	if (enable && !wasEnabled)
+		OnEnabled();
+	else if (!enable && wasEnabled)
+		OnDisabled();
+}

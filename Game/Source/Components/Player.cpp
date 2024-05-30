@@ -25,6 +25,7 @@ void Player::OnDestroy()
 }
 
 
+
 Collider& Player::collider()
 {
 	assert(colliderPtr); // Cannot get instance, before it is initialized.

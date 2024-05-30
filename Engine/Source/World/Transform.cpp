@@ -178,6 +178,12 @@ bool Transform::IsDescendantOf(const Transform& putativeAncestor) const
 		return parent->IsDescendantOf(putativeAncestor);
 }
 
+bool Transform::IsFullyEnabled() const
+{
+	auto parent = Parent();
+	return parent ? Enabled() && parent->IsFullyEnabled() : Enabled();
+}
+
 // isPosition is used to distinguish position vector from other vectors (e.g. a velocity vector)
 vec3 Transform::ToWorldSpace(vec3 localVector, bool isPosition) const
 {
