@@ -4,52 +4,52 @@
 #include "GameLiterals.h"
 
 Shorts;
-static bool isInitialized = false;
-static Texture& texture = Texture();
-static Texture& asteroidTex = Texture();
-static Texture& asteroidMessyTex = Texture();
-Texture& GameAssets::rocketTex = Texture();
-Texture& GameAssets::rocketFlamingTex = Texture();
-static Texture& asteroid3 = Texture();
-static Texture& exhaust = Texture();
-static Texture& explosion = Texture();
-static Texture& longSteelbar = Texture();
-static Texture& rock = Texture();
-static Texture& steelbar = Texture();
-static Texture& stellarBackground = Texture();
 
-static Shader& shader = Shader();
-static Material& material = Material();
+#define MakeTexture(tex) static Texture& tex = _MakeTexture(#tex);
+#define SetupTexture(tex) _SetupTexture(tex, #tex);
+Texture& _MakeTexture(const char* name)
+{
+    return Texture::register_.Add(Literals::Textures + name + ".png");
+}
+void _SetupTexture(Texture& tex, const char* name)
+{
+    tex = Texture::register_.Add(Literals::Textures + name + ".png");
+}
+
+Texture& GameAssets::rocket = Texture();
+Texture& GameAssets::rocketFlaming = Texture();
+static Texture& blizzardAttackingFans = Texture();
 
 
 void GameAssets::OnGameStart()
 {
+    static bool isInitialized = false;
     if (isInitialized)
         return;
     isInitialized = true;
 
+    SetupTexture(rocket);
+    SetupTexture(rocketFlaming);
+    SetupTexture(blizzardAttackingFans);
+
+    MakeTexture(asteroid);
+    MakeTexture(asteroidMessy);
+    MakeTexture(asteroid3);
+    MakeTexture(exhaust);
+    MakeTexture(explosion);
+    MakeTexture(longSteelbar);
+    MakeTexture(rock);
+    MakeTexture(steelbar);
+    MakeTexture(stellarBackground);
+
     // parameters
     map_uo<string, std::any> uniformsByName = {
-        {Literals::u_textureSampler, &texture},
+        {Literals::u_textureSampler, &blizzardAttackingFans},
         {Literals::u_color, glm::vec4(0.8f, 0.3f, 0.8f, 1.0f)},
     };
 
-    // assets
-    texture             = Texture::register_.Add(Literals::Textures + "blizzard attacking fans.png");
-    rocketTex           = Texture::register_.Add(Literals::Textures + "rocket.png");
-    rocketFlamingTex    = Texture::register_.Add(Literals::Textures + "rocketFlaming.png");
-    asteroidTex         = Texture::register_.Add(Literals::Textures + "asteroid.png");
-    asteroidMessyTex    = Texture::register_.Add(Literals::Textures + "asteroidMessy.png");
-    asteroid3           = Texture::register_.Add(Literals::Textures + "asteroid3.png");
-    exhaust             = Texture::register_.Add(Literals::Textures + "exhaust.png");
-    explosion           = Texture::register_.Add(Literals::Textures + "explosion.png");
-    longSteelbar        = Texture::register_.Add(Literals::Textures + "longSteelbar.png");
-    rock                = Texture::register_.Add(Literals::Textures + "rock.png");
-    steelbar            = Texture::register_.Add(Literals::Textures + "steelbar.png");
-    stellarBackground   = Texture::register_.Add(Literals::Textures + "stellarBackground.png");
-
-    shader = Shader::register_.Add(Literals::imageShader);
-    material = Material::register_.Add("mat", shader, uniformsByName);
+    static Shader& shader = Shader::register_.Add(Literals::imageShader);
+    static Material& material = Material::register_.Add("mat", shader, uniformsByName);
 
 }
 
