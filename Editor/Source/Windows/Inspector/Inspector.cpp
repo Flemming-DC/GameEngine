@@ -23,18 +23,18 @@ void Inspector::Update()
     ImGui::Begin("Inspector");
     if (Entity::Exists(currentEntityID))
     {
-        DrawEntityHeader();
+        EntityHeader();
 
         Entity& entity = Entity::GetEntity(currentEntityID);
         for (const unique_ptr<Component>& compPtr : entity.GetComponents())
             DrawComponent(*compPtr);
 
-        AttachComponent();
+        DrawAddComponent();
     }
     ImGui::End();
 }
 
-void Inspector::DrawEntityHeader()
+void Inspector::EntityHeader()
 {
     static string entityName;
     static bool isEditingName = false;
@@ -59,29 +59,8 @@ void Inspector::DrawEntityHeader()
 
 void Inspector::DrawComponent(Component& comp)
 {
-    // header
-    ImGui::PushID(uuids::to_string(comp.GetID()).c_str());
-    bool open = ImGui::CollapsingHeader(Tools::TypeName(comp).c_str(), ImGuiTreeNodeFlags_DefaultOpen);
-    ImGui::PopID();
-    if (typeid(comp) != typeid(Transform) && ImGui::BeginPopupContextItem()) // remove comp option
-    {
-        if (comp.Entity().GetStoredID().has_value())
-            ImGui::Text("Cannot Remove Component on stored entity in editor.");
-        else if (ImGui::Button("Remove Component"))
-        {
-            comp.Entity().Destroy(comp);
-            ImGui::CloseCurrentPopup();
-        }
-        ImGui::EndPopup();
-    }
-    if (!open)
+    if (!ComponentHeader(comp))
         return;
-
-    bool enabled = comp.Enabled();
-    ImGui::PushID((uuids::to_string(comp.GetID()) + "Enabled").c_str());
-    ImGui::Checkbox("Enabled", &enabled);
-    ImGui::PopID();
-    comp.SetEnabled(enabled);
 
     // exposed fields
     ImGui::Indent();
@@ -111,8 +90,35 @@ void Inspector::DrawComponent(Component& comp)
         ImGui::Spacing();
 }
 
+bool Inspector::ComponentHeader(Component& comp)
+{
+    ImGui::PushID(uuids::to_string(comp.GetID()).c_str());
+    int flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowOverlap;
+    bool open = ImGui::CollapsingHeader(Tools::TypeName(comp).c_str(), flags);
+    ImGui::PopID();
+    if (typeid(comp) != typeid(Transform) && ImGui::BeginPopupContextItem()) // remove comp option
+    {
+        if (comp.Entity().GetStoredID().has_value())
+            ImGui::Text("Cannot Remove Component on stored entity in editor.");
+        else if (ImGui::Button("Remove Component"))
+        {
+            comp.Entity().Destroy(comp);
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
 
-void Inspector::AttachComponent()
+    bool enabled = comp.Enabled();
+    ImGui::SameLine();
+    ImGui::PushID((uuids::to_string(comp.GetID()) + "Enabled").c_str());
+    ImGui::Checkbox("", &enabled);
+    ImGui::PopID();
+    comp.SetEnabled(enabled);
+
+    return open;
+}
+
+void Inspector::DrawAddComponent()
 {
 
     ImGui::NewLine();
@@ -129,4 +135,5 @@ void Inspector::AttachComponent()
     }
 
 }
+
 
