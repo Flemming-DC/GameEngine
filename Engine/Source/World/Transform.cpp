@@ -178,10 +178,10 @@ bool Transform::IsDescendantOf(const Transform& putativeAncestor) const
 		return parent->IsDescendantOf(putativeAncestor);
 }
 
-bool Transform::IsFullyEnabled() const
+bool Transform::IsTransformFullyEnabled() const
 {
 	auto parent = Parent();
-	return parent ? Enabled() && parent->IsFullyEnabled() : Enabled();
+	return parent ? Enabled() && parent->IsTransformFullyEnabled() : Enabled();
 }
 
 // isPosition is used to distinguish position vector from other vectors (e.g. a velocity vector)

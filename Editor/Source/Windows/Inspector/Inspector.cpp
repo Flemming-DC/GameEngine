@@ -59,10 +59,11 @@ void Inspector::DrawEntityHeader()
 
 void Inspector::DrawComponent(Component& comp)
 {
+    // header
     ImGui::PushID(uuids::to_string(comp.GetID()).c_str());
     bool open = ImGui::CollapsingHeader(Tools::TypeName(comp).c_str(), ImGuiTreeNodeFlags_DefaultOpen);
     ImGui::PopID();
-    if (typeid(comp) != typeid(Transform) && ImGui::BeginPopupContextItem())
+    if (typeid(comp) != typeid(Transform) && ImGui::BeginPopupContextItem()) // remove comp option
     {
         if (comp.Entity().GetStoredID().has_value())
             ImGui::Text("Cannot Remove Component on stored entity in editor.");
@@ -76,6 +77,13 @@ void Inspector::DrawComponent(Component& comp)
     if (!open)
         return;
 
+    bool enabled = comp.Enabled();
+    ImGui::PushID((uuids::to_string(comp.GetID()) + "Enabled").c_str());
+    ImGui::Checkbox("Enabled", &enabled);
+    ImGui::PopID();
+    comp.SetEnabled(enabled);
+
+    // exposed fields
     ImGui::Indent();
     if (typeid(comp) == typeid(Transform))
         ComponentDrawer::DrawTransform(*static_cast<Transform*>(&comp));

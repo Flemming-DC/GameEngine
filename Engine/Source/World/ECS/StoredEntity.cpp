@@ -101,6 +101,7 @@ Node StoredEntity::ToNode(const Entity& in)
     {
         Node compNode;
         compNode["id"] = comp->GetID();
+        compNode["enabled"] = comp->Enabled();
         comp->Save(compNode); // component-type dependent data
         node[Tools::TypeName(*comp)] = compNode;
     }

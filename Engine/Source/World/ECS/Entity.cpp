@@ -33,7 +33,7 @@ void Entity::Update()
 
 	for (const auto& [e, components] : componentsByEntity)
 	{
-		if (!components.empty() && !components[0]->GetTransform().IsFullyEnabled())
+		if (!components.empty() && !components[0]->GetTransform().IsTransformFullyEnabled())
 			continue;
 
 		for (const auto& compPtr : components)

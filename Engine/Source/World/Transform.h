@@ -49,7 +49,7 @@ public:
 	vector<Transform*> GetChildren() const;
 	string GetPath() const; // could also be called to_string
 	bool IsDescendantOf(const Transform& putativeAncestor) const;
-	bool IsFullyEnabled() const;
+	bool IsTransformFullyEnabled() const;
 	// get forward, backward, right, left, up, down
 
 	//glm::vec2 As2D

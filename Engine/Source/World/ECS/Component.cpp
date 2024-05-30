@@ -26,6 +26,7 @@ void Component::OnAddComponent(uuids::uuid entityID_, YAML::Node* node_)
 void Component::OnSceneLoaded()
 {
 	transform = &Get<Transform>();
+	SetEnabled(node["enabled"].as<bool>());
 	Load(node);
 	OnStart(); // evt. combine Load and OnConstructed into Load with nullable pointer
 }
@@ -50,4 +51,9 @@ void Component::SetEnabled(bool enable)
 		OnEnabled();
 	else if (!enable && wasEnabled)
 		OnDisabled();
+}
+
+bool Component::IsFullyEnabled() const 
+{
+	return enabled && transform->IsTransformFullyEnabled(); 
 }

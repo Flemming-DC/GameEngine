@@ -50,6 +50,8 @@ void SceneVisuals::DrawColliders()
     for (const uuid& colID : Collider::GetAllColliders())
     {
         Collider& collider = Entity::GetComponent<Collider>(colID);
+        if (!collider.IsFullyEnabled())
+            continue;
         vector<vec2> positions = collider.Bare().Positions();
         Gizmo::DrawPolygon(positions, colliderColor, lineThickness);
     }

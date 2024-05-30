@@ -16,6 +16,7 @@ bool isIgnited = false;
 void RocketEngine::OnStart()
 {
 	material = &Get<Renderable>().GetMaterial();
+	P(Enabled());
 }
 
 

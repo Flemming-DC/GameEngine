@@ -1,4 +1,7 @@
 
+enabling:
+	place inside header
+
 flaw during mini game dev:
 	lol - all entities are really stored entities
 	ignore: entity got its components reversed

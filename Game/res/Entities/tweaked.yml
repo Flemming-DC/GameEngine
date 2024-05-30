@@ -1,9 +1,0 @@
-Transform:
-    id: a5d621e1-7c30-4bc1-9e69-f1972f435718
-    localPosition: [-2.27729273, 1.87074244, 0]
-    localRotation: [1, 0, 0, 0]
-    localScale: [1, 1, 1]
-CircleCollider:
-    id: 7e5fd9ea-92eb-41ff-8e78-601e51bca814
-    localRadius: 0.277999997
-    center: [0, 0]

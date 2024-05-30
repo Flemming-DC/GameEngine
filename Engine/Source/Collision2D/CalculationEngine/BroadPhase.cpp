@@ -10,10 +10,14 @@ Overlaps BroadPhase::GetPotentialOverlaps()
 	auto colliderIDs = Collider::GetAllColliders();
 	for (int i=0; i<(int)colliderIDs.size(); i++)
 	{
+		auto& col1 = Entity::GetComponent<Collider>(colliderIDs[i]);
+		if (!col1.IsFullyEnabled())
+			continue;
 		for (int j = 0; j < i; j++)
 		{
-			auto& col1 = Entity::GetComponent<Collider>(colliderIDs[i]);
 			auto& col2 = Entity::GetComponent<Collider>(colliderIDs[j]);
+			if (!col2.IsFullyEnabled())
+				continue;
 			allPairs.push_back({ &col1, &col2 });
 		}
 	}

@@ -38,6 +38,7 @@ public:
 	virtual int InitOrder() { return 0; }
 	inline bool Enabled() const { return enabled; }
 	void SetEnabled(bool enable);
+	bool IsFullyEnabled() const;
 
 protected:
 	bool unique = false; // if unique, then the entity can only contain a single component of this type.

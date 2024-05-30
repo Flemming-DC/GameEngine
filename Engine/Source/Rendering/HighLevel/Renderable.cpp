@@ -31,6 +31,8 @@ void Renderable::OnDestroy()
 
 void Renderable::Draw(const mat4& projectionView)
 {
+    if (!IsFullyEnabled())
+        return;
     if (!UuidCreator::IsInitialized(material.GetID()) || !UuidCreator::IsInitialized(mesh.GetID()))
         RaiseError("you must setup the mesh and material on the renderable, before drawing it.");
     mat4 model = GetTransform().GetModel(); // this is inefficient

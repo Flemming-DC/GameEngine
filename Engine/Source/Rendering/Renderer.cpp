@@ -54,7 +54,7 @@ void Renderer::DrawToScreen(mat4 projectionView)
     glCall(glClear(GL_COLOR_BUFFER_BIT)); // same as renderer.Clear()
     Renderable::UnBind(); //  evt. add framebuffer unbind
 
-    for (const uuids::uuid& renderableID : Renderable::allRenderables)
+    for (const uuid& renderableID : Renderable::allRenderables)
         Entity::GetComponent<Renderable>(renderableID).Draw(projectionView);
     
     Screen::ApplyCursorState();
