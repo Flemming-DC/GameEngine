@@ -4,7 +4,13 @@
 
 class Impact : public Component
 {
+public:
+	inline bool IsRock() { return isRock; };
+
 private:
+	unsigned int funcID;
+	bool isRock;
+
 	void OnStart() override;
 	void OnDestroy() override;
 

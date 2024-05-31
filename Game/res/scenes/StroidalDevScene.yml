@@ -6,11 +6,18 @@ StoredEntities:
         name: Exhaust
         storedID: f8af50fb-ca66-49f9-a963-c068e781a408
     3e415bbf-9ef9-4cb6-895a-36350e010124:
-        name: asteroid_2d
-        storedID: c0ebea4e-14ab-479a-8c33-a66587dca8c3
+        AsteroidMotion:
+            speed: 1
+        name: rock
+        storedID: e2007bb2-c9f2-438f-845e-3f0749c4cc55
     5d38bec5-3ca1-4b8d-afb6-5898026d0b96:
         name: rocket
         storedID: 03e54f95-8af6-4430-b26c-9c87d3f8de82
+    67b04aec-efb9-4dbb-83c1-644e16b19166:
+        AsteroidMotion:
+            speed: 1
+        name: asteroid
+        storedID: 2c795eb9-852c-4bc6-ab5a-89e42c07c484
     9aac4a6e-9e2a-4c45-ad94-572592e41fef:
         Transform:
             enabled: true
@@ -19,34 +26,6 @@ StoredEntities:
         name: Builtin/Empty
         storedID: 60fb0c6a-b61f-4d03-9f6c-b34469c8170b
 Entities:
-    331428e6-2dfc-4243-a53a-f470f08038ea:
-        name: asteroid_2d
-        storedID: ~
-        AsteroidMotion:
-            id: 623bd4e8-8984-4a33-9f25-74d14e1c4319
-            enabled: true
-        Impact:
-            id: a1b0d653-fc8b-4ca9-8f8e-b10380fa00a0
-            enabled: true
-        RectangleCollider:
-            id: d98d7763-ba4e-4e59-98b1-22f7d958f94f
-            enabled: true
-            size: [0.501999974, 0.841000021]
-            center: [0, 0]
-        Renderable:
-            id: ab2541e0-5cf6-4bee-808b-49853724d36c
-            enabled: true
-            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
-            material:
-                id: b456a101-6f11-459e-8080-de7bd7deae4a
-                u_color: [1, 1, 1, 1]
-                u_textureSampler: 5de4b726-018a-4146-a310-22a1a915b766
-        Transform:
-            id: d51f2bb4-9a10-4e01-b384-4621331d87d0
-            enabled: true
-            localPosition: [-0.556041121, 1.99924898, 0]
-            localRotation: [1, 0, 0, 0]
-            localScale: [1, 1, 1]
     955c33e9-7c9b-4169-938a-6430d573d55e:
         name: camera
         storedID: ~

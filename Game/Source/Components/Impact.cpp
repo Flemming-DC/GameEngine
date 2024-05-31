@@ -5,11 +5,11 @@
 #include "StoredEntity.h"
 Shorts;
 
-static uint funcID;
-static std::string rockName = "rock";
+static string rockName = "rock";
 
 void Impact::OnStart()
 {
+	isRock = (entity().GetStoredID() == StoredEntity::naming.at(rockName));
 	funcID = Get<Collider>().onEnter.Add([this](Collider& other) { Kill(other); });
 }
 
@@ -26,8 +26,20 @@ void Impact::Kill(Collider& other)
 
 
 	// make dust
-	//StoredEntity::Load(rockName);
 	
+	Impact* otherImpact = other.TryGet<Impact>();
+	bool otherIsRock = otherImpact && otherImpact->IsRock();
+	bool heavyObjectHittingRock = !isRock && otherIsRock;
+	if (heavyObjectHittingRock)
+		return;
+
+	if (!isRock)
+	{
+		vec2 here = GetTransform().Position2D();
+		StoredEntity::Load(rockName).Get<Transform>().SetPosition2D(here + vec2(0.0f, 0.2f));
+		StoredEntity::Load(rockName).Get<Transform>().SetPosition2D(here + vec2(0.2f, 0.0f));
+		StoredEntity::Load(rockName).Get<Transform>().SetPosition2D(here + vec2(-0.1f, -0.1f));
+	}
 	this->entity().Destroy();
 
 }

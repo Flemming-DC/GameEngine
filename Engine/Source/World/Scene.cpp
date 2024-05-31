@@ -93,7 +93,7 @@ void Scene::MakeBlankSceneFile(string name)
 void Scene::Load()
 {
     string path = Literals::Scenes + naming.at(id) + ".yml";
-    Node sceneYML = YmlTools::Load(path);
+    Node sceneYML = YmlTools::Load(path, true);
 
     auto storedEntitiesMap = sceneYML["StoredEntities"].IsMap() ? sceneYML["StoredEntities"].as<map<uuid, Node>>() : map<uuid, Node>();
     auto entitiesMap = sceneYML["Entities"].IsMap() ? sceneYML["Entities"].as<map<uuid, Node>>() : map<uuid, Node>();

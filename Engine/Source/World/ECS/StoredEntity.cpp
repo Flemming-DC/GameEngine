@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "EngineLiterals.h"
 #include "NamingSaver.h"
+#include <filesystem>
 
 Shorts;
 Naming StoredEntity::naming;
@@ -34,7 +35,7 @@ Entity& StoredEntity::Load(const string& entityName)
 Node StoredEntity::LoadToNode(uuid storedID)
 {
     const string& entityName = naming.at(storedID);
-    return YmlTools::Load(Literals::Entities + entityName + ".yml"); 
+    return YmlTools::Load(Literals::Entities + entityName + ".yml", false); 
 }
 
 

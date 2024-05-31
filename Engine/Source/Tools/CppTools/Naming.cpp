@@ -141,7 +141,7 @@ void Naming::Save(string fileName)
 
 void Naming::Load(string fileName)
 {
-	Node node = YmlTools::Load(Literals::Namings + fileName);
+	Node node = YmlTools::Load(Literals::Namings + fileName, true);
 	if (node.IsNull())
 		return;
 	auto idByName_ = node.as<map<string, uuid>>();

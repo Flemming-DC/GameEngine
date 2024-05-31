@@ -1,14 +1,16 @@
 AsteroidMotion:
     id: 96021ec5-6d34-47a9-969f-3d250f481d3a
     enabled: true
+    speed: 0.5
+    angularSpeed: 1.5
 Impact:
     id: c6e7f9ed-957b-4fa4-974a-af111286abff
     enabled: true
 RectangleCollider:
     id: e59af1c5-129d-4e1a-946b-235b008d2f46
     enabled: true
-    size: [0.852999985, 0.832000017]
-    center: [0.0359999985, 0.0540000014]
+    size: [0.879999995, 0.832000017]
+    center: [-0.0480000004, 0.00300000003]
 Renderable:
     id: 1f788caa-a400-4a9f-acdc-8b8d33c51305
     enabled: true
@@ -16,10 +18,10 @@ Renderable:
     material:
         id: b456a101-6f11-459e-8080-de7bd7deae4a
         u_color: [1, 1, 1, 1]
-        u_textureSampler: c3e9eeba-d3df-4764-bc69-539766cc3028
+        u_textureSampler: 35c08577-8d54-475d-8258-33ab6e1bb093
 Transform:
     id: c5be765c-7669-471c-8b33-469575034ecf
     enabled: true
-    localPosition: [-0.811499536, 0.577851832, 0]
+    localPosition: [-1.37402987, -1.2013135, 0]
     localRotation: [1, 0, 0, 0]
-    localScale: [1, 1, 1]
+    localScale: [0.229000002, 0.229000002, 0.229000002]
