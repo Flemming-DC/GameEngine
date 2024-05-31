@@ -162,9 +162,9 @@ vector<Transform*> Transform::GetChildren() const
 string Transform::GetPath() const
 {
 	if (Parent() == nullptr)
-		return Entity().Name();
+		return entity().Name();
 	else
-		return Parent()->GetPath() + "/" + Entity().Name();
+		return Parent()->GetPath() + "/" + entity().Name();
 }
 
 bool Transform::IsDescendantOf(const Transform& putativeAncestor) const
@@ -235,6 +235,8 @@ void Transform::Load(const YAML::Node& node)
 	if (node["parent"])
 	{
 		auto parentID = node["parent"].as<uuid>();
+		if (!Entity::ExistsComponent(parentID))
+			RaiseError("parent not found. parentID = ", parentID);
 		SetParent(&Entity::GetComponent<Transform>(parentID));
 	}
 	localPosition = node["localPosition"].as<vec3>();

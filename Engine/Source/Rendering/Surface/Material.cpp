@@ -7,6 +7,7 @@
 #include "ListTools.h"
 #include "OpenGlSetup.h"
 #include "YmlTools.h"
+#include "EngineLiterals.h"
 
 Register<Material> Material::register_;
 Naming Material::naming;
@@ -50,6 +51,22 @@ void Material::SetTexture(const string& uniformName, uuid texID)
     Texture& tex = Texture::register_.Get(texID);
     SetUniform(uniformName, &tex);
 }
+
+
+void Material::SetColor(vec4 color)
+{
+    SetUniform(Literals::u_color, color);
+}
+glm::vec4 Material::Color()
+{
+    return GetUniform<vec4>(Literals::u_color);
+}
+void Material::IncrementColor(vec4 colorDelta)
+{
+    vec4 color = glm::clamp(Color() + colorDelta, vec4(0.0f), vec4(1.0f));
+    SetUniform(Literals::u_color, color);
+}
+
 
 void Material::Bind(bool allowMissingUniforms)
 {

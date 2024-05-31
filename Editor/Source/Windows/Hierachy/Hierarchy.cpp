@@ -63,7 +63,7 @@ void Hierarchy::DropToRoot()
 
 void Hierarchy::DrawTreeNode(Transform& transform)
 {
-    uuid& id = transform.Entity().GetID();
+    uuid& id = transform.entity().GetID();
     
     int flags = ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow
         | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_NavLeftJumpsBackHere;
@@ -77,9 +77,9 @@ void Hierarchy::DrawTreeNode(Transform& transform)
 
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
     ImGui::PushID(uuids::to_string(id).c_str());
-    auto color = transform.Entity().GetStoredID().has_value() ? IM_COL32(100, 200, 255, 255) : IM_COL32(255, 255, 255, 255);
+    auto color = transform.entity().GetStoredID().has_value() ? IM_COL32(100, 200, 255, 255) : IM_COL32(255, 255, 255, 255);
     ImGui::PushStyleColor(ImGuiCol_Text, color);
-    bool open = ImGui::TreeNodeEx(transform.Entity().Name().c_str(), flags);
+    bool open = ImGui::TreeNodeEx(transform.entity().Name().c_str(), flags);
     ImGui::PopStyleColor();
 
     Rename(transform);
@@ -137,12 +137,12 @@ bool Hierarchy::DragDrop(Transform& transform)
 void Hierarchy::Rename(Transform& transform)
 {
     static string newName;
-    uuid& id = transform.Entity().GetID();
+    uuid& id = transform.entity().GetID();
 
     if (EditorInputs::Rename() && Selector::IsSelected(id))
     {
         renameID = id;
-        newName = transform.Entity().Name();
+        newName = transform.entity().Name();
     }
     if (renameID == id)
     {
@@ -150,7 +150,7 @@ void Hierarchy::Rename(Transform& transform)
         ImGui::SetKeyboardFocusHere();
         if (ImGui::InputText(" ", &newName, ImGuiInputTextFlags_EnterReturnsTrue))
         {
-            transform.Entity().SetName(newName);
+            transform.entity().SetName(newName);
             renameID = std::nullopt;
         }
         else if (ImGui::IsItemDeactivated() || ImGui::IsItemDeactivatedAfterEdit())

@@ -59,6 +59,7 @@ public:
 	static Entity& GetEntity(string name) { return register_.Get(GetID(name)); }
 	static Entity& GetEntity(uuid id_) { return register_.Get(id_); }
 	static bool Exists(uuid id_) { return register_.Contains(id_); }
+	static bool ExistsComponent(uuid id_) { return Tools::ContainsKey(componentByID, id_); }
 	bool Destroy(Component& comp); // destroys the component at the end of the component update calls
 
 private:

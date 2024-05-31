@@ -1,4 +1,10 @@
 StoredEntities:
+    3312f8e8-c270-401f-a632-f17eea8dc847:
+        Renderable:
+            material:
+                u_color: [1, 1, 1, 0]
+        name: Exhaust
+        storedID: f8af50fb-ca66-49f9-a963-c068e781a408
     3e415bbf-9ef9-4cb6-895a-36350e010124:
         name: asteroid_2d
         storedID: c0ebea4e-14ab-479a-8c33-a66587dca8c3

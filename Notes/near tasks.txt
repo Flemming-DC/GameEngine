@@ -1,18 +1,10 @@
 
-enabling:
-	place inside header
 
 flaw during mini game dev:
-	lol - all entities are really stored entities
-	ignore: entity got its components reversed
-	activation / deactivation of components required for smoothing flames.
 	OnStart mixes OnStart, OnGameStart and OnEngineStart
-	show errormessage when attempting to delete stored components on stored entity.
 	evt. HotKeyList (or action menu in hierachy)
-	make empty stored Entity
-	seperate builtins from optional ressources
-	
 	evt. ensure that { filenames } == { names in naming } in NamingSaver
+	parenting is handled incorrectly by stored entities. You ought store children, not parents.
 
 diverse:
 	safety regarding deletion (er du sikker eller auto backups eller undo)

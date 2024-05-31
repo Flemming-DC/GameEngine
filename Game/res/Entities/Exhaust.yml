@@ -1,0 +1,15 @@
+Renderable:
+    id: 2c920984-a629-4a01-adfa-38f0c75e179d
+    enabled: true
+    mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+    material:
+        id: b456a101-6f11-459e-8080-de7bd7deae4a
+        u_color: [1, 1, 1, 1]
+        u_textureSampler: d484ecd6-9e00-4d54-a245-d48d93be6019
+Transform:
+    id: 2a5fb784-9f6d-4894-ae8e-91b17e7eec5f
+    enabled: true
+    localPosition: [0, 0, 0]
+    localRotation: [1, 0, 0, 0]
+    localScale: [1, 1, 1]
+    parent: 376b5921-dcdb-4a73-9545-f24af17d03de

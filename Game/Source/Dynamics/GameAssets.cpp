@@ -18,6 +18,7 @@ void _SetupTexture(Texture& tex, const char* name)
 
 Texture& GameAssets::rocket = Texture();
 Texture& GameAssets::rocketFlaming = Texture();
+Texture& GameAssets::explosion = Texture();
 static Texture& blizzardAttackingFans = Texture();
 
 
@@ -31,12 +32,12 @@ void GameAssets::OnGameStart()
     SetupTexture(rocket);
     SetupTexture(rocketFlaming);
     SetupTexture(blizzardAttackingFans);
+    SetupTexture(explosion);
 
     MakeTexture(asteroid);
     MakeTexture(asteroidMessy);
     MakeTexture(asteroid3);
     MakeTexture(exhaust);
-    MakeTexture(explosion);
     MakeTexture(longSteelbar);
     MakeTexture(rock);
     MakeTexture(steelbar);

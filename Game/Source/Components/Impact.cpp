@@ -1,11 +1,12 @@
 #include "Impact.h"
 #include "RocketEngine.h"
 #include "Delay.h"
-#include "Scene.h"
 #include "Player.h"
+#include "StoredEntity.h"
 Shorts;
 
 static uint funcID;
+static std::string rockName = "rock";
 
 void Impact::OnStart()
 {
@@ -20,15 +21,13 @@ void Impact::OnDestroy()
 
 void Impact::Kill(Collider& other)
 {
-	// missing death anim
 	if (other == Player::collider())
-	{
-		Scene::Reload();
-	}
-	else
-	{
-		other.Entity().Destroy();
-		this->Entity().Destroy();
-	}
+		Player::rocketEngine().Die();
+
+
+	// make dust
+	//StoredEntity::Load(rockName);
+	
+	this->entity().Destroy();
 
 }

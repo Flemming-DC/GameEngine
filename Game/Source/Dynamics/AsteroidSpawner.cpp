@@ -5,7 +5,7 @@
 #include "GlmTools.h"
 #include "Player.h"
 
-std::string asteroidName = "asteroid_2";
+static std::string asteroidName = "asteroid_2";
 static float minDuration = 0.0f;
 static float maxDuration = 3.0f;
 static float spawnDistance = 5.0f; // must be larger than viewport-half-width and viewport-half-height

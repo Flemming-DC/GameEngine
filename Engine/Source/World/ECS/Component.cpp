@@ -36,7 +36,7 @@ std::string Component::to_string() const
 	if (transform && UuidCreator::IsInitialized(entityID))
 		return transform->GetPath() + "." + Tools::TypeName(*this);
 	else if (UuidCreator::IsInitialized(entityID))
-		return "uninitialized " + Entity().Name() + "." + Tools::TypeName(*this);
+		return "uninitialized " + entity().Name() + "." + Tools::TypeName(*this);
 	else
 		return "uninitialized " + Tools::TypeName(*this);
 }

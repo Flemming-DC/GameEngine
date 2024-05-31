@@ -32,6 +32,9 @@ public:
 	// nb: it wont be sent to the GPU until the renderer issues a draw call.
 	void SetUniform(const string& name, std::any value);
 	void SetTexture(const string& name, uuid id);
+	void SetColor(vec4 color);
+	vec4 Color();
+	void IncrementColor(vec4 colorDelta);
 	inline uuid GetID() const { return id; }
 	inline static vector<string> Names() { return naming.Names(); }
 

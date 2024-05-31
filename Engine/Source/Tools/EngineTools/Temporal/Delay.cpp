@@ -23,6 +23,12 @@ void Delay::Update()
 
 }
 
+void Delay::OnGameStop()
+{
+	forSeconds.clear();
+}
+
+
 void Delay::ToFrameEnd(const std::function<void()>& function)
 {
 	onFrameEnd.Add(function);

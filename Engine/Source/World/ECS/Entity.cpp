@@ -191,7 +191,7 @@ void Entity::Destroy()
 	// doom children
 	Transform* transform = TryGetComponent<Transform>();
 	for (const auto& child : transform->GetChildren())
-		child->Entity().Destroy();
+		child->entity().Destroy();
 
 	// doom components
 	for (const auto& comp : GetComponents())
@@ -240,7 +240,7 @@ bool Entity::Destroy(Component& comp)
 
 void Entity::ClearData(const unique_ptr<Component>& compPtr)
 {
-	auto& entityID = compPtr->Entity().GetID();
+	auto& entityID = compPtr->entity().GetID();
 
 	Tools::RemoveKey(componentByID, compPtr->GetID());
 

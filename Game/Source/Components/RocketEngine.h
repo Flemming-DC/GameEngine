@@ -6,11 +6,13 @@
 
 class RocketEngine : public Component
 {
-private:
-	Material* material = nullptr; // if using ref, then the code somehow acts like a copying took place
+public:
+	void Die();
 
+private:
 	void OnStart() override;
 	void OnUpdate() override;
+
 
 };
 

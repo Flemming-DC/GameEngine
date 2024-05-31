@@ -49,7 +49,7 @@ void DummyComp::OnUpdate()
 	{
 		P("F");
 		auto& func = Entity::AddComponentByName[Tools::TypeName(*this)];
-		func(Entity().GetID());
+		func(entity().GetID());
 	}
 
 	TestInputActions();
@@ -121,15 +121,15 @@ void DummyComp::OldTests()
 
 	if (InputKey::BecomesPressed(Keyboard::J))
 	{
-		logger::print("J: try destroy gamelogic from ", this->Entity());
+		logger::print("J: try destroy gamelogic from ", this->entity());
 		if (TryGet<GameLogic>())
-			Entity().Destroy<GameLogic>();
+			entity().Destroy<GameLogic>();
 	}
 	if (InputKey::BecomesPressed(Keyboard::H))
 	{
-		logger::print("H: try add gamelogic to ", this->Entity());
+		logger::print("H: try add gamelogic to ", this->entity());
 		if (!TryGet<GameLogic>() && TryGet<Renderable>() && TryGet<RectangleCollider>())
-			Entity().Add<GameLogic>();
+			entity().Add<GameLogic>();
 	}
 
 	if (InputKey::BecomesPressed(Keyboard::I))
