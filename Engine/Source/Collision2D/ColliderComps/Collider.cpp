@@ -9,6 +9,8 @@ vector<uuid> Collider::allColliders = {};
 
 void Collider::OnStart()
 {
+	if (Tools::Contains(allColliders, GetID()))
+		RaiseError("ColliderID has already been added. id = ", GetID());
 	allColliders.push_back(GetID());
 }
 

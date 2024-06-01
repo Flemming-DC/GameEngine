@@ -1,4 +1,40 @@
 StoredEntities:
+    21098c39-d350-4819-86a2-43cd0a2749d3:
+        Renderable:
+            enabled: false
+            id: 6e32a0b1-7eaf-4aa9-97db-dea64069e416
+            material:
+                u_textureSampler: aac8fa3c-b8ae-4eff-b782-7dc6ad4b0ff5
+        Transform:
+            id: 668aae9e-cbea-4588-b84e-b9ebfe97f305
+            localPosition: [-4.98176432, 0.365303874, 0]
+            localScale: [2, 2, 2]
+        name: BackGround
+        storedID: 66fafade-6aec-4238-89c4-c2550c12fae2
+    234a1b10-e06f-4f4a-9f84-93baddb9f09b:
+        Impact:
+            id: 9de2ec63-d7c4-4690-bdd9-4e5deca1b211
+        RectangleCollider:
+            id: 31d2263a-8200-4f0f-98bb-4026b4aafae9
+        Renderable:
+            id: 6fc61ae5-78a8-40d7-a729-622ec0ae7299
+        Transform:
+            id: a21c84fa-da4c-4b8f-b97b-8dda41fb2904
+            localPosition: [-1.5502187, 1.55114865, 0]
+        name: LongSteelBar
+        storedID: 66fafade-6aec-4238-89c4-c2550c12fae2
+    278d1d95-e442-4eb1-86ee-85e3a5257cec:
+        Impact:
+            id: 530e60ee-d0aa-45aa-8f16-80a7b2b02256
+        RectangleCollider:
+            id: e3bab634-7e4e-4779-abcc-3058de3a0cc3
+        Renderable:
+            id: 74bececa-1efc-45df-bd7c-868ef2b69fad
+        Transform:
+            id: df81b015-6d77-43b4-8598-871fd567e4b5
+            localPosition: [-2.24454165, 0.332808256, 0]
+        name: SteelBar
+        storedID: ef2c97f9-f7ec-4911-8da8-b453e7cf1723
     3312f8e8-c270-401f-a632-f17eea8dc847:
         Renderable:
             material:
@@ -18,13 +54,6 @@ StoredEntities:
             speed: 1
         name: asteroid
         storedID: 2c795eb9-852c-4bc6-ab5a-89e42c07c484
-    9aac4a6e-9e2a-4c45-ad94-572592e41fef:
-        Transform:
-            enabled: true
-            id: b07943af-a84d-49b8-9638-33853c54d040
-            localPosition: [-2.27729273, 1.87074244, 0]
-        name: Builtin/Empty
-        storedID: 60fb0c6a-b61f-4d03-9f6c-b34469c8170b
 Entities:
     955c33e9-7c9b-4169-938a-6430d573d55e:
         name: camera

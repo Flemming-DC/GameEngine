@@ -1,0 +1,22 @@
+Impact:
+    id: 2ac354c2-9583-4d3d-91a1-0887b3166c1f
+    enabled: true
+RectangleCollider:
+    id: b829e266-5365-4948-a09e-65de77ea6499
+    enabled: true
+    size: [0.970000029, 0.202000007]
+    center: [0.0149999997, -0.0299999993]
+Renderable:
+    id: 4f0d845c-ce03-478c-8b2d-bb5fd4983682
+    enabled: true
+    mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+    material:
+        id: b456a101-6f11-459e-8080-de7bd7deae4a
+        u_color: [1, 1, 1, 1]
+        u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+Transform:
+    id: c14d7545-e67a-48a8-bd59-28fb611b9f53
+    enabled: true
+    localPosition: [0, 0, 0]
+    localRotation: [1, 0, 0, 0]
+    localScale: [1, 1, 1]

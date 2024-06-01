@@ -18,7 +18,7 @@ class Transform : public Component
 public:
 	vec3 localPosition = vec3(0.0f); 
 	quat localRotation = glm::NoRotation();
-	bool requireUniformScale = false;
+	bool requireUniformScale = true;
 
 	float LocalAngle() const;
 	void SetLocalAngle(float localAngle);
