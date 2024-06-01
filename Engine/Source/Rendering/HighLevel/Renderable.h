@@ -22,10 +22,13 @@ public:
 	void Save(YAML::Node& node) const override;
 	void Load(const YAML::Node& node) override;
 	int InitOrder() override { return -1200; }
+	inline int DrawOrder() const { return drawOrder; }
+	inline void SetDrawOrder(int drawOrder_) { drawOrder = drawOrder_; }
 	
 private:
 	Mesh mesh;
 	Material material;
+	int drawOrder = 0;
 
 	void OnStart() override;
 	void OnDestroy() override;

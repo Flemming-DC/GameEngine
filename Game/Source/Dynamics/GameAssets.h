@@ -5,14 +5,12 @@
 class GameAssets : public Dynamic
 {
 public:
-	static Texture& RocketTex() { return rocket; }
-	static Texture& RocketFlamingTex() { return rocketFlaming; }
-	static Texture& ExplosionTex() { return explosion; }
+	static Texture& Explosion() { return explosion; }
+	static Texture& Dust() { return dust; }
 private:
-	static Texture& rocket;
-	static Texture& rocketFlaming;
 	static Texture& explosion;
-	
+	static Texture& dust;
+
 	void OnGameStart();
 
 

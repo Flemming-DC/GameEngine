@@ -15,10 +15,10 @@ namespace Editor::EditorInputs
 	InputAction<bool>& KeepSelection();
 	vec2 SelectionMoveDirection();
 
-	InputAction<bool>& ControlPosition();
-	InputAction<bool>& ControlRotation();
-	InputAction<bool>& ControlScale();
-	InputAction<bool>& ControlUniformScale();
+	bool ControlPosition();
+	bool ControlRotation();
+	bool ControlScale();
+	bool ControlUniformScale();
 
 	// creation & deletion
 	bool SaveStoredEntity();

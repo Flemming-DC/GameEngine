@@ -9,7 +9,7 @@ namespace Editor
 	{
 		Shorts;
 	public:
-		static Event<vector<uuid>> onSelected; // < selection >
+		static Event<vector<uuid>> onSelected; // vector<uuid> = vector<entityId> = selection 
 		static void Start();
 		static void Update();
 		static vector<uuid> Selection();

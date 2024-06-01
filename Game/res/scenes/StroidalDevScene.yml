@@ -1,16 +1,4 @@
 StoredEntities:
-    21098c39-d350-4819-86a2-43cd0a2749d3:
-        Renderable:
-            enabled: false
-            id: 6e32a0b1-7eaf-4aa9-97db-dea64069e416
-            material:
-                u_textureSampler: aac8fa3c-b8ae-4eff-b782-7dc6ad4b0ff5
-        Transform:
-            id: 668aae9e-cbea-4588-b84e-b9ebfe97f305
-            localPosition: [-4.98176432, 0.365303874, 0]
-            localScale: [2, 2, 2]
-        name: BackGround
-        storedID: 66fafade-6aec-4238-89c4-c2550c12fae2
     234a1b10-e06f-4f4a-9f84-93baddb9f09b:
         Impact:
             id: 9de2ec63-d7c4-4690-bdd9-4e5deca1b211
@@ -55,6 +43,24 @@ StoredEntities:
         name: asteroid
         storedID: 2c795eb9-852c-4bc6-ab5a-89e42c07c484
 Entities:
+    69fcbffb-d249-402b-b505-f0bdc6024c65:
+        name: BackGround
+        storedID: ~
+        Renderable:
+            id: 4e059f3a-1060-4005-b6ba-16af2a6eb490
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: aac8fa3c-b8ae-4eff-b782-7dc6ad4b0ff5
+            drawOrder: -10
+        Transform:
+            id: 31c170e9-c9b9-41a5-8191-4a399ea72234
+            enabled: true
+            localPosition: [0, 0, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [10, 10, 10]
     955c33e9-7c9b-4169-938a-6430d573d55e:
         name: camera
         storedID: ~

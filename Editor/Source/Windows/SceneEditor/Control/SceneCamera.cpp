@@ -33,7 +33,7 @@ void SceneCamera::UpdateCamera(ImVec2 minSceneCorner_, ImVec2 maxSceneCorner_)
         vec3 mousePos = SceneCamera::MouseWorldPosition();
         cameraPos -= (mousePos - lastMouseWorldPosition);
     }
-    else
+    else //if (ImGui::IsWindowFocused() || ImGui::IsMouseDragging(ImGuiMouseButton_Left))
     {
         vec3 moveDirection = glm::ToVec3(EditorInputs::MoveCamera());
         moveSpeed *= scaling;
@@ -51,13 +51,13 @@ vec3 SceneCamera::MouseWorldPosition()
     return editorWorldPos;
 }
 
-glm::vec2 SceneCamera::ToWorldPosition(glm::vec2 screenPosition)
+vec2 SceneCamera::ToWorldPosition(vec2 screenPosition)
 {
     return (vec2)Screen::ToWorldPosition(
         screenPosition, minSceneCorner, maxSceneCorner,
         cameraPos, cameraRot, cameraScale);
 }
-glm::vec2 SceneCamera::FromWorldPosition(glm::vec2 worldPosition)
+vec2 SceneCamera::FromWorldPosition(vec2 worldPosition)
 {
     return Screen::FromWorldPosition(
         glm::ToVec3(worldPosition), minSceneCorner, maxSceneCorner,

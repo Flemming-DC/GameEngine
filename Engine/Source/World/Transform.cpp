@@ -184,6 +184,14 @@ bool Transform::IsTransformFullyEnabled() const
 	return parent ? Enabled() && parent->IsTransformFullyEnabled() : Enabled();
 }
 
+Transform& Transform::Root()
+{
+	Transform* ancestor = this;
+	while (ancestor->Parent())
+		ancestor = ancestor->Parent();
+	return *ancestor;
+}
+
 // isPosition is used to distinguish position vector from other vectors (e.g. a velocity vector)
 vec3 Transform::ToWorldSpace(vec3 localVector, bool isPosition) const
 {

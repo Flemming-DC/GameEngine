@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "Collider.h"
 #include "Gizmo.h"
+#include "Selector.h"
 
 using namespace Editor;
 Shorts;
@@ -51,6 +52,8 @@ void SceneVisuals::DrawColliders()
     {
         Collider& collider = Entity::GetComponent<Collider>(colID);
         if (!collider.IsFullyEnabled())
+            continue;
+        if (!Selector::IsSelected(collider.entity().GetID()))
             continue;
         vector<vec2> positions = collider.Bare().Positions();
         Gizmo::DrawPolygon(positions, colliderColor, lineThickness);

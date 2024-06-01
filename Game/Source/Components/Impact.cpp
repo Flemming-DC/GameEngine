@@ -3,6 +3,8 @@
 #include "Delay.h"
 #include "Player.h"
 #include "StoredEntity.h"
+#include "GameLiterals.h"
+#include "GameAssets.h"
 Shorts;
 
 static string rockName = "rock";
@@ -10,7 +12,7 @@ static string rockName = "rock";
 void Impact::OnStart()
 {
 	isRock = (entity().GetStoredID() == StoredEntity::naming.at(rockName));
-	funcID = Get<Collider>().onEnter.Add([this](Collider& other) { Kill(other); });
+	funcID = Get<Collider>().onEnter.Add([this](Collider& other) { OnColliderEnter(other); });
 }
 
 void Impact::OnDestroy()
@@ -19,19 +21,16 @@ void Impact::OnDestroy()
 }
 
 
-void Impact::Kill(Collider& other)
+void Impact::OnColliderEnter(Collider& other)
 {
-	if (other == Player::collider())
-		Player::rocketEngine().Die();
-
-
-	// make dust
-	
 	Impact* otherImpact = other.TryGet<Impact>();
 	bool otherIsRock = otherImpact && otherImpact->IsRock();
 	bool heavyObjectHittingRock = !isRock && otherIsRock;
 	if (heavyObjectHittingRock)
 		return;
+
+	if (other == Player::collider())
+		Player::rocketEngine().Die();
 
 	if (!isRock)
 	{
@@ -40,6 +39,11 @@ void Impact::Kill(Collider& other)
 		StoredEntity::Load(rockName).Get<Transform>().SetPosition2D(here + vec2(0.2f, 0.0f));
 		StoredEntity::Load(rockName).Get<Transform>().SetPosition2D(here + vec2(-0.1f, -0.1f));
 	}
-	this->entity().Destroy();
+
+	float deathDuration = 0.65f;
+	Get<Collider>().SetEnabled(false);
+	Get<Renderable>().GetMaterial().SetTexture(Literals::u_textureSampler, GameAssets::Dust().GetID());
+
+	Delay::ForSeconds(deathDuration, [this]() { this->entity().Destroy(); });
 
 }

@@ -57,11 +57,14 @@ void RocketEngine::OnUpdate() // SetFlames, Rotate, Move
 
 void RocketEngine::Die()
 {
+	if (!Enabled())
+		return;
+
 	float deathDuration = 1;
 	SetEnabled(false);
 
 	exhaustMaterial->SetColor(vec4(1.0f, 1.0f, 1.0f, 0.0f));
-	Get<Renderable>().GetMaterial().SetTexture(Literals::u_textureSampler, GameAssets::ExplosionTex().GetID());
+	Get<Renderable>().GetMaterial().SetTexture(Literals::u_textureSampler, GameAssets::Explosion().GetID());
 
 	Delay::ForSeconds(deathDuration, []() { Scene::Reload(); });
 

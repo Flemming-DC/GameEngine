@@ -168,6 +168,7 @@ void Scene::Save()
 
 void Scene::ShutDown() 
 {
+    Delay::OnSceneEnd();
     Entity::DestroyEverything();
     onEnd.Invoke(*activeScene);
 }

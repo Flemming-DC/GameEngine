@@ -24,14 +24,6 @@ static auto& keepSelection = InputAction<bool>::Create()
 	.AddKey(Key::Keyboard::leftShift)
 	.AddKey(Key::Keyboard::rightShift);
 
-static auto& controlPosition = InputAction<bool>::Create()
-	.AddKey(Key::Keyboard::_1); 
-static auto& controlRotation = InputAction<bool>::Create()
-	.AddKey(Key::Keyboard::_2); 
-static auto& controlScale = InputAction<bool>::Create()
-	.AddKey(Key::Keyboard::_3); 
-static auto& controlUniformScale = InputAction<bool>::Create()
-	.AddKey(Key::Keyboard::_4); 
 
 
 // ------------------ getters -------------------
@@ -54,10 +46,10 @@ namespace Editor::EditorInputs
 	InputAction<vec2>& ScreenPosition()			{ return screenPosition; };
 	InputAction<bool>& KeepSelection()			{ return keepSelection; };
 	vec2			   SelectionMoveDirection() { return Shift() && !Ctrl() ? directional.State() : vec2(); };
-	InputAction<bool>& ControlPosition()		{ return controlPosition; }; // evt. add shift condition
-	InputAction<bool>& ControlRotation()		{ return controlRotation; }; // evt. add shift condition
-	InputAction<bool>& ControlScale()			{ return controlScale; }; // evt. add shift condition
-	InputAction<bool>& ControlUniformScale()	{ return controlUniformScale; }; // evt. add shift condition
+	bool ControlPosition()		{ return Ctrl() && InputKey::BecomesPressed(Key::Keyboard::_1); };
+	bool ControlRotation()		{ return Ctrl() && InputKey::BecomesPressed(Key::Keyboard::_2); };
+	bool ControlScale()			{ return Ctrl() && InputKey::BecomesPressed(Key::Keyboard::_3); };
+	bool ControlUniformScale()	{ return Ctrl() && InputKey::BecomesPressed(Key::Keyboard::_4); };
 
 	// Creation / Deletion
 	bool SaveStoredEntity()		{ return Ctrl() && InputKey::BecomesPressed(Key::Keyboard::enter); }

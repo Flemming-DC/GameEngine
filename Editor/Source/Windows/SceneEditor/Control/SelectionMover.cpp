@@ -28,13 +28,13 @@ void SelectionMover::Update()
 
 void SelectionMover::UpdateControl()
 {
-	if (EditorInputs::ControlPosition().BecomesPressed())
+	if (EditorInputs::ControlPosition())
 		control = Control::position;
-	else if (EditorInputs::ControlRotation().BecomesPressed())
+	else if (EditorInputs::ControlRotation())
 		control = Control::rotation;
-	else if (EditorInputs::ControlScale().BecomesPressed())
+	else if (EditorInputs::ControlScale())
 		control = Control::scale;
-	else if (EditorInputs::ControlUniformScale().BecomesPressed())
+	else if (EditorInputs::ControlUniformScale())
 		control = Control::uniformScale;
 	
 }

@@ -14,6 +14,7 @@ Renderable:
         id: b456a101-6f11-459e-8080-de7bd7deae4a
         u_color: [1, 1, 1, 1]
         u_textureSampler: 44359829-1113-4574-b271-aef5c3017028
+    drawOrder: 0
 Transform:
     id: 6b8a4a0c-85c4-411f-a3cc-82e56771bb33
     enabled: true

@@ -50,6 +50,7 @@ public:
 	string GetPath() const; // could also be called to_string
 	bool IsDescendantOf(const Transform& putativeAncestor) const;
 	bool IsTransformFullyEnabled() const;
+	Transform& Root();
 	// get forward, backward, right, left, up, down
 
 	//glm::vec2 As2D

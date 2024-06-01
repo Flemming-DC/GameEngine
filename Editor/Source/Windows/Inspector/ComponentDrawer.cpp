@@ -69,6 +69,11 @@ void ComponentDrawer::DrawRenderable(Renderable& renderable)
             mat.SetTexture(Literals::u_textureSampler, *changedTexID);
     }
     ImGui::Unindent();
+
+
+    int drawOrder = renderable.DrawOrder();
+    ImGui::InputInt("drawOrder", &drawOrder);
+    renderable.SetDrawOrder(drawOrder);
 }
 
 void ComponentDrawer::DrawPolygonCollider(PolygonCollider& poly)

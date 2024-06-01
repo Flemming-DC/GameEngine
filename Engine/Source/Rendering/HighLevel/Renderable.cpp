@@ -72,6 +72,9 @@ void Renderable::Save(Node& node) const
         materialNode[Literals::u_color] = material.GetUniform<vec4>(Literals::u_color);
     // save the node
     node["material"] = materialNode;
+
+
+    node["drawOrder"] = drawOrder;
 }
 
 void Renderable::Load(const Node& node)
@@ -99,5 +102,6 @@ void Renderable::Load(const Node& node)
         mesh = Mesh::register_.Get(meshID); // copy, not ref
     }
 
+    drawOrder = node["drawOrder"].as<int>();
 }
 

@@ -14,6 +14,6 @@ private:
 	void OnStart() override;
 	void OnDestroy() override;
 
-	void Kill(Collider& other);
+	void OnColliderEnter(Collider& other);
 };
 

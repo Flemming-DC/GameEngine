@@ -16,10 +16,9 @@ void _SetupTexture(Texture& tex, const char* name)
     tex = Texture::register_.Add(Literals::Textures + name + ".png");
 }
 
-Texture& GameAssets::rocket = Texture();
-Texture& GameAssets::rocketFlaming = Texture();
-Texture& GameAssets::explosion = Texture();
 static Texture& blizzardAttackingFans = Texture();
+Texture& GameAssets::explosion = Texture();
+Texture& GameAssets::dust = Texture();
 
 
 void GameAssets::OnGameStart()
@@ -29,11 +28,12 @@ void GameAssets::OnGameStart()
         return;
     isInitialized = true;
 
-    SetupTexture(rocket);
-    SetupTexture(rocketFlaming);
     SetupTexture(blizzardAttackingFans);
     SetupTexture(explosion);
+    SetupTexture(dust);
 
+    MakeTexture(rocket);
+    MakeTexture(rocketFlaming);
     MakeTexture(asteroid);
     MakeTexture(asteroidMessy);
     MakeTexture(asteroid3);

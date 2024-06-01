@@ -122,7 +122,6 @@ void Core::StopRunningGame()
         {
             Renderer::ShowWindow(false); 
             Scene::ReloadImmediately();
-            Delay::OnGameStop();
             Dynamic::CallOnGameEnd();
             EngineMode::gameIsRunning = false;
             EngineMode::MarkGameCloseButtonAsUnclicked();
