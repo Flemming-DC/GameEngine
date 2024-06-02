@@ -10,6 +10,8 @@
 #include "EngineMode.h"
 #include "OpenGlSetup.h"
 #include "NamingSaver.h"
+#include "Audio.h"
+
 
 
 void Core::Run(std::string firstScenePath)
@@ -35,6 +37,7 @@ void Core::Setup(std::string firstScenePath)
     OpenGlSetup::Setup();
     InputLoop::GlfwSetup();
     ImGuiSetup::Setup();
+    Audio::Setup();
     // engine setup
     NamingSaver::Load();
     Time::Setup();
@@ -94,8 +97,9 @@ void Core::Shutdown()
     if (EngineMode::InEditor())
         NamingSaver::Save(); // namings cant change at playtime
     // externals
-    ImGuiSetup::Shutdown();
-    OpenGlSetup::Shutdown();
+    Audio::ShutDown();
+    ImGuiSetup::ShutDown();
+    OpenGlSetup::ShutDown();
 }
 
 

@@ -1,6 +1,6 @@
 #include "GlmTools.h"
 #include "ShortHands.h"
-
+#include "Time_.h"
 
 
 namespace glm
@@ -44,31 +44,27 @@ namespace glm
 		return glm::identity<glm::quat>();
 	}
 
-	float SmoothAngle(float currentAngle, float targetAngle, float step)
+	float SmoothAngle(float current, float target, float duration)
 	{
 		// correct for discontinuity in angles
-		if (targetAngle - currentAngle > glm::PI)
-			targetAngle -= 2 * glm::PI;
-		else if (targetAngle - currentAngle < -glm::PI)
-			targetAngle += 2 * glm::PI;
+		if (target - current > glm::PI)
+			target -= 2 * glm::PI;
+		else if (target - current < -glm::PI)
+			target += 2 * glm::PI;
 
-		float nextAngle = (1 - step) * currentAngle + step * targetAngle; // ignoring overshoot
-
-		// prevent overshoot
-		if (targetAngle > currentAngle)
-			return glm::min(nextAngle, targetAngle);
-		else
-			return glm::max(nextAngle, targetAngle);
+		return SmoothFloat(current, target, duration);
 	}
 
-	vec2 SmoothVec(vec2 currentVec, vec2 targetVec, float step)
+	vec2 SmoothVec(vec2 current, vec2 target, float duration)
 	{
-		vec2 nextVec = (1 - step) * currentVec + step * targetVec; // ignoring overshoot
-		// prevent overshoot
 		return glm::vec2(
-			targetVec.x > currentVec.x ? glm::min(nextVec.x, targetVec.x) : glm::max(nextVec.x, targetVec.x),
-			targetVec.y > currentVec.y ? glm::min(nextVec.y, targetVec.y) : glm::max(nextVec.y, targetVec.y)
-			);
+			SmoothFloat(current.x, target.x, duration),
+			SmoothFloat(current.y, target.y, duration));
+	}
+
+	float SmoothFloat(float current, float target, float duration)
+	{
+		return target - (target - current) * glm::exp(-Time::Delta() * 10 / duration);
 	}
 
 	vec2 PolarVec2(float radius, float angle)

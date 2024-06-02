@@ -40,6 +40,8 @@ StoredEntities:
     67b04aec-efb9-4dbb-83c1-644e16b19166:
         AsteroidMotion:
             speed: 1
+        Transform:
+            localPosition: [-1.53857362, 1.01671648, 0]
         name: asteroid
         storedID: 2c795eb9-852c-4bc6-ab5a-89e42c07c484
 Entities:

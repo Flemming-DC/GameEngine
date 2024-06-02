@@ -8,11 +8,12 @@
 #include "GameAssets.h"
 #include "Transform.h"
 #include "Scene.h"
+#include "Audio.h"
 
 Shorts;
 static bool isIgnited = false;
 static const float speed = 1.0f;
-static const float angularSpeed = 10.0f;
+static const float turnDuration = 0.5f;
 static float exhaustFadingspeed = 0.2f;
 static Material* exhaustMaterial = nullptr;
 
@@ -41,7 +42,7 @@ void RocketEngine::OnUpdate() // SetFlames, Rotate, Move
 	if (isIgnited)
 	{
 		vec2 targetDirection = GameInputs::Move().State();
-		GetTransform().SmoothAngle(glm::Angle(targetDirection), angularSpeed * Time::Delta());
+		GetTransform().SmoothAngle(glm::Angle(targetDirection), turnDuration);
 
 		vec2 currentDirection = GetTransform().Forward2D();
 		GetTransform().IncrementPosition2D(speed * currentDirection * Time::Delta());
@@ -65,6 +66,7 @@ void RocketEngine::Die()
 
 	exhaustMaterial->SetColor(vec4(1.0f, 1.0f, 1.0f, 0.0f));
 	Get<Renderable>().GetMaterial().SetTexture(Literals::u_textureSampler, GameAssets::Explosion().GetID());
+	Audio::Play(Literals::Sounds + "dummy.wav");
 
 	Delay::ForSeconds(deathDuration, []() { Scene::Reload(); });
 

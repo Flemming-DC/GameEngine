@@ -49,8 +49,9 @@ namespace glm
 	//inline float OrientedAngle(glm::vec4 v1, glm::vec4 v2) { return glm::orientedAngle(glm::normalize(v1), glm::normalize(v2)); }
 	inline float Angle(glm::vec2 vec) { return glm::atan(vec.y, vec.x); }
 
-	float SmoothAngle(float currentAngle, float targetAngle, float step);
-	vec2 SmoothVec(vec2 currentVec, vec2 targetVec, float step);
+	float SmoothAngle(float current, float target, float duration); 
+	vec2 SmoothVec(vec2 current, vec2 target, float duration); 
+	float SmoothFloat(float current, float target, float duration); // duration = time until current is nearly equal target
 	vec2 PolarVec2(float radius, float angle);
 }
 

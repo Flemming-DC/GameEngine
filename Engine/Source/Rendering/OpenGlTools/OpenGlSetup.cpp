@@ -44,7 +44,7 @@ void OpenGlSetup::Setup()
     openGLInitialized = true;
 }
 
-void OpenGlSetup::Shutdown()
+void OpenGlSetup::ShutDown()
 {
     glfwTerminate();
 }

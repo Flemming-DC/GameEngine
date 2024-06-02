@@ -1,10 +1,19 @@
 
+audio:
+	settings:
+		intensity / loudness
+		evt. pitch
+		optional position with attenuation
+		size of sound emitter (used for attenuation)
+	get sensible audio files
 
 flaw during mini game dev:
 	OnStart mixes OnStart, OnGameStart and OnEngineStart
 	evt. HotKeyList (or action menu in hierachy)
 	evt. ensure that { filenames } == { names in naming } in NamingSaver
 	parenting is handled incorrectly by stored entities. You ought store children, not parents.
+	missing sound
+	select by non-visiable renderable is annoying
 
 diverse:
 	safety regarding deletion (er du sikker eller auto backups eller undo)
@@ -14,10 +23,9 @@ diverse:
 
 game:
 	background
-	smooth transition to flames
-	death anim: explosion and rocks
-	steelbars
-	asteroid types
+	death anim: sound
+	build level
+	asteroid types: fast asteroid
 
 
 Editor 

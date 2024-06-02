@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Audio.h" // temp
 
 static Transform* transformPtr = nullptr;
 static Collider* colliderPtr = nullptr;
@@ -24,7 +25,10 @@ void Player::OnDestroy()
 	rocketEnginePtr = nullptr;
 }
 
+void Player::OnUpdate()
+{
 
+}
 
 Collider& Player::collider()
 {

@@ -7,6 +7,6 @@ public:
     static void Setup();
     static void EarlyUpdate();
     static void LateUpdate();
-    static void Shutdown();
+    static void ShutDown();
 };
 

@@ -45,9 +45,9 @@ mat4 Transform::GetInverseLocalModel() const
 		* glm::translate(mat4(1.0f), -localPosition);
 }
 
-void Transform::SmoothAngle(float targetAngle, float step)
+void Transform::SmoothAngle(float targetAngle, float duration)
 {
-	float nextAngle = glm::SmoothAngle(Angle(), targetAngle, step);
+	float nextAngle = glm::SmoothAngle(Angle(), targetAngle, duration);
 	SetAngle(nextAngle);
 }
 

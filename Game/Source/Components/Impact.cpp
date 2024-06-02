@@ -5,6 +5,7 @@
 #include "StoredEntity.h"
 #include "GameLiterals.h"
 #include "GameAssets.h"
+#include "Audio.h"
 Shorts;
 
 static string rockName = "rock";
@@ -43,6 +44,7 @@ void Impact::OnColliderEnter(Collider& other)
 	float deathDuration = 0.65f;
 	Get<Collider>().SetEnabled(false);
 	Get<Renderable>().GetMaterial().SetTexture(Literals::u_textureSampler, GameAssets::Dust().GetID());
+	Audio::Play(Literals::Sounds + "dummy.wav");
 
 	Delay::ForSeconds(deathDuration, [this]() { this->entity().Destroy(); });
 

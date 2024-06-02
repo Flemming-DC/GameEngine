@@ -7,7 +7,7 @@ class OpenGlSetup
 {
 public:
 	static void Setup();
-	static void Shutdown();
+	static void ShutDown();
 	static bool Update();
 	static bool Initialized() { return openGLInitialized; }
 	inline static int GetWidth() { return WindowSize().first; } 

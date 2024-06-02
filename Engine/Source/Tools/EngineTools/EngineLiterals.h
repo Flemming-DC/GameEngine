@@ -12,6 +12,7 @@ namespace Literals
 	static string Textures = Res + "Textures/";
 	static string Namings = Res + "Namings/";
 	static string Entities = Res + "Entities/";
+	static string Sounds = Res + "Sounds/";
 	
 
 	// ------- files ------- //

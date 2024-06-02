@@ -48,7 +48,7 @@ void ImGuiSetup::LateUpdate()
     }
 }
 
-void ImGuiSetup::Shutdown()
+void ImGuiSetup::ShutDown()
 {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
