@@ -9,9 +9,8 @@ namespace Audio
 {
 	Shorts;
 
-	void Setup();
 	void Play(const string& filePath);
-	ma_engine& Engine();
+	ma_engine& Engine();;
 
 };
 

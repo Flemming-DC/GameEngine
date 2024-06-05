@@ -8,9 +8,24 @@ Shorts;
 /*
 
 ma_sound_is_playing(&sound)
-ma_sound_set_fade_in_milliseconds
 evt. dont double load the same file - evt. use the Resource Management from miniaudio
 */
+
+/*
+defaults to ma_attenuation_model_inverse, wich works as follows:
+
+                            min
+gain =   ----------------------------------------   =  konst / distanceClamped, for distance >> min, with konst = min / rolloff
+         min + rolloff * (distanceClamped - min)      1                       , for distance == min
+
+and where min = minDistance and distanceClamped = clamp(distance, minDistance, maxDistance)
+*/
+static float rolloff        = 4.0f;     // default: 1
+static float minGain        = 0.0f;     // default: 0
+static float maxGain        = 1.0f;     // default: 1
+static float minDistance    = 4.0f;     // default: 1
+static float maxDistance    = FLT_MAX;  // default: FLT_MAX
+static float dopplerFactor  = 1.0f;     // default: 1
 
 Sound::Sound(const string& filePath, bool hasPosition)
     : ma_sound_(ma_sound())
@@ -24,11 +39,15 @@ Sound::Sound(const string& filePath, bool hasPosition)
     
     ma_result result = ma_sound_init_from_file(&Audio::Engine(), filePath.c_str(), flag, nullptr, nullptr, &ma_sound_);
     if (result != MA_SUCCESS)
-    {
-        Warning("Failed to create sound. ", result);
-        return;
-    }
+        RaiseError("Failed to create sound. ", result);
 
+    
+    ma_sound_set_rolloff(&ma_sound_, rolloff);
+    ma_sound_set_min_gain(&ma_sound_, minGain);
+    ma_sound_set_max_gain(&ma_sound_, maxGain);
+    ma_sound_set_min_distance(&ma_sound_, minDistance);
+    ma_sound_set_max_distance(&ma_sound_, maxDistance);
+    ma_sound_set_doppler_factor(&ma_sound_, dopplerFactor);
 }
 
 Sound::~Sound()
@@ -38,17 +57,15 @@ Sound::~Sound()
 
 void Sound::Start(optional<vec2> position, float fadeDuration)
 {
-    /*
     if (position)
         ma_sound_set_position(&ma_sound_, position->x, position->y, 0.0f);
 
     if (fadeDuration > GlmCheck::realisticallySmall)
     {
         float volume = ma_sound_get_volume(&ma_sound_);
-        ma_sound_set_fade_in_milliseconds(&ma_sound_, 0, volume, fadeDuration * 1000.0f);
+        ma_sound_set_fade_in_milliseconds(&ma_sound_, 0, volume, (ma_uint64)fadeDuration * 1000);
     }
-    */
-    P(position, fadeDuration);
+    
     ma_result result = ma_sound_start(&ma_sound_);
     if (result != MA_SUCCESS)
         Warning("Failed to play sound. ", result);

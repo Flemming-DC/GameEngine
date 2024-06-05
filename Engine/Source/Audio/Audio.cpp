@@ -6,10 +6,14 @@ Shorts;
 
 static ma_engine engine;
 static ma_engine_config engineConfig;
+static bool initialized = false;
 
 
-void Audio::Setup()
+void Setup() // initialized on first use
 {
+    if (initialized)
+        RaiseError("Attempting to initialize audio twice");
+    initialized = true;
     engineConfig = ma_engine_config_init();
     engineConfig.listenerCount = 1;
     ma_result result = ma_engine_init(&engineConfig, &engine);
@@ -20,6 +24,8 @@ void Audio::Setup()
 
 void Audio::Play(const string& filePath)
 {
+    if (!initialized)
+        Setup();
     if (!std::filesystem::exists(filePath))
         RaiseError("Cannot play audioFile, since it does not exist. ", filePath);
 
@@ -29,8 +35,12 @@ void Audio::Play(const string& filePath)
         Warning("Failed to play sound. ", result);
 }
 
-ma_engine& Audio::Engine() { return engine; }
-
+ma_engine& Audio::Engine() 
+{ 
+    if (!initialized)
+        Setup();
+    return engine; 
+}
 
 namespace logger
 {

@@ -10,7 +10,6 @@
 #include "EngineMode.h"
 #include "OpenGlSetup.h"
 #include "NamingSaver.h"
-#include "Audio.h"
 #include "Ear.h"
 
 
@@ -38,7 +37,6 @@ void Core::Setup(std::string firstScenePath)
     OpenGlSetup::Setup();
     InputLoop::GlfwSetup();
     ImGuiSetup::Setup();
-    Audio::Setup();
     // engine setup
     NamingSaver::Load();
     Time::Setup();

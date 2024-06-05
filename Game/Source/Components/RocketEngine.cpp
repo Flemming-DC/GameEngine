@@ -33,6 +33,17 @@ void RocketEngine::OnStart()
 
 void RocketEngine::OnUpdate() // SetFlames, Rotate, Move
 {
+	if		(InputKey::BecomesPressed(Key::Keyboard::_1)) explosionSound.Start(vec2(std::pow(2, 1), 0));
+	else if (InputKey::BecomesPressed(Key::Keyboard::_2)) explosionSound.Start(vec2(std::pow(2, 2), 0));
+	else if (InputKey::BecomesPressed(Key::Keyboard::_3)) explosionSound.Start(vec2(std::pow(2, 3), 0));
+	else if (InputKey::BecomesPressed(Key::Keyboard::_4)) explosionSound.Start(vec2(std::pow(2, 4), 0));
+	else if (InputKey::BecomesPressed(Key::Keyboard::_5)) explosionSound.Start(vec2(std::pow(2, 5), 0));
+	else if (InputKey::BecomesPressed(Key::Keyboard::_6)) explosionSound.Start(vec2(std::pow(2, 6), 0));
+	else if (InputKey::BecomesPressed(Key::Keyboard::_7)) explosionSound.Start(vec2(std::pow(2, 7), 0));
+	else if (InputKey::BecomesPressed(Key::Keyboard::_8)) explosionSound.Start(vec2(std::pow(2, 8), 0));
+	else if (InputKey::BecomesPressed(Key::Keyboard::_9)) explosionSound.Start(vec2(std::pow(2, 9), 0));
+	else if (InputKey::BecomesPressed(Key::Keyboard::_0)) explosionSound.Start(vec2(std::pow(2, 10),0));
+
 	if (GameInputs::Move().IsPressed() != isIgnited)
 		isIgnited = !isIgnited;
 
@@ -63,7 +74,6 @@ void RocketEngine::Die()
 
 	exhaustMaterial->SetColor(vec4(1.0f, 1.0f, 1.0f, 0.0f));
 	Get<Renderable>().GetMaterial().SetTexture(Literals::u_textureSampler, GameAssets::Explosion().GetID());
-	//Audio::Play(Literals::Sounds + "dummy.wav");
 	explosionSound.Start(GetTransform().Position2D());
 
 	Delay::ForSeconds(deathDuration, []() { Scene::Reload(); });
