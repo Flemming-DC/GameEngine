@@ -66,10 +66,10 @@ void Sound::Start(optional<vec2> position, float fadeDuration)
         ma_sound_set_fade_in_milliseconds(&ma_sound_, 0, volume, (ma_uint64)fadeDuration * 1000);
     }
     
+    ma_sound_seek_to_pcm_frame(&ma_sound_, 0);
     ma_result result = ma_sound_start(&ma_sound_);
     if (result != MA_SUCCESS)
         Warning("Failed to play sound. ", result);
-
 }
 
 

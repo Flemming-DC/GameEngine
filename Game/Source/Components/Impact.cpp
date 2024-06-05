@@ -15,7 +15,6 @@ void Impact::OnStart()
 {
 	isRock = (entity().GetStoredID() == StoredEntity::naming.at(rockName));
 	funcID = Get<Collider>().onEnter.Add([this](Collider& other) { OnColliderEnter(other); });
-	//impactSound = &Sound(Literals::Sounds + "dummy.wav", true);
 }
 
 void Impact::OnDestroy()
@@ -46,8 +45,6 @@ void Impact::OnColliderEnter(Collider& other)
 	float deathDuration = 0.65f;
 	Get<Collider>().SetEnabled(false);
 	Get<Renderable>().GetMaterial().SetTexture(Literals::u_textureSampler, GameAssets::Dust().GetID());
-	//if (!impactSound)
-	//	RaiseError("impactSound was nullptr");
 	impactSound.Start(GetTransform().Position2D());
 
 	Delay::ForSeconds(deathDuration, [this]() { this->entity().Destroy(); });

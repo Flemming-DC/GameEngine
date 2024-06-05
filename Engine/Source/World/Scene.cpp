@@ -8,7 +8,6 @@
 #include "Register.h"
 #include "NamingSaver.h"
 #include "StoredEntity.h"
-#include "Audio.h"
 #include <fstream>
 #include <filesystem>
 #include <sstream>
@@ -65,15 +64,23 @@ void Scene::MakeBlankSceneFile(string name)
     uuid id = naming.at(name);
     //naming.Save("sceneNames.yml");
 
+    Node StoredEntitiesYML;
+
     // building a scene with a single entity with a transform and a camera
     Node transformYML;
     transformYML["id"] = UuidCreator::MakeID();
+    transformYML["enabled"] = true;
     transformYML["localPosition"] = glm::vec3(0, 0, 0);
     transformYML["localRotation"] = glm::quat(1, 0, 0, 0);
     transformYML["localScale"] = glm::vec3(1, 1, 1);
 
     Node cameraYML;
     cameraYML["id"] = UuidCreator::MakeID();
+    cameraYML["enabled"] = true;
+
+    Node earYML;
+    earYML["id"] = UuidCreator::MakeID();
+    earYML["enabled"] = true;
 
     Node cameraEntityYML;
     cameraEntityYML["name"] = "camera";// = UuidCreator::MakeID();
@@ -84,6 +91,7 @@ void Scene::MakeBlankSceneFile(string name)
     entitiesYML[naming.at(name)] = cameraEntityYML;
 
     Node sceneYML;
+    sceneYML["StoredEntities"] = StoredEntitiesYML;
     sceneYML["Entities"] = entitiesYML;
 
     string path = Literals::Scenes + name + ".yml";

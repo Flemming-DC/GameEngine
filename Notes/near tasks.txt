@@ -1,10 +1,5 @@
 
 audio:
-	settings:
-		intensity / loudness
-		evt. pitch
-		optional position with attenuation
-		size of sound emitter (used for attenuation)
 	get sensible audio files
 
 flaw during mini game dev:
