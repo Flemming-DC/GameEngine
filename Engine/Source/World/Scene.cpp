@@ -8,6 +8,7 @@
 #include "Register.h"
 #include "NamingSaver.h"
 #include "StoredEntity.h"
+#include "Audio.h"
 #include <fstream>
 #include <filesystem>
 #include <sstream>

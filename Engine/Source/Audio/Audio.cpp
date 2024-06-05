@@ -1,34 +1,35 @@
 #define MINIAUDIO_IMPLEMENTATION
 #include "Audio.h"
 #include "ErrorChecker.h"
-#include "logger.h"
 #include <filesystem>
+Shorts;
 
 static ma_engine engine;
+static ma_engine_config engineConfig;
+
 
 void Audio::Setup()
 {
-    ma_result result = ma_engine_init(NULL, &engine);
+    engineConfig = ma_engine_config_init();
+    engineConfig.listenerCount = 1;
+    ma_result result = ma_engine_init(&engineConfig, &engine);
     if (result != MA_SUCCESS)
         RaiseError("Failed to initialize audio engine. ", result);
 
 }
 
-void Audio::Play(const string& filePath, optional<vec2> position)
+void Audio::Play(const string& filePath)
 {
     if (!std::filesystem::exists(filePath))
         RaiseError("Cannot play audioFile, since it does not exist. ", filePath);
 
-    ma_result result = ma_engine_play_sound(&engine, filePath.c_str(), NULL);
+    ma_result result = ma_engine_play_sound(&Audio::Engine(), filePath.c_str(), nullptr);
+
     if (result != MA_SUCCESS)
         Warning("Failed to play sound. ", result);
 }
 
-void Audio::ShutDown()
-{
-
-    ma_engine_uninit(&engine);
-}
+ma_engine& Audio::Engine() { return engine; }
 
 
 namespace logger
@@ -108,7 +109,7 @@ namespace logger
         case MA_FAILED_TO_OPEN_BACKEND_DEVICE: return "MA_FAILED_TO_OPEN_BACKEND_DEVICE";
         case MA_FAILED_TO_START_BACKEND_DEVICE: return "MA_FAILED_TO_START_BACKEND_DEVICE";
         case MA_FAILED_TO_STOP_BACKEND_DEVICE: return "MA_FAILED_TO_STOP_BACKEND_DEVICE";
-        default: return string("Unknown ma_result with error code ") + std::to_string(result);
+        default: return ma_result_description(result);
         }
     }
 }

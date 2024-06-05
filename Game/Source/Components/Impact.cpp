@@ -44,7 +44,7 @@ void Impact::OnColliderEnter(Collider& other)
 	float deathDuration = 0.65f;
 	Get<Collider>().SetEnabled(false);
 	Get<Renderable>().GetMaterial().SetTexture(Literals::u_textureSampler, GameAssets::Dust().GetID());
-	Audio::Play(Literals::Sounds + "dummy.wav");
+	//Audio::Play(Literals::Sounds + "dummy.wav");
 
 	Delay::ForSeconds(deathDuration, [this]() { this->entity().Destroy(); });
 

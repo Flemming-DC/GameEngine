@@ -11,6 +11,7 @@
 #include "OpenGlSetup.h"
 #include "NamingSaver.h"
 #include "Audio.h"
+#include "Ear.h"
 
 
 
@@ -43,7 +44,7 @@ void Core::Setup(std::string firstScenePath)
     Time::Setup();
     CollisionLoop::Setup();
     EngineAssets::Setup();
-    Entity::DeclareComps<Transform, Renderable, Camera, CircleCollider, RectangleCollider, PolygonCollider>();
+    Entity::DeclareComps<Transform, Renderable, Camera, CircleCollider, RectangleCollider, PolygonCollider, Ear>();
     // editor / game setup
     if (EngineMode::InEditor())
         Dynamic::CallOnEditorStart();
@@ -97,7 +98,6 @@ void Core::Shutdown()
     if (EngineMode::InEditor())
         NamingSaver::Save(); // namings cant change at playtime
     // externals
-    Audio::ShutDown();
     ImGuiSetup::ShutDown();
     OpenGlSetup::ShutDown();
 }

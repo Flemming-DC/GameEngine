@@ -69,6 +69,9 @@ Entities:
         Camera:
             id: 0a73a2ca-d1f3-43f4-81c5-eeff68d3c774
             enabled: true
+        Ear:
+            id: c59e3b60-1ae1-4b3d-abb4-1cd88be779b0
+            enabled: true
         FollowPlayer:
             id: 0083755f-4dd5-4522-a509-ca916f18e537
             enabled: true

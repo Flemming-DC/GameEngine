@@ -9,35 +9,32 @@
 #include "Transform.h"
 #include "Scene.h"
 #include "Audio.h"
+#include "Sound.h"
 
 Shorts;
 static bool isIgnited = false;
 static const float speed = 1.0f;
 static const float turnDuration = 0.5f;
 static float exhaustFadingspeed = 0.2f;
+// for non-singletons, put these on the instance.
 static Material* exhaustMaterial = nullptr;
+static Sound explosionSound(Literals::Sounds + "dummy.wav", true);
 
 void RocketEngine::OnStart()
 {
 	if (!Entity::Exists(Entity::GetID("Exhaust")))
 		RaiseError("Exhaust not found.");
 
-	//exhaustMaterial = &GetTransform().GetChildren()[0]->Get<Renderable>().GetMaterial();
 	exhaustMaterial = &Entity::GetEntity("Exhaust").Get<Renderable>().GetMaterial();
 	exhaustMaterial->SetColor(vec4(1.0f, 1.0f, 1.0f, 0.0f));
-	//material = &Get<Renderable>().GetMaterial();
+
 }
 
 
 void RocketEngine::OnUpdate() // SetFlames, Rotate, Move
 {
 	if (GameInputs::Move().IsPressed() != isIgnited)
-	{
 		isIgnited = !isIgnited;
-		//Texture& tex = isIgnited ? GameAssets::RocketFlamingTex() : GameAssets::RocketTex();
-		//material->SetTexture(Literals::u_textureSampler, tex.GetID());
-	}
-
 
 	if (isIgnited)
 	{
@@ -66,7 +63,8 @@ void RocketEngine::Die()
 
 	exhaustMaterial->SetColor(vec4(1.0f, 1.0f, 1.0f, 0.0f));
 	Get<Renderable>().GetMaterial().SetTexture(Literals::u_textureSampler, GameAssets::Explosion().GetID());
-	Audio::Play(Literals::Sounds + "dummy.wav");
+	//Audio::Play(Literals::Sounds + "dummy.wav");
+	explosionSound.Start(GetTransform().Position2D());
 
 	Delay::ForSeconds(deathDuration, []() { Scene::Reload(); });
 
