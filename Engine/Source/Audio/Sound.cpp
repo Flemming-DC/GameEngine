@@ -26,18 +26,19 @@ static float maxGain        = 1.0f;     // default: 1
 static float minDistance    = 4.0f;     // default: 1
 static float maxDistance    = FLT_MAX;  // default: FLT_MAX
 static float dopplerFactor  = 1.0f;     // default: 1
+static int i = 0;
 
-Sound::Sound(const string& filePath, bool hasPosition)
+Sound::Sound(const string& filePath_, bool hasPosition)
     : ma_sound_(ma_sound())
 {
-    if (!std::filesystem::exists(filePath))
-        RaiseError("Cannot play audioFile, since it does not exist. ", filePath);
+    if (!std::filesystem::exists(filePath_))
+        RaiseError("Cannot play audioFile, since it does not exist. ", filePath_);
 
     int flag = MA_SOUND_FLAG_DECODE; // decode sound on load, not every time its played, for performance reasons.
     if (!hasPosition)
         flag |= MA_SOUND_FLAG_NO_SPATIALIZATION;
     
-    ma_result result = ma_sound_init_from_file(&Audio::Engine(), filePath.c_str(), flag, nullptr, nullptr, &ma_sound_);
+    ma_result result = ma_sound_init_from_file(&Audio::Engine(), filePath_.c_str(), flag, nullptr, nullptr, &ma_sound_);
     if (result != MA_SUCCESS)
         RaiseError("Failed to create sound. ", result);
 
@@ -48,14 +49,31 @@ Sound::Sound(const string& filePath, bool hasPosition)
     ma_sound_set_min_distance(&ma_sound_, minDistance);
     ma_sound_set_max_distance(&ma_sound_, maxDistance);
     ma_sound_set_doppler_factor(&ma_sound_, dopplerFactor);
+    filePath = filePath_;
+    i++;
 }
 
 Sound::~Sound()
 {
+    i--;
     ma_sound_uninit(&ma_sound_);
 }
 
-void Sound::Start(optional<vec2> position, float fadeDuration)
+
+void Sound::PlayCopy(optional<vec2> position, float fadeDuration)
+{
+    auto sound = std::make_shared<Sound>(filePath, position.has_value());
+    
+    sound->SetVolume(ma_sound_get_volume(&ma_sound_));
+    sound->SetPitch(ma_sound_get_pitch(&ma_sound_));
+    sound->SetPan(ma_sound_get_pan(&ma_sound_));
+    sound->SetLooping(ma_sound_is_looping(&ma_sound_));
+
+    sound->Play(position, fadeDuration);
+    Delay::ForSeconds(sound->Duration(), [sound]() {}); // this preserves the sound throughout its duration
+}
+
+void Sound::Play(optional<vec2> position, float fadeDuration)
 {
     if (position)
         ma_sound_set_position(&ma_sound_, position->x, position->y, 0.0f);

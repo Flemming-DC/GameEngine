@@ -62,7 +62,8 @@ Entities:
             enabled: true
             localPosition: [0, 0, 0]
             localRotation: [1, 0, 0, 0]
-            localScale: [10, 10, 10]
+            localScale: [3.33333349, 3.33333349, 3.33333349]
+            parent: bfd2a852-ec3a-4d62-adea-9f452657b87b
     955c33e9-7c9b-4169-938a-6430d573d55e:
         name: camera
         storedID: ~

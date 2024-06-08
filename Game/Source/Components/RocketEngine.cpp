@@ -17,7 +17,7 @@ static const float turnDuration = 0.5f;
 static float exhaustFadingspeed = 0.2f;
 // for non-singletons, put these on the instance.
 static Material* exhaustMaterial = nullptr;
-static Sound explosionSound(Literals::Sounds + "dummy.wav", true);
+static Sound explosionSound(Literals::Sounds + "bum.wav", true);
 
 void RocketEngine::OnStart()
 {
@@ -26,6 +26,7 @@ void RocketEngine::OnStart()
 
 	exhaustMaterial = &Entity::GetEntity("Exhaust").Get<Renderable>().GetMaterial();
 	exhaustMaterial->SetColor(vec4(1.0f, 1.0f, 1.0f, 0.0f));
+	explosionSound.SetVolume(0.3f);
 }
 
 
@@ -47,7 +48,6 @@ void RocketEngine::OnUpdate() // SetFlames, Rotate, Move
 		exhaustMaterial->IncrementColor(vec4(0.0f, 0.0f, 0.0f, exhaustFadingspeed));
 	else
 		exhaustMaterial->IncrementColor(vec4(0.0f, 0.0f, 0.0f, -exhaustFadingspeed));
-	
 }
 
 
@@ -61,7 +61,7 @@ void RocketEngine::Die()
 
 	exhaustMaterial->SetColor(vec4(1.0f, 1.0f, 1.0f, 0.0f));
 	Get<Renderable>().GetMaterial().SetTexture(Literals::u_textureSampler, GameAssets::Explosion().GetID());
-	explosionSound.Start(GetTransform().Position2D());
+	explosionSound.Play(GetTransform().Position2D());
 
 	Delay::ForSeconds(deathDuration, []() { Scene::Reload(); });
 

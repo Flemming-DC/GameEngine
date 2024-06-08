@@ -11,6 +11,8 @@
 #include "OpenGlSetup.h"
 #include "NamingSaver.h"
 #include "Ear.h"
+#include "GlmTools.h" // temp
+#include "Transform.h" // temp
 
 
 
