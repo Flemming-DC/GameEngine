@@ -4,6 +4,11 @@
 #include "Collider.h"
 #include "ListTools.h"
 #include "Scene.h"
+#include "Profiler.h"
+#include <windows.h> // temp
+#include <iostream>// temp
+#include <chrono>// temp
+#include <thread>// temp
 
 using Overlaps = std::vector<std::pair<Collider*, Collider*>>;
 Overlaps CollisionLoop::overlaps = {};
@@ -16,11 +21,13 @@ void CollisionLoop::Setup()
 
 void CollisionLoop::Update()
 {
-	PruneDeadColliders();
+	ProfileFunc;
+	
+	ProfileLine; PruneDeadColliders();
 	// potentialCollisions are stored as collider pairs, rather than collision objects
-	auto potentialNewOverlaps = BroadPhase::GetPotentialOverlaps();
-	auto newOverlaps = NarrowPhase::GetOverlaps(potentialNewOverlaps);
-	HandleCollisionInfo(newOverlaps);
+	ProfileLine; auto potentialNewOverlaps = BroadPhase::GetPotentialOverlaps();
+	ProfileLine; auto newOverlaps = NarrowPhase::GetOverlaps(potentialNewOverlaps);
+	ProfileLine; HandleCollisionInfo(newOverlaps);
 	//solve collisions
 
 }

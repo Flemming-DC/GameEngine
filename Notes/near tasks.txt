@@ -1,6 +1,7 @@
 
-audio:
-	get sensible audio files
+performance:
+	evt. rename Time::Now() to Time::ThisFrame()
+
 
 flaw during mini game dev:
 	OnStart mixes OnStart, OnGameStart and OnEngineStart

@@ -3,8 +3,9 @@
 #include <iostream>
 #include "StringTools.h"
 
+#define file_func logger::file_name(__FILE__) + "." + __func__
 #ifdef _DEBUG
-#define P(...) logger::print(logger::file_name(__FILE__), ".", __func__, ": ", __VA_ARGS__);
+#define P(...) logger::print(file_func + ": ", __VA_ARGS__);
 #endif // _DEBUG
 
 

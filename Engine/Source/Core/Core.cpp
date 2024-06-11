@@ -11,10 +11,7 @@
 #include "OpenGlSetup.h"
 #include "NamingSaver.h"
 #include "Ear.h"
-#include "GlmTools.h" // temp
-#include "Transform.h" // temp
-
-
+#include "Profiler.h"
 
 void Core::Run(std::string firstScenePath)
 {
@@ -50,14 +47,12 @@ void Core::Setup(std::string firstScenePath)
         Dynamic::CallOnEditorStart();
     Dynamic::CallOnGameStart(); // this must be called even if (gameIsRunning == false). Thats a bit messy.
     Scene::ActivateImmediately(firstScenePath);
-
-
-
 }
 
 
 void Core::Update()
 {
+    ProfileFunc;
     // setup frame
     OpenGlSetup::Update();
     ImGuiSetup::EarlyUpdate();
@@ -110,6 +105,7 @@ void Core::Shutdown()
 void Core::StartRunningGame()
 {
     logger::print("--- Running Game ---");
+    Profiler::Reset();
     EngineMode::gameIsRunning = true;
     EngineMode::MarkGameCloseButtonAsUnclicked();
     Time::GameSetup();
@@ -129,6 +125,9 @@ void Core::StopRunningGame()
             Dynamic::CallOnGameEnd();
             EngineMode::gameIsRunning = false;
             EngineMode::MarkGameCloseButtonAsUnclicked();
+            //Profiler::Print();
+            //Profiler::Reset();
         });
+    Profiler::Print();
     logger::print("--- Stopping Game ---");
 }

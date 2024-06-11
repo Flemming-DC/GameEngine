@@ -1,15 +1,14 @@
 #include "Time_.h"
 #include <chrono>
 
-// if chrono is bugging, then you can use glfwGetTime instead
-static std::chrono::steady_clock::time_point editorStart;
+static std::chrono::steady_clock::time_point engineStart;
 static std::chrono::steady_clock::time_point gameStart;
 static std::chrono::steady_clock::time_point previous;
-static std::chrono::steady_clock::time_point current;
+static std::chrono::steady_clock::time_point current; // time of this frame
 
 void Time::Setup()
 {
-	editorStart = std::chrono::high_resolution_clock::now();
+	engineStart = std::chrono::high_resolution_clock::now();
 	gameStart = std::chrono::high_resolution_clock::now();
 	previous = gameStart;
 	current = gameStart;
@@ -37,9 +36,13 @@ float Time::Now()
 {
 	return std::chrono::duration<float>(current - gameStart).count();
 }
-
-float Time::EditorNow()
+/*
+float Time::EngineNow()
 {
-	return std::chrono::duration<float>(current - editorStart).count();
-}
+	return std::chrono::duration<float>(current - engineStart).count();
+}*/
 
+double Time::ProfilerNow()
+{
+	return std::chrono::duration<double>(std::chrono::high_resolution_clock::now() - engineStart).count();
+}

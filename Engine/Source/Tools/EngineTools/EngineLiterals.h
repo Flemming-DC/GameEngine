@@ -13,6 +13,7 @@ namespace Literals
 	static string Namings = Res + "Namings/";
 	static string Entities = Res + "Entities/";
 	static string Sounds = Res + "Sounds/";
+	static string Log = Res + "Log/";
 	
 
 	// ------- files ------- //
