@@ -2,6 +2,7 @@
 #include "BareCollider.h"
 #include "glm/glm.hpp"
 
+
 //class PolygonCollider;
 // the polygon has to be convex. evt. introduce a check for this
 class BarePolygonCollider : public BareCollider
@@ -21,6 +22,7 @@ public:
 	void SetPosition(int index, vec2 newPosition); // used by inspector
 	void AddPositionAfter(int priorPositionIndex); // used by inspector
 	void RemovePosition(int index); // used by inspector
+	BoundingBox GetBoundingBox() const override;
 
 private:
 	vector<vec2> localPosition2Ds; // positions in local space i.e. relative to transform.GetPosition()

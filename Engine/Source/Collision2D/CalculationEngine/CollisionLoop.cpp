@@ -16,13 +16,13 @@ void CollisionLoop::Setup()
 
 void CollisionLoop::Update()
 {
-	PruneDeadColliders();
-	auto potentialNewOverlaps = BroadPhase::GetPotentialOverlaps();
-	auto newOverlaps = NarrowPhase::GetOverlaps(potentialNewOverlaps);
-	HandleCollisionInfo(newOverlaps);
+	ProfileFunc;
+	ProfileLine(PruneDeadColliders(););
+	ProfileLine(auto potentialNewOverlaps = BroadPhase::GetPotentialOverlaps(););
+	ProfileLine(auto newOverlaps = NarrowPhase::GetOverlaps(potentialNewOverlaps););
+	ProfileLine(HandleCollisionInfo(newOverlaps););
 	//solve collisions
 }
-
 
 void CollisionLoop::HandleCollisionInfo(Overlaps newOverlaps)
 {

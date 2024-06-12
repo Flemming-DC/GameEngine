@@ -5,16 +5,16 @@
 // Place at start of function
 #define ProfileFunc Profiler::FuncTimer funcTimer(std::string(__FILE__) + "." + __func__);
 // Place at end of code line
-//#define ProfileLine Profiler::_ProfileLine(std::string(__FILE__) + "." + __func__, __LINE__);
 #define ProfileLine(line) line; Profiler::_ProfileLine(std::string(__FILE__) + "." + __func__, __LINE__, #line);
+
+
 
 namespace Profiler
 {
 	Shorts;
 
 	void Reset(); // called on gamestart/end
-	void Print();
-	void LogToFile();
+	void LogAndPrint(); // log to console and file
 
 	void _ProfileLine(const string& pathToFunc, int lineNumber, const char* lineText);
 	string _CalculateOutput();

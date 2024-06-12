@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "logger.h"
+#include "Profiler.h" // this line saves me from having to include profiler over and over again
 
 #define RaiseError(...) ErrorChecker::_RaiseError(logger::make_string(__VA_ARGS__), __func__, __FILE__, __LINE__) 
 #define Warning(...) ErrorChecker::_Warning(logger::make_string(__VA_ARGS__), __func__, __FILE__, __LINE__)  

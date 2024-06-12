@@ -2,25 +2,36 @@
 
 using Overlaps = std::vector<std::pair<Collider*, Collider*>>;
 
-// We begin with the trivial broadphase, which returns all pairs, Then we optimize afterwards
+
 Overlaps BroadPhase::GetPotentialOverlaps()
 {
-	Overlaps allPairs;
+	ProfileFunc;
+	Overlaps candidates; // candidates for overlap
 
-	auto colliderIDs = Collider::GetAllColliders();
+	ProfileLine(auto colliderIDs = Collider::GetAllColliders(););
 	for (int i=0; i<(int)colliderIDs.size(); i++)
 	{
-		auto& col1 = Entity::GetComponent<Collider>(colliderIDs[i]);
-		if (!col1.IsFullyEnabled())
-			continue;
+		ProfileLine(auto& col1 = Entity::GetComponent<Collider>(colliderIDs[i]););
+		ProfileLine(if (!col1.IsFullyEnabled())
+			continue;);
+		ProfileLine(auto bounds1 = col1.Bare().GetBoundingBox(););
+
 		for (int j = 0; j < i; j++)
 		{
-			auto& col2 = Entity::GetComponent<Collider>(colliderIDs[j]);
-			if (!col2.IsFullyEnabled())
-				continue;
-			allPairs.push_back({ &col1, &col2 });
+			ProfileLine(auto& col2 = Entity::GetComponent<Collider>(colliderIDs[j]););
+			ProfileLine(if (!col2.IsFullyEnabled())
+				continue;);
+			ProfileLine(auto bounds2 = col2.Bare().GetBoundingBox(););
+
+			ProfileLine(if (!bounds1.IsOverlapping(bounds2))
+				continue;);
+			ProfileLine(candidates.push_back({ &col1, &col2 }););
 		}
 	}
 
-	return allPairs;
+	if (candidates.size() > 2)
+		P("potentialNewOverlapCount: ", candidates.size(), " out of ", Collider::GetAllColliders().size());
+
+	return candidates;
 }
+

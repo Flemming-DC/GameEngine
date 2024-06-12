@@ -37,7 +37,8 @@ void OpenGlSetup::Setup()
         RaiseError("glewInit failed");
     glCall(auto glVersion = glGetString(GL_VERSION));
     //Log(glVersion);
-    glCall(glfwSwapInterval(1));
+    bool enableVsync = false; // Vsync = sync render update loop to monitor refresh rate.
+    glCall(glfwSwapInterval(enableVsync ? 1 : 0));
 
     glCall(glEnable(GL_BLEND));
     glCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
@@ -54,7 +55,8 @@ bool OpenGlSetup::Update()
     lastWindowSize = WindowSize();
     glCall(glfwSwapBuffers(window)); // Swap front and back buffers
     glCall(glfwPollEvents()); // Poll for and process events
-    return !glfwWindowShouldClose(window);
+    bool close = glfwWindowShouldClose(window);
+    return !close;
 }
 
 std::pair<int, int> OpenGlSetup::WindowSize()

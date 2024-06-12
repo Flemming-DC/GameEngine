@@ -14,6 +14,8 @@ public:
 	//void SetLocalRadius(float radius) { localRadius = radius; };
 	pair<float, float> ShadowAlongNormal(vec2 normal) const override;
 	vector<vec2> Positions() const override;
+	BoundingBox GetBoundingBox() const override;
+
 
 private:
 	float localRadius; // we prohibit uneven scaling for cirles 

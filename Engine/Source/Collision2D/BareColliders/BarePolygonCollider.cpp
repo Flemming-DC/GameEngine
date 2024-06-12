@@ -117,7 +117,7 @@ std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(vec2 normal) cons
 
 std::vector<glm::vec2> BarePolygonCollider::Positions() const
 {
-	vector< vec2> positions;
+	vector<vec2> positions;
 	for (auto localPosition2D : localPosition2Ds)
 		positions.push_back(iTransform.ToWorldSpace(localPosition2D, true));
 	return positions;
@@ -224,6 +224,7 @@ void BarePolygonCollider::SetPosition(int index, vec2 newPosition)
 	localPosition2Ds[index] = newPosition;
 	CalculateNormalsAndCenterOfMass(localPosition2Ds);
 }
+
 void BarePolygonCollider::AddPositionAfter(int priorPositionIndex)
 {
 	int count = localPosition2Ds.size();
@@ -234,6 +235,7 @@ void BarePolygonCollider::AddPositionAfter(int priorPositionIndex)
 	localPosition2Ds.insert(localPosition2Ds.begin() + nextIndex, pos);
 	CalculateNormalsAndCenterOfMass(localPosition2Ds);
 }
+
 void BarePolygonCollider::RemovePosition(int index)
 {
 	if (localPosition2Ds.size() <= 3)
@@ -242,6 +244,25 @@ void BarePolygonCollider::RemovePosition(int index)
 	CalculateNormalsAndCenterOfMass(localPosition2Ds);
 }
 
+BoundingBox BarePolygonCollider::GetBoundingBox() const
+{
+	float minX = INFINITY;
+	float minY = INFINITY;
+	float maxX = -INFINITY; 
+	float maxY = -INFINITY;
+	for (const vec2& pos : Positions())
+	{
+		if (pos.x < minX)
+			minX = pos.x;
+		if (pos.y < minY)
+			minY = pos.y;
+		if (pos.x > maxX)
+			maxX = pos.x;
+		if (pos.y > maxY)
+			maxY = pos.y;
+	}
+	return { minX, minY, maxX, maxY };
+}
 
 
 

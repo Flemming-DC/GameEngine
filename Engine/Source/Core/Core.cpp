@@ -11,7 +11,6 @@
 #include "OpenGlSetup.h"
 #include "NamingSaver.h"
 #include "Ear.h"
-#include "Profiler.h"
 
 void Core::Run(std::string firstScenePath)
 {
@@ -128,6 +127,6 @@ void Core::StopRunningGame()
             //Profiler::Print();
             //Profiler::Reset();
         });
-    Profiler::Print();
+    Profiler::LogAndPrint();
     logger::print("--- Stopping Game ---");
 }

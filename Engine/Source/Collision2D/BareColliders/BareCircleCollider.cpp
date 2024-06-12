@@ -62,3 +62,14 @@ std::vector<glm::vec2> BareCircleCollider::Positions() const
 }
 
 
+BoundingBox BareCircleCollider::GetBoundingBox() const
+{
+	auto center = iTransform.GetPosition();
+	auto radius = GetRadius();
+	// minX, minY, maxX, maxY
+	return { 
+		center.x - radius, 
+		center.y - radius, 
+		center.x + radius, 
+		center.y + radius };
+}

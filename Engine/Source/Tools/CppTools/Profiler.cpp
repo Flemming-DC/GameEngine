@@ -49,24 +49,19 @@ void Profiler::_ProfileLine(const string& pathToFunc, int lineNumber, const char
 	data.at(pathToFunc).durationByLine[line] += now - data.at(pathToFunc).last;
 	data.at(pathToFunc).last = now;
 
+	
 }
 
-void Profiler::Print()
+void Profiler::LogAndPrint()
 {
-	logger::print(_CalculateOutput());
-}
+	string output = _CalculateOutput();
+	logger::print(output);
 
-void Profiler::LogToFile()
-{
 	std::ofstream logFile(Literals::Log + "lastLog.txt");
-
-	if (!logFile) // Check if the file is open
-	{
-		Profiler::Print();
+	if (logFile)
+		logFile << output << std::endl;
+	else
 		RaiseError("Failed to open file. Logging to console instead");
-	}
-
-    logFile << _CalculateOutput() << std::endl;
     // logFile is automatically closed, when leaving scope.
 }
 
@@ -75,9 +70,9 @@ void Profiler::LogToFile()
 std::string Column(const std::string& str, uint width)
 {
 	if (str.length() >= width)
-		return str + "| "; // No padding needed if string is already equal to or longer than the specified length
-	
-	return str + std::string(width - str.length(), ' ') + "| "; // Append spaces to the original string
+		return str.substr(0, width - 4) + "... | "; // cut off the remainder of the string (-4 makes room for "... ")
+	else 
+		return str + std::string(width - str.length(), ' ') + "| "; // Append spaces to the original string
 }
 
 string str(double value) // to rounded string
