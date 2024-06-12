@@ -1,5 +1,6 @@
 #include "Gizmo.h"
 #include "SceneCamera.h"
+#include "logger.h"
 
 using namespace Editor;
 
@@ -11,15 +12,20 @@ void Gizmo::DrawPolygon(std::vector<glm::vec2> positions, glm::vec4 color, float
     DrawLines(positions, color, thickness);
 }
 
-void Gizmo::DrawLines(std::vector<glm::vec2> positions, glm::vec4 color, float thickness)
+void Gizmo::DrawLines(std::vector<glm::vec2> positions, glm::vec4 color, float thickness, bool castPositionsToScreen)
 {
     ImU32 imColor = ImGui::FromGlm(color);
     ImDrawList* drawList = ImGui::GetWindowDrawList();
     int numPoints = positions.size();
 
     std::vector<glm::vec2> screenPositions;
-    for (const auto pos : positions)
-        screenPositions.push_back(SceneCamera::FromWorldPosition(pos));
+    if (castPositionsToScreen)
+    {
+        for (const auto pos : positions)
+            screenPositions.push_back(SceneCamera::FromWorldPosition(pos));
+    }
+    else
+        screenPositions = positions;
 
     for (int i = 0; i < numPoints - 1; i++)
     {

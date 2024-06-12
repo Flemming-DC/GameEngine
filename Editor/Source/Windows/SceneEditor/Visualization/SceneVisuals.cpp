@@ -4,6 +4,7 @@
 #include "Collider.h"
 #include "Gizmo.h"
 #include "Selector.h"
+#include "SceneCamera.h"
 
 using namespace Editor;
 Shorts;
@@ -22,24 +23,29 @@ void SceneVisuals::DrawGrid()
     float gridSize = 50;
     float gridScale = 0.5f;
 
-    vector<vec2> horizontallyOrganizedPosition2Ds;
-    vector<vec2> verticallyOrganizedPosition2Ds;
+    vec2 UpperLeft = SceneCamera::FromWorldPosition(vec2(-gridSize, -gridSize)); 
+    vec2 LowerRight = SceneCamera::FromWorldPosition(vec2(gridSize, gridSize));
+    vec2 minScreenPos = vec2(UpperLeft.x, LowerRight.y);
+    vec2 maxScreenPos = vec2(LowerRight.x, UpperLeft.y);
+    float count = 2 * gridSize / gridScale;
+    vec2 gridScreenSize = maxScreenPos - minScreenPos;
+    vec2 gridScreenScale = gridScreenSize / count;
 
-    for (float y = -gridSize; y < gridSize; y += gridScale)
+    vector<vec2> horizontalScreenPos;
+    vector<vec2> verticallyScreenPos;
+    for (float y = minScreenPos.y; y < maxScreenPos.y; y += gridScreenScale.y)
     {
-        horizontallyOrganizedPosition2Ds.push_back({ -gridSize, y });
-        horizontallyOrganizedPosition2Ds.push_back({ gridSize, y });
-
+        horizontalScreenPos.push_back({ minScreenPos.x, y });
+        horizontalScreenPos.push_back({ maxScreenPos.x, y });
     }
-    for (float x = -gridSize; x < gridSize; x += gridScale)
+    for (float x = minScreenPos.x; x < maxScreenPos.x; x += gridScreenScale.x)
     {
-        verticallyOrganizedPosition2Ds.push_back({ x, -gridSize });
-        verticallyOrganizedPosition2Ds.push_back({ x,  gridSize });
+        verticallyScreenPos.push_back({ x, minScreenPos.y });
+        verticallyScreenPos.push_back({ x, maxScreenPos.y });
     }
 
-    Gizmo::DrawLines(horizontallyOrganizedPosition2Ds, gridColor, lineThickness);
-    Gizmo::DrawLines(verticallyOrganizedPosition2Ds, gridColor, lineThickness);
-
+    Gizmo::DrawLines(horizontalScreenPos, gridColor, lineThickness, false);
+    Gizmo::DrawLines(verticallyScreenPos, gridColor, lineThickness, false);
 }
 
 void SceneVisuals::DrawColliders()

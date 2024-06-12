@@ -14,7 +14,7 @@ struct Record
 	time_point start;
 	time_point last; // last ProfileFunc or ProfileLine
 	duration durationFunc;
-	map_uo<string, duration> durationByLine;
+	map<string, duration> durationByLine; // ordered map
 };
 static map_uo<string, Record> data;
 
