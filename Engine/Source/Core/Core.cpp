@@ -54,28 +54,28 @@ void Core::Update()
 {
     ProfileFunc;
     // setup frame
-    OpenGlSetup::Update();
-    ImGuiSetup::EarlyUpdate();
-    Time::Update();
+    ProfileLine(OpenGlSetup::Update());
+    ProfileLine(ImGuiSetup::EarlyUpdate());
+    ProfileLine(Time::Update());
 
-    // update world
+    // update world r
     if (EngineMode::GameIsRunning())
     {
-        CollisionLoop::Update();
-        Dynamic::CallOnUpdate();
-        Entity::Update();
-        Renderer::DrawToScreen();
+        ProfileLine(CollisionLoop::Update());
+        ProfileLine(Dynamic::CallOnUpdate());
+        ProfileLine(Entity::Update());
+        ProfileLine(Renderer::DrawToScreen());
     }
     if (EngineMode::InEditor())
-        Dynamic::CallOnEditorUpdate();
-    Entity::DestroyTheDoomed();
+        ProfileLine(Dynamic::CallOnEditorUpdate());
+    ProfileLine(Entity::DestroyTheDoomed());
     if (EngineMode::GameCloseButtonIsClicked())
-        StopRunningGame();
-    Delay::Update(); 
+        ProfileLine(StopRunningGame());
+    ProfileLine(Delay::Update());
 
     // shutdown frame
-    InputLoop::LateUpdate();
-    ImGuiSetup::LateUpdate();
+    ProfileLine(InputLoop::LateUpdate());
+    ProfileLine(ImGuiSetup::LateUpdate());
 }
 
 

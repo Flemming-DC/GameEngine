@@ -2,8 +2,11 @@
 #include "Time_.h"
 #include "ShortHands.h"
 
+// Place at start of function
 #define ProfileFunc Profiler::FuncTimer funcTimer(std::string(__FILE__) + "." + __func__);
-#define ProfileLine Profiler::_ProfileLine(std::string(__FILE__) + "." + __func__, __LINE__);
+// Place at end of code line
+//#define ProfileLine Profiler::_ProfileLine(std::string(__FILE__) + "." + __func__, __LINE__);
+#define ProfileLine(line) line; Profiler::_ProfileLine(std::string(__FILE__) + "." + __func__, __LINE__, #line);
 
 namespace Profiler
 {
@@ -13,7 +16,7 @@ namespace Profiler
 	void Print();
 	void LogToFile();
 
-	void _ProfileLine(const string& pathToFunc, int codeLine);
+	void _ProfileLine(const string& pathToFunc, int lineNumber, const char* lineText);
 	string _CalculateOutput();
 
 	struct FuncTimer

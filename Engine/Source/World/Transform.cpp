@@ -2,7 +2,6 @@
 #include "ListTools.h"
 #include "GlmTools.h"
 #include "ErrorChecker.h"
-#include <windows.h>
 
 Shorts;
 

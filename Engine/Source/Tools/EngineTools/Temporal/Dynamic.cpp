@@ -1,5 +1,6 @@
 #include "Dynamic.h"
 #include <ListTools.h>
+#include "Profiler.h"
 
 std::vector<std::unique_ptr<Dynamic>> Dynamic::dynamics;
 
@@ -48,6 +49,7 @@ void Dynamic::CallOnUpdate()
 
 void Dynamic::CallOnEditorUpdate()
 {
+    ProfileFunc;
     for (const auto& dynamic : dynamics)
     {
         if (!dynamic)

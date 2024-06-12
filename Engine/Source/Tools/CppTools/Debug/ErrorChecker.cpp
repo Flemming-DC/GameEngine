@@ -3,7 +3,10 @@
 #include <string>
 #include <vector>
 #ifdef _WIN32 
+    #pragma warning(push)
+    #pragma warning(disable: 5105)
     #include <windows.h>
+    #pragma warning(pop)
     #include <dbghelp.h>
 #endif
 

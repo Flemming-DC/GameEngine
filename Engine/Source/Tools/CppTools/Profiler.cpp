@@ -7,36 +7,48 @@
 Shorts;
 using time_point = std::chrono::steady_clock::time_point;
 using duration = std::chrono::duration<double>; // units of seconds
-using DurationByLine = map_uo<int, duration>;
 
-const int funcEnd = -1;
-static map_uo<string, DurationByLine> performanceData;
-static map_uo<string, int> callCountByFunc;
-static map_uo<string, time_point> startByFunc;
+struct Record 
+{
+	int callCount;
+	time_point start;
+	time_point last; // last ProfileFunc or ProfileLine
+	duration durationFunc;
+	map_uo<string, duration> durationByLine;
+};
+static map_uo<string, Record> data;
 
 inline time_point Now() { return std::chrono::high_resolution_clock::now(); }
-//double to_double(duration dur) { return std::chrono::duration<double>(dur).count(); } // also casts ns to s
 
 Profiler::FuncTimer::FuncTimer(const string& pathToFunc_)
 {
-
 	pathToFunc = pathToFunc_;
-	startByFunc[pathToFunc] = Now();
-	callCountByFunc[pathToFunc] += 1;
-	performanceData[pathToFunc]; // initializes performanceData for pathToFunc, if not already initialized
+	data[pathToFunc]; // this initializes data[pathToFunc] if not already initialized
+	data.at(pathToFunc).callCount += 1;
+	data.at(pathToFunc).start = Now();
+	data.at(pathToFunc).last = data.at(pathToFunc).start;
 }
 
 Profiler::FuncTimer::~FuncTimer()
 {
-	if (Tools::ContainsKey(startByFunc, pathToFunc))
-		performanceData[pathToFunc][funcEnd] += Now() - startByFunc.at(pathToFunc);
+	//if (Tools::ContainsKey(data, pathToFunc))
+	if (data.at(pathToFunc).callCount == 0)
+		return; // this happens if Reset gets called between Timer construction and destruction.
+	data.at(pathToFunc).durationFunc += Now() - data.at(pathToFunc).start;
+
 }
 
 
 
-void Profiler::_ProfileLine(const string& pathToFunc, int codeLine)
+void Profiler::_ProfileLine(const string& pathToFunc, int lineNumber, const char* lineText)
 {
-	performanceData.at(pathToFunc)[codeLine] += Now() - startByFunc.at(pathToFunc);
+	if (data.at(pathToFunc).callCount == 0)
+		return; // this happens if Reset gets called between Timer construction and destruction.
+	auto now = Now();
+	string line = std::to_string(lineNumber) + ": " + string(lineText);
+	data.at(pathToFunc).durationByLine[line] += now - data.at(pathToFunc).last;
+	data.at(pathToFunc).last = now;
+
 }
 
 void Profiler::Print()
@@ -58,39 +70,55 @@ void Profiler::LogToFile()
     // logFile is automatically closed, when leaving scope.
 }
 
-std::string Column(const std::string& str)
+
+
+std::string Column(const std::string& str, uint width)
 {
-	uint columnWidth = 6;
-	if (str.length() >= columnWidth)
-		return str; // No padding needed if string is already equal to or longer than the specified length
+	if (str.length() >= width)
+		return str + "| "; // No padding needed if string is already equal to or longer than the specified length
 	
-	return str + std::string(columnWidth - str.length(), ' ') + "| "; // Append spaces to the original string
+	return str + std::string(width - str.length(), ' ') + "| "; // Append spaces to the original string
+}
+
+string str(double value) // to rounded string
+{
+	int precision = 3;
+	if (value < 0)
+		precision++; // make room for the minus sign. Ohh, well... we dont need negative numbers.
+	
+	if (value > std::pow(10, precision))
+		// "rounding" a big number like 12345.6 -> 1234 is an error. Instead, we return the number unchanged.
+		return std::to_string(value); 
+	else
+		// rounding a small number like 0.123456 -> 0.12 is desirable.
+		return std::to_string(value).substr(0, 2 + precision); // the ekstra 2 are for the 0. prefix
 }
 
 string Profiler::_CalculateOutput()
 {
 	string out = "";
 	string next = "\n    ";
-	for (const auto& [func, durationByLine] : performanceData)
+	uint colWidth1 = 35;
+	uint colWidth2 = 10;
+	for (const auto& [func, record] : data)
 	{
-		int callCount = callCountByFunc.at(func);
+		int callCount = record.callCount;
+		double totalDurationPerCall = record.durationFunc.count() / callCount;
 
 		out += "\n" + func + next;
-		if (durationByLine.size() > 1)
+		if (record.durationByLine.size() > 1)
 		{
-			out += Column("line") + "durationPerFrame" + next;
-			out += "-----------------------" + next;
+			out += Column("line", colWidth1) + Column("sec/call", colWidth2) + "percent" + next;
+			out += "--------------------------------------------------------" + next;
 		}
-		for (const auto& [line, duration] : durationByLine)
+		for (const auto& [line, duration] : record.durationByLine)
 		{
-			if (line == funcEnd)
-				continue;
-			double durationPerFrame = durationByLine.at(funcEnd).count() / callCount;
-			out += Column(std::to_string(line)) + std::to_string(durationPerFrame) + next;
+			double durationPerCall = record.durationByLine.at(line).count() / callCount;
+			double percent = 100 * durationPerCall / totalDurationPerCall;
+			out += Column(line, colWidth1) + Column(str(durationPerCall), colWidth2) + str(percent) + " %" + next;
 		}
 
-		double durationPerFrame = durationByLine.at(funcEnd).count() / callCount;
-		out += Column("total") + std::to_string(durationPerFrame) + " (" + std::to_string(callCount) + " hits) \n";
+		out += Column("total", colWidth1) + Column(str(totalDurationPerCall), colWidth2) + "100.0 % (" + str(callCount) + " hits) \n";
 	}
 	return out;
 }
@@ -99,7 +127,7 @@ string Profiler::_CalculateOutput()
 
 void Profiler::Reset()
 {
-	performanceData.clear();
-	callCountByFunc.clear();
-	startByFunc.clear();
+	//data.clear();
+	for (const auto& [func, _] : data)
+		data.at(func) = Record(); // clear the record
 }
