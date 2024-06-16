@@ -61,9 +61,9 @@ void CollisionLoop::PruneDeadColliders()
 	Overlaps toBeRemoved;
 	for (const auto& [col1, col2] : overlaps)
 	{
-		if (!Tools::Contains(Collider::GetAllColliders(), col1->GetID()))
+		if (!Tools::Contains(Collider::CollidersSortedByX(), col1->GetID()))
 			toBeRemoved.push_back({ col1, col2 });
-		else if (!Tools::Contains(Collider::GetAllColliders(), col2->GetID()))
+		else if (!Tools::Contains(Collider::CollidersSortedByX(), col2->GetID()))
 			toBeRemoved.push_back({ col1, col2 });
 	}
 	for (const auto& pair : toBeRemoved)

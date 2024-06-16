@@ -19,7 +19,7 @@ Collider* ColQuery::RayCast(vec2 startPosition, vec2 direction, float distance)
 	auto normal = vec2(-direction.y, direction.x);
 	float startPosAlongNormal = glm::dot(startPosition, normal);
 
-	for (const auto colID : Collider::GetAllColliders())
+	for (const auto& colID : Collider::CollidersSortedByX())
 	{
 		auto& col = Entity::GetComponent<Collider>(colID);
 		// checking for overlap
@@ -55,7 +55,7 @@ vector<Collider*> ColQuery::RayOverlaps(vec2 startPosition, vec2 direction, floa
 	auto normal = vec2(-direction.y, direction.x);
 	float startPosAlongNormal = glm::dot(startPosition, normal);
 
-	for (const auto& colID : Collider::GetAllColliders())
+	for (const auto& colID : Collider::CollidersSortedByX())
 	{
 		auto& col = Entity::GetComponent<Collider>(colID);
 		// checking for overlap
@@ -78,7 +78,7 @@ Collider* ColQuery::TryGetOverlap(const BareCollider& collider)
 {
 	// introduce a broadphase first
 	vector<Collider*> overlappingColliders;
-	for (const auto& colliderID : Collider::GetAllColliders())
+	for (const auto& colliderID : Collider::CollidersSortedByX())
 	{
 		auto& colComp = Entity::GetComponent<Collider>(colliderID);
 		if (NarrowPhase::IsOverLapping(collider, colComp.Bare()))
@@ -91,7 +91,7 @@ vector<Collider*> ColQuery::Overlaps(const BareCollider& collider)
 {
 	// introduce a broadphase first
 	vector<Collider*> overlappingColliders;
-	for (const auto& colliderID : Collider::GetAllColliders())
+	for (const auto& colliderID : Collider::CollidersSortedByX())
 	{
 		auto& colComp = Entity::GetComponent<Collider>(colliderID);
 		if (NarrowPhase::IsOverLapping(collider, colComp.Bare()))

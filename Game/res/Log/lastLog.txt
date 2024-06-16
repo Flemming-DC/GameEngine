@@ -2,41 +2,27 @@
 C:\Mine\cpp\GameEngine\Engine\Source\Core\Core.cpp.Update
     line                               | sec/call  | percent
     --------------------------------------------------------
-    56: OpenGlSetup::Update()          | 0.000     | 1.211 %
-    57: ImGuiSetup::EarlyUpdate()      | 0.000     | 2.043 %
-    58: Time::Update()                 | 0.000     | 0.114 %
-    63: CollisionLoop::Update()        | 0.008     | 67.78 %
-    64: Dynamic::CallOnUpdate()        | 0.000     | 0.670 %
-    65: Entity::Update()               | 0.000     | 1.744 %
-    66: Renderer::DrawToScreen()       | 0.000     | 6.073 %
-    69: Dynamic::CallOnEditorUpdate()  | 0.001     | 15.15 %
-    70: Entity::DestroyTheDoomed()     | 0.000     | 0.338 %
-    72: StopRunningGame()              | 0.000     | 0.102 %
-    73: Delay::Update()                | 0.000     | 0.120 %
-    76: InputLoop::LateUpdate()        | 0.000     | 0.445 %
-    77: ImGuiSetup::LateUpdate()       | 0.000     | 4.136 %
-    total                              | 0.012     | 100.0 % (2390.000000 hits) 
-
-C:\Mine\cpp\GameEngine\Engine\Source\Collision2D\CalculationEngine\BroadPhase.cpp.GetPotentialOverlaps
-    line                               | sec/call  | percent
-    --------------------------------------------------------
-    11: auto colliderIDs = Collider... | 0.000     | 0.147 %
-    14: auto& col1 = Entity::GetCom... | 0.000     | 2.782 %
-    16: if (!col1.IsFullyEnabled())... | 0.000     | 2.319 %
-    17: auto bounds1 = col1.Bare().... | 0.000     | 8.427 %
-    21: auto& col2 = Entity::GetCom... | 0.001     | 17.34 %
-    23: if (!col2.IsFullyEnabled())... | 0.001     | 14.87 %
-    24: auto bounds2 = col2.Bare().... | 0.004     | 53.70 %
-    27: if (!bounds1.IsOverlapping(... | 0.000     | 0.100 %
-    28: allPairs.push_back({ &col1,... | 0.000     | 0.120 %
-    total                              | 0.008     | 100.0 % (2390.000000 hits) 
+    56: OpenGlSetup::Update()          | 0.000     | 1.674 %
+    57: ImGuiSetup::EarlyUpdate()      | 0.000     | 2.133 %
+    58: Time::Update()                 | 0.000     | 0.121 %
+    63: CollisionLoop::Update()        | 0.009     | 74.95 %
+    64: Dynamic::CallOnUpdate()        | 0.000     | 1.427 %
+    65: Entity::Update()               | 0.000     | 1.277 %
+    66: Renderer::DrawToScreen()       | 0.000     | 3.672 %
+    69: Dynamic::CallOnEditorUpdate()  | 0.001     | 11.34 %
+    70: Entity::DestroyTheDoomed()     | 0.000     | 0.184 %
+    72: StopRunningGame()              | 0.000     | 0.097 %
+    73: Delay::Update()                | 0.000     | 0.106 %
+    76: InputLoop::LateUpdate()        | 0.000     | 0.519 %
+    77: ImGuiSetup::LateUpdate()       | 0.000     | 4.163 %
+    total                              | 0.012     | 100.0 % (41.00 hits) 
 
 C:\Mine\cpp\GameEngine\Engine\Source\Collision2D\CalculationEngine\CollisionLoop.cpp.Update
     line                               | sec/call  | percent
     --------------------------------------------------------
-    20: PruneDeadColliders();          | 0.000     | 0.096 %
-    21: auto potentialNewOverlaps =... | 0.008     | 95.95 %
-    22: auto newOverlaps = NarrowPh... | 0.000     | 1.156 %
-    23: HandleCollisionInfo(newOver... | 0.000     | 2.391 %
-    total                              | 0.008     | 100.0 % (2390.000000 hits) 
+    20: PruneDeadColliders();          | 0.000     | 0.088 %
+    21: auto potentialNewOverlaps =... | 0.009     | 99.43 %
+    22: auto newOverlaps = NarrowPh... | 0.000     | 0.198 %
+    23: HandleCollisionInfo(newOver... | 0.000     | 0.160 %
+    total                              | 0.009     | 100.0 % (41.00 hits) 
 

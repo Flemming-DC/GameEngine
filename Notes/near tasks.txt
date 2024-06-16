@@ -2,6 +2,7 @@
 performance:
 	evt. rename Time::Now() to Time::ThisFrame() or Time::Frame()
 	turn vSync back on when done with performance
+	use && over repeated if in Bounds overlap check
 
 flaw during mini game dev:
 	OnStart mixes OnStart, OnGameStart and OnEngineStart

@@ -12,13 +12,14 @@
 class Collider : public Component
 {
 public:
+	Shorts;
 	Event<Collider&> onEnter; // invoked  by the collision detection system
 	Event<Collider&> onExit; // invoked  by the collision detection system
 
-	static std::vector<uuids::uuid>& GetAllColliders() { return allColliders; }
-	virtual std::pair<float, float> ShadowAlongNormal(glm::vec2 normal) const { return Bare().ShadowAlongNormal(normal); };
+	static vector<uuid>& CollidersSortedByX() { return collidersSortedByX; }
+	virtual pair<float, float> ShadowAlongNormal(vec2 normal) const { return Bare().ShadowAlongNormal(normal); };
 	//Bounds GetBounds() { return bounds; }
-	ITransform MakeTransformInterface(glm::vec2 center = glm::vec2(0.0f));
+	ITransform MakeTransformInterface(vec2 center = vec2(0.0f));
 	virtual const BareCollider& Bare() const = 0;
 
 
@@ -26,8 +27,10 @@ public:
 protected:
 	virtual void OnStart() override;
 
-protected:
-	static std::vector<uuids::uuid> allColliders;
+private:
+	static vector<uuid> collidersSortedByX;
+
+	void OnUpdate() override;
 	void OnDestroy() override;
 };
 

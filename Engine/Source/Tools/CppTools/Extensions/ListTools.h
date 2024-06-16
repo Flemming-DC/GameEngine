@@ -142,6 +142,13 @@ namespace Tools
 		return -1;
 	};
 
+	template<typename T, typename UnaryPredicate>
+	inline typename std::vector<T>::const_iterator FindIf(const vector<T>& vec, const UnaryPredicate& condition)
+	{
+		return std::find_if(std::begin(vec), std::end(vec), condition);
+	};
+
+
 
 }
 

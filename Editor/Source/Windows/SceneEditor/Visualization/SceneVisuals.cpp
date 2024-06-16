@@ -54,7 +54,7 @@ void SceneVisuals::DrawColliders()
     float lineThickness = 0.2f;
 
     // evt. restrict to selection and evt. toggle gizmo on and off
-    for (const uuid& colID : Collider::GetAllColliders())
+    for (const uuid& colID : Collider::CollidersSortedByX())
     {
         Collider& collider = Entity::GetComponent<Collider>(colID);
         if (!collider.IsFullyEnabled())

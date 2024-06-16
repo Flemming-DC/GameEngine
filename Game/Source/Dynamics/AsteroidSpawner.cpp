@@ -7,7 +7,7 @@
 
 static std::string asteroidName = "asteroid";
 static float minDuration = 0.0f;
-static float maxDuration = 3.0f;
+static float maxDuration = 1.0f;
 static float spawnDistance = 5.0f; // must be larger than viewport-half-width and viewport-half-height
 
 static float nextSpawnTime = 0.0f;
