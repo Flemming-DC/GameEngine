@@ -26,8 +26,8 @@ Entity& StoredEntity::Load(const string& entityName)
 {
     uuid storedID = naming.at(entityName);
     Node& node = LoadToNode(storedID);
-    if (node["name"] && node["name"].as<string>() != entityName)
-        RaiseError("inconsistent naming.");
+    Deny(node["name"] && node["name"].as<string>() != entityName,
+        "inconsistent naming.");
     node["name"] = entityName;
     return FromNode(node, std::nullopt, storedID, true, true);
 }
@@ -43,8 +43,8 @@ Node StoredEntity::Override(const Node& stored, const Node& overrider)
 {
     if (!overrider.IsDefined() || overrider.IsNull())
         return stored;
-    if (!overrider.IsMap())
-        RaiseError("Node is defined, not null and not a map. This is unexpected.");
+    Assert(overrider.IsMap(),
+        "Node is defined, not null and not a map. This is unexpected.");
 
     Node combined = stored;
     auto overriderMap = overrider.as<map<string, Node>>();
@@ -63,9 +63,9 @@ Node StoredEntity::Override(const Node& stored, const Node& overrider)
 // combined is the result of applying overrider to stored
 Node StoredEntity::GetOverrider(const Node& stored, const Node& combined)
 {
-    if (!stored.IsMap() || !combined.IsMap())
-        RaiseError("Both nodes are expected to be maps.\n",
-            "\nstored ", stored, "\ncombined ", combined);
+    Assert(stored.IsMap() && combined.IsMap(),
+        "Both nodes are expected to be maps.\n",
+        "\nstored ", stored, "\ncombined ", combined);
 
     Node overrider;
     auto combinedMap = combined.as<map<string, Node>>();

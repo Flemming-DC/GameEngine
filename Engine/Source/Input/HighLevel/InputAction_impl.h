@@ -97,8 +97,8 @@ template<> float InputAction<float>::FindState()
 			maxKey = k;
 		}
 	}
-	if ((maxFloat < -1.001f || maxFloat > 1.001f) && maxKey != Key::FloatKey::mouseScrollVelocity)
-		RaiseError("Impossible state encountered. FindState() = ", maxFloat, "\nError in ", to_string());
+	Deny((maxFloat < -1.001f || maxFloat > 1.001f) && maxKey != Key::FloatKey::mouseScrollVelocity,
+		"Impossible state encountered. FindState() = ", maxFloat, "\nError in ", to_string());
 	return maxFloat;
 }
 
@@ -137,44 +137,44 @@ template<> float InputAction<glm::vec2>::Magnitude(glm::vec2 state) const { retu
 
 template<> InputAction<bool>& InputAction<bool>::AddKey(Key::Keyboard key) 
 {
-	if (id < 1)
-		RaiseError("This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
+	Deny(id < 1,
+		"This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
 	keyboardKeys.push_back(key);
 	return *this;
 } 
 template<> InputAction<bool>& InputAction<bool>::AddKey(Key::Mouse key)
 {
-	if (id < 1)
-		RaiseError("This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
+	Deny(id < 1,
+		"This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
 	mouseKeys.push_back(key);
 	return *this;
 }
 template<> InputAction<bool>& InputAction<bool>::AddKey(Key::Gamepad key)
 {
-	if (id < 1)
-		RaiseError("This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
+	Deny(id < 1,
+		"This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
 	gamepadKeys.push_back(key);
 	return *this;
 }
 template<> InputAction<float>& InputAction<float>::AddKey(Key::FloatKey key)
 {
-	if (id < 1)
-		RaiseError("This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
+	Deny(id < 1,
+		"This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
 	floatKeys.push_back(key);
 	return *this;
 }
 template<> InputAction<glm::vec2>& InputAction<glm::vec2>::AddKey(Key::VectorKey key) 
 {
-	if (id < 1)
-		RaiseError("This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
-	vectorKeys.push_back(key); 
+	Deny(id < 1,
+		"This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
+	vectorKeys.push_back(key);
 	return *this; 
 }
 /*
 template<typename T> InputAction<T>& InputAction<T>::AddConditionalKey(Key::Keyboard key)
 {
-	if (id < 1)
-		RaiseError("This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
+	Deny(id < 1,
+		"This InputAction is not initialized. Use InputAction<T>::Create() to make an initialized inputAction.");
 	conditionalKeyboardKeys.push_back(key);
 	return *this;
 }

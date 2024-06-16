@@ -14,10 +14,10 @@ Naming Material::naming;
 
 void Material::Setup(string name, const Shader& shader_, const map_uo<string, std::any>& uniformValuesByName_)
 {
-    if (!OpenGlSetup::Initialized())
-        RaiseError("Material cannot be setup before OpenGlSetup::Setup() is called.");
-    if (UuidCreator::IsInitialized(id))
-        RaiseError("Material is already initialized");
+    Assert(OpenGlSetup::Initialized(),
+        "Material cannot be setup before OpenGlSetup::Setup() is called.");
+    Deny(UuidCreator::IsInitialized(id),
+        "Material is already initialized");
     if (!naming.Contains(name))
         naming.AddWithSuffix(name, UuidCreator::MakeID());
     id = naming.at(name);
@@ -31,23 +31,22 @@ void Material::Setup(string name, const Shader& shader_, const map_uo<string, st
 
 void Material::SetUniform(const string& name, std::any value)
 {
-    if (!UuidCreator::IsInitialized(id))
-        RaiseError("You cannot set a uniform upon an uninitialized Material");
-    if (!Tools::ContainsKey(uniformValuesByName, name))
-        RaiseError(
-            "The uniform " + name + " is not recognized.\n"
-            "The material contains the following uniforms\n" + 
-            logger::to_string(Tools::GetKeys(uniformValuesByName))
-            );
+    Assert(UuidCreator::IsInitialized(id),
+        "You cannot set a uniform upon an uninitialized Material");
+    Assert(Tools::ContainsKey(uniformValuesByName, name),
+        "The uniform " + name + " is not recognized.\n"
+        "The material contains the following uniforms\n" + 
+        logger::to_string(Tools::GetKeys(uniformValuesByName))
+        );
     uniformValuesByName[name] = value;
     SetupTexturesByName();
 }
 
 void Material::SetTexture(const string& uniformName, uuid texID)
 {
-    if (!Texture::register_.Contains(texID))
-        RaiseError("Trying to set uniform ", uniformName, " with a textureID ", texID, 
-            " that does exist in the register. The textue name is ", Texture::naming.at(texID));
+    Assert(Texture::register_.Contains(texID),
+        "Trying to set uniform " + uniformName + " with a textureID ", texID, 
+        " that does exist in the register. The textue name is " + Texture::naming.at(texID));
     Texture& tex = Texture::register_.Get(texID);
     SetUniform(uniformName, &tex);
 }
@@ -70,8 +69,8 @@ void Material::IncrementColor(vec4 colorDelta)
 
 void Material::Bind(bool allowMissingUniforms)
 {
-    if (!UuidCreator::IsInitialized(id))
-        RaiseError("You cannot bind an uninitialized Material");
+    Assert(UuidCreator::IsInitialized(id),
+        "You cannot bind an uninitialized Material");
 
     using namespace std;
     for (auto pair : texturesByName)
@@ -125,9 +124,11 @@ void Material::CheckUniforms()
         // we add "u_MVP": MissingUniform ourselves, since its an implementation detail.
         if (name == "u_MVP" && !Tools::ContainsKey(uniformValuesByName, name))
             uniformValuesByName["u_MVP"] = MissingUniform(); 
-        else if (!Tools::ContainsKey(uniformValuesByName, name))
-            RaiseError(
+        else 
+        {
+            Assert(Tools::ContainsKey(uniformValuesByName, name),
                 "Material lacks a uniforms named " + name + ", even though this uniform is a part of the shader.");
+        }   
     }
 }
 

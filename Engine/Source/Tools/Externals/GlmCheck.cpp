@@ -22,14 +22,14 @@ namespace GlmCheck
 
 	float _Check(std::string variableName, float toCheck, bool zeroable, bool signed_)
 	{
-		if (glm::isnan(toCheck))
-			RaiseError(variableName, " is nan.");
-		if (glm::abs(toCheck) > unRealisticallyLarge)
-			RaiseError(variableName, " = ", toCheck, ", which is unrealistically large.");
-		if (!zeroable && glm::abs(toCheck) < unRealisticallySmall)
-			RaiseError(variableName, " = ", toCheck, ", which is unrealistically small.");
-		if (!signed_ && toCheck < 0)
-			RaiseError(variableName, " = ", toCheck, ", but is not allowed to be negative.");
+		Deny(glm::isnan(toCheck),
+			variableName, " is nan.");
+		Deny(glm::abs(toCheck) > unRealisticallyLarge,
+			variableName, " = ", toCheck, ", which is unrealistically large.");
+		Deny(!zeroable && glm::abs(toCheck) < unRealisticallySmall,
+			variableName, " = ", toCheck, ", which is unrealistically small.");
+		Deny(!signed_ && toCheck < 0,
+			variableName, " = ", toCheck, ", but is not allowed to be negative.");
 		//if (glm::isinf(num))
 		//	RaiseError("inf encountered");
 		return toCheck;

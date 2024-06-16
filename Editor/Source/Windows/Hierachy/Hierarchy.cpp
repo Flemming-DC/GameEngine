@@ -49,8 +49,8 @@ void Hierarchy::DropToRoot()
 
     const ImGuiPayload* payload = ImGui::GetDragDropPayload();
 
-    if (payload->DataSize <= 0)
-        RaiseError("expected some data from DragDrop");
+    Deny(payload->DataSize <= 0,
+        "expected some data from DragDrop");
     uuid childID = *static_cast<uuid*>(payload->Data);
     Transform* child = Entity::TryGetComponent<Transform>(childID);
     ImGui::SetDragDropPayload(dragDrop, nullptr, 0); // remove payload
@@ -114,8 +114,8 @@ bool Hierarchy::DragDrop(Transform& transform)
     {
         if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(dragDrop))
         {
-            if (payload->DataSize <= 0)
-                RaiseError("expected some data from DragDrop");
+            Deny(payload->DataSize <= 0,
+                "expected some data from DragDrop");
             uuid childID = *static_cast<uuid*>(payload->Data);
             Transform& child = Entity::GetComponent<Transform>(childID);
             child.SetParent(&transform);

@@ -60,10 +60,10 @@ void Naming::Add(const string& name, uuid id)
 {
 	for (const auto& [name_, id_] : idByName)
 	{
-		if (name_ == name)
-			RaiseError("This name ", name, " is already used in Naming ", idByName);
-		if (id_ == id)
-			RaiseError("This id ", id, " is already named in Naming ", idByName);
+		Deny(name_ == name,
+			"This name ", name, " is already used in Naming ", idByName);
+		Deny(id_ == id,
+			"This id ", id, " is already named in Naming ", idByName);
 	}
 	idByName[name] = id;
 }

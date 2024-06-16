@@ -31,18 +31,18 @@ static int i = 0;
 Sound::Sound(const string& filePath_, bool hasPosition)
     : ma_sound_(ma_sound())
 {
-    if (!std::filesystem::exists(filePath_))
-        RaiseError("Cannot play audioFile, since it does not exist. ", filePath_);
+    Assert(std::filesystem::exists(filePath_),
+        "Cannot play audioFile, since it does not exist. ", filePath_);
 
     int flag = MA_SOUND_FLAG_DECODE; // decode sound on load, not every time its played, for performance reasons.
     if (!hasPosition)
         flag |= MA_SOUND_FLAG_NO_SPATIALIZATION;
     
     ma_result result = ma_sound_init_from_file(&Audio::Engine(), filePath_.c_str(), flag, nullptr, nullptr, &ma_sound_);
-    if (result != MA_SUCCESS)
-        RaiseError("Failed to create sound. ", result);
+    Assert(result == MA_SUCCESS,
+        "Failed to create sound. ", result);
 
-    
+
     ma_sound_set_rolloff(&ma_sound_, rolloff);
     ma_sound_set_min_gain(&ma_sound_, minGain);
     ma_sound_set_max_gain(&ma_sound_, maxGain);
@@ -111,22 +111,22 @@ void Sound::Stop(float fadeDuration)
 
 void Sound::SetVolume(float volume)
 {
-    if (volume < -GlmCheck::realisticallySmall)
-        RaiseError("The volume should be greater than 0. Received ", volume);
+    Deny(volume < -GlmCheck::realisticallySmall,
+        "The volume should be greater than 0. Received ", volume);
     ma_sound_set_volume(&ma_sound_, volume);
 }
 
 void Sound::SetPitch(float pitch)
 {
-    if (pitch < -GlmCheck::realisticallySmall)
-        RaiseError("The pitch should be greater than 0. Received ", pitch);
+    Deny(pitch < -GlmCheck::realisticallySmall,
+        "The pitch should be greater than 0. Received ", pitch);
     ma_sound_set_pitch(&ma_sound_, pitch);
 }
 
 void Sound::SetPan(float pan)
 {
-    if (std::abs(pan) > 1 + GlmCheck::realisticallySmall)
-        RaiseError("The pan should be between -1 (pan left) and 1 (pan right). Received ", pan);
+    Deny(std::abs(pan) > 1 + GlmCheck::realisticallySmall,
+        "The pan should be between -1 (pan left) and 1 (pan right). Received ", pan);
     ma_sound_set_pan(&ma_sound_, pan);
 }
 

@@ -18,10 +18,10 @@ Register<Shader> Shader::register_;
 
 void Shader::Setup(const std::string& filePath)
 {
-    if (!OpenGlSetup::Initialized())
-        RaiseError("Shader cannot be setup before OpenGlSetup::Setup() is called.");
-    if (UuidCreator::IsInitialized(id))
-        RaiseError("Shader is already initialized");
+    Assert(OpenGlSetup::Initialized(),
+        "Shader cannot be setup before OpenGlSetup::Setup() is called.");
+    Deny(UuidCreator::IsInitialized(id),
+        "Shader is already initialized");
     id = UuidCreator::MakeID();
     path = filePath;
     if (idByFilePath.find(filePath) != idByFilePath.end())
@@ -40,8 +40,10 @@ void Shader::Setup(const std::string& filePath)
 
 void Shader::ShutDown()
 {
-    if (UuidCreator::IsInitialized(id) != (openGLid != 0))
-        RaiseError("UuidCreator::IsInitialized(id) doesn't match (openGLid != 0)");
+    //if (UuidCreator::IsInitialized(id) != (openGLid != 0))
+    //    RaiseError("UuidCreator::IsInitialized(id) doesn't match (openGLid != 0)");
+    Assert(UuidCreator::IsInitialized(id) == (openGLid != 0),
+        "UuidCreator::IsInitialized(id) doesn't match (openGLid != 0)");
     if (!UuidCreator::IsInitialized(id))
         return;
     glCall(glDeleteProgram(openGLid));
@@ -50,8 +52,8 @@ void Shader::ShutDown()
 
 void Shader::Bind() const
 {
-    if (!UuidCreator::IsInitialized(id))
-        RaiseError("You cannot bind an uninitialized Shader");
+    Assert(UuidCreator::IsInitialized(id),
+        "You cannot bind an uninitialized Shader");
 
     glCall(glUseProgram(openGLid));
 }
@@ -162,12 +164,12 @@ int Shader::GetUniformLocation(const std::string& name)
 void Shader::CheckFilePath(const std::string& filePath)
 {
     bool fileExists = std::filesystem::exists(filePath) && std::filesystem::is_regular_file(filePath);
-    if (!fileExists)
-        RaiseError("There is no shader file (nor any other file) at " + filePath);
+    Assert(fileExists,
+        "There is no shader file (nor any other file) at " + filePath);
     auto split = Tools::SplitString(filePath, ".");
     bool isShaderFile = split[split.size() - 1] == "shader";
-    if (!isShaderFile)
-        RaiseError("The shader filePath doesnt have the expected .shader extension " + filePath);
+    Assert(isShaderFile,
+        "The shader filePath doesnt have the expected .shader extension " + filePath);
 }
 
 void Shader::FindUniforms(const std::string& filePath)
@@ -186,10 +188,9 @@ void Shader::FindUniforms(const std::string& filePath)
             // Parse uniform name from the line (simplified, assumes specific format)
             string uniform = line.substr(line.find(" ") + 1, line.find(";") - line.find(" ") - 1);
             vector<string> typeAndName = Tools::SplitString(uniform, " ");
-            if (typeAndName.size() != 2)
-                RaiseError(
-                    "Expected typeAndName of uniform to have exactly two elements.\n"
-                    "uniform = " + uniform);
+            Assert(typeAndName.size() == 2,                
+                "Expected typeAndName of uniform to have exactly two elements.\n"
+                "uniform = " + uniform);
             uniformTypesByName[typeAndName[1]] = typeAndName[0];
             if (typeAndName[1].find("sampler2D") != string::npos) // what about 1D and 3D ?? evt. drop dimensionality suffix
                 textureSlotsByName[typeAndName[0]] = textureSlotsByName.size(); // this counts up like an ID: 0,1,2...
@@ -245,8 +246,9 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
         char* message = (char*)_malloca(length * sizeof(char)); // changed from alloca
         glCall(glGetShaderInfoLog(subShaderID, length, &length, message));
         std::string typeName = (type == GL_VERTEX_SHADER) ? "vertex" : "fragment";
-        RaiseError("Failed to compile " + typeName + " shader\n" + message);
+        
         glCall(glDeleteShader(subShaderID));
+        RaiseError("Failed to compile " + typeName + " shader\n" + message);
         return 0;
     }
 

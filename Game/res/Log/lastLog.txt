@@ -1,28 +1,48 @@
 
 C:\Mine\cpp\GameEngine\Engine\Source\Core\Core.cpp.Update
-    line                               | sec/call  | percent
+    line                               | ms/call   | percent
     --------------------------------------------------------
-    56: OpenGlSetup::Update()          | 0.000     | 1.674 %
-    57: ImGuiSetup::EarlyUpdate()      | 0.000     | 2.133 %
-    58: Time::Update()                 | 0.000     | 0.121 %
-    63: CollisionLoop::Update()        | 0.009     | 74.95 %
-    64: Dynamic::CallOnUpdate()        | 0.000     | 1.427 %
-    65: Entity::Update()               | 0.000     | 1.277 %
-    66: Renderer::DrawToScreen()       | 0.000     | 3.672 %
-    69: Dynamic::CallOnEditorUpdate()  | 0.001     | 11.34 %
-    70: Entity::DestroyTheDoomed()     | 0.000     | 0.184 %
-    72: StopRunningGame()              | 0.000     | 0.097 %
-    73: Delay::Update()                | 0.000     | 0.106 %
-    76: InputLoop::LateUpdate()        | 0.000     | 0.519 %
-    77: ImGuiSetup::LateUpdate()       | 0.000     | 4.163 %
-    total                              | 0.012     | 100.0 % (41.00 hits) 
+    56: OpenGlSetup::Update()          | 0.134     | 2.167 %
+    57: ImGuiSetup::EarlyUpdate()      | 0.267     | 4.316 %
+    58: Time::Update()                 | 0.016     | 0.265 %
+    63: CollisionLoop::Update()        | 0.975     | 15.72 %
+    64: Dynamic::CallOnUpdate()        | 0.112     | 1.811 %
+    65: Entity::Update()               | 0.195     | 3.152 %
+    66: Renderer::DrawToScreen()       | 1.470     | 23.70 %
+    69: Dynamic::CallOnEditorUpdate()  | 2.487     | 40.09 %
+    70: Entity::DestroyTheDoomed()     | 0.024     | 0.401 %
+    72: StopRunningGame()              | 0.012     | 0.204 %
+    73: Delay::Update()                | 0.013     | 0.210 %
+    76: InputLoop::LateUpdate()        | 0.050     | 0.814 %
+    77: ImGuiSetup::LateUpdate()       | 0.440     | 7.096 %
+    total                              | 6.203     | 100.0 % (347.0 hits) 
+
+C:\Mine\cpp\GameEngine\Engine\Source\Rendering\Renderer.cpp.DrawToScreen
+    line                               | ms/call   | percent
+    --------------------------------------------------------
+    58: glCall(glClear(GL_COLOR_BUF... | 0.019     | 1.346 %
+    68: vector<Renderable*> rendera... | 0.043     | 3.048 %
+    73: for (Renderable* rend : ren... | 1.338     | 94.84 %
+    total                              | 1.411     | 100.0 % (694.0 hits) 
+
+C:\Mine\cpp\GameEngine\Engine\Source\Rendering\HighLevel\Renderable.cpp.Draw
+    line                               | ms/call   | percent
+    --------------------------------------------------------
+    35: _DoNothing()                   | 0.005     | 4.427 %
+    39: if (!IsFullyEnabled()) return; | 0.012     | 9.609 %
+    42: mat4 model = GetTransform()... | 0.023     | 17.95 %
+    43: material.SetUniform("u_MVP"... | 0.021     | 16.27 %
+    44: material.Bind();               | 0.030     | 23.32 %
+    45: mesh.Bind();                   | 0.013     | 9.980 %
+    47: glCall(glDrawElements(GL_TR... | 0.013     | 10.45 %
+    total                              | 0.132     | 100.0 % (6632.000000 hits) 
 
 C:\Mine\cpp\GameEngine\Engine\Source\Collision2D\CalculationEngine\CollisionLoop.cpp.Update
-    line                               | sec/call  | percent
+    line                               | ms/call   | percent
     --------------------------------------------------------
-    20: PruneDeadColliders();          | 0.000     | 0.088 %
-    21: auto potentialNewOverlaps =... | 0.009     | 99.43 %
-    22: auto newOverlaps = NarrowPh... | 0.000     | 0.198 %
-    23: HandleCollisionInfo(newOver... | 0.000     | 0.160 %
-    total                              | 0.009     | 100.0 % (41.00 hits) 
+    20: PruneDeadColliders();          | 0.009     | 1.025 %
+    21: auto potentialNewOverlaps =... | 0.859     | 90.12 %
+    22: auto newOverlaps = NarrowPh... | 0.058     | 6.139 %
+    23: HandleCollisionInfo(newOver... | 0.014     | 1.528 %
+    total                              | 0.953     | 100.0 % (347.0 hits) 
 

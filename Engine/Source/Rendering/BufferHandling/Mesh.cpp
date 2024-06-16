@@ -7,10 +7,10 @@ Naming Mesh::naming;
 
 void Mesh::Setup(string name, const vector<float>& vertices_, const vector<unsigned int>& indices_, const VertexLayout& layout_)
 {
-    if (!OpenGlSetup::Initialized())
-        RaiseError("Mesh cannot be setup before OpenGlSetup::Setup() is called.");
-    if (UuidCreator::IsInitialized(id))
-        RaiseError("Mesh is already initialized");
+    Assert(OpenGlSetup::Initialized(),
+        "Mesh cannot be setup before OpenGlSetup::Setup() is called.");
+    Deny(UuidCreator::IsInitialized(id),
+        "Mesh is already initialized");
     if (!naming.Contains(name))
         naming.AddWithSuffix(name, UuidCreator::MakeID());
     id = naming.at(name);
@@ -34,8 +34,8 @@ void Mesh::Setup(string name, const vector<float>& vertices_, const vector<unsig
 
 void Mesh::Bind() const
 {
-    if (!UuidCreator::IsInitialized(id))
-        RaiseError("You cannot bind an uninitialized Mesh");
+    Assert(UuidCreator::IsInitialized(id),
+        "You cannot bind an uninitialized Mesh");
     vertexArray.Bind();
     indexBuffer.Bind();
 }
@@ -70,8 +70,8 @@ std::string Mesh::to_string() const
 
 std::vector<glm::vec2> Mesh::FindPositions2D()
 {
-    if (layout.positionDimension != 2)
-        RaiseError("calling GetPositions2D, but layout.positionDimension isn't 2.");
+    Assert(layout.positionDimension == 2,
+        "calling GetPositions2D, but layout.positionDimension isn't 2.");
     int layoutIndex = 0;
     int layoutSize = layout.positionDimension + layout.textureDimension + layout.colorDimension + layout.textureID;
     std::vector<glm::vec2> positions;

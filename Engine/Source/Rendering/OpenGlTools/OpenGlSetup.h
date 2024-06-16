@@ -12,7 +12,7 @@ public:
 	static bool Initialized() { return openGLInitialized; }
 	inline static int GetWidth() { return WindowSize().first; } 
 	inline static int GetHeight() { return WindowSize().second; } 
-	inline static GLFWwindow* GetWindow() { if (window) return window; else RaiseError("GLFWwindow is nullptr"); } // returns ptr for convenience
+	inline static GLFWwindow* GetWindow() { Assert(window, "GLFWwindow is nullptr"); return window; } // returns ptr for convenience
 	inline static bool WindowIsResized() { return WindowSize() != lastWindowSize; }
 
 private:

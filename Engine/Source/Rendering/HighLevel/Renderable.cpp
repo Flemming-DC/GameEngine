@@ -22,25 +22,29 @@ void Renderable::OnStart()
 void Renderable::OnDestroy()
 {
 	bool wasThere = Tools::Remove(allRenderables, GetID());
-    if (!wasThere)
-        RaiseError("RenderableID has been removed from allRenderables prematurely");
+    Assert(wasThere,
+        "RenderableID has been removed from allRenderables prematurely");
 }
 
 
-
+void _DoNothing() {}
 
 void Renderable::Draw(const mat4& projectionView)
 {
-    if (!IsFullyEnabled())
-        return;
-    if (!UuidCreator::IsInitialized(material.GetID()) || !UuidCreator::IsInitialized(mesh.GetID()))
-        RaiseError("you must setup the mesh and material on the renderable, before drawing it.");
-    mat4 model = GetTransform().GetModel(); // this is inefficient
-    material.SetUniform("u_MVP", projectionView * model);
-    material.Bind();
-    mesh.Bind();
+    ProfileFunc;
+    ProfileLine(_DoNothing());
+    ProfileLine(
+        if (!IsFullyEnabled())
+            return;
+    );
+    Assert(UuidCreator::IsInitialized(material.GetID()) && UuidCreator::IsInitialized(mesh.GetID()),
+        "you must setup the mesh and material on the renderable, before drawing it.");
+    ProfileLine(mat4 model = GetTransform().GetModel();); // this is inefficient
+    ProfileLine(material.SetUniform("u_MVP", projectionView * model););
+    ProfileLine(material.Bind(););
+    ProfileLine(mesh.Bind(););
     // GL_TRIANGLES should be soft coded if we want to support other things.
-    glCall(glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr));
+    ProfileLine(glCall(glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr)););
 }
 
 
@@ -63,9 +67,9 @@ void Renderable::Save(Node& node) const
     {
         materialNode[Literals::u_color] = material.GetUniform<vec4>(Literals::u_color);
         uuid texID = material.GetUniform<Texture*>(Literals::u_textureSampler)->GetID();
-        if (!Texture::register_.Contains(texID))
-            RaiseError("Trying to save material ", name, " on ", to_string(), " with textureID ", texID,
-                " that does not exist in the register.");// The textue name is ", Texture::naming.at(texID));
+        Assert(Texture::register_.Contains(texID),
+            "Trying to save material ", name, " on ", to_string(), " with textureID ", texID,
+            " that does not exist in the register.");// The textue name is ", Texture::naming.at(texID));
         materialNode[Literals::u_textureSampler] = texID;
     } 
     else if (name == Literals::colorMaterialName)

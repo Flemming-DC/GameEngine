@@ -58,10 +58,8 @@ void Profiler::LogAndPrint()
 	logger::print(output);
 
 	std::ofstream logFile(Literals::Log + "lastLog.txt");
-	if (logFile)
-		logFile << output << std::endl;
-	else
-		RaiseError("Failed to open file. Logging to console instead");
+	Assert(logFile, "Failed to open file, but we can still log to console");
+	logFile << output << std::endl;
     // logFile is automatically closed, when leaving scope.
 }
 
@@ -91,24 +89,25 @@ string str(double value) // to rounded string
 
 string Profiler::_CalculateOutput()
 {
+	double unit = 1000.0f; // milliseconds
 	string out = "";
-	string next = "\n    ";
+	string next = "\n    "; 
 	uint colWidth1 = 35;
 	uint colWidth2 = 10;
 	for (const auto& [func, record] : data)
 	{
 		int callCount = record.callCount;
-		double totalDurationPerCall = record.durationFunc.count() / callCount;
+		double totalDurationPerCall = unit * record.durationFunc.count() / callCount;
 
 		out += "\n" + func + next;
 		if (record.durationByLine.size() > 1)
 		{
-			out += Column("line", colWidth1) + Column("sec/call", colWidth2) + "percent" + next;
+			out += Column("line", colWidth1) + Column("ms/call", colWidth2) + "percent" + next;
 			out += "--------------------------------------------------------" + next;
 		}
 		for (const auto& [line, duration] : record.durationByLine)
 		{
-			double durationPerCall = record.durationByLine.at(line).count() / callCount;
+			double durationPerCall = unit * record.durationByLine.at(line).count() / callCount;
 			double percent = 100 * durationPerCall / totalDurationPerCall;
 			out += Column(line, colWidth1) + Column(str(durationPerCall), colWidth2) + str(percent) + " %" + next;
 		}

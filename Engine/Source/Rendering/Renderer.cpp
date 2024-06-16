@@ -51,24 +51,27 @@ Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView)
 
 void Renderer::DrawToScreen(mat4 projectionView)
 {
-    glCall(glClear(GL_COLOR_BUFFER_BIT)); // same as renderer.Clear()
-    Renderable::UnBind(); //  evt. add framebuffer unbind
-
+    ProfileFunc;
+    ProfileLine(
+        glCall(glClear(GL_COLOR_BUFFER_BIT)); // same as renderer.Clear()
+        Renderable::UnBind(); //  evt. add framebuffer unbind
+    );
     // sorting (inefficient)
-    vector<Renderable*> renderables;
-    for (const uuid& renderableID : Renderable::allRenderables)
-        renderables.push_back(&Entity::GetComponent<Renderable>(renderableID));
-    struct SortByOrder {
-        bool operator() (Renderable* lhs, Renderable* rhs) const
-            { return lhs->DrawOrder() < rhs->DrawOrder(); } };
-    std::sort(renderables.begin(), renderables.end(), SortByOrder());
-
+    ProfileLine(
+        vector<Renderable*> renderables;
+        for (const uuid& renderableID : Renderable::allRenderables)
+            renderables.push_back(&Entity::GetComponent<Renderable>(renderableID));
+        struct SortByOrder {
+            bool operator() (Renderable* lhs, Renderable* rhs) const
+                { return lhs->DrawOrder() < rhs->DrawOrder(); } };
+        std::sort(renderables.begin(), renderables.end(), SortByOrder());
+    );
     // drawing
-    for (Renderable* rend : renderables)
-        rend->Draw(projectionView);
-    //for (const uuid& renderableID : Renderable::allRenderables)
-    //    Entity::GetComponent<Renderable>(renderableID).Draw(projectionView);
-
+    ProfileLine(
+        for (Renderable* rend : renderables)
+            rend->Draw(projectionView);
+    );
+    
     Screen::ApplyCursorState();
 }
 

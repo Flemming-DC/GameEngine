@@ -72,16 +72,15 @@ void BarePolygonCollider::CalculateNormalsAndCenterOfMass(const vector<vec2>& lo
 		for (int i = 0; i < count; i++)
 			localNormals[i] *= -1;
 	}
-	if (glm::isnan(divergence))
-		RaiseError("Divergence is ", divergence, " on ", Tools::TypeName(*this), ".\n",
-			"localPosition2Ds = ", localPosition2Ds);
+	Deny(glm::isnan(divergence),
+		"Divergence is ", divergence, " on ", Tools::TypeName(*this), ".\nlocalPosition2Ds = ", localPosition2Ds);
 }
 
 
 std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(vec2 normal) const
 {
-	if (glm::HasNAN(normal))
-		RaiseError("normal is nan: ", normal);
+	Deny(glm::HasNAN(normal),
+		"normal is nan: ", normal);
 	float min = INFINITY;
 	float max = -INFINITY;
 	for (auto localPosition2D : localPosition2Ds)
@@ -94,24 +93,26 @@ std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(vec2 normal) cons
 		if (coordinateAlongNormal > max)
 			max = coordinateAlongNormal;
 	}
-	if (min > max)
-	{
-		float min_ = INFINITY;
-		float max_ = -INFINITY;
-		for (auto localPosition2D : localPosition2Ds)
+	InDebug(
+		if (min > max)
 		{
-			//glm::vec2 position2D = isLocal ? localPosition2D : GetTransform().ToWorldSpace(localPosition2D, true);
-			glm::vec2 position2D = iTransform.ToWorldSpace(localPosition2D, true);
-			float coordinateAlongNormal = glm::dot(position2D, normal);
-			if (coordinateAlongNormal < min_)
-				min_ = coordinateAlongNormal;
-			if (coordinateAlongNormal > max_)
-				max_ = coordinateAlongNormal;
-		}
+			float min_ = INFINITY;
+			float max_ = -INFINITY;
+			for (vec2 localPosition2D : localPosition2Ds)
+			{
+				//glm::vec2 position2D = isLocal ? localPosition2D : GetTransform().ToWorldSpace(localPosition2D, true);
+				glm::vec2 position2D = iTransform.ToWorldSpace(localPosition2D, true);
+				float coordinateAlongNormal = glm::dot(position2D, normal);
+				if (coordinateAlongNormal < min_)
+					min_ = coordinateAlongNormal;
+				if (coordinateAlongNormal > max_)
+					max_ = coordinateAlongNormal;
+			}
 
-		RaiseError(Tools::TypeName(*this) + " min should be less than max. But found min = ", min, " and max = ", max,
-			"\n localPosition2Ds: ", localPosition2Ds, "\n normal:", normal);
-	}
+			RaiseError(Tools::TypeName(*this) + " min should be less than max. But found min = ", min, " and max = ", max,
+				"\n localPosition2Ds: ", localPosition2Ds, "\n normal:", normal);
+		}
+	);
 	return { min, max };
 }
 
@@ -126,7 +127,7 @@ std::vector<glm::vec2> BarePolygonCollider::Positions() const
 
 void BarePolygonCollider::PruneEquivalentPositions(vector<vec2>& localPosition2Ds_)
 {
-	// try to find a pair of ækvivalent positions
+	// try to find a pair of equivalent positions
 	int indexToEliminate = -1;
 	int count = (int)localPosition2Ds_.size();
 	for (int i = 0; i < count; i++)
@@ -149,31 +150,33 @@ void BarePolygonCollider::PruneEquivalentPositions(vector<vec2>& localPosition2D
 		PruneEquivalentPositions(localPosition2Ds_);
 	}
 	else
-	{
-		if (localPosition2Ds_.size() < 3)
-			RaiseError("localPosition2Ds.size() is below 3. This is not a valid " + Tools::TypeName(*this));
+	{ 
+		InDebug(
+			if (localPosition2Ds_.size() < 3)
+				RaiseError("localPosition2Ds.size() is below 3. This is not a valid " + Tools::TypeName(*this));
 
-		// find max and min coordinates so as to check if the points are one a line
-		float minX = +INFINITY;
-		float minY = +INFINITY;
-		float maxX = -INFINITY;
-		float maxY = -INFINITY;
-		for (const vec2& pos : localPosition2Ds_)
-		{
-			if (pos.x < minX)
-				minX = pos.x;
-			if (pos.x > maxX)
-				maxX = pos.x;
+			// find max and min coordinates so as to check if the points are one a line
+			float minX = +INFINITY;
+			float minY = +INFINITY;
+			float maxX = -INFINITY;
+			float maxY = -INFINITY;
+			for (const vec2& pos : localPosition2Ds_)
+			{
+				if (pos.x < minX)
+					minX = pos.x;
+				if (pos.x > maxX)
+					maxX = pos.x;
 
-			if (pos.y < minY)
-				minY = pos.y;
-			if (pos.y > maxY)
-				maxY = pos.y;
-		}
-		float width = std::abs(maxX - minX);
-		float height = std::abs(maxY - minY);
-		if (Check_p(width) < minPositionSeparation || Check_p(height) < minPositionSeparation)
-			RaiseError("The points are all on a single line. This is not a valid polygon.");
+				if (pos.y < minY)
+					minY = pos.y;
+				if (pos.y > maxY)
+					maxY = pos.y;
+			}
+			float width = std::abs(maxX - minX);
+			float height = std::abs(maxY - minY);
+			if (Check_p(width) < minPositionSeparation || Check_p(height) < minPositionSeparation)
+				RaiseError("The points are all on a single line. This is not a valid polygon.");
+		); 
 	}
 }
 
@@ -238,8 +241,8 @@ void BarePolygonCollider::AddPositionAfter(int priorPositionIndex)
 
 void BarePolygonCollider::RemovePosition(int index)
 {
-	if (localPosition2Ds.size() <= 3)
-		RaiseError("A polygon must have at least 3 corners");
+	Deny(localPosition2Ds.size() <= 3,
+		"A polygon must have at least 3 corners");
 	Tools::RemoveIndex(localPosition2Ds, index);
 	CalculateNormalsAndCenterOfMass(localPosition2Ds);
 }

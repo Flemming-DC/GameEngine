@@ -24,8 +24,8 @@ public:
 
     void Remove(const uuids::uuid& id) // this has not passed testing
     {
-        if (!Tools::ContainsKey(indexByID, id))
-            RaiseError("Trying to remove an object, which isn't in the register.");
+        Assert(Tools::ContainsKey(indexByID, id),
+            "Trying to remove an object, which isn't in the register.");
         unsigned int index = indexByID.at(id);
         for (const auto& [id_, index_] : indexByID)
         {

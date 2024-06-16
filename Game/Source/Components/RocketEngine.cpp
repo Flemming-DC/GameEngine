@@ -21,8 +21,8 @@ static Sound explosionSound(Literals::Sounds + "bum.wav", true);
 
 void RocketEngine::OnStart()
 {
-	if (!Entity::Exists(Entity::GetID("Exhaust")))
-		RaiseError("Exhaust not found.");
+	Assert(Entity::Exists(Entity::GetID("Exhaust")),
+		"Exhaust not found.");
 
 	exhaustMaterial = &Entity::GetEntity("Exhaust").Get<Renderable>().GetMaterial();
 	exhaustMaterial->SetColor(vec4(1.0f, 1.0f, 1.0f, 0.0f));

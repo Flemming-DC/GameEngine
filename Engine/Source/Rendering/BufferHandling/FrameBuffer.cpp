@@ -9,10 +9,10 @@ Register<FrameBuffer> FrameBuffer::register_;
 
 void FrameBuffer::Setup(int width_, int height_)
 {
-    if (!OpenGlSetup::Initialized())
-        RaiseError("FrameBuffer cannot be setup before OpenGlSetup::Setup() is called.");
-    if (UuidCreator::IsInitialized(id))
-        RaiseError("FrameBuffer is already initialized");
+    Assert(OpenGlSetup::Initialized(),
+        "FrameBuffer cannot be setup before OpenGlSetup::Setup() is called.");
+    Deny(UuidCreator::IsInitialized(id),
+        "FrameBuffer is already initialized");
     id = UuidCreator::MakeID();
 
     width = width_;
@@ -41,8 +41,8 @@ void FrameBuffer::Setup(int width_, int height_)
     glCall(glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, renderBuffer_openGLid));
 
     glCall(unsigned int fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER)); // fboStatus = 36053
-    if (fboStatus != GL_FRAMEBUFFER_COMPLETE)
-        RaiseError("framebuffer failed with ErrorCode: " + std::to_string(fboStatus));
+    Assert(fboStatus == GL_FRAMEBUFFER_COMPLETE,
+        "framebuffer failed with ErrorCode: " + std::to_string(fboStatus));
 
     UnBind();
     glCall(glBindTexture(GL_TEXTURE_2D, 0)); // unbind
@@ -54,8 +54,8 @@ void FrameBuffer::Setup(int width_, int height_)
 
 void FrameBuffer::ShutDown()
 {
-    if (!UuidCreator::IsInitialized(id) && openGLid != 0)
-        RaiseError("Uninitialized VertexBuffer has openGLid != 0");
+    Assert(UuidCreator::IsInitialized(id) && openGLid != 0,
+        "Uninitialized VertexBuffer has openGLid != 0");
     if (!UuidCreator::IsInitialized(id))
         return;
     glCall(glDeleteFramebuffers(1, &openGLid)); 
@@ -68,8 +68,8 @@ void FrameBuffer::ShutDown()
 
 void FrameBuffer::Bind() const
 {
-    if (!UuidCreator::IsInitialized(id))
-        RaiseError("You cannot bind an uninitialized FrameBuffer");
+    Assert(UuidCreator::IsInitialized(id),
+        "You cannot bind an uninitialized FrameBuffer");
     glCall(glBindFramebuffer(GL_FRAMEBUFFER, openGLid));
     // only bind texture and renderBuffer if you need to edit them as opposed to simply displaying them
 }

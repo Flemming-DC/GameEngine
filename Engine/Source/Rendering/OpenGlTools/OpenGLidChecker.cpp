@@ -4,7 +4,7 @@
 #include "StringTools.h"
 
 
-using namespace std;
+Shorts;
 map<string, vector<unsigned int>> OpenGLidChecker::openGLidByType = {};
 
 
@@ -19,8 +19,8 @@ void OpenGLidChecker::Add(const string& typeName, unsigned int openGLid)
 
 void OpenGLidChecker::Remove(const string& typeName, unsigned int openGLid)
 {
-	if (!Tools::ContainsKey(openGLidByType, typeName))
-		RaiseError("Trying to remove a typeName openGLid, but there are none.");
+	Assert(Tools::ContainsKey(openGLidByType, typeName),
+		"Trying to remove a typeName openGLid, but there are none.");
 
 	Tools::Remove(openGLidByType[typeName], openGLid);
 }
@@ -29,8 +29,8 @@ void OpenGLidChecker::CheckCleanup()
 {
 	for (const auto& pair : openGLidByType)
 	{
-		if (pair.second.size() != 0)
-			RaiseError("Some openGLids haven't been cleaned up.\n" 
-				+ pair.first + " openGLids: " + logger::to_string(pair.second));
+		Assert(pair.second.empty(),
+			"Some openGLids haven't been cleaned up.\n" 
+			+ pair.first + " openGLids: " + logger::to_string(pair.second));
 	}
 }

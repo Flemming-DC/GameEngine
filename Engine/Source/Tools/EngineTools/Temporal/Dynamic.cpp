@@ -20,8 +20,7 @@ void Dynamic::CallOnEditorStart()
 {
     for (const auto& dynamic : dynamics)
     {
-        if (!dynamic)
-            RaiseError(Tools::TypeName(dynamic) + " is nullptr");
+        Assert(dynamic, Tools::TypeName(dynamic) + " is nullptr");
         dynamic->OnEditorStart();
     }
 }
@@ -30,8 +29,7 @@ void Dynamic::CallOnGameStart()
 {
     for (const auto& dynamic : dynamics)
     {
-        if (!dynamic)
-            RaiseError(Tools::TypeName(dynamic) + " is nullptr");
+        Assert(dynamic, Tools::TypeName(dynamic) + " is nullptr");
         dynamic->OnGameStart();
     }
 }
@@ -40,8 +38,7 @@ void Dynamic::CallOnUpdate()
 {
     for (const auto& dynamic : dynamics)
     {
-        if (!dynamic)
-            RaiseError(Tools::TypeName(dynamic) + " is nullptr");
+        Assert(dynamic, Tools::TypeName(dynamic) + " is nullptr");
         dynamic->OnUpdate();
     }
 }
@@ -50,8 +47,7 @@ void Dynamic::CallOnEditorUpdate()
 {
     for (const auto& dynamic : dynamics)
     {
-        if (!dynamic)
-            RaiseError(Tools::TypeName(dynamic) + " is nullptr");
+        Assert(dynamic, Tools::TypeName(dynamic) + " is nullptr");
         dynamic->OnEditorUpdate();
     }
 }
@@ -61,8 +57,7 @@ void Dynamic::CallOnGameEnd()
 {
     for (const auto& dynamic : dynamics)
     {
-        if (!dynamic)
-            RaiseError(Tools::TypeName(dynamic) + " is nullptr");
+        Assert(dynamic, Tools::TypeName(dynamic) + " is nullptr");
         dynamic->OnGameEnd();
     }
 }
@@ -71,8 +66,7 @@ void Dynamic::CallOnEditorEnd()
 {
     for (const auto& dynamic : dynamics)
     {
-        if (!dynamic)
-            RaiseError(Tools::TypeName(dynamic) + " is nullptr");
+        Assert(dynamic, Tools::TypeName(dynamic) + " is nullptr");
         dynamic->OnEditorEnd();
     }
 }

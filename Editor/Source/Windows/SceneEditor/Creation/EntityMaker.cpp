@@ -83,8 +83,8 @@ void EntityMaker::CreationMenu() // given user input: show popup and create enti
         vector<string> completionOptions = StoredEntity::naming.Names();
         if (ImGui::AutoCompletor("Choose entity", &entityName, completionOptions, true))
         {
-            if (!Tools::Contains(completionOptions, entityName))
-                RaiseError("Unrecognized entity ", entityName);
+            Assert(Tools::Contains(completionOptions, entityName),
+                "Unrecognized entity ", entityName);
             vec2 pos = SceneCamera::MouseWorldPosition2D();
             StoredEntity::Load(entityName).Get<Transform>().SetPosition2D(pos);
             entityName.clear();

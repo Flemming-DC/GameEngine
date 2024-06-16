@@ -8,10 +8,9 @@ template <typename ComponentType>
 ComponentType& Entity::GetComponent() const
 {
 	ComponentType* comp = TryGetComponent<ComponentType>();
-	if (comp)
-		return *comp;
-	else
-		RaiseError("Failed to find " + Tools::TypeName<ComponentType>() + " on " + name);
+	Assert(comp,
+		"Failed to find " + Tools::TypeName<ComponentType>() + " on " + name);
+	return *comp;
 }
 
 
@@ -46,12 +45,13 @@ ComponentType& Entity::AddComponent(YAML::Node* node)
 	componentsByEntity[id].push_back(std::make_unique<ComponentType>());
 	Component* ptr = componentsByEntity[id].back().get();
 	ComponentType* afterCast = dynamic_cast<ComponentType*>(ptr);
-	if (afterCast == nullptr)
-		RaiseError("dynamic_cast failed for " + name + ".AddComponent<" + Tools::TypeName<ComponentType>() + ">()");
+	Deny(afterCast == nullptr,
+		"dynamic_cast failed for " + name + ".AddComponent<" + Tools::TypeName<ComponentType>() + ">()");
 	afterCast->OnAddComponent(id, node);
 	componentByID[afterCast->id] = ptr;
-	if (afterCast->unique && hasComponent)
-		RaiseError(Tools::TypeName<ComponentType>(), " is marked as unique, but there is already a ", Tools::TypeName<ComponentType>(), " at ", *this);
+	Deny(afterCast->unique && hasComponent,
+		Tools::TypeName<ComponentType>(), " is marked as unique, but there is already a ", 
+		Tools::TypeName<ComponentType>(), " at ", *this);
 	return *afterCast;
 
 }

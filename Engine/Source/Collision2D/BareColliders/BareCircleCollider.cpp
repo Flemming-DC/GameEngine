@@ -27,13 +27,12 @@ float BareCircleCollider::GetRadius() const
 {
 	glm::vec3 scale = iTransform.GetScale();
 
-#ifdef _DEBUG
-	// replace error checking with constrained proportions
-	float error = (scale.x - scale.y) / std::max(0.005f, scale.x + scale.y);
-	if (error * error > 0.01f)
-		Warning("non-uniform scales are not supported for circle colliders. Using scale.x for both x and y.");
-#endif // _DEBUG
-
+	InDebug(
+		// replace error checking with constrained proportions
+		float error = (scale.x - scale.y) / std::max(0.005f, scale.x + scale.y);
+		if (error * error > 0.01f)
+			Warning("non-uniform scales are not supported for circle colliders. Using scale.x for both x and y.");
+	);
 	return scale.x * localRadius;
 }
 

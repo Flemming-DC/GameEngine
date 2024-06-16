@@ -14,13 +14,13 @@
 
 
 #ifdef _DEBUG
-#define InDebug(codeLine)// codeLine
+#define InDebug(codeLine) codeLine
 #else
 #define InDebug(codeLine) // evaluate to nothing
 #endif
 
-#define Deny(condition, ...)   InDebug(if (condition)  RaiseError(logger::make_string(__VA_ARGS__)))
-#define Assert(condition, ...) InDebug(if (!condition) RaiseError(logger::make_string(__VA_ARGS__)))
+#define Deny(condition, ...)   InDebug( if (  condition ) RaiseError(logger::make_string(__VA_ARGS__)) )
+#define Assert(condition, ...) InDebug( if (!(condition)) RaiseError(logger::make_string(__VA_ARGS__)) )
 
 namespace ErrorChecker
 {

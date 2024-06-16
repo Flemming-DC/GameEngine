@@ -85,8 +85,8 @@ void MenuBar::Open()
     static string sceneName;
     if (ImGui::AutoCompletor("Choose scene", &sceneName, Scene::naming.Names()))
     {
-        if (!Tools::Contains(Scene::naming.Names(), sceneName))
-            RaiseError("Unrecognized scene ", sceneName);
+        Assert(Tools::Contains(Scene::naming.Names(), sceneName),
+            "Unrecognized scene ", sceneName);
         Scene::Save();
         Scene::Activate(sceneName);
         sceneName.clear();

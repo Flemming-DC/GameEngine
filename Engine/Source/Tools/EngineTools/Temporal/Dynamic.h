@@ -43,14 +43,14 @@ private:
 	{
 		static_assert(std::is_base_of<Dynamic, DynamicType>::value,
 			"Dynamic::Setup can only handle subclasses of Dynamic, not other types.");
-		if (typeid(DynamicType) == typeid(Dynamic))
-			RaiseError("Dynamic::Setup can only handle subclasses of Dynamic, not the base class Dynamic.");
+		Deny(typeid(DynamicType) == typeid(Dynamic),
+			"Dynamic::Setup can only handle subclasses of Dynamic, not the base class Dynamic.");
 
 		dynamics.push_back(std::make_unique<DynamicType>());
 		Dynamic* ptr = dynamics.back().get();
 		DynamicType* afterCast = dynamic_cast<DynamicType*>(ptr);
-		if (afterCast == nullptr)
-			RaiseError("dynamic_cast failed for Dynamic::Add<" + Tools::TypeName<DynamicType>() + ">()");
+		Deny(afterCast == nullptr,
+			"dynamic_cast failed for Dynamic::Add<" + Tools::TypeName<DynamicType>() + ">()");
 		return *afterCast;
 	}
 };

@@ -20,6 +20,7 @@
 
 int main()
 {
+
 #ifdef InEditor
     Editor::EditorCore::MarkAsEditor();
 #endif // InEditor

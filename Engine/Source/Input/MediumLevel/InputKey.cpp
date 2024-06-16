@@ -48,8 +48,8 @@ glm::vec2 InputKey::MouseEntireScreenPosition() // absolute mouse position (i.e.
 }
 glm::vec2 InputKey::MouseGameScreenPosition()
 {
-    if (!EngineMode::GameIsRunning())
-        RaiseError("you can only use MouseGameScreenPosition, if the game is running.");
+    Assert(EngineMode::GameIsRunning(),
+        "you can only use MouseGameScreenPosition, if the game is running.");
     // normalized screen position only uses the game screen, not the editor and therefore not imGUI
     auto mousePos = GlfwInput::MouseScreenPosition(true);
     return Screen::NormalizeGameScreenPosition({ mousePos.first, mousePos.second });

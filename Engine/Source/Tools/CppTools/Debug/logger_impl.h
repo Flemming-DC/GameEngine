@@ -23,10 +23,18 @@ namespace logger
 	string inline make_string(T first, Args... args)
 	{
 		string out = to_string(first);
-		out += make_string(args...);
+		out += _internal_make_string(args...);
 		return out;
 	}
-	string inline make_string() { return ""; } // handle end of recursion
+
+	template<typename T, typename... Args>
+	string inline _internal_make_string(T first, Args... args)
+	{
+		string out = to_string(first);
+		out += _internal_make_string(args...);
+		return out;
+	}
+	string inline _internal_make_string() { return ""; } // handle end of recursion
 
 
 	string inline file_name(string path)

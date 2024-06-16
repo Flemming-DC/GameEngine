@@ -21,7 +21,7 @@ void PrintAndResetTimes()
 {
 	if (times.empty())
 		return;
-
+	
 	P("times:");
 	double total = duration(times.back().second - times[0].second).count();
 	for (int i = 1; i < (int)times.size(); i++)
@@ -33,7 +33,7 @@ void PrintAndResetTimes()
 }
 
 
-Overlaps BroadPhase::GetPotentialOverlaps()
+Overlaps FineTimedGetPotentialOverlaps()
 {
 	Overlaps candidates; // candidates for overlap
 	auto colliderIDs = Collider::CollidersSortedByX();
@@ -82,13 +82,13 @@ Overlaps BroadPhase::GetPotentialOverlaps()
 		*/
 	}
 
-	if (candidates.size() > 5)
-		P("potentialNewOverlapCount: ", candidates.size(), " out of ", Collider::CollidersSortedByX().size());
+	//if (candidates.size() > 5)
+	//	P("potentialNewOverlapCount: ", candidates.size(), " out of ", Collider::CollidersSortedByX().size());
 
 	return candidates;
 }
 
-Overlaps PureGetPotentialOverlaps()
+Overlaps BroadPhase::GetPotentialOverlaps()
 {
 	Overlaps candidates; // candidates for overlap
 	auto colliderIDs = Collider::CollidersSortedByX();
@@ -100,7 +100,6 @@ Overlaps PureGetPotentialOverlaps()
 		auto bounds1 = col1.Bare().GetBoundingBox();
 
 
-		//vector<Collider*> candidatesX = { &col1 };
 		for (int j = i + 1; j < (int)colliderIDs.size(); j++) // loop until no overlap along X
 		{
 			auto& col2 = Entity::GetComponent<Collider>(colliderIDs[j]);
@@ -110,30 +109,11 @@ Overlaps PureGetPotentialOverlaps()
 
 			if (!bounds1.IsOverlappingX(bounds2))
 				break;
-			//candidatesX.push_back(&col2);
 			if (bounds1.IsOverlappingY(bounds2))
 				candidates.push_back({ &col1, &col2 });
 		}
-
-		/*
-		std::sort(candidatesX.begin(), candidatesX.end(), SortByY());
-		for (int j = i + 1; j < (int)candidatesX.size(); j++) // loop until no overlap along Y
-		{
-			auto& col2 = *candidatesX[j];
-			if (!col2.IsFullyEnabled())
-				continue;
-			auto bounds2 = col2.Bare().GetBoundingBox();
-
-			if (!bounds1.IsOverlappingY(bounds2))
-				break;
-			candidates.push_back({ &col1, &col2 });
-		}
-		*/
+		// this only applies sweep and prune along the x direction
 	}
-
-
-	if (candidates.size() > 5)
-		P("potentialNewOverlapCount: ", candidates.size(), " out of ", Collider::CollidersSortedByX().size());
 
 	return candidates;
 }
@@ -166,8 +146,8 @@ Overlaps NewGetPotentialOverlaps() // BroadPhase::
 
 			ProfileLine(if (!bounds1.IsOverlappingX(bounds2))
 			{
-				if (j - i > 3)
-					P("overlap along x count ", j - i);
+				//if (j - i > 3)
+				//	P("overlap along x count ", j - i);
 				break;
 			});
 			//ProfileLine(candidatesX.push_back(&col2););
@@ -191,8 +171,8 @@ Overlaps NewGetPotentialOverlaps() // BroadPhase::
 	}
 
 
-	if (candidates.size() > 3)
-		P("potentialNewOverlapCount: ", candidates.size(), " out of ", Collider::CollidersSortedByX().size());
+	//if (candidates.size() > 3)
+	//	P("potentialNewOverlapCount: ", candidates.size(), " out of ", Collider::CollidersSortedByX().size());
 
 	return candidates;
 }
@@ -259,8 +239,8 @@ Overlaps NewTimedGetPotentialOverlaps()
 	}
 
 
-	if (candidates.size() > 3)
-		P("potentialNewOverlapCount: ", candidates.size(), " out of ", Collider::CollidersSortedByX().size());
+	//if (candidates.size() > 3)
+	//	P("potentialNewOverlapCount: ", candidates.size(), " out of ", Collider::CollidersSortedByX().size());
 
 	return candidates;
 }

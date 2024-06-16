@@ -17,8 +17,8 @@ public:
 	
 	static InputAction<T>& Create() 
 	{ 
-		if (typeid(T) != typeid(bool) && typeid(T) != typeid(float) && typeid(T) != typeid(glm::vec2))
-			RaiseError("Unrecognized type. Expected bool, float or glm::vec2. Received ", Tools::TypeName<T>());
+		Deny(typeid(T) != typeid(bool) && typeid(T) != typeid(float) && typeid(T) != typeid(glm::vec2),
+			"Unrecognized type. Expected bool, float or glm::vec2. Received ", Tools::TypeName<T>());
 		maxID++;
 		actions.emplace(maxID, std::make_unique<InputAction<T>>(maxID));
 		return *(actions[maxID]);

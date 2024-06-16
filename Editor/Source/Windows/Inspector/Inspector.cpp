@@ -128,8 +128,8 @@ void Inspector::DrawAddComponent()
     Tools::Remove(completionOptions, Tools::TypeName<Transform>());
     if (ImGui::AutoCompletor(" ", &compName, completionOptions))
     {
-        if (!Tools::ContainsKey(Entity::AddComponentByName, compName))
-            RaiseError("Unrecognized component ", compName);
+        Assert(Tools::ContainsKey(Entity::AddComponentByName, compName),
+            "Unrecognized component ", compName);
         Entity::AddComponentByName.at(compName)(currentEntityID, nullptr);
         compName.clear();
     }

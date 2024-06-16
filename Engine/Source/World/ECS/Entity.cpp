@@ -16,9 +16,9 @@ map_uo<string, std::function<void(uuid, YAML::Node*)>> Entity::AddComponentByNam
 
 Entity::Entity(string name, optional<uuid> id_, optional<uuid> storedID_) : name(name), storedID(storedID_)
 {
-	if (!storedID_.has_value() && !id_.has_value())
-		RaiseError("The entity constructor must receive a stored entity id or a normal id. ",
-			name, " received ", id_, " and ", storedID_);
+	Assert(storedID_.has_value() || id_.has_value(),
+		"The entity constructor must receive a stored entity id or a normal id. ",
+		name, " received ", id_, " and ", storedID_);
 	id = id_.has_value() ? *id_ : UuidCreator::MakeID(); // you get an input id_ iff it is loaded as an asset.
 	EntitiesByName[name].push_back(id); // [] initializes if the key is not present
 	OnCreated.Invoke(*this);
@@ -27,9 +27,7 @@ Entity::Entity(string name, optional<uuid> id_, optional<uuid> storedID_) : name
 
 void Entity::Update()
 {
-	#ifdef _DEBUG
-	CheckConsistency();
-	#endif // _DEBUG
+	InDebug(CheckConsistency());
 
 	for (const auto& [e, components] : componentsByEntity)
 	{
@@ -57,8 +55,8 @@ void Entity::CheckConsistency()
 	for (const auto& [entityID, components] : componentsByEntity)
 	{
 		Entity& entity = register_.Get(entityID);
-		if (entity.GetID() != entityID)
-			RaiseError("inconsistent data");
+		Assert(entity.GetID() == entityID, 
+			"inconsistent data");
 		auto& _1 = EntitiesByName.at(entity.Name()); // .at() fails if the key is not present. This constistutes a consistency check.
 		for (const auto& compPtr : components)
 			auto& _2 = componentByID.at(compPtr.get()->GetID()); // .at() fails if the key is not present. This constistutes a consistency check.
@@ -73,13 +71,13 @@ void Entity::CheckConsistency()
 uuid Entity::GetID(string name_)
 {
 	int count = Tools::ContainsKey(EntitiesByName, name_) ? EntitiesByName.at(name_).size() : 0;
-	if (count != 1)
-		RaiseError("There are " + std::to_string(count) + " entities named '" + name_
-			+ "', so you cannot get an entity unambigously from this name."
-			+ "\nEntitiesByName = \n" + logger::to_string(EntitiesByName));
+	Assert(count == 1,
+		"There are " + std::to_string(count) + " entities named '" + name_
+		+ "', so you cannot get an entity unambigously from this name."
+		+ "\nEntitiesByName = \n" + logger::to_string(EntitiesByName));
 	auto id = EntitiesByName.at(name_)[0];
-	if (register_.Get(id).name != name_)
-		RaiseError("Searched for an entity named " + name_ + " found one named " + register_.Get(id).name);
+	Assert(register_.Get(id).name == name_,
+		"Searched for an entity named " + name_ + " found one named " + register_.Get(id).name);
 
 	return id;
 }
@@ -89,14 +87,14 @@ uuid* Entity::TryGetID(string name_)
 	int count = Tools::ContainsKey(EntitiesByName, name_) ? EntitiesByName.at(name_).size() : 0;
 	if (count == 0)
 		return nullptr;
-	if (count > 1)
-		RaiseError("There are " + std::to_string(count) + " entities named '" + name_
-			+ "', so you cannot get an entity unambigously from this name."
-			+ "\nEntitiesByName = \n" + logger::to_string(EntitiesByName));
+	Deny(count > 1,
+		"There are " + std::to_string(count) + " entities named '" + name_
+		+ "', so you cannot get an entity unambigously from this name."
+		+ "\nEntitiesByName = \n" + logger::to_string(EntitiesByName));
 	
 	auto& id = EntitiesByName.at(name_)[0];
-	if (register_.Get(id).name != name_)
-		RaiseError("Searched for an entity named " + name_ + " found one named " + register_.Get(id).name);
+	Assert(register_.Get(id).name == name_,
+		"Searched for an entity named " + name_ + " found one named " + register_.Get(id).name);
 
 	return &EntitiesByName.at(name_)[0]; // using id yields the warning "returning address of local variable or temporary"
 }

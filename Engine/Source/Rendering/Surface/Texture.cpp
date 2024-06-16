@@ -11,12 +11,12 @@ Naming Texture::naming;
 
 void Texture::Setup(const std::string& filePath_)
 {
-	if (!OpenGlSetup::Initialized())
-		RaiseError("Texture cannot be setup before OpenGlSetup::Setup() is called.");
-	if (UuidCreator::IsInitialized(id))
-		RaiseError("Texture is already initialized");
-	if (!std::filesystem::exists(filePath_))
-		RaiseError("Cannot load texture at '" + filePath_ + "', since there is no file there.");
+	Assert(OpenGlSetup::Initialized(),
+		"Texture cannot be setup before OpenGlSetup::Setup() is called.");
+	Deny(UuidCreator::IsInitialized(id),
+		"Texture is already initialized");
+	Assert(std::filesystem::exists(filePath_),
+		"Cannot load texture at '" + filePath_ + "', since there is no file there.");
 
 	auto name = Tools::RemovePrefix(filePath_, Literals::Textures); // we assume that all textures are in the texture folder
 	if (!naming.Contains(name))
@@ -28,8 +28,8 @@ void Texture::Setup(const std::string& filePath_)
 	filePath = filePath_;
 	stbi_set_flip_vertically_on_load(1);
 	unsigned char* localBuffer = stbi_load(filePath.c_str(), &width, &height, &bytesPerPixel, 4); // 4 = channel count
-	if (!localBuffer)
-		RaiseError("Failed to load texture image " + filePath + " due to " + stbi_failure_reason());
+	Assert(localBuffer,
+		"Failed to load texture image " + filePath + " due to " + stbi_failure_reason());
 	glCall(glGenTextures(1, &openGLid));
 	glCall(glBindTexture(GL_TEXTURE_2D, openGLid));
 	
@@ -47,8 +47,8 @@ void Texture::Setup(const std::string& filePath_)
 
 void Texture::ShutDown()
 {
-	if (!UuidCreator::IsInitialized(id) && openGLid != 0)
-		RaiseError("Uninitialized Texture has openGLid != 0");
+	Assert(UuidCreator::IsInitialized(id) || openGLid == 0,
+		"Uninitialized Texture has openGLid != 0");
 	if (!UuidCreator::IsInitialized(id))
 		return;
 	glCall(glDeleteTextures(1, &openGLid));
@@ -57,8 +57,8 @@ void Texture::ShutDown()
 
 void Texture::Bind(unsigned int slot) const
 {
-	if (!UuidCreator::IsInitialized(id))
-		RaiseError("You cannot bind an uninitialized Texture");
+	Assert(UuidCreator::IsInitialized(id),
+		"You cannot bind an uninitialized Texture");
 
 	// GL_TEXTURE0 is an int, so GL_TEXTURE0 + slot gives another GL_TEXTURE enum value. 
 	glCall(glActiveTexture(GL_TEXTURE0 + slot));

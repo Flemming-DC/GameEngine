@@ -9,10 +9,10 @@ Register<IndexBuffer> IndexBuffer::register_;
 
 void IndexBuffer::Setup(const unsigned int* data, unsigned int count_)
 {
-    if (!OpenGlSetup::Initialized())
-        RaiseError("IndexBuffer cannot be setup before OpenGlSetup::Setup() is called.");
-    if (UuidCreator::IsInitialized(id))
-        RaiseError("IndexBuffer is already initialized");
+    Assert(OpenGlSetup::Initialized(),
+        "IndexBuffer cannot be setup before OpenGlSetup::Setup() is called.");
+    Deny(UuidCreator::IsInitialized(id),
+        "IndexBuffer is already initialized");
     id = UuidCreator::MakeID();
     static_assert(sizeof(unsigned int) == sizeof(GLuint),
         "IndexBuffer expects sizeof(unsigned int) == sizeof(GLuint)");
@@ -26,8 +26,8 @@ void IndexBuffer::Setup(const unsigned int* data, unsigned int count_)
 
 void IndexBuffer::ShutDown()
 {
-    if (!UuidCreator::IsInitialized(id) && openGLid != 0)
-        RaiseError("Uninitialized IndexBuffer has openGLid != 0");
+    Assert(UuidCreator::IsInitialized(id) || openGLid == 0,
+        "Uninitialized IndexBuffer has openGLid != 0");
     if (!UuidCreator::IsInitialized(id))
         return;
     glCall(glDeleteBuffers(1, &openGLid));
@@ -36,8 +36,8 @@ void IndexBuffer::ShutDown()
 
 void IndexBuffer::Bind() const
 {
-    if (!UuidCreator::IsInitialized(id))
-        RaiseError("You cannot bind an uninitialized IndexBuffer");
+    Assert(UuidCreator::IsInitialized(id),
+        "You cannot bind an uninitialized IndexBuffer");
     glCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, openGLid));
 }
 

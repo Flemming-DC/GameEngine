@@ -48,8 +48,8 @@ mat4 Camera::MakeOrthoProjection(float scale, float nearClipping, float farClipp
 
 glm::mat4 Camera::Projection() const
 {
-    if (!isProjectionInitialized)
-        RaiseError("projection must be initialized before it can be used.");
+    Assert(isProjectionInitialized,
+        "projection must be initialized before it can be used.");
     return projection;
 }
 
@@ -79,7 +79,7 @@ mat4 Camera::ProjectionView(vec3 cameraPos, quat cameraRot, vec3 cameraScale)
 
 Camera& Camera::Current()
 {
-    if (currentCamera == nullptr)
-        RaiseError("currentCamera is null. If you destroy the current camera, then you must set a new camera as the current one.");
+    Deny(currentCamera == nullptr,
+        "currentCamera is null. If you destroy the current camera, then you must set a new camera as the current one.");
     return *currentCamera;
 }

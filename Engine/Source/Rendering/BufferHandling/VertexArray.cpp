@@ -8,10 +8,10 @@ Register<VertexArray> VertexArray::register_;
 
 void VertexArray::Setup()
 {
-    if (!OpenGlSetup::Initialized())
-        RaiseError("VertexArray cannot be setup before OpenGlSetup::Setup() is called.");
-    if (UuidCreator::IsInitialized(id))
-        RaiseError("VertexArray is already initialized");
+    Assert(OpenGlSetup::Initialized(),
+        "VertexArray cannot be setup before OpenGlSetup::Setup() is called.");
+    Deny(UuidCreator::IsInitialized(id),
+        "VertexArray is already initialized");
     id = UuidCreator::MakeID();
     glCall(glGenVertexArrays(1, &openGLid));
     glCall(glBindVertexArray(openGLid));
@@ -21,8 +21,8 @@ void VertexArray::Setup()
 }
 void VertexArray::ShutDown()
 {
-    if (!UuidCreator::IsInitialized(id) && openGLid != 0)
-        RaiseError("Uninitialized VertexArray has openGLid != 0");
+    Assert(UuidCreator::IsInitialized(id) || openGLid == 0,
+        "Uninitialized VertexArray has openGLid != 0");
     if (!UuidCreator::IsInitialized(id))
         return;
     glCall(glDeleteVertexArrays(1, &openGLid));
@@ -44,8 +44,8 @@ void VertexArray::UnBind()
 
 void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexLayoutManager& layoutManager) const
 {
-    if (!UuidCreator::IsInitialized(id))
-        RaiseError("You cannot bind an uninitialized VertexArray");
+    Assert(UuidCreator::IsInitialized(id),
+        "You cannot bind an uninitialized VertexArray");
 
     Bind();
     vb.Bind();

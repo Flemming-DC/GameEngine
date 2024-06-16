@@ -8,10 +8,10 @@ Register<VertexBuffer> VertexBuffer::register_;
 
 void VertexBuffer::Setup(const void* data, unsigned int size)
 {
-    if (!OpenGlSetup::Initialized())
-        RaiseError("VertexBuffer cannot be setup before OpenGlSetup::Setup() is called.");
-    if (UuidCreator::IsInitialized(id))
-        RaiseError("VertexBuffer is already initialized");
+    Assert(OpenGlSetup::Initialized(),
+        "VertexBuffer cannot be setup before OpenGlSetup::Setup() is called.");
+    Deny(UuidCreator::IsInitialized(id),
+        "VertexBuffer is already initialized");
     id = UuidCreator::MakeID();
     // The use of pointers here can cause unexpected bugs, when copying
     // eg.g. vertexBuffer = VertexBuffer(...). use Setup() instead. 
@@ -23,8 +23,8 @@ void VertexBuffer::Setup(const void* data, unsigned int size)
 
 void VertexBuffer::ShutDown()
 {
-    if (!UuidCreator::IsInitialized(id) && openGLid != 0)
-        RaiseError("Uninitialized VertexBuffer has openGLid != 0");
+    Assert(UuidCreator::IsInitialized(id) || openGLid == 0,
+        "Uninitialized VertexBuffer has openGLid != 0");
     if (!UuidCreator::IsInitialized(id))
         return;
     glCall(glDeleteBuffers(1, &openGLid));
@@ -33,8 +33,8 @@ void VertexBuffer::ShutDown()
 
 void VertexBuffer::Bind() const
 {
-    if (!UuidCreator::IsInitialized(id))
-        RaiseError("You cannot bind an uninitialized VertexBuffer");
+    Assert(UuidCreator::IsInitialized(id),
+        "You cannot bind an uninitialized VertexBuffer");
     glCall(glBindBuffer(GL_ARRAY_BUFFER, openGLid));
 }
 

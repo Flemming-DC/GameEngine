@@ -18,15 +18,15 @@ namespace YmlTools
             return;
         if (hasExtension && parts.back() == "yaml")
             return;
-        if (hasExtension)
-            RaiseError("The socalled yml file '" + path + "', should end on .yml or .yaml, not " + parts.back());
+        Deny(hasExtension,
+            "The socalled yml file '" + path + "', should end on .yml or .yaml, not " + parts.back());
         path += ".yml";
     }
 
     void _CheckValidLocation(const string& path)
     {
-        if (!Tools::StartsWith(path, Literals::Res))
-            RaiseError("path is expected to start with '" + Literals::Res + "' received '" + path + "'");
+        Assert(Tools::StartsWith(path, Literals::Res),
+            "path is expected to start with '" + Literals::Res + "' received '" + path + "'");
     }
 
 
@@ -53,8 +53,8 @@ namespace YmlTools
     {
         _CheckValidLocation(path);
         _EnsureYMLsuffix(path);
-        if (!overwrite && std::filesystem::exists(path))
-            RaiseError("Cannot save yml to '" + path + "', since there is already a file there.");
+        Deny(!overwrite && std::filesystem::exists(path),
+            "Cannot save yml to '" + path + "', since there is already a file there.");
 
         // configure yaml file using emitter
         YAML::Emitter emitter;

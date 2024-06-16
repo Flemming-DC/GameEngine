@@ -149,11 +149,10 @@ void Transform::SetParent(Transform* newParent)
 
 vector<Transform*> Transform::GetChildren() const
 {
-	#ifdef _DEBUG
-	for (const auto& child : children)
-		if (!child)
-			RaiseError("child is null: ", to_string());
-	#endif // _DEBUG
+	InDebug(
+		for (const auto& child : children)
+			Assert(child, "child is null: " + to_string());
+	);
 
 	return children;
 }
@@ -242,8 +241,8 @@ void Transform::Load(const YAML::Node& node)
 	if (node["parent"])
 	{
 		auto parentID = node["parent"].as<uuid>();
-		if (!Entity::ExistsComponent(parentID))
-			RaiseError("parent not found. parentID = ", parentID);
+		Assert(Entity::ExistsComponent(parentID),
+			"parent not found. parentID = ", parentID);
 		SetParent(&Entity::GetComponent<Transform>(parentID));
 	}
 	localPosition = node["localPosition"].as<vec3>();

@@ -14,10 +14,10 @@ Overlaps NarrowPhase::GetOverlaps(Overlaps potentialOverlaps)
 
 	for (const auto& colliderPair : potentialOverlaps)
 	{
-		if (colliderPair.first == nullptr)
-			RaiseError("collider1 is nullptr");
-		if (colliderPair.second == nullptr)
-			RaiseError("collider2 is nullptr");
+		Deny(colliderPair.first == nullptr,
+			"collider1 is nullptr");
+		Deny(colliderPair.second == nullptr,
+			"collider2 is nullptr");
 		if (NarrowPhase::IsOverLapping(colliderPair.first->Bare(), colliderPair.second->Bare()))
 			overlaps.push_back(colliderPair);
 	}
@@ -98,9 +98,11 @@ bool NarrowPhase::IsOverLapping_CP(circle circle, poly polygon)
 		if (glm::HasNAN(circleNormal))
 			return true; // since minSqrDistance is tiny, then it can't be very wrong to return true.
 	}
-	else if (glm::HasNAN(circleNormal))
-		RaiseError("NAN encountered"); // if NAN occurs for reasons other than tiny minSqrDistance, then I dont know what to do.
-
+	else 
+	{
+		Deny(glm::HasNAN(circleNormal),
+			"NAN encountered"); // if NAN occurs for reasons other than tiny minSqrDistance, then I dont know what to do.
+	} 
 	pair<float, float> circleShadow = circle.ShadowAlongNormal(circleNormal);
 	auto polygonShadow = polygon.ShadowAlongNormal(circleNormal);
 	bool noOverlap = circleShadow.first > polygonShadow.second || polygonShadow.first > circleShadow.second;

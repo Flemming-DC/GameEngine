@@ -11,14 +11,14 @@ static bool initialized = false;
 
 void Setup() // initialized on first use
 {
-    if (initialized)
-        RaiseError("Attempting to initialize audio twice");
+    Deny(initialized,
+        "Attempting to initialize audio twice");
     initialized = true;
     engineConfig = ma_engine_config_init();
     engineConfig.listenerCount = 1;
     ma_result result = ma_engine_init(&engineConfig, &engine);
-    if (result != MA_SUCCESS)
-        RaiseError("Failed to initialize audio engine. ", result);
+    Assert(result == MA_SUCCESS,
+        "Failed to initialize audio engine. ", result);
 
 }
 
@@ -26,13 +26,13 @@ void Audio::Play(const string& filePath)
 {
     if (!initialized)
         Setup();
-    if (!std::filesystem::exists(filePath))
-        RaiseError("Cannot play audioFile, since it does not exist. ", filePath);
+    Assert(std::filesystem::exists(filePath),
+        "Cannot play audioFile, since it does not exist. ", filePath);
 
     ma_result result = ma_engine_play_sound(&Audio::Engine(), filePath.c_str(), nullptr);
 
-    if (result != MA_SUCCESS)
-        Warning("Failed to play sound. ", result);
+    Assert(result == MA_SUCCESS,
+        "Failed to play sound. ", result);
 }
 
 ma_engine& Audio::Engine() 

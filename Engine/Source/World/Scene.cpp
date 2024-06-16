@@ -146,8 +146,8 @@ void Scene::Load()
 void Scene::Save()
 {
     Scene& scene = *activeScene;
-    if (!UuidCreator::IsInitialized(scene.id))
-        RaiseError("You are trying to save a scene with an uninitialized id");
+    Assert(UuidCreator::IsInitialized(scene.id),
+        "You are trying to save a scene with an uninitialized id");
 
     NamingSaver::Save();
     Node sceneYML;
