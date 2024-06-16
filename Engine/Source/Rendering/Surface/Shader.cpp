@@ -13,10 +13,11 @@
 
 // ---------------- public ----------------
 Register<Shader> Shader::register_;
+Shorts;
 
 
 
-void Shader::Setup(const std::string& filePath)
+void Shader::Setup(const string& filePath)
 {
     Assert(OpenGlSetup::Initialized(),
         "Shader cannot be setup before OpenGlSetup::Setup() is called.");
@@ -63,49 +64,46 @@ void Shader::UnBind()
     glCall(glUseProgram(0));
 }
 
-void Shader::SetUniform(const std::string& name, std::any value)
+void Shader::SetUniform(const string& name, std::any value)
 {
-    std::string type = uniformTypesByName[name];
-    if (type == "int")
-        SetUniformInt(name, std::any_cast<int>(value));
-    else if (type == "vec4")
-        SetUniformVec4(name, std::any_cast<glm::vec4>(value));
-    else if (type == "mat4")
-        SetUniformMat4(name, std::any_cast<glm::mat4>(value));
-    else if (type == "sampler2D")
-        SetUniformTexture(name);
-    else
+    UniformType type = uniformTypesByName[name];
+    switch (type)
     {
-        type = type == "" ? "blank" : type;
+    case UniformType::int_:       SetUniformInt(name,  std::any_cast<int>(value));  break;
+    case UniformType::vec4_:      SetUniformVec4(name, std::any_cast<vec4>(value)); break;
+    case UniformType::mat4_:      SetUniformMat4(name, std::any_cast<mat4>(value)); break;
+    case UniformType::sampler2D_: SetUniformTexture(name);                          break;
+    default:
         RaiseError(
-            "Unrecognized type " + type + " for uniform " + name + "\n"
+            "Unrecognized type ", type, " for uniform " + name + "\n"
             "Consider creating an additional SetUniformXXX function to deal with it.");
+        break;
     }
 }
 
-std::string Shader::to_string() const
+string Shader::to_string() const
 {
-    std::string newline = "\n    ";
-    std::string out = "Shader:" + newline;
+    string newline = "\n    ";
+    string out = "Shader:" + newline;
 
-    std::string locationByNameStr = "{ ";
-    for (const auto& pair : locationByName)
-        locationByNameStr += pair.first + ": " + std::to_string(pair.second) + ", ";
+    string locationByNameStr = "{ ";
+    for (const auto& [name, location] : locationByName)
+        locationByNameStr += name + ": " + std::to_string(location) + ", ";
     locationByNameStr += "}";
 
-    std::string idByFilePathStr = "{ ";
-    for (const auto& pair : idByFilePath)
-        idByFilePathStr += pair.first + ": " + std::to_string(pair.second) + ", ";
+    string idByFilePathStr = "{ ";
+    for (const auto& [filePath, id_] : idByFilePath)
+        idByFilePathStr += filePath + ": " + std::to_string(id_) + ", ";
     idByFilePathStr += "}";
 
-    std::string uniformTypesByNameStr = "{ ";
-    for (const auto& pair : uniformTypesByName)
-        uniformTypesByNameStr += pair.first + ": " + pair.second + ", ";
+    string uniformTypesByNameStr = "{ ";
+    for (const auto& [name, type] : uniformTypesByName)
+        uniformTypesByNameStr += name + ": " + logger::to_string(type) + ", ";
     uniformTypesByNameStr += "}";
 
-    std::string textureSlotsByNameStr = "{ ";
-    for (const auto& pair : textureSlotsByName)
-        textureSlotsByNameStr += pair.first + ": " + std::to_string(pair.second) + ", ";
+    string textureSlotsByNameStr = "{ ";
+    for (const auto& [name, texSlot] : textureSlotsByName)
+        textureSlotsByNameStr += name + ": " + std::to_string(texSlot) + ", ";
     textureSlotsByNameStr += "}";
 
     int boundOpenGLid;
@@ -125,27 +123,27 @@ std::string Shader::to_string() const
 // ---------------- private ----------------
 
 // ---------- internal uniform functions ----------
-void Shader::SetUniformInt(const std::string& name, int i)
+void Shader::SetUniformInt(const string& name, int i)
 {
     glCall(glUniform1i(GetUniformLocation(name), i));
 }
-void Shader::SetUniformVec4(const std::string& name, const glm::vec4& vector4)
+void Shader::SetUniformVec4(const string& name, const vec4& vector4)
 {
     glCall(glUniform4f(GetUniformLocation(name), vector4.r, vector4.g, vector4.b, vector4.a));
 }
-void Shader::SetUniformMat4(const std::string& name, const glm::mat4& matrix)
+void Shader::SetUniformMat4(const string& name, const mat4& matrix)
 {
     auto pointerToStartOfMatrix = &matrix[0][0];
     glCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, pointerToStartOfMatrix));
 }
-void Shader::SetUniformTexture(const std::string& name)
+void Shader::SetUniformTexture(const string& name)
 {
     glCall(glUniform1i(GetUniformLocation(name), textureSlotsByName[name]));
 }
 
 
 
-int Shader::GetUniformLocation(const std::string& name)
+int Shader::GetUniformLocation(const string& name)
 {
     if (locationByName.find(name) != locationByName.end())
         return locationByName[name];
@@ -161,7 +159,7 @@ int Shader::GetUniformLocation(const std::string& name)
 
 // ---------- parsing ----------
 
-void Shader::CheckFilePath(const std::string& filePath)
+void Shader::CheckFilePath(const string& filePath)
 {
     bool fileExists = std::filesystem::exists(filePath) && std::filesystem::is_regular_file(filePath);
     Assert(fileExists,
@@ -172,7 +170,7 @@ void Shader::CheckFilePath(const std::string& filePath)
         "The shader filePath doesnt have the expected .shader extension " + filePath);
 }
 
-void Shader::FindUniforms(const std::string& filePath)
+void Shader::FindUniforms(const string& filePath)
 {
     using namespace std;
     ifstream stream(filePath);
@@ -188,30 +186,48 @@ void Shader::FindUniforms(const std::string& filePath)
             // Parse uniform name from the line (simplified, assumes specific format)
             string uniform = line.substr(line.find(" ") + 1, line.find(";") - line.find(" ") - 1);
             vector<string> typeAndName = Tools::SplitString(uniform, " ");
-            Assert(typeAndName.size() == 2,                
-                "Expected typeAndName of uniform to have exactly two elements.\n"
-                "uniform = " + uniform);
-            uniformTypesByName[typeAndName[1]] = typeAndName[0];
-            if (typeAndName[1].find("sampler2D") != string::npos) // what about 1D and 3D ?? evt. drop dimensionality suffix
-                textureSlotsByName[typeAndName[0]] = textureSlotsByName.size(); // this counts up like an ID: 0,1,2...
+            Assert(typeAndName.size() == 2,
+                "Expected typeAndName of uniform to have exactly two elements. \nuniform = " + uniform);
+            
+            string& typeStr = typeAndName[0];
+            string& name = typeAndName[1];
+
+            if (typeStr == "int")
+                uniformTypesByName[name] = UniformType::int_;
+            else if (typeStr == "vec4")
+                uniformTypesByName[name] = UniformType::vec4_;
+            else if (typeStr == "mat4")
+                uniformTypesByName[name] = UniformType::mat4_;
+            else if (typeStr == "sampler2D")
+                uniformTypesByName[name] = UniformType::sampler2D_;
+            else
+            {
+                typeStr = typeStr == "" ? "blank" : typeStr;
+                RaiseError(
+                    "Unrecognized type " + typeStr + " for uniform " + name + "\n"
+                    "Consider creating an additional SetUniformXXX function to deal with it.");
+            }
+            
+            if (name.find("sampler2D") != string::npos) // what about 1D and 3D ?? evt. drop dimensionality suffix
+                textureSlotsByName[typeStr] = textureSlotsByName.size(); // this counts up like an ID: 0,1,2...
         }
     }
 }
 
-ShaderStrings Shader::ParseShader(const std::string& filePath)
+ShaderStrings Shader::ParseShader(const string& filePath)
 {
     std::ifstream stream(filePath);
-    std::string line;
+    string line;
     std::stringstream parsedShader[2];
     enum class ShaderType { none = -1, vertex = 0, fragment = 1 };
     ShaderType shaderType = ShaderType::none;
     while (getline(stream, line))
     {
-        if (line.find("#shader") != std::string::npos)
+        if (line.find("#shader") != string::npos)
         {
-            if (line.find("vertex") != std::string::npos)
+            if (line.find("vertex") != string::npos)
                 shaderType = ShaderType::vertex;
-            else if (line.find("fragment") != std::string::npos)
+            else if (line.find("fragment") != string::npos)
                 shaderType = ShaderType::fragment;
             else
                 RaiseError("Failed to parse shader. Unrecognized shader type.");
@@ -228,7 +244,7 @@ ShaderStrings Shader::ParseShader(const std::string& filePath)
     return { parsedShader[0].str(), parsedShader[1].str() };
 }
 
-unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
+unsigned int Shader::CompileShader(unsigned int type, const string& source)
 {
     // compiling shader
     glCall(unsigned int subShaderID = glCreateShader(type));
@@ -255,7 +271,7 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
     return subShaderID;
 }
 
-unsigned int Shader::CreateShaderProgram(const std::string& vertexShader, const std::string& fragmentShader)
+unsigned int Shader::CreateShaderProgram(const string& vertexShader, const string& fragmentShader)
 {
     glCall(unsigned int shaderID = glCreateProgram());
     unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);

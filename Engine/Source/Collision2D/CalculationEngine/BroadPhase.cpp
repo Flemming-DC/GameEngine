@@ -21,14 +21,14 @@ void PrintAndResetTimes()
 {
 	if (times.empty())
 		return;
-	
+	/*
 	P("times:");
 	double total = duration(times.back().second - times[0].second).count();
 	for (int i = 1; i < (int)times.size(); i++)
 	{
 		double dur = duration(times[i].second - times[i - 1].second).count();
 		P("    ", times[i].first, " | ", dur / total);
-	}
+	}*/
 	times.clear();
 }
 

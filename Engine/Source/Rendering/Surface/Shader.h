@@ -1,8 +1,5 @@
 #pragma once
-#include <string>
-#include <unordered_map>
 #include <any>
-#include <stduuid/uuid.h>
 #include "glm/glm.hpp"
 #include "Register.h"
 #include "UuidCreator.h"
@@ -13,43 +10,45 @@ struct ShaderStrings
 	std::string vertexShader;
 	std::string fragmentShader;
 };
+enum class UniformType { int_, vec4_, mat4_, sampler2D_, };
 
 class Shader
 {
 public:
+	Shorts;
 	static Register<Shader> register_;
 
 	Shader() { }
-	Shader(const std::string& filePath) { Setup(filePath); }
+	Shader(const string& filePath) { Setup(filePath); }
 	void ShutDown();
-	void Setup(const std::string& filePath);
+	void Setup(const string& filePath);
 	void Bind() const;
 	static void UnBind();
-	void SetUniform(const std::string& name, std::any value);
-	std::string GetPath() const { return path; }
-	std::unordered_map<std::string, std::string> GetUniformTypesByName() const { return uniformTypesByName; }
-	int GetTextureSlot(std::string uniformName) { return textureSlotsByName[uniformName]; }
-	inline uuids::uuid GetID() const { return id; }
-	std::string to_string() const;
+	void SetUniform(const string& name, std::any value);
+	const string& GetPath() const { return path; }
+	map_uo<string, UniformType> GetUniformTypesByName() const { return uniformTypesByName; }
+	int GetTextureSlot(const string& uniformName) { return textureSlotsByName[uniformName]; }
+	inline uuid GetID() const { return id; }
+	string to_string() const;
 
 private:
-	uuids::uuid id; 
-	std::string path = "";
-	unsigned int openGLid = 0;
-	std::unordered_map<std::string, int> locationByName;
-	std::unordered_map<std::string, int> idByFilePath;
-	std::unordered_map<std::string, std::string> uniformTypesByName;
-	std::unordered_map<std::string, int> textureSlotsByName;
+	uuid id; 
+	string path = "";
+	uint openGLid = 0;
+	map_uo<string, int> locationByName;
+	map_uo<string, int> idByFilePath;
+	map_uo<string, UniformType> uniformTypesByName;
+	map_uo<string, int> textureSlotsByName;
 
-	void SetUniformInt(const std::string& name, int i);
-	void SetUniformVec4(const std::string& name, const glm::vec4& vector4);
-	void SetUniformMat4(const std::string& name, const glm::mat4& matrix);
-	void SetUniformTexture(const std::string& name);
+	void SetUniformInt(const string& name, int i);
+	void SetUniformVec4(const string& name, const vec4& vector4);
+	void SetUniformMat4(const string& name, const mat4& matrix);
+	void SetUniformTexture(const string& name);
 
-	void CheckFilePath(const std::string& filePath);
-	int GetUniformLocation(const std::string& name);
-	ShaderStrings ParseShader(const std::string& filePath); // splits the shader into a vertex shader and a fragment shader
-	void FindUniforms(const std::string& shaderSource);
-	unsigned int CompileShader(unsigned int type, const std::string& source); // returns id for subShader
-	unsigned int CreateShaderProgram(const std::string& vertexShader, const std::string& fragmentShader); // returns id for full shader
+	void CheckFilePath(const string& filePath);
+	int GetUniformLocation(const string& name);
+	ShaderStrings ParseShader(const string& filePath); // splits the shader into a vertex shader and a fragment shader
+	void FindUniforms(const string& shaderSource);
+	unsigned int CompileShader(uint type, const string& source); // returns id for subShader
+	unsigned int CreateShaderProgram(const string& vertexShader, const string& fragmentShader); // returns id for full shader
 };

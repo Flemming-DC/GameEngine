@@ -23,7 +23,7 @@ void Material::Setup(string name, const Shader& shader_, const map_uo<string, st
     id = naming.at(name);
     shader = shader_;
     uniformValuesByName = uniformValuesByName_;
-    CheckUniforms();
+    InDebug(CheckUniforms());
     SetupTexturesByName();
     Bind(true);
 }
@@ -38,8 +38,19 @@ void Material::SetUniform(const string& name, std::any value)
         "The material contains the following uniforms\n" + 
         logger::to_string(Tools::GetKeys(uniformValuesByName))
         );
+    Assert(uniformValuesByName.at(name).type() == value.type() 
+        || uniformValuesByName.at(name).type() == typeid(MissingUniform),
+        "Trying to change the type of the (non-missing) uniform " + name
+        );
+
     uniformValuesByName[name] = value;
-    SetupTexturesByName();
+    
+    if (value.type() == typeid(Texture*))
+    {
+        Texture* texturePtr = std::any_cast<Texture*>(value);
+        Assert(texturePtr, "texturePtr is null");
+        texturesByName[name] = texturePtr;
+    }
 }
 
 void Material::SetTexture(const string& uniformName, uuid texID)
@@ -73,25 +84,20 @@ void Material::Bind(bool allowMissingUniforms)
         "You cannot bind an uninitialized Material");
 
     using namespace std;
-    for (auto pair : texturesByName)
-        pair.second->Bind(shader.GetTextureSlot(pair.first));
+    for (const auto& [name, tex] : texturesByName)
+        tex->Bind(shader.GetTextureSlot(name));
     shader.Bind();
 
-    for (const auto& pair : uniformValuesByName)
+    for (const auto& [name, value] : uniformValuesByName)
     {
-        string name = pair.first;
-        any value = pair.second;
         bool hasValue = value.has_value() && value.type() != typeid(MissingUniform);
-        
-        if (!hasValue)
-        {
-            if (allowMissingUniforms)
-                continue;
-            RaiseError(
-                "Material is being bound, while uniform lacks a value:\n"
-                "    uniform = " + name + "\n"
-                "    shader = " + shader.GetPath());
-        }
+        if (allowMissingUniforms && !hasValue)
+            continue;
+        Assert(hasValue,
+            "Material is being bound, while uniform lacks a value:\n"
+            "    uniform = " + name + "\n"
+            "    shader = " + shader.GetPath()
+        );
         
         shader.SetUniform(name, value);
     }
@@ -111,19 +117,17 @@ void Material::UnBind()
 
 void Material::CheckUniforms()
 {
-    for (const auto& pair : uniformValuesByName)
+    for (const auto& [name, _] : uniformValuesByName)
     {
-        std::string name = pair.first;
         if (!Tools::ContainsKey(shader.GetUniformTypesByName(), name))
             Warning(
                 "Material contains a uniform named " + name + ", even though this uniform doesn't exist in the shader.");
     }
-    for (const auto& pair : shader.GetUniformTypesByName())
+    for (const auto& [name, _] : shader.GetUniformTypesByName())
     {
-        std::string name = pair.first;
         // we add "u_MVP": MissingUniform ourselves, since its an implementation detail.
         if (name == "u_MVP" && !Tools::ContainsKey(uniformValuesByName, name))
-            uniformValuesByName["u_MVP"] = MissingUniform(); 
+            uniformValuesByName["u_MVP"] = MissingUniform();
         else 
         {
             Assert(Tools::ContainsKey(uniformValuesByName, name),
@@ -135,14 +139,15 @@ void Material::CheckUniforms()
 void Material::SetupTexturesByName()
 {
     texturesByName.clear();
-    for (const auto& pair : uniformValuesByName)
+    for (const auto& [name, value] : uniformValuesByName)
     {
-        if (pair.second.type() == typeid(Texture*))
+        if (value.type() == typeid(Texture*))
         {
-            Texture* texturePtr = std::any_cast<Texture*>(pair.second);
-            if (texturePtr)
-                texturesByName[pair.first] = texturePtr;
-        }
+            Texture* texturePtr = std::any_cast<Texture*>(value);
+            Assert(texturePtr, "texturePtr is null");
+            texturesByName[name] = texturePtr;
+        } 
+        else { Deny(name == Literals::u_textureSampler, "u_textureSampler should be a texture"); }
     }
 }
 
