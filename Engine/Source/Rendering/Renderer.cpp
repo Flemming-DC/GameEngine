@@ -16,22 +16,37 @@ Shorts
 FrameBuffer Renderer::frameBuffer;
 
 
-Renderer::RenderResult Renderer::DrawToFrameBuffer(vec3 cameraPos, quat cameraRot, vec3 cameraScale)
-{ 
+Renderer::RenderResult Renderer::DrawToFrameBuffer(
+    vec3 cameraPos, quat cameraRot, vec3 cameraScale, vec2 screenMinCorner, vec2 screenMaxCorner)
+{
+    vec2 upperLeft = Screen::ToWorldPosition(screenMinCorner,
+        screenMinCorner, screenMaxCorner, cameraPos, cameraRot, cameraScale);
+    vec2 lowerRight = Screen::ToWorldPosition(screenMaxCorner,
+        screenMinCorner, screenMaxCorner, cameraPos, cameraRot, cameraScale);
+    RenderBoundingBox viewBounds = { upperLeft.x, lowerRight.y, lowerRight.x, upperLeft.y, };
+
     mat4 projView = Camera::ProjectionView(cameraPos, cameraRot, cameraScale);
-    return DrawToFrameBuffer(projView); 
+    return DrawToFrameBuffer(projView, viewBounds);
 }
 Renderer::RenderResult Renderer::DrawToFrameBuffer() 
-{ 
-    return DrawToFrameBuffer(Camera::Current().ProjectionView()); 
+{
+    vec2 min = Screen::ToWorldPosition(vec2(0.0f, 0.0f));
+    vec2 max = Screen::ToWorldPosition(vec2(OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight()));
+    RenderBoundingBox viewBounds = { min.x, min.y, max.x, max.y, };
+
+    return DrawToFrameBuffer(Camera::Current().ProjectionView(), viewBounds);
 }
 void Renderer::DrawToScreen() 
-{ 
-    DrawToScreen(Camera::Current().ProjectionView()); 
+{
+    vec2 min = Screen::ToWorldPosition(vec2(0.0f, 0.0f));
+    vec2 max = Screen::ToWorldPosition(vec2(OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight()));
+    RenderBoundingBox viewBounds = { min.x, min.y, max.x, max.y, };
+
+    DrawToScreen(Camera::Current().ProjectionView(), viewBounds);
 }
 
 
-Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView)
+Renderer::RenderResult Renderer::DrawToFrameBuffer(const mat4& projectionView, const RenderBoundingBox& viewBounds)
 {
     if (!UuidCreator::IsInitialized(frameBuffer.GetID()))
         frameBuffer = FrameBuffer::register_.Add(OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight());
@@ -43,34 +58,31 @@ Renderer::RenderResult Renderer::DrawToFrameBuffer(mat4 projectionView)
 
     frameBuffer.Bind();
     glCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-    Renderer::DrawToScreen(projectionView);
+    Renderer::DrawToScreen(projectionView, viewBounds);
     frameBuffer.UnBind();
     return { frameBuffer.GetTextureOpenGLid(), OpenGlSetup::GetWidth(), OpenGlSetup::GetHeight() };
 }
 
 
-void Renderer::DrawToScreen(mat4 projectionView)
+void Renderer::DrawToScreen(const mat4& projectionView, const RenderBoundingBox& viewBounds)
 {
-    ProfileFunc;
-    ProfileLine(
-        glCall(glClear(GL_COLOR_BUFFER_BIT)); // same as renderer.Clear()
-        Renderable::UnBind(); //  evt. add framebuffer unbind
-    );
-    // sorting (inefficient)
-    ProfileLine(
-        vector<Renderable*> renderables;
-        for (const uuid& renderableID : Renderable::allRenderables)
-            renderables.push_back(&Entity::GetComponent<Renderable>(renderableID));
-        struct SortByOrder {
-            bool operator() (Renderable* lhs, Renderable* rhs) const
-                { return lhs->DrawOrder() < rhs->DrawOrder(); } };
-        std::sort(renderables.begin(), renderables.end(), SortByOrder());
-    );
+    glCall(glClear(GL_COLOR_BUFFER_BIT)); // same as renderer.Clear()
+    Renderable::UnBind(); //  evt. add framebuffer unbind
+
+    vector<Renderable*> renderables;
+    for (const uuid& renderableID : Renderable::allRenderables)
+        renderables.push_back(&Entity::GetComponent<Renderable>(renderableID));
+    struct SortByOrder {
+        bool operator() (Renderable* lhs, Renderable* rhs) const
+            { return lhs->DrawOrder() < rhs->DrawOrder(); } };
+    std::sort(renderables.begin(), renderables.end(), SortByOrder());
+    
     // drawing
-    ProfileLine(
-        for (Renderable* rend : renderables)
+    for (Renderable* rend : renderables)
+    {
+        if (rend->IsInView(viewBounds))
             rend->Draw(projectionView);
-    );
+    }
     
     Screen::ApplyCursorState();
 }

@@ -2,6 +2,7 @@
 #include "OpenGlError.h"
 #include "EngineAssets.h"
 #include "EngineLiterals.h"
+#include "Camera.h"
 #include "ListTools.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -27,24 +28,19 @@ void Renderable::OnDestroy()
 }
 
 
-void _DoNothing() {}
-
 void Renderable::Draw(const mat4& projectionView)
 {
-    ProfileFunc;
-    ProfileLine(_DoNothing());
-    ProfileLine(
-        if (!IsFullyEnabled())
-            return;
-    );
+    if (!IsFullyEnabled())
+        return;
+    // if not in view then return;
     Assert(UuidCreator::IsInitialized(material.GetID()) && UuidCreator::IsInitialized(mesh.GetID()),
         "you must setup the mesh and material on the renderable, before drawing it.");
-    ProfileLine(mat4 model = GetTransform().GetModel();); // this is inefficient
-    ProfileLine(material.SetUniform("u_MVP", projectionView * model););
-    ProfileLine(material.Bind(););
-    ProfileLine(mesh.Bind(););
+    mat4 model = GetTransform().GetModel(); // this is inefficient
+    material.SetUniform("u_MVP", projectionView * model);
+    material.Bind();
+    mesh.Bind();
     // GL_TRIANGLES should be soft coded if we want to support other things.
-    ProfileLine(glCall(glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr)););
+    glCall(glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr));
 }
 
 
@@ -52,6 +48,21 @@ void Renderable::UnBind()
 {
     Mesh::UnBind();
     Material::UnBind();
+}
+
+
+bool Renderable::IsInView(const RenderBoundingBox& ViewBounds)
+{
+    // this checks AABB overlap between two bounding boxes 
+    // pos and mesh.MaxExtention() forms the corners of the other box
+    vec2 pos = GetTransform().Position2D();
+
+    if (ViewBounds.maxX < pos.x - mesh.MaxExtention()) return false;
+    if (ViewBounds.minX > pos.x + mesh.MaxExtention()) return false;
+    if (ViewBounds.maxY < pos.y - mesh.MaxExtention()) return false;
+    if (ViewBounds.minY > pos.y + mesh.MaxExtention()) return false;
+
+    return true;
 }
 
 
@@ -108,4 +119,5 @@ void Renderable::Load(const Node& node)
 
     drawOrder = node["drawOrder"].as<int>();
 }
+
 

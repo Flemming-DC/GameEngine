@@ -17,5 +17,7 @@ namespace Editor
 		static glm::vec3 Position();
 		static glm::quat Rotation();
 		static glm::vec3 Scale();
+		static glm::vec2 MinSceneCorner();
+		static glm::vec2 MaxSceneCorner();
 	};
 }

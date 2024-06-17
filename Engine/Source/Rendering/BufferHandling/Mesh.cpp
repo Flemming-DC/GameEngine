@@ -29,6 +29,14 @@ void Mesh::Setup(string name, const vector<float>& vertices_, const vector<unsig
     vertices = vertices_;
     indices = indices_;
     layout = layout_;
+
+    float safetyFactor = 1.1f;
+    for (const vec2 pos : FindPositions2D())
+    {
+        if (glm::SqrMagnitude(pos) > maxExtention * maxExtention)
+            maxExtention = safetyFactor * glm::Magnitude(pos);
+    }
+    
 }
 
 

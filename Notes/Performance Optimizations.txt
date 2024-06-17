@@ -18,3 +18,4 @@ optimizations:
 	compile yml to binary when exporting the game
 	texture atlasses
 	use gpu compressed textures
+	frustrum culling i.e. dont render objects that are out of view

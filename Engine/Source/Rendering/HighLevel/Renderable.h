@@ -5,6 +5,10 @@
 #include "Transform.h"
 #include "Component.h"
 
+struct RenderBoundingBox
+{
+	float minX, minY, maxX, maxY;
+};
 
 // evt. use batch-rendering
 class Renderable : public Component
@@ -24,6 +28,7 @@ public:
 	int InitOrder() override { return -1200; }
 	inline int DrawOrder() const { return drawOrder; }
 	inline void SetDrawOrder(int drawOrder_) { drawOrder = drawOrder_; }
+	bool IsInView(const RenderBoundingBox& ViewBounds);
 	
 private:
 	Mesh mesh;

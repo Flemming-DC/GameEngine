@@ -2,47 +2,27 @@
 C:\Mine\cpp\GameEngine\Engine\Source\Core\Core.cpp.Update
     line                               | ms/call   | percent
     --------------------------------------------------------
-    56: OpenGlSetup::Update()          | 0.122     | 1.435 %
-    57: ImGuiSetup::EarlyUpdate()      | 0.223     | 2.620 %
-    58: Time::Update()                 | 0.013     | 0.158 %
-    63: CollisionLoop::Update()        | 1.830     | 21.50 %
-    64: Dynamic::CallOnUpdate()        | 0.126     | 1.490 %
-    65: Entity::Update()               | 0.256     | 3.011 %
-    66: Renderer::DrawToScreen()       | 2.105     | 24.73 %
-    69: Dynamic::CallOnEditorUpdate()  | 3.228     | 37.92 %
-    70: Entity::DestroyTheDoomed()     | 0.038     | 0.449 %
-    72: StopRunningGame()              | 0.012     | 0.150 %
-    73: Delay::Update()                | 0.044     | 0.527 %
-    76: InputLoop::LateUpdate()        | 0.056     | 0.667 %
-    77: ImGuiSetup::LateUpdate()       | 0.445     | 5.234 %
-    total                              | 8.512     | 100.0 % (1410.000000 hits) 
-
-C:\Mine\cpp\GameEngine\Engine\Source\Rendering\Renderer.cpp.DrawToScreen
-    line                               | ms/call   | percent
-    --------------------------------------------------------
-    58: glCall(glClear(GL_COLOR_BUF... | 0.017     | 0.875 %
-    68: vector<Renderable*> rendera... | 0.037     | 1.825 %
-    73: for (Renderable* rend : ren... | 1.986     | 96.80 %
-    total                              | 2.052     | 100.0 % (2820.000000 hits) 
-
-C:\Mine\cpp\GameEngine\Engine\Source\Rendering\HighLevel\Renderable.cpp.Draw
-    line                               | ms/call   | percent
-    --------------------------------------------------------
-    35: _DoNothing()                   | 0.005     | 4.927 %
-    39: if (!IsFullyEnabled()) return; | 0.011     | 10.08 %
-    42: mat4 model = GetTransform()... | 0.021     | 18.68 %
-    43: material.SetUniform("u_MVP"... | 0.017     | 15.43 %
-    44: material.Bind();               | 0.021     | 18.47 %
-    45: mesh.Bind();                   | 0.013     | 11.45 %
-    47: glCall(glDrawElements(GL_TR... | 0.013     | 11.90 %
-    total                              | 0.113     | 100.0 % (46470.000000 hits) 
+    56: OpenGlSetup::Update()          | 0.145     | 1.894 %
+    57: ImGuiSetup::EarlyUpdate()      | 0.264     | 3.438 %
+    58: Time::Update()                 | 0.015     | 0.204 %
+    63: CollisionLoop::Update()        | 2.943     | 38.23 %
+    64: Dynamic::CallOnUpdate()        | 0.124     | 1.610 %
+    65: Entity::Update()               | 0.418     | 5.434 %
+    66: Renderer::DrawToScreen()       | 1.200     | 15.59 %
+    69: Dynamic::CallOnEditorUpdate()  | 1.981     | 25.74 %
+    70: Entity::DestroyTheDoomed()     | 0.055     | 0.723 %
+    72: StopRunningGame()              | 0.013     | 0.171 %
+    73: Delay::Update()                | 0.017     | 0.232 %
+    76: InputLoop::LateUpdate()        | 0.060     | 0.792 %
+    77: ImGuiSetup::LateUpdate()       | 0.443     | 5.760 %
+    total                              | 7.698     | 100.0 % (3041.000000 hits) 
 
 C:\Mine\cpp\GameEngine\Engine\Source\Collision2D\CalculationEngine\CollisionLoop.cpp.Update
     line                               | ms/call   | percent
     --------------------------------------------------------
-    20: PruneDeadColliders();          | 0.007     | 0.420 %
-    21: auto potentialNewOverlaps =... | 1.351     | 74.64 %
-    22: auto newOverlaps = NarrowPh... | 0.157     | 8.679 %
-    23: HandleCollisionInfo(newOver... | 0.283     | 15.64 %
-    total                              | 1.810     | 100.0 % (1410.000000 hits) 
+    20: PruneDeadColliders();          | 0.008     | 0.305 %
+    21: auto potentialNewOverlaps =... | 2.304     | 78.87 %
+    22: auto newOverlaps = NarrowPh... | 0.279     | 9.569 %
+    23: HandleCollisionInfo(newOver... | 0.317     | 10.86 %
+    total                              | 2.922     | 100.0 % (3041.000000 hits) 
 

@@ -68,4 +68,6 @@ vec2 SceneCamera::FromWorldPosition(vec2 worldPosition)
 vec3 SceneCamera::Position() { return cameraPos; }
 quat SceneCamera::Rotation() { return cameraRot; }
 vec3 SceneCamera::Scale() { return cameraScale; }
+vec2 SceneCamera::MinSceneCorner() { return minSceneCorner;}
+vec2 SceneCamera::MaxSceneCorner() { return maxSceneCorner;}
 

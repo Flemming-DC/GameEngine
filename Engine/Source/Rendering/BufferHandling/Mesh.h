@@ -26,6 +26,7 @@ public:
     void Bind() const;
     static void UnBind();
     inline unsigned int GetIndexCount() const { return indexBuffer.GetCount(); }
+    inline float MaxExtention() const { return maxExtention; }
     uuid GetID() const { return id; }
     string to_string() const;
     vector<vec2> FindPositions2D();
@@ -42,7 +43,7 @@ private:
     vector<float> vertices;
     vector<unsigned int> indices; // for debug only. You could save space by removing them rfom release build
     VertexLayout layout; // for debug only. You could save space by removing them rfom release build
-    
+    float maxExtention = 0; // distance to the most remote vertex
 
 };
 
