@@ -44,13 +44,13 @@ public:
 	vec3 GetScale() const;
 	mat4 GetModel() const;
 	mat4 GetInverseModel() const; // probably only used by camera
-	Transform* Parent() const;
 	void SetParent(Transform* newParent);
 	vector<Transform*> GetChildren() const;
 	string GetPath() const; // could also be called to_string
 	bool IsDescendantOf(const Transform& putativeAncestor) const;
-	bool IsTransformFullyEnabled() const;
+	inline bool IsTransformFullyEnabled() const { return Enabled() && (!HasParent() || Parent().IsTransformFullyEnabled()); }
 	Transform& Root();
+	inline bool HasParent() const { return UuidCreator::IsInitialized(parentID); }
 	// get forward, backward, right, left, up, down
 
 	//glm::vec2 As2D
@@ -76,7 +76,9 @@ private:
 	void OnDestroy() override;
 	mat4 GetLocalModel() const;
 	mat4 GetInverseLocalModel() const; // probably only used by camera
-	void SetLocalDataUsingMatrix(const mat4& transform); 
+	void SetLocalDataUsingMatrix(const mat4& transform);
+	Transform* TryParent() const;
+	inline Transform& Parent() const { return Entity::GetComponent<Transform>(parentID); }
 
 };
 

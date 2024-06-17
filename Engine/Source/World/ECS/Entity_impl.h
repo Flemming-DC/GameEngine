@@ -85,6 +85,7 @@ ComponentType& Entity::GetComponent(uuids::uuid id_)
 	ComponentType* afterCast = dynamic_cast<ComponentType*>(componentByID.at(id_));
 	Assert(afterCast,
 		"Failed to find " + Tools::TypeName<ComponentType>() + " with id ", id_);
+
 	return *afterCast;
 }
 

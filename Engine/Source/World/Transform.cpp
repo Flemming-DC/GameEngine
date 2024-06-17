@@ -87,42 +87,42 @@ void Transform::SetScale(vec3 scale)
 
 vec3 Transform::GetPosition() const
 {
-	if (Parent() == nullptr)
+	if (!HasParent())
 		return localPosition;
 	else
-		return Parent()->GetPosition() + Parent()->GetRotation() * localPosition; // this handling of rotation is inefficient
+		return TryParent()->GetPosition() + TryParent()->GetRotation() * localPosition; // this handling of rotation is inefficient
 }
 quat Transform::GetRotation() const
 {
-	if (Parent() == nullptr)
+	if (!HasParent())
 		return localRotation;
 	else
-		return Parent()->GetRotation() * localRotation;
+		return TryParent()->GetRotation() * localRotation;
 }
 vec3 Transform::GetScale() const
 {
-	if (Parent() == nullptr)
+	if (!HasParent())
 		return localScale;
 	else
-		return Parent()->GetScale() * localScale;
+		return TryParent()->GetScale() * localScale;
 }
 mat4 Transform::GetModel() const
 {
-	if (Parent() == nullptr)
+	if (!HasParent())
 		return GetLocalModel();
 	else
-		return Parent()->GetModel() * GetLocalModel(); // using this by the renderer is inefficient
+		return TryParent()->GetModel() * GetLocalModel(); // using this by the renderer is inefficient
 }
 mat4 Transform::GetInverseModel() const
 {
-	if (Parent() == nullptr)
+	if (!HasParent())
 		return GetInverseLocalModel();
 	else
-		return GetInverseLocalModel() * Parent()->GetInverseModel();
+		return GetInverseLocalModel() * TryParent()->GetInverseModel();
 }
 
 
-Transform* Transform::Parent() const
+Transform* Transform::TryParent() const
 {
 	return Entity::TryGetComponent<Transform>(parentID);
 }
@@ -135,8 +135,8 @@ void Transform::SetParent(Transform* newParent)
 	// the local data (which is stored explicitly) is relative to a given parent.
 	// therefore we must adjust for the effect that changing parent has on the world
 	// position, rotation and scale
-	Transform* oldParent = Parent();
-	mat4 oldParentModel = Parent() ? oldParent->GetModel() : mat4(1.0f);
+	Transform* oldParent = TryParent();
+	mat4 oldParentModel = TryParent() ? oldParent->GetModel() : mat4(1.0f);
 	mat4 newParentInverseModel = newParent ? newParent->GetInverseModel() : mat4(1.0f);
 	SetLocalDataUsingMatrix(newParentInverseModel * oldParentModel * GetLocalModel()); // oldParentModel * GetLocalModel() = GetModel()
 
@@ -145,13 +145,25 @@ void Transform::SetParent(Transform* newParent)
 	parentID = newParent ? newParent->GetID() : uuid();
 	if (newParent)
 		newParent->children.push_back(this);
+
+	InDebug(if (newParent)
+	{
+		for (const auto& newSibling : newParent->children)
+		{
+			Assert(newSibling, "newSibling is null: " + to_string());
+			Assert(newSibling->TryParent() == newParent, "newParent must be my newSiblings parent.");
+		}
+	});
 }
 
 vector<Transform*> Transform::GetChildren() const
 {
 	InDebug(
 		for (const auto& child : children)
+		{
 			Assert(child, "child is null: " + to_string());
+			Assert(child->TryParent() == this, "I must be my childrens parent.");
+		}
 	);
 
 	return children;
@@ -159,15 +171,15 @@ vector<Transform*> Transform::GetChildren() const
 
 string Transform::GetPath() const
 {
-	if (Parent() == nullptr)
+	if (!HasParent())
 		return entity().Name();
 	else
-		return Parent()->GetPath() + "/" + entity().Name();
+		return TryParent()->GetPath() + "/" + entity().Name();
 }
 
 bool Transform::IsDescendantOf(const Transform& putativeAncestor) const
 {
-	auto parent = Parent();
+	auto parent = TryParent();
 	if (parent == nullptr)
 		return false;
 	else if (*parent == putativeAncestor)
@@ -176,17 +188,11 @@ bool Transform::IsDescendantOf(const Transform& putativeAncestor) const
 		return parent->IsDescendantOf(putativeAncestor);
 }
 
-bool Transform::IsTransformFullyEnabled() const
-{
-	auto parent = Parent();
-	return parent ? Enabled() && parent->IsTransformFullyEnabled() : Enabled();
-}
-
 Transform& Transform::Root()
 {
 	Transform* ancestor = this;
-	while (ancestor->Parent())
-		ancestor = ancestor->Parent();
+	while (ancestor->TryParent())
+		ancestor = ancestor->TryParent();
 	return *ancestor;
 }
 
