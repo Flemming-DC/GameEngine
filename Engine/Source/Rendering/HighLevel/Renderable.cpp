@@ -54,13 +54,14 @@ void Renderable::UnBind()
 bool Renderable::IsInView(const RenderBoundingBox& ViewBounds)
 {
     // this checks AABB overlap between two bounding boxes 
-    // pos and mesh.MaxExtention() forms the corners of the other box
+    // pos and mesh.MaxExtension() forms the corners of the other box
     vec2 pos = GetTransform().Position2D();
+    vec2 size = GetTransform().Scale2D() * mesh.MaxExtension();
 
-    if (ViewBounds.maxX < pos.x - mesh.MaxExtention()) return false;
-    if (ViewBounds.minX > pos.x + mesh.MaxExtention()) return false;
-    if (ViewBounds.maxY < pos.y - mesh.MaxExtention()) return false;
-    if (ViewBounds.minY > pos.y + mesh.MaxExtention()) return false;
+    if (ViewBounds.maxX < pos.x - size.x) return false;
+    if (ViewBounds.minX > pos.x + size.x) return false;
+    if (ViewBounds.maxY < pos.y - size.y) return false;
+    if (ViewBounds.minY > pos.y + size.y) return false;
 
     return true;
 }

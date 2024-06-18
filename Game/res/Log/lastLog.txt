@@ -2,27 +2,27 @@
 C:\Mine\cpp\GameEngine\Engine\Source\Core\Core.cpp.Update
     line                               | ms/call   | percent
     --------------------------------------------------------
-    56: OpenGlSetup::Update()          | 0.145     | 1.894 %
-    57: ImGuiSetup::EarlyUpdate()      | 0.264     | 3.438 %
-    58: Time::Update()                 | 0.015     | 0.204 %
-    63: CollisionLoop::Update()        | 2.943     | 38.23 %
-    64: Dynamic::CallOnUpdate()        | 0.124     | 1.610 %
-    65: Entity::Update()               | 0.418     | 5.434 %
-    66: Renderer::DrawToScreen()       | 1.200     | 15.59 %
-    69: Dynamic::CallOnEditorUpdate()  | 1.981     | 25.74 %
-    70: Entity::DestroyTheDoomed()     | 0.055     | 0.723 %
-    72: StopRunningGame()              | 0.013     | 0.171 %
-    73: Delay::Update()                | 0.017     | 0.232 %
-    76: InputLoop::LateUpdate()        | 0.060     | 0.792 %
-    77: ImGuiSetup::LateUpdate()       | 0.443     | 5.760 %
-    total                              | 7.698     | 100.0 % (3041.000000 hits) 
+    56: OpenGlSetup::Update()          | 0.165     | 1.073 %
+    57: ImGuiSetup::EarlyUpdate()      | 0.501     | 3.263 %
+    58: Time::Update()                 | 0.017     | 0.111 %
+    63: CollisionLoop::Update()        | 5.581     | 36.28 %
+    64: Dynamic::CallOnUpdate()        | 0.245     | 1.595 %
+    65: Entity::Update()               | 2.392     | 15.55 %
+    66: Renderer::DrawToScreen()       | 2.336     | 15.18 %
+    69: Dynamic::CallOnEditorUpdate()  | 3.492     | 22.70 %
+    70: Entity::DestroyTheDoomed()     | 0.084     | 0.548 %
+    72: StopRunningGame()              | 0.013     | 0.085 %
+    73: Delay::Update()                | 0.018     | 0.123 %
+    76: InputLoop::LateUpdate()        | 0.056     | 0.370 %
+    77: ImGuiSetup::LateUpdate()       | 0.485     | 3.157 %
+    total                              | 15.38     | 100.0 % (567.0 hits) 
 
 C:\Mine\cpp\GameEngine\Engine\Source\Collision2D\CalculationEngine\CollisionLoop.cpp.Update
     line                               | ms/call   | percent
     --------------------------------------------------------
-    20: PruneDeadColliders();          | 0.008     | 0.305 %
-    21: auto potentialNewOverlaps =... | 2.304     | 78.87 %
-    22: auto newOverlaps = NarrowPh... | 0.279     | 9.569 %
-    23: HandleCollisionInfo(newOver... | 0.317     | 10.86 %
-    total                              | 2.922     | 100.0 % (3041.000000 hits) 
+    20: PruneDeadColliders();          | 0.008     | 0.157 %
+    21: auto potentialNewOverlaps =... | 3.668     | 65.97 %
+    22: auto newOverlaps = NarrowPh... | 1.281     | 23.04 %
+    23: HandleCollisionInfo(newOver... | 0.590     | 10.61 %
+    total                              | 5.560     | 100.0 % (567.0 hits) 
 

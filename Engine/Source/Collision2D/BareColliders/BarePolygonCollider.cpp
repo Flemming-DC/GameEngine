@@ -31,6 +31,13 @@ void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> l
 	iTransform = iTransform_,
 	localPosition2Ds = localPosition2Ds_;
 	CalculateNormalsAndCenterOfMass(localPosition2Ds_);
+
+	for (const vec2 pos : localPosition2Ds)
+	{
+		if (glm::SqrMagnitude(pos) > maxExtension * maxExtension)
+			maxExtension = glm::Magnitude(pos);
+	}
+
 }
 
 void BarePolygonCollider::CalculateNormalsAndCenterOfMass(const vector<vec2>& localPosition2Ds_)
@@ -249,6 +256,16 @@ void BarePolygonCollider::RemovePosition(int index)
 
 BoundingBox BarePolygonCollider::GetBoundingBox() const
 {
+	vec3 center = iTransform.GetPosition();
+	float size = glm::Magnitude(iTransform.GetScale()) * maxExtension;
+	return { 
+		center.x - size, 
+		center.y - size, 
+		center.x + size, 
+		center.y + size };
+
+	// here is a slower, but more tightly fitting bounding box
+	/*
 	float minX = INFINITY;
 	float minY = INFINITY;
 	float maxX = -INFINITY; 
@@ -265,6 +282,7 @@ BoundingBox BarePolygonCollider::GetBoundingBox() const
 			maxY = pos.y;
 	}
 	return { minX, minY, maxX, maxY };
+	*/
 }
 
 

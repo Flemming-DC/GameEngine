@@ -17,6 +17,9 @@ diverse:
 	literals should evt. store uuids not names
 	colliders are not very visible when selected
 	LargerThan / LessThen -> Longer / Shorter
+	allow deletion while mouse in hierachy
+	allow shift select-range in hierachy
+	dublicate parent-child relationships, when dublicating hierachy
 
 game:
 	background
