@@ -19,6 +19,7 @@ BareCircleCollider BareCircleCollider::Make(vec2 center, float radius_)
 
 void BareCircleCollider::Setup(ITransform iTransform_, float radius_, bool isStatic)
 {
+	// isStatic is currently unused, but available for use in optimizations.
 	iTransform = iTransform_,
 	localRadius = Check_p(radius_);
 }
