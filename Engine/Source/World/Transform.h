@@ -51,10 +51,8 @@ public:
 	inline bool IsTransformFullyEnabled() const { return Enabled() && (!HasParent() || Parent().IsTransformFullyEnabled()); }
 	Transform& Root();
 	inline bool HasParent() const { return UuidCreator::IsInitialized(parentID); }
-	// get forward, backward, right, left, up, down
-
-	//glm::vec2 As2D
-	//glm::vec2 LocalPosition2D() { return glm::vec2(localPosition.x, localPosition.y); }
+	inline bool IsStatic() const { return isStatic; }
+	void SetStatic(bool becomeStatic);
 
 	vec3 ToWorldSpace(vec3 position, bool isPosition) const;
 	vec2 ToWorldSpace(vec2 position2D, bool isPosition) const;
@@ -71,6 +69,7 @@ private:
 	//glm::mat4 model = glm::mat4(1.0f); // cached value
 	vector<Transform*> children;
 	vec3 localScale = vec3(1.0f);
+	bool isStatic = false;
 
 	void OnStart() override { unique = true; }
 	void OnDestroy() override;

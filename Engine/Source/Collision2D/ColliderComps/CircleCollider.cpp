@@ -16,7 +16,7 @@ void CircleCollider::OnStart()
 void CircleCollider::Setup(float radius_, glm::vec2 center_)
 {
 	center = center_;
-	bare.Setup(MakeTransformInterface(center), radius_);
+	bare.Setup(MakeTransformInterface(center), radius_, GetTransform().IsStatic());
 
 	//glm::vec2 center = glm::vec2(0.0f); // evt. make this a variable
 }

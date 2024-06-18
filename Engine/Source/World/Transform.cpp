@@ -2,8 +2,12 @@
 #include "ListTools.h"
 #include "GlmTools.h"
 #include "ErrorChecker.h"
+#include "EngineMode.h"
 
 Shorts;
+#define CheckStatic \
+	Deny(isStatic && EngineMode::GameIsRunning(), \
+	"You cannot change spatial properties of static transform, while the game is running.");
 
 void Transform::OnDestroy()
 {
@@ -13,6 +17,7 @@ void Transform::OnDestroy()
 float Transform::LocalAngle() const { return  glm::eulerAngles(localRotation).z; } // this is in radians.
 void Transform::SetLocalAngle(float localAngle)
 {
+	CheckStatic;
 	auto euler = glm::eulerAngles(localRotation);
 	localRotation = quat(vec3(euler.x, euler.y, localAngle));
 }
@@ -20,6 +25,7 @@ void Transform::SetLocalAngle(float localAngle)
 vec3 Transform::LocalScale() const { return localScale; }
 void Transform::SetLocalScale(vec3 localScale_)
 {
+	CheckStatic;
 	if (requireUniformScale)
 		localScale_ = vec3(localScale_.x); // unclear whether this is the best way to ensure uniformity
 	localScale = localScale_;
@@ -53,20 +59,23 @@ void Transform::SmoothAngle(float targetAngle, float duration)
 
 void Transform::IncrementAngle(float deltaAngle)
 {
+	CheckStatic;
 	auto euler = glm::eulerAngles(localRotation);
 	float newLocalAngle = euler.z + deltaAngle;
 	localRotation = quat(vec3(euler.x, euler.y, newLocalAngle));
 }
 
-void Transform::SetPosition2D(vec2 pos) { localPosition += glm::ToVec3((pos - Position2D())); }
+void Transform::SetPosition2D(vec2 pos) { CheckStatic; localPosition += glm::ToVec3((pos - Position2D())); }
 void Transform::SetAngle(float angle)
 {
+	CheckStatic;
 	auto euler = glm::eulerAngles(localRotation);
 	float newLocalAngle = euler.z + (angle - Angle());
 	localRotation = quat(vec3(euler.x, euler.y, newLocalAngle));
 }
 void Transform::SetScale2D(vec2 scale) 
 {
+	CheckStatic;
 	if (requireUniformScale)
 		scale.y = scale.x; // unclear whether this is the best way to ensure uniformity
 	localScale *= glm::ToVec3((scale / Scale2D())); 
@@ -76,10 +85,11 @@ vec2 Transform::Position2D() const { return (vec2)GetPosition(); }
 float Transform::Angle() const { return  glm::eulerAngles(GetRotation()).z; } // this is in radians.
 vec2 Transform::Scale2D() const { return (vec2)GetScale(); }
 
-void Transform::SetPosition(vec3 pos) { localPosition += (pos - GetPosition()); }
-void Transform::SetRotation(quat rot) { localRotation *= (rot * glm::inverse(GetRotation())); }
+void Transform::SetPosition(vec3 pos) { CheckStatic; localPosition += (pos - GetPosition()); }
+void Transform::SetRotation(quat rot) { CheckStatic; localRotation *= (rot * glm::inverse(GetRotation())); }
 void Transform::SetScale(vec3 scale) 
 {
+	CheckStatic;
 	if (requireUniformScale)
 		scale = vec3(scale.x); // unclear whether this is the best way to ensure uniformity
 	localScale *= (scale / GetScale());
@@ -129,6 +139,8 @@ Transform* Transform::TryParent() const
 
 void Transform::SetParent(Transform* newParent) 
 {
+	Deny(isStatic && newParent && !newParent->IsStatic(),
+		"You cannot set a static transform to be the child of a non-static parent.");
 	assert(newParent != this);
 	assert(!newParent || !newParent->IsDescendantOf(*this));
 
@@ -221,6 +233,8 @@ vec2 Transform::ToLocalSpace(vec2 worldVector2D, bool isPosition) const
 
 void Transform::SetLocalDataUsingMatrix(const mat4& transformMatrix)
 {
+	// We omit CheckStatic, since this function is called by setParent, 
+	// which is called during reload scene, and because it is private.
 	localPosition = vec3(transformMatrix[3]);
 
 	localScale.x = glm::length(vec3(transformMatrix[0]));
@@ -231,6 +245,12 @@ void Transform::SetLocalDataUsingMatrix(const mat4& transformMatrix)
 	localRotation = glm::quat_cast(rotationMatrix);
 }
 
+void Transform::SetStatic(bool becomeStatic)
+{
+	Deny(EngineMode::GameIsRunning(), 
+		"cannot set transform to static/non-static, while the game is running");
+	isStatic = becomeStatic;
+}
 
 
 void Transform::Save(YAML::Node& node) const
@@ -240,6 +260,7 @@ void Transform::Save(YAML::Node& node) const
 	node["localScale"] = localScale;
 	if (UuidCreator::IsInitialized(parentID))
 		node["parent"] = parentID;
+	node["isStatic"] = isStatic;
 }
 
 void Transform::Load(const YAML::Node& node)
@@ -247,12 +268,12 @@ void Transform::Load(const YAML::Node& node)
 	if (node["parent"])
 	{
 		auto parentID = node["parent"].as<uuid>();
-		Assert(Entity::ExistsComponent(parentID),
-			"parent not found. parentID = ", parentID);
+		Assert(Entity::ExistsComponent(parentID), "parent not found. parentID = ", parentID);
 		SetParent(&Entity::GetComponent<Transform>(parentID));
 	}
 	localPosition = node["localPosition"].as<vec3>();
 	localRotation = node["localRotation"].as<quat>();
 	localScale = node["localScale"].as<vec3>();
+	isStatic = node["isStatic"].as<bool>(); // we dont use SetStatic, since the check doesnt count
 }
 

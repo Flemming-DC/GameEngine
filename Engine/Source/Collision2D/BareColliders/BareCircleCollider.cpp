@@ -13,11 +13,11 @@ BareCircleCollider BareCircleCollider::MakePoint(vec2 pos)
 BareCircleCollider BareCircleCollider::Make(vec2 center, float radius_)
 {
 	BareCircleCollider col;
-	col.Setup(col.MakeTransform(center), radius_); 
+	col.Setup(col.MakeTransform(center), radius_, false); 
 	return col;
 }
 
-void BareCircleCollider::Setup(ITransform iTransform_, float radius_)
+void BareCircleCollider::Setup(ITransform iTransform_, float radius_, bool isStatic)
 {
 	iTransform = iTransform_,
 	localRadius = Check_p(radius_);

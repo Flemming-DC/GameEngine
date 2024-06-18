@@ -3,6 +3,7 @@
 #include "GlmCheck.h"
 #include "EngineAssets.h"
 #include "EngineLiterals.h"
+#include "EngineMode.h"
 #include <glm/gtc/type_ptr.hpp> 
 
 Shorts
@@ -28,6 +29,14 @@ void ComponentDrawer::DrawTransform(Transform& transform)
     ImGui::SameLine();
     ImGui::Checkbox("uniform ", &transform.requireUniformScale);
 
+    bool isStatic = transform.IsStatic();
+    if (EngineMode::GameIsRunning())
+        ImGui::BeginDisabled();
+    ImGui::Checkbox("static", &isStatic);
+    if (EngineMode::GameIsRunning())
+        ImGui::EndDisabled();
+    else
+        transform.SetStatic(isStatic);
 }
 
 void ComponentDrawer::DrawRenderable(Renderable& renderable)

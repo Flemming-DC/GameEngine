@@ -26,3 +26,4 @@ Transform:
     localPosition: [-1.37402987, -1.2013135, 0]
     localRotation: [1, 0, 0, 0]
     localScale: [0.229000002, 0.229000002, 0.229000002]
+    isStatic: false

@@ -11,7 +11,7 @@ public:
 	Shorts;
 	static BarePolygonCollider MakeRectangle(vec2 center, quat rot, vec2 size);
 	static BarePolygonCollider Make(vector<vec2> positions);
-	void Setup(ITransform iTransform_, vector<vec2> localPosition2Ds);
+	void Setup(ITransform iTransform_, vector<vec2> localPosition2Ds, bool isStatic);
 	// add position and remove position would be useful in an editor
 
 	const vector<vec2>& GetLocalPosition2Ds() const { return localPosition2Ds; }
@@ -29,9 +29,10 @@ private:
 	vector<vec2> localNormals;
 	vec2 centerOfMass; // same as average position2D, since we assume uniform density
 	float maxExtension = 0;
+	optional<BoundingBox> cachedBounds = std::nullopt;
 
 	void CalculateNormalsAndCenterOfMass(const vector<vec2>& localPosition2Ds_);
 	void PruneEquivalentPositions(vector<vec2>& localPosition2Ds_);
-	//void CheckConvexity(vector<vec2>& localPosition2Ds_)
+	void CacheBounds();
 };
 

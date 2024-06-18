@@ -4,6 +4,7 @@ Transform:
     localPosition: [0, 0, 0]
     localRotation: [1, 0, 0, 0]
     localScale: [1, 1, 1]
+    isStatic: false
 Renderable:
     id: 47e7725f-c87e-480a-9d48-aa2317518b5e
     enabled: true

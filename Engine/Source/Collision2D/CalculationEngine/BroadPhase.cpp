@@ -98,6 +98,8 @@ Overlaps BroadPhase::GetPotentialOverlaps() // new version
 	for (int i = 0; i < (int)colliderIDs.size() - 1; i++)
 	{
 		auto& col1 = Entity::GetComponent<Collider>(colliderIDs[i]);
+		if (col1.GetTransform().IsStatic()) // this check is not repeated in the internal loop
+			continue;
 		if (!col1.IsFullyEnabled())
 			continue;
 		auto bounds1 = col1.Bare().GetBoundingBox();

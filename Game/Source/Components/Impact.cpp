@@ -34,7 +34,7 @@ void Impact::OnColliderEnter(Collider& other)
 
 	if (other == Player::collider())
 		Player::rocketEngine().Die();
-
+	 
 	if (!isRock)
 	{
 		vec2 here = GetTransform().Position2D();

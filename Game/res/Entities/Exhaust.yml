@@ -14,3 +14,4 @@ Transform:
     localRotation: [1, 0, 0, 0]
     localScale: [1, 1, 1]
     parent: 376b5921-dcdb-4a73-9545-f24af17d03de
+    isStatic: false

@@ -20,7 +20,7 @@ void PolygonCollider::OnStart()
 
 void PolygonCollider::SetupPoly(std::vector<glm::vec2> localPosition2Ds_)
 {
-	bare.Setup(MakeTransformInterface(), localPosition2Ds_);
+	bare.Setup(MakeTransformInterface(), localPosition2Ds_, GetTransform().IsStatic());
 }
 
 

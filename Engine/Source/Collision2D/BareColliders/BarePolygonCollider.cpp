@@ -21,11 +21,11 @@ BarePolygonCollider BarePolygonCollider::MakeRectangle(vec2 center, quat rot, ve
 BarePolygonCollider BarePolygonCollider::Make(vector<vec2> positions)
 {
 	BarePolygonCollider col;
-	col.Setup(col.MakeTransform(), positions); // vec2(0.0f), quat(), vec2(1.0f)
+	col.Setup(col.MakeTransform(), positions, false); 
 	return col;
 }
 
-void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> localPosition2Ds_)
+void BarePolygonCollider::Setup(ITransform iTransform_, vector<vec2> localPosition2Ds_, bool isStatic)
 {
 	PruneEquivalentPositions(localPosition2Ds_);
 	iTransform = iTransform_,
@@ -37,7 +37,8 @@ void BarePolygonCollider::Setup(ITransform iTransform_, std::vector<glm::vec2> l
 		if (glm::SqrMagnitude(pos) > maxExtension * maxExtension)
 			maxExtension = glm::Magnitude(pos);
 	}
-
+	if (isStatic)
+		CacheBounds();
 }
 
 void BarePolygonCollider::CalculateNormalsAndCenterOfMass(const vector<vec2>& localPosition2Ds_)
@@ -86,8 +87,7 @@ void BarePolygonCollider::CalculateNormalsAndCenterOfMass(const vector<vec2>& lo
 
 std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(vec2 normal) const
 {
-	Deny(glm::HasNAN(normal),
-		"normal is nan: ", normal);
+	Deny(glm::HasNAN(normal), "normal is nan: ", normal);
 	float min = INFINITY;
 	float max = -INFINITY;
 	for (auto localPosition2D : localPosition2Ds)
@@ -256,6 +256,10 @@ void BarePolygonCollider::RemovePosition(int index)
 
 BoundingBox BarePolygonCollider::GetBoundingBox() const
 {
+	// The cached bounds are more tightly fitting, but their calculation takes a little longer. 
+	if (cachedBounds)
+		return *cachedBounds;
+
 	vec3 center = iTransform.GetPosition();
 	float size = glm::Magnitude(iTransform.GetScale()) * maxExtension;
 	return { 
@@ -263,12 +267,13 @@ BoundingBox BarePolygonCollider::GetBoundingBox() const
 		center.y - size, 
 		center.x + size, 
 		center.y + size };
+}
 
-	// here is a slower, but more tightly fitting bounding box
-	/*
+void BarePolygonCollider::CacheBounds()
+{
 	float minX = INFINITY;
 	float minY = INFINITY;
-	float maxX = -INFINITY; 
+	float maxX = -INFINITY;
 	float maxY = -INFINITY;
 	for (const vec2& pos : Positions())
 	{
@@ -281,10 +286,8 @@ BoundingBox BarePolygonCollider::GetBoundingBox() const
 		if (pos.y > maxY)
 			maxY = pos.y;
 	}
-	return { minX, minY, maxX, maxY };
-	*/
+	cachedBounds = { minX, minY, maxX, maxY };
 }
-
 
 
 

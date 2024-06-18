@@ -39,8 +39,7 @@ ITransform BareCollider::MakeTransform(vec2 pos, quat rot, vec2 scale)
 		vec2 out2 = (vec2)out4;
 		return out2;
 	};
-	Deny(glm::HasNAN(model),
-		"model has nan: ", model);
+	Deny(glm::HasNAN(model), "model has nan: ", model);
 
 	return {
 		[pos]() { return glm::ToVec3(pos); },
