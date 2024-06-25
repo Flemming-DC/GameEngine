@@ -44,9 +44,26 @@ void Collider::OnUpdate() // maintaining sorted collider lists
 
 ITransform Collider::MakeTransformInterface(vec2 center)
 {
-	return {
-		[this, center]() { return glm::ToVec3(center) + GetTransform().Position(); },
-		[this]() { return GetTransform().Scale(); },
-		[this](vec2 vec, bool isPos) { return GetTransform().ToWorldSpace(vec, isPos); },
-	};
+	if (GetTransform().IsStatic())
+	{
+		vec3 pos = glm::ToVec3(center) + GetTransform().Position();
+		vec3 scale = GetTransform().Scale();
+		mat4 model = GetTransform().Model();
+		mat4 rotMatrix = glm::mat4_cast(GetTransform().Rotation());
+		return {
+			[pos]() { return pos; },
+			[scale]() { return scale; },
+			[model](vec2 vec) { return model * vec4(vec.x, vec.y, 0, 1); },
+			[rotMatrix](vec2 vec) { return rotMatrix * vec4(vec.x, vec.y, 0, 1); },
+		};
+	}
+	else
+	{
+		return {
+			[this, center]() { return glm::ToVec3(center) + GetTransform().Position(); },
+			[this]() { return GetTransform().Scale(); },
+			[this](vec2 vec) { return GetTransform().ToWorldSpace(vec, true); },
+			[this](vec2 vec) { return GetTransform().ToWorldSpace(vec, false); },
+		};
+	}
 }

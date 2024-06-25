@@ -52,7 +52,8 @@ vec2 Transform::Forward2D()
 
 mat4 Transform::LocalModel() const
 {
-	return glm::translate(mat4(1.0f), localPosition)
+	// can be optimized
+	return glm::translate(mat4(1.0f), localPosition) 
 		* glm::mat4_cast(localRotation)
 		* glm::scale(mat4(1.0f), localScale);
 }
@@ -81,8 +82,10 @@ void Transform::IncrementAngle(float deltaAngle)
 
 void Transform::SetPosition2D(vec2 pos) 
 { 
-	CheckStatic; 
-	localPosition += glm::ToVec3((pos - Position2D()));
+	CheckStatic;
+	vec3 delta = glm::ToVec3((pos - Position2D()));
+	localPosition += delta;
+	//CacheModel(glm::translate(model, delta)); // yields weirdo error
 	CacheModel(CalcModel());
 }
 void Transform::SetAngle(float angle)
@@ -104,12 +107,8 @@ void Transform::SetScale2D(vec2 scale, bool allowFlip)
 	Check_vec(factor);
 	localScale *= factor;
 	CacheModel(glm::scale(model, factor));
-	//CacheModel(CalcModel());
 }
 
-vec2 Transform::Position2D() const { return (vec2)Position(); }
-float Transform::Angle() const { return  glm::eulerAngles(Rotation()).z; } // this is in radians.
-vec2 Transform::Scale2D() const { return (vec2)Scale(); }
 
 void Transform::SetPosition(vec3 pos) 
 { 
@@ -133,7 +132,6 @@ void Transform::SetScale(vec3 scale)
 	Check_vec(factor);
 	localScale *= factor;
 	CacheModel(glm::scale(model, factor));
-	//CacheModel(CalcModel());
 }
 
 vec3 Transform::Scale() const
@@ -149,7 +147,7 @@ mat4 Transform::CalcModel() const
 	if (!HasParent())
 		return LocalModel();
 	else
-		return TryParent()->Model();
+		return Parent().Model() * LocalModel();
 }
 mat4 Transform::InverseModel() const
 {	
@@ -176,7 +174,7 @@ void Transform::SetParent(Transform* newParent)
 	// therefore we must adjust for the effect that changing parent has on the world
 	// position, rotation and scale
 	Transform* oldParent = TryParent();
-	mat4 oldParentModel = TryParent() ? oldParent->Model() : mat4(1.0f);
+	mat4 oldParentModel = HasParent() ? oldParent->Model() : mat4(1.0f);
 	mat4 newParentInverseModel = newParent ? newParent->InverseModel() : mat4(1.0f);
 	SetLocalDataUsingMatrix(newParentInverseModel * oldParentModel * LocalModel()); // oldParentModel * LocalModel() = CalcModel()
 
@@ -214,7 +212,7 @@ string Transform::GetPath() const
 	if (!HasParent())
 		return entity().Name();
 	else
-		return TryParent()->GetPath() + "/" + entity().Name();
+		return Parent().GetPath() + "/" + entity().Name();
 }
 
 bool Transform::IsDescendantOf(const Transform& putativeAncestor) const
@@ -231,8 +229,8 @@ bool Transform::IsDescendantOf(const Transform& putativeAncestor) const
 Transform& Transform::Root()
 {
 	Transform* ancestor = this;
-	while (ancestor->TryParent())
-		ancestor = ancestor->TryParent();
+	while (ancestor->HasParent())
+		ancestor = &ancestor->Parent();
 	return *ancestor;
 }
 

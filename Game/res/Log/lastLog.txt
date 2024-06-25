@@ -2,44 +2,44 @@
 C:\Mine\cpp\GameEngine\Engine\Source\Core\Core.cpp.Update
     line                               | ms/call   | percent
     --------------------------------------------------------
-    56: OpenGlSetup::Update()          | 0.124     | 2.295 %
-    57: ImGuiSetup::EarlyUpdate()      | 0.232     | 4.288 %
-    58: Time::Update()                 | 0.015     | 0.294 %
-    63: CollisionLoop::Update()        | 0.815     | 15.02 %
-    64: Dynamic::CallOnUpdate()        | 0.097     | 1.789 %
-    65: Entity::Update()               | 0.801     | 14.76 %
-    66: Renderer::DrawToScreen()       | 0.692     | 12.76 %
-    69: Dynamic::CallOnEditorUpdate()  | 2.128     | 39.22 %
-    70: Entity::DestroyTheDoomed()     | 0.044     | 0.818 %
-    72: StopRunningGame()              | 0.012     | 0.233 %
-    73: Delay::Update()                | 0.014     | 0.265 %
-    76: InputLoop::LateUpdate()        | 0.026     | 0.482 %
-    77: ImGuiSetup::LateUpdate()       | 0.414     | 7.640 %
-    total                              | 5.426     | 100.0 % (423.0 hits) 
+    56: OpenGlSetup::Update()          | 0.147     | 1.884 %
+    57: ImGuiSetup::EarlyUpdate()      | 0.255     | 3.266 %
+    58: Time::Update()                 | 0.015     | 0.203 %
+    63: CollisionLoop::Update()        | 2.306     | 29.43 %
+    64: Dynamic::CallOnUpdate()        | 0.125     | 1.599 %
+    65: Entity::Update()               | 1.066     | 13.60 %
+    66: Renderer::DrawToScreen()       | 1.005     | 12.83 %
+    69: Dynamic::CallOnEditorUpdate()  | 2.315     | 29.54 %
+    70: Entity::DestroyTheDoomed()     | 0.065     | 0.830 %
+    72: StopRunningGame()              | 0.013     | 0.168 %
+    73: Delay::Update()                | 0.017     | 0.225 %
+    76: InputLoop::LateUpdate()        | 0.035     | 0.451 %
+    77: ImGuiSetup::LateUpdate()       | 0.455     | 5.813 %
+    total                              | 7.835     | 100.0 % (1354.000000 hits) 
 
 C:\Mine\cpp\GameEngine\Engine\Source\Collision2D\CalculationEngine\NarrowPhase.cpp.IsOverLapping_PP
     line                               | ms/call   | percent
     --------------------------------------------------------
-    118: int count1 = (int)polygon1... | 0.007     | 5.047 %
-    119: int count2 = (int)polygon2... | 0.013     | 9.103 %
-    122: poly simplePolygon = count... | 0.013     | 8.943 %
-    123: poly complexPolygon = coun... | 0.013     | 9.474 %
-    124: int simpleCount = count1 <... | 0.014     | 9.559 %
-    125: int complexCount = count1 ... | 0.013     | 9.429 %
-    131: auto complexShadow = compl... | 0.022     | 15.28 %
-    132: auto simpleShadow = simple... | 0.022     | 15.33 %
-    133: bool noOverlap = complexSh... | 0.014     | 9.738 %
-    140: auto complexShadow = compl... | 0.000     | 0.127 %
-    141: auto simpleShadow = simple... | 0.000     | 0.125 %
-    142: bool noOverlap = complexSh... | 0.000     | 0.094 %
-    total                              | 0.146     | 100.0 % (1293.000000 hits) 
+    118: int count1 = (int)polygon1... | 0.006     | 4.140 %
+    119: int count2 = (int)polygon2... | 0.013     | 7.900 %
+    122: poly simplePolygon = count... | 0.013     | 7.895 %
+    123: poly complexPolygon = coun... | 0.013     | 8.245 %
+    124: int simpleCount = count1 <... | 0.013     | 8.283 %
+    125: int complexCount = count1 ... | 0.013     | 8.057 %
+    131: auto complexShadow = compl... | 0.029     | 17.69 %
+    132: auto simpleShadow = simple... | 0.029     | 17.48 %
+    133: bool noOverlap = complexSh... | 0.019     | 11.60 %
+    140: auto complexShadow = compl... | 0.001     | 0.808 %
+    141: auto simpleShadow = simple... | 0.001     | 0.792 %
+    142: bool noOverlap = complexSh... | 0.000     | 0.548 %
+    total                              | 0.167     | 100.0 % (12160.000000 hits) 
 
 C:\Mine\cpp\GameEngine\Engine\Source\Collision2D\CalculationEngine\CollisionLoop.cpp.Update
     line                               | ms/call   | percent
     --------------------------------------------------------
-    20: PruneDeadColliders();          | 0.008     | 1.048 %
-    21: auto potentialNewOverlaps =... | 0.170     | 21.45 %
-    22: auto newOverlaps = NarrowPh... | 0.490     | 61.77 %
-    23: HandleCollisionInfo(newOver... | 0.113     | 14.24 %
-    total                              | 0.794     | 100.0 % (423.0 hits) 
+    20: PruneDeadColliders();          | 0.008     | 0.388 %
+    21: auto potentialNewOverlaps =... | 0.340     | 14.90 %
+    22: auto newOverlaps = NarrowPh... | 1.591     | 69.65 %
+    23: HandleCollisionInfo(newOver... | 0.332     | 14.55 %
+    total                              | 2.284     | 100.0 % (1354.000000 hits) 
 

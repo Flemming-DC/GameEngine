@@ -28,14 +28,19 @@ bool BoundingBox::IsOverlappingY(const BoundingBox& other)
 
 ITransform BareCollider::MakeTransform(vec2 pos, quat rot, vec2 scale)
 {
-	mat4 rot_matrix = glm::mat4_cast(rot);
+	mat4 rotMatrix = glm::mat4_cast(rot);
 	mat4 model = glm::translate(glm::mat4(1.0f), glm::ToVec3(pos))
-		* rot_matrix
+		* rotMatrix
 		* glm::scale(glm::mat4(1.0f), glm::ToVec3(scale, 1.0f));
-	auto ToWorldSpace = [model, rot_matrix](vec2 vec, bool isPos)
+	auto PosToWorldSpace = [model, rotMatrix](vec2 vec)
 	{
-		mat4 matrix = isPos ? model : rot_matrix;
-		vec4 out4 = matrix * vec4(vec.x, vec.y, 0, 1);
+		vec4 out4 = model * vec4(vec.x, vec.y, 0, 1);
+		vec2 out2 = (vec2)out4;
+		return out2;
+	};
+	auto NonPosToWorldSpace = [model, rotMatrix](vec2 vec)
+	{
+		vec4 out4 = rotMatrix * vec4(vec.x, vec.y, 0, 1);
 		vec2 out2 = (vec2)out4;
 		return out2;
 	};
@@ -44,7 +49,8 @@ ITransform BareCollider::MakeTransform(vec2 pos, quat rot, vec2 scale)
 	return {
 		[pos]() { return glm::ToVec3(pos); },
 		[scale]() { return glm::ToVec3(scale); },
-		ToWorldSpace
+		PosToWorldSpace,
+		NonPosToWorldSpace
 		};
 }
 

@@ -20,8 +20,7 @@ StoredEntities:
             id: 74bececa-1efc-45df-bd7c-868ef2b69fad
         Transform:
             id: df81b015-6d77-43b4-8598-871fd567e4b5
-            localPosition: [-2.35299993, 0.332808256, 0]
-            localScale: [1.98800004, 1.98800004, 1.98800004]
+            localPosition: [-2.3195169, 0.265843898, 0]
         name: SteelBar
         storedID: ef2c97f9-f7ec-4911-8da8-b453e7cf1723
     3312f8e8-c270-401f-a632-f17eea8dc847:

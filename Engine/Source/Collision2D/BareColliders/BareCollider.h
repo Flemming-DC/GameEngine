@@ -11,7 +11,8 @@ struct ITransform // this struct serves as an interface for a transform.
 	Shorts;
 	function<vec3()> GetPosition;
 	function<vec3()> GetScale;
-	function<vec2(vec2, bool)> ToWorldSpace; // (localVector, isPositionvector) -> worldVector
+	function<vec2(vec2)> PosToWorldSpace;
+	function<vec2(vec2)> NonPosToWorldSpace;
 };
 struct BoundingBox 
 { 

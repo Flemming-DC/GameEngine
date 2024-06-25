@@ -96,7 +96,7 @@ std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(vec2 normal) cons
 	for (auto localPosition2D : localPosition2Ds)
 	{
 		//glm::vec2 position2D = isLocal ? localPosition2D : GetTransform().ToWorldSpace(localPosition2D, true);
-		glm::vec2 position2D = iTransform.ToWorldSpace(localPosition2D, true);
+		glm::vec2 position2D = iTransform.PosToWorldSpace(localPosition2D);
 		float coordinateAlongNormal = glm::dot(position2D, normal);
 		if (coordinateAlongNormal < min)
 			min = coordinateAlongNormal;
@@ -111,7 +111,7 @@ std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(vec2 normal) cons
 			for (vec2 localPosition2D : localPosition2Ds)
 			{
 				//glm::vec2 position2D = isLocal ? localPosition2D : GetTransform().ToWorldSpace(localPosition2D, true);
-				glm::vec2 position2D = iTransform.ToWorldSpace(localPosition2D, true);
+				glm::vec2 position2D = iTransform.PosToWorldSpace(localPosition2D);
 				float coordinateAlongNormal = glm::dot(position2D, normal);
 				if (coordinateAlongNormal < min_)
 					min_ = coordinateAlongNormal;
@@ -130,7 +130,7 @@ std::vector<glm::vec2> BarePolygonCollider::Positions() const
 {
 	vector<vec2> positions;
 	for (auto localPosition2D : localPosition2Ds)
-		positions.push_back(iTransform.ToWorldSpace(localPosition2D, true));
+		positions.push_back(iTransform.PosToWorldSpace(localPosition2D));
 	return positions;
 }
 

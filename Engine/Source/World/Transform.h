@@ -32,9 +32,9 @@ public:
 	void SetPosition2D(vec2 pos);
 	void SetAngle(float angle);
 	void SetScale2D(vec2 scale, bool allowFlip = false);
-	vec2 Position2D() const;
-	float Angle() const;
-	vec2 Scale2D() const;
+	inline vec2 Position2D() const { return (vec2)Position(); }
+	inline float Angle() const { return glm::eulerAngles(Rotation()).z; } // this is in radians.
+	inline vec2 Scale2D() const { return (vec2)Scale(); }
 
 	void SetPosition(vec3 pos);
 	void SetRotation(quat rot);

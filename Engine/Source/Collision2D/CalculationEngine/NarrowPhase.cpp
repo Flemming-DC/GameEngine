@@ -79,7 +79,7 @@ bool NarrowPhase::IsOverLapping_CP(circle circle, poly polygon)
 	vec2 closestCorner; // evt. put GetClosestCorner calculation inside the collider class
 	for (vec2 localPosition2D : polygon.GetLocalPosition2Ds())
 	{
-		auto position2D = polygon.iTransform.ToWorldSpace(localPosition2D, true);
+		auto position2D = polygon.iTransform.PosToWorldSpace(localPosition2D);
 		float sqrDistance = glm::dot(position2D - circlePosition, position2D - circlePosition);
 		if (sqrDistance < minSqrDistance)
 		{

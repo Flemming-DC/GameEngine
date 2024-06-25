@@ -16,7 +16,7 @@ public:
 
 	const vector<vec2>& GetLocalPosition2Ds() const { return localPosition2Ds; }
 	pair<float, float> ShadowAlongNormal(vec2 normal) const override;
-	const vec2 GetNormalByIndex(int i) const { return iTransform.ToWorldSpace(localNormals[i], false); };
+	const vec2 GetNormalByIndex(int i) const { return iTransform.NonPosToWorldSpace(localNormals[i]); };
 	vector<vec2> Positions() const override;
 	//static bool Check(vector<vec2> localPosition2Ds_);
 	void SetPosition(int index, vec2 newPosition); // used by inspector
