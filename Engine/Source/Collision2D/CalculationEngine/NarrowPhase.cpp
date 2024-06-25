@@ -112,9 +112,47 @@ bool NarrowPhase::IsOverLapping_CP(circle circle, poly polygon)
 
 bool NarrowPhase::IsOverLapping_PP(poly polygon1, poly polygon2)
 {
-	ProfileFunc;
 	// we use the SAT algorithm https://www.youtube.com/watch?v=59BTXB-kFNs&ab_channel=Nybbit
 	
+	int count1 = (int)polygon1.GetLocalPosition2Ds().size();
+	int count2 = (int)polygon2.GetLocalPosition2Ds().size();
+
+	// we determine which polygon is simplest (in terms of position count)
+	poly simplePolygon = count1 < count2 ? polygon1 : polygon2;
+	poly complexPolygon = count1 >= count2 ? polygon1 : polygon2;
+	int simpleCount = count1 < count2 ? count1 : count2;
+	int complexCount = count1 >= count2 ? count1 : count2;
+
+	// we loop over the simple polygon first, since I suspect that it will maximize the chance of an early exit
+	for (int i = 0; i < simpleCount; i++)
+	{
+		auto complexShadow = complexPolygon.ShadowAlongNormal(simplePolygon.GetNormalByIndex(i));
+		auto simpleShadow = simplePolygon.ShadowAlongNormal(simplePolygon.GetNormalByIndex(i));
+		bool noOverlap = complexShadow.first > simpleShadow.second || simpleShadow.first > complexShadow.second;
+		if (noOverlap)
+			return false;
+	}
+
+	for (int i = 0; i < complexCount; i++)
+	{
+		auto complexShadow = complexPolygon.ShadowAlongNormal(complexPolygon.GetNormalByIndex(i));
+		auto simpleShadow = simplePolygon.ShadowAlongNormal(complexPolygon.GetNormalByIndex(i));
+		bool noOverlap = complexShadow.first > simpleShadow.second || simpleShadow.first > complexShadow.second;
+		if (noOverlap)
+			return false;
+	}
+
+	return true;
+}
+
+
+/*
+
+bool NarrowPhase::IsOverLapping_PP(poly polygon1, poly polygon2)
+{
+	ProfileFunc;
+	// we use the SAT algorithm https://www.youtube.com/watch?v=59BTXB-kFNs&ab_channel=Nybbit
+
 	ProfileLine(int count1 = (int)polygon1.GetLocalPosition2Ds().size(););
 	ProfileLine(int count2 = (int)polygon2.GetLocalPosition2Ds().size(););
 
@@ -148,6 +186,7 @@ bool NarrowPhase::IsOverLapping_PP(poly polygon1, poly polygon2)
 }
 
 
+*/
 
 
 

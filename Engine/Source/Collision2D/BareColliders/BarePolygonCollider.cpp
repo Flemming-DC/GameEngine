@@ -84,7 +84,17 @@ void BarePolygonCollider::CalculateCaches(const vector<vec2>& localPosition2Ds_)
 			maxExtension = glm::Magnitude(pos);
 	}
 	if (isStatic)
+	{
 		CacheBounds();
+		cachedPositions = Positions();
+		if (cachedNormals)
+			cachedNormals->clear();
+		else
+			cachedNormals = {};
+		for (const auto& normal : localNormals)
+			cachedNormals->push_back(iTransform.NonPosToWorldSpace(normal));
+	}
+	
 }
 
 
@@ -93,16 +103,31 @@ std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(vec2 normal) cons
 	Deny(glm::HasNAN(normal), "normal is nan: ", normal);
 	float min = INFINITY;
 	float max = -INFINITY;
-	for (auto localPosition2D : localPosition2Ds)
+
+	if (cachedPositions)
 	{
-		//glm::vec2 position2D = isLocal ? localPosition2D : GetTransform().ToWorldSpace(localPosition2D, true);
-		glm::vec2 position2D = iTransform.PosToWorldSpace(localPosition2D);
-		float coordinateAlongNormal = glm::dot(position2D, normal);
-		if (coordinateAlongNormal < min)
-			min = coordinateAlongNormal;
-		if (coordinateAlongNormal > max)
-			max = coordinateAlongNormal;
+		for (auto pos : *cachedPositions)
+		{
+			float coordinateAlongNormal = glm::dot(pos, normal);
+			if (coordinateAlongNormal < min)
+				min = coordinateAlongNormal;
+			if (coordinateAlongNormal > max)
+				max = coordinateAlongNormal;
+		}
 	}
+	else
+	{
+		for (auto localPosition2D : localPosition2Ds)
+		{
+			glm::vec2 position2D = iTransform.PosToWorldSpace(localPosition2D);
+			float coordinateAlongNormal = glm::dot(position2D, normal);
+			if (coordinateAlongNormal < min)
+				min = coordinateAlongNormal;
+			if (coordinateAlongNormal > max)
+				max = coordinateAlongNormal;
+		}
+	}
+
 	InDebug(
 		if (min > max)
 		{
@@ -128,6 +153,9 @@ std::pair<float, float> BarePolygonCollider::ShadowAlongNormal(vec2 normal) cons
 
 std::vector<glm::vec2> BarePolygonCollider::Positions() const
 {
+	if (cachedPositions)
+		return *cachedPositions;
+
 	vector<vec2> positions;
 	for (auto localPosition2D : localPosition2Ds)
 		positions.push_back(iTransform.PosToWorldSpace(localPosition2D));
