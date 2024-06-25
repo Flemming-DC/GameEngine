@@ -35,7 +35,7 @@ void Renderable::Draw(const mat4& projectionView)
     // if not in view then return;
     Assert(UuidCreator::IsInitialized(material.GetID()) && UuidCreator::IsInitialized(mesh.GetID()),
         "you must setup the mesh and material on the renderable, before drawing it.");
-    mat4 model = GetTransform().GetModel(); // this is inefficient
+    mat4 model = GetTransform().Model(); // this is inefficient
     material.SetUniform("u_MVP", projectionView * model);
     material.Bind();
     mesh.Bind();

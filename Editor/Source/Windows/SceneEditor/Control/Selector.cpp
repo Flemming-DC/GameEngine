@@ -131,7 +131,7 @@ vector<Entity*> Selector::GetOverlaps(vec2 selectionBoxCenter, vec2 selectionBox
         }
         else
         {
-            vec2 pos = (vec2)transform.GetPosition();
+            vec2 pos = (vec2)transform.Position();
             if (ColQuery::IsOverlapping(selectionRect, ColMaker::Point(pos)))
                 overlaps.push_back(&entity);
         }

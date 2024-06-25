@@ -4,6 +4,7 @@
 #include "EditorInputs.h"
 #include "SceneCamera.h"
 #include "Time_.h"
+#include "EngineMode.h"
 
 Shorts;
 using namespace Editor;
@@ -20,7 +21,8 @@ void SelectionMover::Update()
 {
 	UpdateControl();
 	vec2 delta = Delta();
-	Move(delta);
+	if (!EngineMode::GameIsRunning())
+		Move(delta);
 
 	lastMouseWorldPosition2D = SceneCamera::MouseWorldPosition2D();
 	wasDragging = Selector::IsDraggingSelection();

@@ -25,23 +25,17 @@ BarePolygonCollider BarePolygonCollider::Make(vector<vec2> positions)
 	return col;
 }
 
-void BarePolygonCollider::Setup(ITransform iTransform_, vector<vec2> localPosition2Ds_, bool isStatic)
+void BarePolygonCollider::Setup(ITransform iTransform_, vector<vec2> localPosition2Ds_, bool isStatic_)
 {
 	PruneEquivalentPositions(localPosition2Ds_);
 	iTransform = iTransform_,
 	localPosition2Ds = localPosition2Ds_;
-	CalculateNormalsAndCenterOfMass(localPosition2Ds_);
+	CalculateCaches(localPosition2Ds_);
+	isStatic = isStatic_;
 
-	for (const vec2 pos : localPosition2Ds)
-	{
-		if (glm::SqrMagnitude(pos) > maxExtension * maxExtension)
-			maxExtension = glm::Magnitude(pos);
-	}
-	if (isStatic)
-		CacheBounds();
 }
 
-void BarePolygonCollider::CalculateNormalsAndCenterOfMass(const vector<vec2>& localPosition2Ds_)
+void BarePolygonCollider::CalculateCaches(const vector<vec2>& localPosition2Ds_)
 {
 	// calculate additional data
 	localNormals.clear();
@@ -82,6 +76,15 @@ void BarePolygonCollider::CalculateNormalsAndCenterOfMass(const vector<vec2>& lo
 	}
 	Deny(glm::isnan(divergence),
 		"Divergence is ", divergence, " on ", Tools::TypeName(*this), ".\nlocalPosition2Ds = ", localPosition2Ds);
+
+
+	for (const vec2 pos : localPosition2Ds)
+	{
+		if (glm::SqrMagnitude(pos) > maxExtension * maxExtension)
+			maxExtension = glm::Magnitude(pos);
+	}
+	if (isStatic)
+		CacheBounds();
 }
 
 
@@ -169,6 +172,7 @@ void BarePolygonCollider::PruneEquivalentPositions(vector<vec2>& localPosition2D
 			float maxY = -INFINITY;
 			for (const vec2& pos : localPosition2Ds_)
 			{
+				Check_vec(pos);
 				if (pos.x < minX)
 					minX = pos.x;
 				if (pos.x > maxX)
@@ -232,7 +236,7 @@ void BarePolygonCollider::SetPosition(int index, vec2 newPosition)
 	}
 
 	localPosition2Ds[index] = newPosition;
-	CalculateNormalsAndCenterOfMass(localPosition2Ds);
+	CalculateCaches(localPosition2Ds);
 }
 
 void BarePolygonCollider::AddPositionAfter(int priorPositionIndex)
@@ -243,7 +247,7 @@ void BarePolygonCollider::AddPositionAfter(int priorPositionIndex)
 	vec2 nextPos = localPosition2Ds[nextIndex];
 	vec2 pos = (nextPos + priorPos) / 2.0f;
 	localPosition2Ds.insert(localPosition2Ds.begin() + nextIndex, pos);
-	CalculateNormalsAndCenterOfMass(localPosition2Ds);
+	CalculateCaches(localPosition2Ds);
 }
 
 void BarePolygonCollider::RemovePosition(int index)
@@ -251,7 +255,7 @@ void BarePolygonCollider::RemovePosition(int index)
 	Deny(localPosition2Ds.size() <= 3,
 		"A polygon must have at least 3 corners");
 	Tools::RemoveIndex(localPosition2Ds, index);
-	CalculateNormalsAndCenterOfMass(localPosition2Ds);
+	CalculateCaches(localPosition2Ds);
 }
 
 BoundingBox BarePolygonCollider::GetBoundingBox() const

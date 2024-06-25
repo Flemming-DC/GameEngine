@@ -65,7 +65,7 @@ void SelectionVisuals::Display(const Entity& entity)
     else
     {
         float minHalfSize = minSize / 2.0f;
-        vec2 pos = (vec2)transform.GetPosition();
+        vec2 pos = (vec2)transform.Position();
         positions = {
             vec2(pos.x - minHalfSize, pos.y - minHalfSize),
             vec2(pos.x + minHalfSize, pos.y - minHalfSize),

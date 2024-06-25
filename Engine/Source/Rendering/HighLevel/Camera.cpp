@@ -56,13 +56,13 @@ glm::mat4 Camera::Projection() const
 
 glm::mat4 Camera::View() const
 {
-    if (nearClipping > -GetTransform().GetPosition().z)
+    if (nearClipping > -GetTransform().Position().z)
         Warning(
             "near clipping plane is closer than minus camera z position, which can cause black screen\n"
             "nearClipping = " + std::to_string(nearClipping) + "\n"
-            "camera position.z = " + std::to_string(GetTransform().GetPosition().z));
+            "camera position.z = " + std::to_string(GetTransform().Position().z));
 
-    return GetTransform().GetInverseModel();
+    return GetTransform().InverseModel();
 }
 
 mat4 Camera::ProjectionView(vec3 cameraPos, quat cameraRot, vec3 cameraScale)

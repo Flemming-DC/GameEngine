@@ -45,8 +45,8 @@ void Collider::OnUpdate() // maintaining sorted collider lists
 ITransform Collider::MakeTransformInterface(vec2 center)
 {
 	return {
-		[this, center]() { return glm::ToVec3(center) + GetTransform().GetPosition(); },
-		[this]() { return GetTransform().GetScale(); },
+		[this, center]() { return glm::ToVec3(center) + GetTransform().Position(); },
+		[this]() { return GetTransform().Scale(); },
 		[this](vec2 vec, bool isPos) { return GetTransform().ToWorldSpace(vec, isPos); },
 	};
 }

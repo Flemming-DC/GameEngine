@@ -3,6 +3,7 @@
 #include "GlmTools.h"
 #include "ErrorChecker.h"
 #include "EngineMode.h"
+#include "GlmCheck.h"
 
 Shorts;
 #define CheckStatic \
@@ -14,12 +15,21 @@ void Transform::OnDestroy()
 	SetParent(nullptr);
 }
 
-float Transform::LocalAngle() const { return  glm::eulerAngles(localRotation).z; } // this is in radians.
+
+void Transform::SetLocalPosition(vec3 pos) 
+{ 
+	CheckStatic;
+	CacheModel(glm::translate(model, pos - localPosition));
+	localPosition = pos;
+}
+
+float Transform::LocalAngle() const { return glm::eulerAngles(localRotation).z; } // this is in radians.
 void Transform::SetLocalAngle(float localAngle)
 {
 	CheckStatic;
 	auto euler = glm::eulerAngles(localRotation);
 	localRotation = quat(vec3(euler.x, euler.y, localAngle));
+	CacheModel(CalcModel());
 }
 
 vec3 Transform::LocalScale() const { return localScale; }
@@ -28,22 +38,25 @@ void Transform::SetLocalScale(vec3 localScale_)
 	CheckStatic;
 	if (requireUniformScale)
 		localScale_ = vec3(localScale_.x); // unclear whether this is the best way to ensure uniformity
-	localScale = localScale_;
+	vec3 factor = localScale_ / localScale;
+	Check_vec(factor);
+	localScale *= factor;
+	CacheModel(glm::scale(model, factor));
 }
 
 vec2 Transform::Forward2D()
 {
-	return (vec2) (GetRotation() * vec3(1.0f, 0.0f, 0.0f));
+	return (vec2) (Rotation() * vec3(1.0f, 0.0f, 0.0f));
 }
 
 
-mat4 Transform::GetLocalModel() const
+mat4 Transform::LocalModel() const
 {
 	return glm::translate(mat4(1.0f), localPosition)
 		* glm::mat4_cast(localRotation)
 		* glm::scale(mat4(1.0f), localScale);
 }
-mat4 Transform::GetInverseLocalModel() const
+mat4 Transform::InverseLocalModel() const
 {
 	return glm::scale(mat4(1.0f), 1.0f / localScale)
 		* glm::mat4_cast(glm::inverse(localRotation))
@@ -63,72 +76,87 @@ void Transform::IncrementAngle(float deltaAngle)
 	auto euler = glm::eulerAngles(localRotation);
 	float newLocalAngle = euler.z + deltaAngle;
 	localRotation = quat(vec3(euler.x, euler.y, newLocalAngle));
+	CacheModel(CalcModel());
 }
 
-void Transform::SetPosition2D(vec2 pos) { CheckStatic; localPosition += glm::ToVec3((pos - Position2D())); }
+void Transform::SetPosition2D(vec2 pos) 
+{ 
+	CheckStatic; 
+	localPosition += glm::ToVec3((pos - Position2D()));
+	CacheModel(CalcModel());
+}
 void Transform::SetAngle(float angle)
 {
 	CheckStatic;
 	auto euler = glm::eulerAngles(localRotation);
 	float newLocalAngle = euler.z + (angle - Angle());
 	localRotation = quat(vec3(euler.x, euler.y, newLocalAngle));
+	CacheModel(CalcModel());
 }
-void Transform::SetScale2D(vec2 scale) 
+void Transform::SetScale2D(vec2 scale, bool allowFlip)
 {
 	CheckStatic;
+	if (!allowFlip)
+		scale = glm::max(scale, vec2(0.00001f));
 	if (requireUniformScale)
 		scale.y = scale.x; // unclear whether this is the best way to ensure uniformity
-	localScale *= glm::ToVec3((scale / Scale2D())); 
+	vec3 factor = glm::ToVec3((scale / Scale2D()), 1.0f);
+	Check_vec(factor);
+	localScale *= factor;
+	CacheModel(glm::scale(model, factor));
+	//CacheModel(CalcModel());
 }
 
-vec2 Transform::Position2D() const { return (vec2)GetPosition(); }
-float Transform::Angle() const { return  glm::eulerAngles(GetRotation()).z; } // this is in radians.
-vec2 Transform::Scale2D() const { return (vec2)GetScale(); }
+vec2 Transform::Position2D() const { return (vec2)Position(); }
+float Transform::Angle() const { return  glm::eulerAngles(Rotation()).z; } // this is in radians.
+vec2 Transform::Scale2D() const { return (vec2)Scale(); }
 
-void Transform::SetPosition(vec3 pos) { CheckStatic; localPosition += (pos - GetPosition()); }
-void Transform::SetRotation(quat rot) { CheckStatic; localRotation *= (rot * glm::inverse(GetRotation())); }
+void Transform::SetPosition(vec3 pos) 
+{ 
+	CheckStatic;
+	vec3 delta = pos - Position();
+	CacheModel(glm::translate(model, delta));
+	localPosition += delta;
+}
+void Transform::SetRotation(quat rot) 
+{ 
+	CheckStatic; 
+	localRotation *= (rot * glm::inverse(Rotation()));
+	CacheModel(CalcModel());
+}
 void Transform::SetScale(vec3 scale) 
 {
 	CheckStatic;
 	if (requireUniformScale)
 		scale = vec3(scale.x); // unclear whether this is the best way to ensure uniformity
-	localScale *= (scale / GetScale());
+	vec3 factor = scale / Scale();
+	Check_vec(factor);
+	localScale *= factor;
+	CacheModel(glm::scale(model, factor));
+	//CacheModel(CalcModel());
 }
 
-vec3 Transform::GetPosition() const
+vec3 Transform::Scale() const
 {
-	if (!HasParent())
-		return localPosition;
-	else
-		return TryParent()->GetPosition() + TryParent()->GetRotation() * localPosition; // this handling of rotation is inefficient
+	return vec3(
+		glm::Magnitude(model[0]),
+		glm::Magnitude(model[1]),
+		glm::Magnitude(model[2])
+	);
 }
-quat Transform::GetRotation() const
+mat4 Transform::CalcModel() const
 {
 	if (!HasParent())
-		return localRotation;
+		return LocalModel();
 	else
-		return TryParent()->GetRotation() * localRotation;
+		return TryParent()->Model();
 }
-vec3 Transform::GetScale() const
-{
+mat4 Transform::InverseModel() const
+{	
 	if (!HasParent())
-		return localScale;
+		return InverseLocalModel();
 	else
-		return TryParent()->GetScale() * localScale;
-}
-mat4 Transform::GetModel() const
-{
-	if (!HasParent())
-		return GetLocalModel();
-	else
-		return TryParent()->GetModel() * GetLocalModel(); // using this by the renderer is inefficient
-}
-mat4 Transform::GetInverseModel() const
-{
-	if (!HasParent())
-		return GetInverseLocalModel();
-	else
-		return GetInverseLocalModel() * TryParent()->GetInverseModel();
+		return glm::inverse(model);;
 }
 
 
@@ -148,9 +176,9 @@ void Transform::SetParent(Transform* newParent)
 	// therefore we must adjust for the effect that changing parent has on the world
 	// position, rotation and scale
 	Transform* oldParent = TryParent();
-	mat4 oldParentModel = TryParent() ? oldParent->GetModel() : mat4(1.0f);
-	mat4 newParentInverseModel = newParent ? newParent->GetInverseModel() : mat4(1.0f);
-	SetLocalDataUsingMatrix(newParentInverseModel * oldParentModel * GetLocalModel()); // oldParentModel * GetLocalModel() = GetModel()
+	mat4 oldParentModel = TryParent() ? oldParent->Model() : mat4(1.0f);
+	mat4 newParentInverseModel = newParent ? newParent->InverseModel() : mat4(1.0f);
+	SetLocalDataUsingMatrix(newParentInverseModel * oldParentModel * LocalModel()); // oldParentModel * LocalModel() = CalcModel()
 
 	if (oldParent)
 		Tools::Remove(oldParent->children, this);
@@ -212,22 +240,22 @@ Transform& Transform::Root()
 vec3 Transform::ToWorldSpace(vec3 localVector, bool isPosition) const
 {
 	// we extend the localPosition using a homogenous coordinate
-	mat4 matrix = isPosition ? GetModel() : glm::mat4_cast(GetRotation());
+	mat4 matrix = isPosition ? model : glm::mat4_cast(Rotation());
 	return matrix * vec4(localVector.x, localVector.y, localVector.z, 1);
 }
 vec2 Transform::ToWorldSpace(vec2 localVector2D, bool isPosition) const
 {
-	mat4 matrix = isPosition ? GetModel() : glm::mat4_cast(GetRotation());
+	mat4 matrix = isPosition ? model : glm::mat4_cast(Rotation());
 	return matrix * vec4(localVector2D.x, localVector2D.y, 0, 1);
 }
 vec3 Transform::ToLocalSpace(vec3 worldVector, bool isPosition) const
 {
-	mat4 matrix = isPosition ? GetInverseModel() : glm::mat4_cast(glm::inverse(GetRotation()));
+	mat4 matrix = isPosition ? InverseModel() : glm::mat4_cast(glm::inverse(Rotation()));
 	return matrix * vec4(worldVector.x, worldVector.y, worldVector.z, 1);
 }
 vec2 Transform::ToLocalSpace(vec2 worldVector2D, bool isPosition) const
 {
-	mat4 matrix = isPosition ? GetInverseModel() : glm::mat4_cast(glm::inverse(GetRotation()));
+	mat4 matrix = isPosition ? InverseModel() : glm::mat4_cast(glm::inverse(Rotation()));
 	return matrix * vec4(worldVector2D.x, worldVector2D.y, 0, 1);
 }
 
@@ -243,6 +271,7 @@ void Transform::SetLocalDataUsingMatrix(const mat4& transformMatrix)
 
 	glm::mat3 rotationMatrix(transformMatrix);
 	localRotation = glm::quat_cast(rotationMatrix);
+	CacheModel(CalcModel());
 }
 
 void Transform::SetStatic(bool becomeStatic)
@@ -251,6 +280,15 @@ void Transform::SetStatic(bool becomeStatic)
 		"cannot set transform to static/non-static, while the game is running");
 	isStatic = becomeStatic;
 }
+
+
+void Transform::CacheModel(const mat4& m)
+{
+	model = m;
+	for (Transform* child : children)
+		child->CacheModel(m * child->LocalModel());
+}
+
 
 
 void Transform::Save(YAML::Node& node) const
@@ -275,5 +313,6 @@ void Transform::Load(const YAML::Node& node)
 	localRotation = node["localRotation"].as<quat>();
 	localScale = node["localScale"].as<vec3>();
 	isStatic = node["isStatic"].as<bool>(); // we dont use SetStatic, since the check doesnt count
+	CacheModel(CalcModel());
 }
 

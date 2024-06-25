@@ -20,6 +20,7 @@ diverse:
 	allow deletion while mouse in hierachy
 	allow shift select-range in hierachy
 	dublicate parent-child relationships, when dublicating hierachy
+	collision detection for scaled object if wrong near the edges
 
 game:
 	background

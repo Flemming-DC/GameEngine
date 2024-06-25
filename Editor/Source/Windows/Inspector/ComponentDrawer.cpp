@@ -13,30 +13,41 @@ float dragSensitivity = 0.003f;
 //void DrawCamera(Camera& camera) {}
 void ComponentDrawer::DrawTransform(Transform& transform)
 {
-    ImGui::DragFloat2("position", glm::value_ptr(transform.localPosition), dragSensitivity);
+    if (EngineMode::GameIsRunning())
+        ImGui::BeginDisabled();
+
+    vec3 pos = transform.LocalPosition();
+    if (ImGui::DragFloat2("position", glm::value_ptr(pos), dragSensitivity))
+        transform.SetLocalPosition(pos);
 
     float angle = transform.LocalAngle();
-    ImGui::SliderFloat("rotation", &angle, 0.0f, 2.0f * 3.14159265359f);
-    transform.SetLocalAngle(angle);
+    if (ImGui::SliderFloat("rotation", &angle, 0.0f, 2.0f * 3.14159265359f))
+        transform.SetLocalAngle(angle);
 
     vec3 scale = transform.LocalScale();
+    bool scaleChanged = false;
     if (transform.requireUniformScale)
-        ImGui::DragFloat("scale", glm::value_ptr(scale), 0.5f * dragSensitivity);
+        scaleChanged = ImGui::DragFloat("scale", &scale.x, 0.5f * dragSensitivity, 0.0001f);
     else
-        ImGui::DragFloat2("scale", glm::value_ptr(scale), dragSensitivity);
-    transform.SetLocalScale(scale);
+        scaleChanged = ImGui::DragFloat2("scale", glm::value_ptr(scale), dragSensitivity, 0.0001f);
+    if (scaleChanged)
+    {
+        scale.z = 1;
+        if (transform.requireUniformScale)
+            scale = vec3(scale.x); // this is also done in SetLocalScale, but for clarity we do it here too.
+        scale = vec3(Realistic_nz(scale.x), Realistic_nz(scale.y), Realistic_nz(scale.z));
+        transform.SetLocalScale(scale);
+    }
 
     ImGui::SameLine();
     ImGui::Checkbox("uniform ", &transform.requireUniformScale);
-
+    
     bool isStatic = transform.IsStatic();
-    if (EngineMode::GameIsRunning())
-        ImGui::BeginDisabled();
-    ImGui::Checkbox("static", &isStatic);
+    if (ImGui::Checkbox("static", &isStatic))
+        transform.SetStatic(isStatic);
+    
     if (EngineMode::GameIsRunning())
         ImGui::EndDisabled();
-    else
-        transform.SetStatic(isStatic);
 }
 
 void ComponentDrawer::DrawRenderable(Renderable& renderable)
