@@ -125,19 +125,27 @@ void Scene::Load()
     struct SortByOrder {
         bool operator() (Component* lhs, Component* rhs) const 
             { return lhs->InitOrder() < rhs->InitOrder(); } };
-    
+
+    static vector<Component*> comps;
     for (const auto& entity : Entity::register_.GetData())
     {
-        vector<Component*> comps;
+        comps.clear();
         for (const auto& comp : entity.GetComponents())
             comps.push_back(comp.get());
         std::sort(comps.begin(), comps.end(), SortByOrder());
 
+        for (const auto& comp : comps)
+            comp->CallLoadEtc();
+    }
+    for (const auto& entity : Entity::register_.GetData())
+    {
+        comps.clear();
+        for (const auto& comp : entity.GetComponents())
+            comps.push_back(comp.get());
+        std::sort(comps.begin(), comps.end(), SortByOrder());
 
         for (const auto& comp : comps)
-        {
-            comp->OnSceneLoaded();
-        }
+            comp->CallOnStart();
     }
     
 }

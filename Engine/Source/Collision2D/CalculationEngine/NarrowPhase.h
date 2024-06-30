@@ -12,7 +12,7 @@ public:
 	typedef const BareCircleCollider& circle;
 	typedef const BarePolygonCollider& poly;
 
-	static Overlaps GetOverlaps(Overlaps potentialOverlaps);
+	static Overlaps& GetOverlaps(Overlaps& potentialOverlaps);
 	static bool IsOverLapping(const BareCollider& collider1, const BareCollider& collider2);
 
 private:

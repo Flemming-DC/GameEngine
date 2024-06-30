@@ -29,7 +29,7 @@ void Material::Setup(string name, const Shader& shader_, const map_uo<string, st
 }
 
 
-void Material::SetUniform(const string& name, std::any value)
+void Material::SetUniform(const string& name, const std::any& value)
 {
     Assert(UuidCreator::IsInitialized(id),
         "You cannot set a uniform upon an uninitialized Material");

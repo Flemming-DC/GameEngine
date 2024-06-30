@@ -192,9 +192,7 @@ void DummyComp::OldTests()
 
 	if (InputKey::BecomesPressed(Keyboard::B))
 	{
-		bool foundDepth;
-		auto pos = Screen::ToWorldPosition(InputKey::MouseEntireScreenPosition(), &foundDepth);
-		logger::print("B: ", foundDepth, " ", pos);
+		auto pos = Screen::ToWorldPosition(InputKey::MouseEntireScreenPosition());
 	}
 
 	if (InputKey::BecomesPressed(Keyboard::_1))

@@ -119,14 +119,15 @@ optional<string> Naming::TryGet(uuid id)
 
 optional<uuid> Naming::Show(const char* label, uuid currentID)
 {
-	auto& names = Names();
+	vector<string>& names = Names();
 	string name = at(currentID);
-	int currentIndex = Tools::FindIndex(names, name);
+	optional<int> currentIndex = Tools::FindIndex(names, name);
+	Assert(currentIndex, "Failed to find index");
 
 	//static int currentIndex = 0;
-	bool changed = ImGui::Combo(label, &currentIndex, names);
+	bool changed = ImGui::Combo(label, &*currentIndex, names);
 	if (changed && !names.empty())
-		return at(names[currentIndex]);
+		return at(names[*currentIndex]);
 	else
 		return std::nullopt;
 }

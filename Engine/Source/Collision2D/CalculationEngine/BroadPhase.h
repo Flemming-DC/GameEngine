@@ -7,7 +7,7 @@ class BroadPhase
 public:
 	using Overlaps = std::vector<std::pair<Collider*, Collider*>>;
 
-	static Overlaps GetPotentialOverlaps();
+	static Overlaps& GetPotentialOverlaps();
 
 };
 

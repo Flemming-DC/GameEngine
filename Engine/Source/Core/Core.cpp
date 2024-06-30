@@ -11,6 +11,8 @@
 #include "OpenGlSetup.h"
 #include "NamingSaver.h"
 #include "Ear.h"
+#include "Memory.h"
+#include <thread>
 
 void Core::Run(std::string firstScenePath)
 {
@@ -51,32 +53,62 @@ void Core::Setup(std::string firstScenePath)
 
 void Core::Update()
 {
-    ProfileFunc;
     // setup frame
-    ProfileLine(OpenGlSetup::Update());
-    ProfileLine(ImGuiSetup::EarlyUpdate());
-    ProfileLine(Time::Update());
+    OpenGlSetup::Update();
+    ImGuiSetup::EarlyUpdate();
+    Time::Update();
 
-    // update world r
+    // update world
     if (EngineMode::GameIsRunning())
     {
-        ProfileLine(CollisionLoop::Update());
-        ProfileLine(Dynamic::CallOnUpdate());
-        ProfileLine(Entity::Update());
-        ProfileLine(Renderer::DrawToScreen());
+        CollisionLoop::Update();
+        Dynamic::CallOnUpdate();
+        Entity::Update();
+        Renderer::DrawToScreen();
     }
     if (EngineMode::InEditor())
-        ProfileLine(Dynamic::CallOnEditorUpdate());
-    ProfileLine(Entity::DestroyTheDoomed());
+        Dynamic::CallOnEditorUpdate(); 
+    Entity::DestroyTheDoomed(); 
     if (EngineMode::GameCloseButtonIsClicked())
-        ProfileLine(StopRunningGame());
-    ProfileLine(Delay::Update());
+        StopRunningGame();
+    Delay::Update(); 
 
     // shutdown frame
-    ProfileLine(InputLoop::LateUpdate());
-    ProfileLine(ImGuiSetup::LateUpdate());
+    InputLoop::LateUpdate();
+    ImGuiSetup::LateUpdate();
+    Memory::Update();
 }
 
+/*
+void Core::Update()
+{
+    ProfileFunc;
+    // setup frame
+    ProfileLine(OpenGlSetup::Update(););
+    ProfileLine(ImGuiSetup::EarlyUpdate(););
+    ProfileLine(Time::Update(););
+
+    // update world
+    if (EngineMode::GameIsRunning())
+    {
+        ProfileLine(CollisionLoop::Update(); );
+        ProfileLine(Dynamic::CallOnUpdate(); );
+        ProfileLine(Entity::Update();        );
+        ProfileLine(Renderer::DrawToScreen(););
+    }
+    ProfileLine(if (EngineMode::InEditor())
+        Dynamic::CallOnEditorUpdate(););
+    ProfileLine(Entity::DestroyTheDoomed(););
+    ProfileLine(if (EngineMode::GameCloseButtonIsClicked())
+        StopRunningGame(););
+    ProfileLine(Delay::Update(););
+
+    // shutdown frame
+    ProfileLine(InputLoop::LateUpdate(););
+    ImGuiSetup::LateUpdate();
+    Memory::Update();
+}
+*/
 
 void Core::Shutdown()
 {
@@ -94,6 +126,7 @@ void Core::Shutdown()
     // externals
     ImGuiSetup::ShutDown();
     OpenGlSetup::ShutDown();
+    Memory::ShutDown();
 }
 
 

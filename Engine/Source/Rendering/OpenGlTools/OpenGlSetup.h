@@ -14,6 +14,7 @@ public:
 	inline static int GetHeight() { return WindowSize().second; } 
 	inline static GLFWwindow* GetWindow() { Assert(window, "GLFWwindow is nullptr"); return window; } // returns ptr for convenience
 	inline static bool WindowIsResized() { return WindowSize() != lastWindowSize; }
+	static std::pair<int, int> GlVersionPair();
 
 private:
 	static bool openGLInitialized;
@@ -21,6 +22,7 @@ private:
 	static std::pair<int, int> lastWindowSize;
 
 	static std::pair<int, int> WindowSize();
+	static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 };
 
 

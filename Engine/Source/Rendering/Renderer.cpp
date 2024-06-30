@@ -66,10 +66,12 @@ Renderer::RenderResult Renderer::DrawToFrameBuffer(const mat4& projectionView, c
 
 void Renderer::DrawToScreen(const mat4& projectionView, const RenderBoundingBox& viewBounds)
 {
-    glCall(glClear(GL_COLOR_BUFFER_BIT)); // same as renderer.Clear()
+    glCall(glClear(GL_COLOR_BUFFER_BIT));
     Renderable::UnBind(); //  evt. add framebuffer unbind
 
-    vector<Renderable*> renderables;
+    // get sorted renderables
+    static vector<Renderable*> renderables;
+    renderables.clear();
     for (const uuid& renderableID : Renderable::allRenderables)
         renderables.push_back(&Entity::GetComponent<Renderable>(renderableID));
     struct SortByOrder {

@@ -28,15 +28,16 @@ void Collider::OnDestroy()
 
 void Collider::OnUpdate() // maintaining sorted collider lists
 {
-	// looks slow, but doesn't seem to bad accordiing to measurement
-	int indexX = Tools::FindIndex(collidersSortedByX, GetID()); 
+	// looks slow, but doesn't seem to bad according to measurement
+	optional<int> indexX = Tools::FindIndex(collidersSortedByX, GetID());
+	Assert(indexX, "id ", GetID(), " of ", to_string(), " does not exist in collidersSortedByX");
 	if (indexX < (int)collidersSortedByX.size() - 1)
 	{
-		uuid nextIdX = collidersSortedByX[indexX + 1];
+		uuid nextIdX = collidersSortedByX.at(*indexX + 1);
 		float nextX = Entity::GetComponent<Collider>(nextIdX).Get<Transform>().Position2D().x;
 		float thisX = GetTransform().Position2D().x;
 		if (thisX > nextX) 
-			std::swap(collidersSortedByX[indexX], collidersSortedByX[indexX + 1]);
+			std::swap(collidersSortedByX.at(*indexX), collidersSortedByX.at(*indexX + 1));
 	}
 
 

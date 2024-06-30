@@ -2,30 +2,6 @@
 
 Shorts;
 
-bool BoundingBox::IsOverlapping(const BoundingBox& other)
-{
-	if (this->maxX < other.minX) return false;
-	if (this->minX > other.maxX) return false;
-	if (this->maxY < other.minY) return false;
-	if (this->minY > other.maxY) return false;
-
-	return true;
-}
-bool BoundingBox::IsOverlappingX(const BoundingBox& other)
-{
-	if (this->maxX < other.minX) return false;
-	if (this->minX > other.maxX) return false;
-
-	return true;
-}
-bool BoundingBox::IsOverlappingY(const BoundingBox& other)
-{
-	if (this->maxY < other.minY) return false;
-	if (this->minY > other.maxY) return false;
-
-	return true;
-}
-
 ITransform BareCollider::MakeTransform(vec2 pos, quat rot, vec2 scale)
 {
 	mat4 rotMatrix = glm::mat4_cast(rot);

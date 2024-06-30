@@ -23,12 +23,12 @@ void Component::OnAddComponent(uuids::uuid entityID_, YAML::Node* node_)
 
 }
 
-void Component::OnSceneLoaded()
+void Component::CallLoadEtc()
 {
 	transform = &Get<Transform>();
 	SetEnabled(node["enabled"].as<bool>());
 	Load(node);
-	OnStart(); // evt. combine Load and OnConstructed into Load with nullable pointer
+	//OnStart(); // evt. combine Load and OnConstructed into Load with nullable pointer
 }
 
 std::string Component::to_string() const

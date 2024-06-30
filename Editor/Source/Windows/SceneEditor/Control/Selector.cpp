@@ -102,8 +102,8 @@ void Selector::ClickSelect()
         return;
     if (Tools::Contains(selection, clickedEntity->GetID()))
         return;
-    Entity& root = clickedEntity->Get<Transform>().Root().entity();
-    selection.push_back(root.GetID());
+    //Entity& root = clickedEntity->Get<Transform>().Root().entity();
+    selection.push_back(clickedEntity->GetID());
 }
 
 vector<Entity*> Selector::GetOverlaps(vec2 selectionBoxCenter, vec2 selectionBoxSize)

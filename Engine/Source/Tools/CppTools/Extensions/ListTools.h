@@ -132,14 +132,14 @@ namespace Tools
 	};
 
 	template<typename T>
-	inline int FindIndex(const vector<T>& vec, const T& t)
+	inline optional<int> FindIndex(const vector<T>& vec, const T& t)
 	{
 		for (int i = 0; i < (int)vec.size(); i++)
 		{
 			if (vec[i] == t)
 				return i;
 		}
-		return -1;
+		return std::nullopt;
 	};
 
 	template<typename T, typename UnaryPredicate>

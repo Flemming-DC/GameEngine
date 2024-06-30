@@ -6,7 +6,10 @@ void PolygonCollider::OnStart()
 {
 	Collider::OnStart();
 	if (!bare.GetLocalPosition2Ds().empty())
+	{
+		SetupPoly(bare.GetLocalPosition2Ds());
 		return;
+	}
 	glm::vec2 halfSize = glm::vec2(0.5f);
 	std::vector<glm::vec2> position2Ds =
 	{

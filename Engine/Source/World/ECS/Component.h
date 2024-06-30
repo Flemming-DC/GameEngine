@@ -34,7 +34,8 @@ public:
 	bool has_equal_id(const Component& other) { return this->id == other.id; }
 	inline uuids::uuid GetID() const { return id; }
 	virtual void Save(YAML::Node& node) const {}
-	void OnSceneLoaded();
+	void CallLoadEtc(); // called by StoredEntity and Scene
+	void CallOnStart() { OnStart(); } // called by StoredEntity and Scene
 	virtual int InitOrder() { return 0; }
 	inline bool Enabled() const { return enabled; }
 	void SetEnabled(bool enable);

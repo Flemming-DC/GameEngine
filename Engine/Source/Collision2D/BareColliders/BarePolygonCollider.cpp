@@ -87,10 +87,9 @@ void BarePolygonCollider::CalculateCaches(const vector<vec2>& localPosition2Ds_)
 	{
 		CacheBounds();
 		cachedPositions = Positions();
-		if (cachedNormals)
-			cachedNormals->clear();
-		else
-			cachedNormals = {};
+		if (!cachedNormals)
+			cachedNormals.emplace();
+		cachedNormals->clear();
 		for (const auto& normal : localNormals)
 			cachedNormals->push_back(iTransform.NonPosToWorldSpace(normal));
 	}
@@ -318,6 +317,7 @@ void BarePolygonCollider::CacheBounds()
 		if (pos.y > maxY)
 			maxY = pos.y;
 	}
+	Assert(maxX >= minX && maxY >= minY, "min-max calculation failed.");
 	cachedBounds = { minX, minY, maxX, maxY };
 }
 

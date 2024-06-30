@@ -11,12 +11,12 @@ class CollisionLoop
 public:
 	static void Setup();
 	static void Update();
-	static Overlaps GetOverlaps() { return overlaps; }
+	static Overlaps& GetOverlaps() { return overlaps; }
 	static void PruneDeadColliders();
 
 private:
 	static Overlaps overlaps;
 
-	static void HandleCollisionInfo(Overlaps newOverlaps);
+	static void HandleCollisionInfo(Overlaps& newOverlaps);
 };
 

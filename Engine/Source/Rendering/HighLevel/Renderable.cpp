@@ -36,7 +36,7 @@ void Renderable::Draw(const mat4& projectionView)
     Assert(UuidCreator::IsInitialized(material.GetID()) && UuidCreator::IsInitialized(mesh.GetID()),
         "you must setup the mesh and material on the renderable, before drawing it.");
     mat4 model = GetTransform().Model(); // this is inefficient
-    material.SetUniform("u_MVP", projectionView * model);
+    material.SetUniform("u_MVP", projectionView * model); // std::any allocates here
     material.Bind();
     mesh.Bind();
     // GL_TRIANGLES should be soft coded if we want to support other things.

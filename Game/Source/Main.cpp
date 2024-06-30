@@ -25,6 +25,7 @@ int main()
     Editor::EditorCore::MarkAsEditor();
 #endif // InEditor
 
+
     Entity::DeclareComps<DummyComp, GameLogic, RocketEngine, Impact, Player, AsteroidMotion, FollowPlayer>();
     Dynamic::Setup<GameAssets, Settings, AsteroidSpawner>();
     Core::Run(Literals::stroidalDevScene);

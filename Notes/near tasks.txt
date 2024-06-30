@@ -1,15 +1,15 @@
 
+bug: 
+	release build for game-ineditor won't work
+
 performance:
 	evt. rename Time::Now() to Time::ThisFrame() or Time::Frame()
-	turn vSync back on when done with performance
-	use && over repeated if in Bounds overlap check
 
 flaw during mini game dev:
 	OnStart mixes OnStart, OnGameStart and OnEngineStart
 	evt. HotKeyList (or action menu in hierachy)
 	evt. ensure that { filenames } == { names in naming } in NamingSaver
 	parenting is handled incorrectly by stored entities. You ought store children, not parents.
-	missing sound
 	select by non-visiable renderable is annoying
 
 diverse:
@@ -30,7 +30,6 @@ game:
 
 
 Editor 
-	
 	Inspector
 		evt. macros to show variables
 		evt. edit polygon positions in scene by dragging.

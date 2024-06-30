@@ -5,6 +5,7 @@
 #include "OpenGlSetup.h"
 #include "EngineMode.h"
 
+
 void ImGuiSetup::Setup()
 {
     ImGui::CreateContext();
@@ -12,17 +13,22 @@ void ImGuiSetup::Setup()
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
     if (EngineMode::InEditor())
     {
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
     }
+    else
+        io.IniFilename = nullptr; // Disable automatic .ini file saving/loading
 
-    const char* glsl_version = "#version 460";
+    auto major_minor = OpenGlSetup::GlVersionPair();
+    std::string glVersion = "#version " + std::to_string(major_minor.first) + std::to_string(major_minor.second) + "0";
     ImGui_ImplGlfw_InitForOpenGL(OpenGlSetup::GetWindow(), true);
-    ImGui_ImplOpenGL3_Init(glsl_version);
+    ImGui_ImplOpenGL3_Init(glVersion.c_str());
     ImGui::StyleColorsDark();
     io.FontGlobalScale = 1.2f; // font size
+
 }
 
 void ImGuiSetup::EarlyUpdate()
@@ -31,6 +37,7 @@ void ImGuiSetup::EarlyUpdate()
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 }
+
 
 void ImGuiSetup::LateUpdate()
 {

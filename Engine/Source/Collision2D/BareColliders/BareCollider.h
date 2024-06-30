@@ -17,9 +17,17 @@ struct ITransform // this struct serves as an interface for a transform.
 struct BoundingBox 
 { 
 	float minX, minY, maxX, maxY; 
-	bool IsOverlapping(const BoundingBox& other); // unused
-	bool IsOverlappingX(const BoundingBox& other);
-	bool IsOverlappingY(const BoundingBox& other);
+
+	inline bool IsOverlappingX(const BoundingBox& other) 
+	{
+		return this->maxX >= other.minX
+			&& this->minX <= other.maxX;
+	}
+	inline bool IsOverlappingY(const BoundingBox& other) 
+	{
+		return this->maxY >= other.minY
+			&& this->minY <= other.maxY;
+	}
 };
 
 class BareCollider

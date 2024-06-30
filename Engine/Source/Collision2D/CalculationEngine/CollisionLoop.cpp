@@ -16,15 +16,14 @@ void CollisionLoop::Setup()
 
 void CollisionLoop::Update()
 {
-	ProfileFunc;
-	ProfileLine(PruneDeadColliders(););
-	ProfileLine(auto potentialNewOverlaps = BroadPhase::GetPotentialOverlaps(););
-	ProfileLine(auto newOverlaps = NarrowPhase::GetOverlaps(potentialNewOverlaps););
-	ProfileLine(HandleCollisionInfo(newOverlaps););
-	//solve collisions
+	PruneDeadColliders();
+	auto& potentialNewOverlaps = BroadPhase::GetPotentialOverlaps();
+	auto& newOverlaps = NarrowPhase::GetOverlaps(potentialNewOverlaps);
+	HandleCollisionInfo(newOverlaps);
+	//solve collisions // if multithreaded, then put resolving that the threads join again
 }
 
-void CollisionLoop::HandleCollisionInfo(Overlaps newOverlaps)
+void CollisionLoop::HandleCollisionInfo(Overlaps& newOverlaps)
 {
 	for (const auto& pair : newOverlaps) // enter
 	{

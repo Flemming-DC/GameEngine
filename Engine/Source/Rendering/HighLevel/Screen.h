@@ -19,11 +19,11 @@ public:
 	static void SetCursorMode(CursorMode cursorMode);
 	static void SetTitle(string gameTitle);
 
-	static vec3 ToWorldPosition(vec2 normalizedScreenPosition, bool* foundDepth = nullptr); // using current cam and glfw window
+	static vec3 ToWorldPosition(vec2 somewhatNormalizedScreenPos); // using current cam and glfw window
 	static vec2 FromWorldPosition(vec3 worldPosition); // using current cam and glfw window
 	static vec3 ToWorldPosition(
 		vec2 screenPos, vec2 screenMinCorner, vec2 screenMaxCorner,
-		vec3 cameraPos, quat cameraRot, vec3 cameraScale, bool* foundDepth = nullptr); // can be used by editor
+		vec3 cameraPos, quat cameraRot, vec3 cameraScale); // can be used by editor
 	static vec2 FromWorldPosition(
 		vec3 worldPosition, vec2 screenMinCorner, vec2 screenMaxCorner,
 		vec3 cameraPos, quat cameraRot, vec3 cameraScale); // can be used by editor

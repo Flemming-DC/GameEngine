@@ -6,11 +6,12 @@ Shorts;
 using Overlaps = vector<pair<Collider*, Collider*>>;
 typedef const BareCircleCollider& circle;
 typedef const BarePolygonCollider& poly;
+static Overlaps overlaps;
 
 
-Overlaps NarrowPhase::GetOverlaps(Overlaps potentialOverlaps)
+Overlaps& NarrowPhase::GetOverlaps(Overlaps& potentialOverlaps)
 {
-	Overlaps overlaps;
+	overlaps.clear();
 
 	for (const auto& colliderPair : potentialOverlaps)
 	{
@@ -146,47 +147,6 @@ bool NarrowPhase::IsOverLapping_PP(poly polygon1, poly polygon2)
 }
 
 
-/*
-
-bool NarrowPhase::IsOverLapping_PP(poly polygon1, poly polygon2)
-{
-	ProfileFunc;
-	// we use the SAT algorithm https://www.youtube.com/watch?v=59BTXB-kFNs&ab_channel=Nybbit
-
-	ProfileLine(int count1 = (int)polygon1.GetLocalPosition2Ds().size(););
-	ProfileLine(int count2 = (int)polygon2.GetLocalPosition2Ds().size(););
-
-	// we determine which polygon is simplest (in terms of position count)
-	ProfileLine(poly simplePolygon = count1 < count2 ? polygon1 : polygon2;);
-	ProfileLine(poly complexPolygon = count1 >= count2 ? polygon1 : polygon2;);
-	ProfileLine(int simpleCount = count1 < count2 ? count1 : count2;);
-	ProfileLine(int complexCount = count1 >= count2 ? count1 : count2;);
-
-	// we loop over the complex polygon first, so that CalculateShadowAlongNormal acts on
-	// the simple polygon, which maximize the chance of an early exit
-	for (int i = 0; i < complexCount; i++)
-	{
-		ProfileLine(auto complexShadow = complexPolygon.ShadowAlongNormal(complexPolygon.GetNormalByIndex(i)););
-		ProfileLine(auto simpleShadow = simplePolygon.ShadowAlongNormal(complexPolygon.GetNormalByIndex(i)););
-		ProfileLine(bool noOverlap = complexShadow.first > simpleShadow.second || simpleShadow.first > complexShadow.second;);
-		if (noOverlap)
-			return false;
-	}
-
-	for (int i = 0; i < simpleCount; i++)
-	{
-		ProfileLine(auto complexShadow = complexPolygon.ShadowAlongNormal(simplePolygon.GetNormalByIndex(i)););
-		ProfileLine(auto simpleShadow = simplePolygon.ShadowAlongNormal(simplePolygon.GetNormalByIndex(i)););
-		ProfileLine(bool noOverlap = complexShadow.first > simpleShadow.second || simpleShadow.first > complexShadow.second;);
-		if (noOverlap)
-			return false;
-	}
-
-	return true;
-}
-
-
-*/
 
 
 

@@ -140,7 +140,9 @@ Entity& StoredEntity::FromNode(const Node& node, optional<uuid> instanceID,
         std::sort(comps.begin(), comps.end(), SortByOrder());
 
         for (const auto& comp : comps)
-            comp->OnSceneLoaded();
+            comp->CallLoadEtc();
+        for (const auto& comp : comps)
+            comp->CallOnStart();
     }
 
     return entity;

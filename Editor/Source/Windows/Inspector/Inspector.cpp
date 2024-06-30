@@ -34,6 +34,7 @@ void Inspector::Update()
     ImGui::End();
 }
 
+
 void Inspector::EntityHeader()
 {
     static string entityName;
@@ -41,7 +42,7 @@ void Inspector::EntityHeader()
     Entity& entity = Entity::GetEntity(currentEntityID);
     if (!isEditingName)
         entityName = entity.Name(); // starting choice
-    if (ImGui::InputText("name", &entityName, ImGuiInputTextFlags_EnterReturnsTrue))
+    if (ImGui::InputText("name", &entityName))
     {
         if (entityName != "")
         {
