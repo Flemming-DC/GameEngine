@@ -2,9 +2,9 @@
 #include "ErrorChecker.h"
 
 #define glCall(codeLine) \
-    OpenGlError::_glClearError();\
+    InDebug(OpenGlError::_glClearError());\
     codeLine;\
-    OpenGlError::_glCall(#codeLine, __FILE__, __LINE__)
+    InDebug(OpenGlError::_glCall(#codeLine, __FILE__, __LINE__))
 
 
 namespace OpenGlError

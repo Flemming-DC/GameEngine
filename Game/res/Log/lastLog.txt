@@ -1,1 +1,18 @@
 
+C:\Mine\cpp\GameEngine\Engine\Source\Core\Core.cpp.Update
+    line                               | ms/call   | percent
+    --------------------------------------------------------
+    101: if (EngineMode::InEditor()... | 0.733     | 4.414 %
+    102: Entity::DestroyTheDoomed();   | 0.009     | 0.057 %
+    104: if (EngineMode::GameCloseB... | 0.001     | 0.011 %
+    105: Delay::Update();              | 0.002     | 0.015 %
+    108: InputLoop::LateUpdate();      | 0.049     | 0.299 %
+    88: OpenGlSetup::Update();         | 14.18     | 85.36 %
+    89: ImGuiSetup::EarlyUpdate();     | 0.500     | 3.010 %
+    90: Time::Update();                | 0.003     | 0.022 %
+    95: CollisionLoop::Update();       | 0.128     | 0.772 %
+    96: Dynamic::CallOnUpdate();       | 0.078     | 0.471 %
+    97: Entity::Update();              | 0.050     | 0.304 %
+    98: Renderer::DrawToScreen();      | 0.046     | 0.282 %
+    total                              | 16.61     | 100.0 % (568.0 hits) 
+

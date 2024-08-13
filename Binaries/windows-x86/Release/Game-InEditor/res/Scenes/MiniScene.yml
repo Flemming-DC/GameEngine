@@ -1,0 +1,14 @@
+id: fff92313-cb5d-4f6a-b958-d11f1b4de1f8
+Entities:
+    camera:
+        id: 5a52dda0-36b8-45b3-8b6b-f024e1176796
+        Camera:
+            id: 255f486e-1f9c-4508-a05a-e1ac7aa897d2
+        Transform:
+            id: 8f8dfc20-1f9e-43f7-bf61-8bc6e5e5ec02
+            localPosition: [0, 0, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+        DummyComp:
+            id: e2622952-623d-47a3-a545-77f0f77f9dc9
+

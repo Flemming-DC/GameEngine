@@ -1,0 +1,19 @@
+
+id: uuid
+name: string
+Shader: filepath # or id
+uniformValuesByName:
+    # name: value (what about type)
+    - u_textureSampler: ---
+    - u_color: ---
+
+ids:
+    92bd9bf4-793b-4c24-823f-42475b966209
+    4fb6ff1d-4dbc-4a1d-a3a8-3b878cddb7d9
+    728413ed-5080-4033-a04f-eebc6f0b5ab4
+    
+    
+    
+    
+    
+    

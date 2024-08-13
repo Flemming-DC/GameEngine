@@ -1,0 +1,62 @@
+id: 45dda583-43ef-4bd4-b140-c0772ff439fb
+Entities:
+    camera:
+        id: 70f2f15d-bb08-4086-825c-9335de90485e
+        Transform:
+            id: 65dc8b38-62e2-4d2c-9bdb-e321103fe8b2
+            localPosition: [0, 0, 0]
+            localRotation: [0, 0, 0, 1]
+            localScale: [1, 1, 1]
+        Camera:
+            id: 68a01882-0e0d-49b1-944d-49add7ffbe08
+    picture 1:
+        id: 2b2e78a0-47f5-455d-b108-d5ad200e6759
+        Transform:
+            id: 8abce9b6-962a-4a6a-8525-bd7dc881089f
+            localPosition: [-0.5, -0.5, 0]
+            localRotation: [0, 0, 0, 1]
+            localScale: [1, 1, 1]
+        Renderable:
+            id: 5e7567d7-7f73-4e71-8a50-9b41c7f75a3c
+            mesh: 6b0eeb51-d171-4adc-9d52-9fc87d9d0ede
+            material: 62924bbe-d721-4b46-9775-116048b8c11f
+        RectangleCollider:
+            id: bfe1d3f2-bcb6-46b1-9c8a-f7cba0b28019
+            size: [1, 1]
+    picture 2:
+        id: 24809806-4f77-4d76-8636-fd7c5ec16f73
+        Transform:
+            id: 68dd5a1e-160d-4242-9e03-c9498d40bc3a
+            localPosition: [1.5, -0.5, 0]
+            localRotation: [0, 0, 0, 1]
+            localScale: [1, 1, 1]
+            parent: 8abce9b6-962a-4a6a-8525-bd7dc881089f
+        Renderable:
+            id: d6f9b6b1-1da6-430d-9e9b-6f5da990babc
+            mesh: 6b0eeb51-d171-4adc-9d52-9fc87d9d0ede
+            material: 62924bbe-d721-4b46-9775-116048b8c11f
+        GameLogic:
+            id: 9c88557f-5fab-4489-ba07-e49f7ac31860
+        RectangleCollider:
+            id: d2d33cd1-f06f-4407-a358-4aa11fc9e57a
+            size: [1, 1]
+    circle 1:
+        id: f95a11ad-b8c5-4ada-b9cd-13d9c17be60c
+        Transform:
+            id: b19ad933-20e7-4d59-87ea-33578505f092
+            localPosition: [-0.5, 0.600000024, 0]
+            localRotation: [0, 0, 0, 1]
+            localScale: [1, 1, 1]
+        CircleCollider:
+            id: 611011c0-effc-484c-8599-93d20db2c1bc
+            localRadius: 0.5
+    circle 2:
+        id: 1727a253-2abc-4136-bcbf-808410254f10
+        Transform:
+            id: 1c701d7e-bc80-4421-9c56-a0b636003448
+            localPosition: [0.699999988, 0.5, 0]
+            localRotation: [0, 0, 0, 1]
+            localScale: [1, 1, 1]
+        CircleCollider:
+            id: 077a9f75-3efb-4713-bf59-0ce9b9a9dd37
+            localRadius: 0.5

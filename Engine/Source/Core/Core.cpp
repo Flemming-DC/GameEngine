@@ -50,7 +50,7 @@ void Core::Setup(std::string firstScenePath)
     Scene::ActivateImmediately(firstScenePath);
 }
 
-
+///*
 void Core::Update()
 {
     // setup frame
@@ -78,6 +78,7 @@ void Core::Update()
     ImGuiSetup::LateUpdate();
     Memory::Update();
 }
+//*/
 
 /*
 void Core::Update()

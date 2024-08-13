@@ -1,0 +1,57 @@
+id: 78d15a43-766b-4116-b27b-b0071816ac8e
+Entities:
+    camera:
+        id: 2eb9bf85-5117-4757-96c6-92a99bbb0f49
+        Camera:
+            id: b07698b9-f912-4a39-8a9e-158405c47088
+        Transform:
+            id: 8041bbf2-e0ed-408c-8836-0db47cc5a0ef
+            localPosition: [0, 0, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+    circle 1: 
+        id: 465e6f11-1daa-46ed-9eab-ada19408dd94
+        Transform: 
+            id: c8f4574c-079a-48f7-9055-6b2fd37e023c
+            localPosition: [-0.5, 0.5, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+        CircleCollider:
+          id: 7a2121ba-cb58-4a14-bc42-c907070a6d94
+          localRadius: 0.5
+    circle 2:
+        id: 16aaa607-4e7a-465b-bef0-141127983c85
+        CircleCollider:
+            id: a61bc6e3-6caf-4b28-870a-3dbd0754d585
+            localRadius: 0.5
+        Transform:
+            id: 2e002505-8cd3-4da6-8a61-332630b45a94
+            localPosition: [0.699999988, 0.5, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+    picture 1:
+        id: 62b4da63-0610-4eff-9820-3e1f073c9cff
+        Renderable:
+            id: 8f2e1e26-e6d6-4917-ad9e-61e1e3c81791
+            material: 18ead38c-bb49-4692-a840-4246b2ac1b86
+        Transform:
+            id: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
+            localPosition: [-0.5, -0.5, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+    picture 2:
+        id: 9f90ac2c-01c1-439a-b75e-98acd00255e4
+        RectangleCollider:
+            id: e4cf93a6-af2c-4bab-a22f-7a2dd7561c36
+            size: [1, 1]
+        Renderable:
+            id: 7cb23b0c-f684-4b93-98bb-6ff3d2290336
+            material: 18ead38c-bb49-4692-a840-4246b2ac1b86
+        Transform:
+            id: a5be3ef9-f754-42ca-af89-8842ab357ab7
+            localPosition: [1.25, 0, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: 2d517f0c-ee31-4928-a7b2-25ddc82ba991
+        DummyComp:
+            id: 5799e560-ffe1-4834-adf9-de269c0d98af

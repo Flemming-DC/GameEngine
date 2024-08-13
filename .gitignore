@@ -1,6 +1,8 @@
 # Directories
 .vs/
-Binaries/
+Binaries/Intermediates
+Binaries/Premake
+Binaries/windows-x86/Debug
 
 # Files
 *.vcxproj

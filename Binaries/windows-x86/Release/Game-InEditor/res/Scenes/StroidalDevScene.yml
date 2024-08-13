@@ -1,0 +1,580 @@
+StoredEntities:
+    234a1b10-e06f-4f4a-9f84-93baddb9f09b:
+        Impact:
+            id: 9de2ec63-d7c4-4690-bdd9-4e5deca1b211
+        RectangleCollider:
+            id: 31d2263a-8200-4f0f-98bb-4026b4aafae9
+        Renderable:
+            id: 6fc61ae5-78a8-40d7-a729-622ec0ae7299
+        Transform:
+            id: a21c84fa-da4c-4b8f-b97b-8dda41fb2904
+            localPosition: [-1.42968297, 2.58909488, 0]
+        name: LongSteelBar
+        storedID: 66fafade-6aec-4238-89c4-c2550c12fae2
+    278d1d95-e442-4eb1-86ee-85e3a5257cec:
+        Impact:
+            id: 530e60ee-d0aa-45aa-8f16-80a7b2b02256
+        RectangleCollider:
+            id: e3bab634-7e4e-4779-abcc-3058de3a0cc3
+        Renderable:
+            id: 74bececa-1efc-45df-bd7c-868ef2b69fad
+        Transform:
+            id: df81b015-6d77-43b4-8598-871fd567e4b5
+            localPosition: [-2.3195169, 0.265843898, 0]
+        name: SteelBar
+        storedID: ef2c97f9-f7ec-4911-8da8-b453e7cf1723
+    3312f8e8-c270-401f-a632-f17eea8dc847:
+        Renderable:
+            material:
+                u_color: [1, 1, 1, 0]
+        name: Exhaust
+        storedID: f8af50fb-ca66-49f9-a963-c068e781a408
+    3e415bbf-9ef9-4cb6-895a-36350e010124:
+        AsteroidMotion:
+            speed: 1
+        name: rock
+        storedID: e2007bb2-c9f2-438f-845e-3f0749c4cc55
+    5d38bec5-3ca1-4b8d-afb6-5898026d0b96:
+        name: rocket
+        storedID: 03e54f95-8af6-4430-b26c-9c87d3f8de82
+    5ed35599-0121-424c-afb2-cee5568d3942:
+        Transform:
+            id: e335f6dc-80d1-4133-9771-2d0733747179
+            parent: 5e90fcba-7e93-4eef-8917-bfd3d69ba62c
+        name: Builtin/Empty
+        storedID: 60fb0c6a-b61f-4d03-9f6c-b34469c8170b
+    67b04aec-efb9-4dbb-83c1-644e16b19166:
+        AsteroidMotion:
+            speed: 1
+        Transform:
+            localPosition: [-1.53857362, 1.01671648, 0]
+        name: asteroid
+        storedID: 2c795eb9-852c-4bc6-ab5a-89e42c07c484
+    b58419b2-3422-43de-9bc7-287663dd2153:
+        Transform:
+            id: 5e90fcba-7e93-4eef-8917-bfd3d69ba62c
+            localPosition: [6.40519047, 1.36331081, 0]
+        name: Builtin/Empty
+        storedID: 60fb0c6a-b61f-4d03-9f6c-b34469c8170b
+    f1ad7ffd-dd43-4910-88cb-4b691baa4e7f:
+        Transform:
+            id: 8aad786d-ab78-462c-939c-f38df664bb0d
+            localPosition: [1.68941402, 0.200690508, 0]
+            parent: 12282ab2-a8a3-438a-b001-99eb130c7eb2
+        name: SteelBlock
+        storedID: 60fb0c6a-b61f-4d03-9f6c-b34469c8170b
+Entities:
+    05b90d99-51ce-4b85-bd93-cde7ed32c828:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: 7a4f32c0-ab05-4d87-ad09-5e16fd6fa3e9
+            enabled: true
+        RectangleCollider:
+            id: b42cb179-8f6b-4d5d-9cae-76085aa813bf
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: 7f8454ac-6aca-4a61-9b77-81f20f09548f
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: dc241716-fdcc-41da-ac3b-290d8ba53bf6
+            enabled: true
+            localPosition: [3.09695339, -0.0523855686, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: 8ade4933-1b77-4565-b3d5-76fa453a219e
+            isStatic: true
+    0ce8b316-5898-4b6a-b689-114fcf33b9ee:
+        name: SteelBlock
+        storedID: ~
+        Transform:
+            id: 8ade4933-1b77-4565-b3d5-76fa453a219e
+            enabled: true
+            localPosition: [1.77428341, -1.63133264, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: 12282ab2-a8a3-438a-b001-99eb130c7eb2
+            isStatic: false
+    1cf1affd-9f06-4cce-b167-38f27b867304:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: d7c69fe2-c605-489d-b625-be7a35812abb
+            enabled: true
+        RectangleCollider:
+            id: d95bf3b2-c377-474b-906e-3914719539af
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: 10af0b2a-012e-412c-98a6-590617cc7b81
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: 6e648905-ece3-407b-8a9c-46bea4e19f64
+            enabled: true
+            localPosition: [0.636638165, 0.0766223669, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: 8ade4933-1b77-4565-b3d5-76fa453a219e
+            isStatic: true
+    215af2dd-a985-4c43-94fe-f8e50c1eecbf:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: 3dc99d7e-e2f2-4b08-a8ad-0ad819b7cb8f
+            enabled: true
+        RectangleCollider:
+            id: e0dd7d8f-6154-4798-b6d6-2f86858c2c1f
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: 95c367da-21a7-4b81-98be-61265d64db71
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: 4956d1ce-d736-4b4d-8601-3d3e00d30e44
+            enabled: true
+            localPosition: [3.09695244, -0.0523848534, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: 8aad786d-ab78-462c-939c-f38df664bb0d
+            isStatic: true
+    34186b44-c5f4-47ff-b37a-96c56c985dfa:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: 7aa81644-dbc3-454c-9732-48b275871373
+            enabled: true
+        RectangleCollider:
+            id: 53daba27-2595-4d93-aa7f-89aa82446ae2
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: b5be93b8-cc79-4faf-8a94-099f2cd2408c
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: b66f63b4-cb91-425a-8f35-39e9fc7718a8
+            enabled: true
+            localPosition: [-0.0557022095, 0.0395179987, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: 8ade4933-1b77-4565-b3d5-76fa453a219e
+            isStatic: true
+    351062f8-3767-4b3c-90d1-c2aa44d4719f:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: bc61217f-0a7e-4f8b-a53b-ccc0a1af6b64
+            enabled: true
+        RectangleCollider:
+            id: a36d87a7-fcad-4be6-aa6d-c6d7fec87c5e
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: 48f77179-484a-4b16-a973-9c8ec2a941e1
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: 89cbb470-8e1c-4079-bd44-44d06fbf0590
+            enabled: true
+            localPosition: [2.33932257, 0.0559637547, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: 8aad786d-ab78-462c-939c-f38df664bb0d
+            isStatic: true
+    35dcf8c8-d405-4b90-b27b-c5d09faa3e11:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: efcd8be3-e225-46f6-a534-886fbf80d972
+            enabled: true
+        RectangleCollider:
+            id: 885cae88-5d78-488d-8c03-85271ef5b263
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: 42ecb6f7-8b37-4093-8357-2d2eed380903
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: 5cdf1bd5-7bd4-43d9-be78-02f90116ec44
+            enabled: true
+            localPosition: [0.636638165, 0.0766224861, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: 8aad786d-ab78-462c-939c-f38df664bb0d
+            isStatic: true
+    489405a0-4da2-4db8-9473-cfcb5769f7dd:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: 2d25fc45-7450-4225-9456-ea40a92e03b4
+            enabled: true
+        RectangleCollider:
+            id: d4d73f50-2836-4b4f-a5c9-ba02628e80d0
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: 8f0f7ad3-2dca-4de2-bef0-b82a9efecdb3
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: feb11d5c-5e66-4c02-9f57-d79e2fa1bc8f
+            enabled: true
+            localPosition: [2.33932257, 0.0559636354, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: c0b934aa-e2f0-4bb0-8395-bfb693c086c7
+            isStatic: true
+    55a6bc5a-ce8f-4833-959d-cfc43529ab1a:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: 6f5c68e6-e9fa-4a59-874f-e1c98d17d1ee
+            enabled: true
+        RectangleCollider:
+            id: 8bcbef52-13f4-40d6-aa42-b97898fe9e56
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: b2d6c42f-5401-4057-aad6-2dac11db1420
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: e7da0efc-4df4-477f-9b4e-a59b7e4c5456
+            enabled: true
+            localPosition: [-0.0557022095, 0.0395179987, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: c0b934aa-e2f0-4bb0-8395-bfb693c086c7
+            isStatic: true
+    5e27b57e-7e1e-49b4-bc28-cf38c640ba4a:
+        name: SteelBlock
+        storedID: ~
+        Transform:
+            id: c0b934aa-e2f0-4bb0-8395-bfb693c086c7
+            enabled: true
+            localPosition: [1.7137537, -0.545807481, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: 12282ab2-a8a3-438a-b001-99eb130c7eb2
+            isStatic: false
+    6776d3bf-4780-4897-8aa0-aeec6442ae38:
+        name: Builtin/Empty
+        storedID: ~
+        Transform:
+            id: 12282ab2-a8a3-438a-b001-99eb130c7eb2
+            enabled: true
+            localPosition: [0, 0, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: bf0e0271-849d-4b5b-898d-b40090c10bd3
+            isStatic: false
+    69fcbffb-d249-402b-b505-f0bdc6024c65:
+        name: BackGround
+        storedID: ~
+        Renderable:
+            id: 4e059f3a-1060-4005-b6ba-16af2a6eb490
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: aac8fa3c-b8ae-4eff-b782-7dc6ad4b0ff5
+            drawOrder: -10
+        Transform:
+            id: 31c170e9-c9b9-41a5-8191-4a399ea72234
+            enabled: true
+            localPosition: [0, 0, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [3.33333349, 3.33333349, 3.33333349]
+            parent: bfd2a852-ec3a-4d62-adea-9f452657b87b
+            isStatic: false
+    75aa4825-3707-4cab-bb1e-0217a8c943b1:
+        name: Builtin/Empty
+        storedID: ~
+        Transform:
+            id: bf0e0271-849d-4b5b-898d-b40090c10bd3
+            enabled: true
+            localPosition: [0, 0, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: 2ef56162-0b83-446f-9176-83c93bc14255
+            isStatic: false
+    78c0fc86-49e3-496d-a785-31e5b704167f:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: d43d230f-43fd-4983-bbf2-291f90e11722
+            enabled: true
+        RectangleCollider:
+            id: 4f9bbd88-e4f5-4004-a14f-e828f22921b9
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: 4250483b-b216-4aee-b9eb-1bed2037ff8f
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: d438e9c1-fe08-4c35-8319-874ff1a8ac21
+            enabled: true
+            localPosition: [0.636638165, 0.0766224861, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: c0b934aa-e2f0-4bb0-8395-bfb693c086c7
+            isStatic: true
+    7b6a1ded-5406-4875-b016-a95864f4ac15:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: 4805434c-9a53-4307-86ee-46694c5d1830
+            enabled: true
+        RectangleCollider:
+            id: 7c2c9af3-e462-4edf-ab23-96bc466ee725
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: 2bc359cf-bec0-4eb7-9c9b-93aac5188e5e
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: 76091876-6bb3-4dbe-a18d-5a82502a7ae9
+            enabled: true
+            localPosition: [-0.0557022095, 0.0395179987, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: 8aad786d-ab78-462c-939c-f38df664bb0d
+            isStatic: true
+    955c33e9-7c9b-4169-938a-6430d573d55e:
+        name: camera
+        storedID: ~
+        Camera:
+            id: 0a73a2ca-d1f3-43f4-81c5-eeff68d3c774
+            enabled: true
+        Ear:
+            id: c59e3b60-1ae1-4b3d-abb4-1cd88be779b0
+            enabled: true
+        FollowPlayer:
+            id: 0083755f-4dd5-4522-a509-ca916f18e537
+            enabled: true
+        Transform:
+            id: bfd2a852-ec3a-4d62-adea-9f452657b87b
+            enabled: true
+            localPosition: [0, 0, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [3, 3, 3]
+            isStatic: false
+    a6ffc79e-5be4-4355-95de-457921d211ab:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: 08d3e608-aef5-4430-a5fc-70edbfa92c45
+            enabled: true
+        RectangleCollider:
+            id: b10ca5ec-59d6-49f0-b1f6-f045da6682b5
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: e1c1b258-a9d0-4e25-a64d-cb2fed2a5a25
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: 73405ff4-ab75-40cd-aea3-354ec55a5fdb
+            enabled: true
+            localPosition: [1.49303436, 0.033592701, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: 8aad786d-ab78-462c-939c-f38df664bb0d
+            isStatic: true
+    b63b3a2b-5e68-41dc-aee5-818ca69c1f90:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: 5a3b4498-a682-4857-b56d-a497582a8348
+            enabled: true
+        RectangleCollider:
+            id: 51b04031-398b-45c9-b390-7d0064a2eea5
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: 9352c6b9-af31-43e5-8a38-5fbf6bde5790
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: 011d8cc0-aeff-494c-986f-fb4481b54f61
+            enabled: true
+            localPosition: [1.49303436, 0.0335924625, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: c0b934aa-e2f0-4bb0-8395-bfb693c086c7
+            isStatic: true
+    bf2ea1d9-3d77-4786-8696-2ccd65cf1aae:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: 0d1e5a43-6fcf-4a10-9577-22397051234d
+            enabled: true
+        RectangleCollider:
+            id: cfe7fb6d-9293-41f8-9899-88cdf9379178
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: 621d1762-d1ee-40ce-bf17-7319f7a03fc9
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: ee21e121-764c-439c-96b5-903cca20b64d
+            enabled: true
+            localPosition: [1.49303436, 0.0335924625, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: 8ade4933-1b77-4565-b3d5-76fa453a219e
+            isStatic: true
+    e3a4d11d-dc64-4cfb-bc4d-36053091b6d1:
+        name: Builtin/Empty
+        storedID: ~
+        Transform:
+            id: 2ef56162-0b83-446f-9176-83c93bc14255
+            enabled: true
+            localPosition: [0, 0, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: e335f6dc-80d1-4133-9771-2d0733747179
+            isStatic: false
+    e79af5e6-55ce-4477-84f6-6e2dcdc9f8aa:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: d9abaaa4-2b7e-4435-9fa3-7b278b71f3aa
+            enabled: true
+        RectangleCollider:
+            id: 7c6263c1-0caf-4803-8c1d-a9ad2c37b5cd
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: 5f2095f1-86d0-442d-a617-d96b3a1dee22
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: 08e60055-3a68-44c6-b830-6744367d1468
+            enabled: true
+            localPosition: [2.33932257, 0.0559637547, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: 8ade4933-1b77-4565-b3d5-76fa453a219e
+            isStatic: true
+    ecb2ce52-4f2d-4dc7-8119-dd1a089ed0a5:
+        name: SteelBar
+        storedID: ~
+        Impact:
+            id: bf49738a-35d0-4367-bf72-fe0c34c9fcf8
+            enabled: true
+        RectangleCollider:
+            id: 31fca78b-1207-4046-936a-f053d6d628f2
+            enabled: true
+            size: [0.970000029, 0.202000007]
+            center: [0.0149999997, -0.0299999993]
+        Renderable:
+            id: 934d881b-00f0-4feb-9e09-296c147cb9f1
+            enabled: true
+            mesh: a4716f4b-9c55-4f9a-84e6-5e1e403a8a6a
+            material:
+                id: b456a101-6f11-459e-8080-de7bd7deae4a
+                u_color: [1, 1, 1, 1]
+                u_textureSampler: 0e7796ee-0e94-433e-ba06-0d1735370529
+            drawOrder: 0
+        Transform:
+            id: 07c37a44-ce11-42f4-bd0f-05c0aa315d88
+            enabled: true
+            localPosition: [3.09695148, -0.0523850918, 0]
+            localRotation: [1, 0, 0, 0]
+            localScale: [1, 1, 1]
+            parent: c0b934aa-e2f0-4bb0-8395-bfb693c086c7
+            isStatic: true

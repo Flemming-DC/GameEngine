@@ -1,0 +1,8 @@
+name: John
+age: 40
+seq:
+  - first element
+  - second element
+subNode:
+  subName: Jo
+  subAge: 10

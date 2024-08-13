@@ -1,0 +1,45 @@
+# Missing: build-order, activation of entity and components, custom type-dependent data
+# we dont store scene-name, since it is in the filename
+id: ---
+entities:
+  camera:
+    id: 9a92f39e-872d-4500-a534-d944d72f6cbc
+    Transform: 
+      id: ---
+      localPosition: [0, 0, 0]
+      localRotation: [0, 0, 0]
+      localScale:    [1, 1, 1]
+      parent: null
+    Camera:
+      id: ---
+      # projection data
+  picture 1: 
+    id: db0b16ba-9da6-4e81-b754-fbc5d7eb2761
+    # Transform
+    Renderable:
+      id: ---
+      mesh: --- # angivet ved uuid
+      material: --- # angivet ved uuid
+    RectangleCollider:
+      id: ---
+      size: [1, 1]
+  picture 2: 
+    id: 4fd4e622-a777-41a8-ad95-d4cb2a382aa6
+    # Transform
+    # Renderable
+    # RectangleCollider
+    GameLogic:
+      id: ---
+      # material: --- # serialize custom data ???
+  circle 1: 
+    id: 465e6f11-1daa-46ed-9eab-ada19408dd94
+    # Transform
+    # Renderable
+    CircleCollider:
+      id: ---
+      localRadius: 0.5
+  circle 2: 
+    id: 8d26e12b-d0e6-4905-9cf9-f6dba6d84cde
+    # Transform
+    # Renderable
+    # CircleCollider
