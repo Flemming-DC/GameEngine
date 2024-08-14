@@ -1,7 +1,6 @@
 # Directories
 .vs/
 Binaries/Intermediates
-Binaries/Premake
 Binaries/windows-x86/Debug
 
 # Files
