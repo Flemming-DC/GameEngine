@@ -31,6 +31,10 @@ int main()
     Core::Run(Literals::stroidalDevScene);
 }
 
+
+
+
+
 /*
 logger::print(UuidCreator::MakeID());
 findstr /S /M "_Debug" "Engine\Source\*.*"

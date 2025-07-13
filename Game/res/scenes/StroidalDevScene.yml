@@ -20,7 +20,7 @@ StoredEntities:
             id: 74bececa-1efc-45df-bd7c-868ef2b69fad
         Transform:
             id: df81b015-6d77-43b4-8598-871fd567e4b5
-            localPosition: [-2.3195169, 0.265843898, 0]
+            localPosition: [0.958128631, 1.91885173, 0]
         name: SteelBar
         storedID: ef2c97f9-f7ec-4911-8da8-b453e7cf1723
     3312f8e8-c270-401f-a632-f17eea8dc847:
@@ -35,6 +35,8 @@ StoredEntities:
         name: rock
         storedID: e2007bb2-c9f2-438f-845e-3f0749c4cc55
     5d38bec5-3ca1-4b8d-afb6-5898026d0b96:
+        Transform:
+            localPosition: [0.770695388, 0.127447024, 0]
         name: rocket
         storedID: 03e54f95-8af6-4430-b26c-9c87d3f8de82
     5ed35599-0121-424c-afb2-cee5568d3942:
@@ -47,7 +49,7 @@ StoredEntities:
         AsteroidMotion:
             speed: 1
         Transform:
-            localPosition: [-1.53857362, 1.01671648, 0]
+            localPosition: [-2.20814586, 0.111747086, 0]
         name: asteroid
         storedID: 2c795eb9-852c-4bc6-ab5a-89e42c07c484
     b58419b2-3422-43de-9bc7-287663dd2153:
