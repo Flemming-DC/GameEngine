@@ -1,15 +1,15 @@
 # Introduction
 This is a game engine with an editor and an example game. 
-Each of these three items are a C++ project and they fit together into a C++ solution. 
+
+Each of these things are a C++ project and they fit together into a C++ solution. 
+The editor and engine are liberies, while the game is an executable. 
+The project is only tested for Windows and the Linux Subsystem for Windows. It is not tested on a genuine Linux machine nor on Mac. 
+
 The Game has a macro named InEditor that controls whether it is running inside the editor or as a standalone executable. 
 
 The dependencies are as follows
-    Game depends in Engine and if InEditor is defined, then it also depends on Editor.
-    Editor depends on Engine.
-    Engine doesn't depend on the other projects.
-
-Editor and Engine are liberies, while Game is an executable. 
-The project is only tested for Windows and the Linux Subsystem for Windows. It is not tested on a genuine Linux machine nor on Mac. 
+    The game depends in the engine and if InEditor is defined, then it also depends on the editor.
+    The editor depends on the engine.
 
 ## get started
 Run Setup-Windows.bat to build Engine, Game and Editor.
